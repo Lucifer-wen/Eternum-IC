@@ -165,7 +165,6 @@ label welcome_mod:
     p "You wouldn't want to destroy my career, right?"
     p "RIGHT?!"
     default conver1 = False
-    # $ _im_choice_let_them_go = im_walk_menu("Let them go", good=True)
     menu:
         with dis
         "Ask them to stay":
@@ -187,7 +186,7 @@ label welcome_mod:
             p "I can see you're a cool one, jeez..."
             show welcome 12
             p "Don't listen to him, Mom!" with dis
-        "Let them go [pink][mt](Penelope, Dalia +1)":
+        "{color=[walk_points]}Let them go [pink][mt](Penelope, Dalia +1)":
             mc "Sure, no worries. I was going to sleep early anyway." with dis
             mc "We can talk tomorrow!"
             $ conver1 = True
@@ -381,6 +380,11 @@ label daliacove_mod:
         show cd 0d
         d ". . ." with dis12
         d "Don't talk to me ever again."
+
+        # CCMOD: ACHIEVEMENT: Oathbreaker
+        if renpy.loadable("achievements/achievements.rpy"):
+            $ award_by_name("Oathbreaker")
+
         mc "W-What?"
         show cd 0e with dis
         mc "Dalia!" with dis08
@@ -394,6 +398,11 @@ label daliacove_mod:
         mc "(Tomorrow's another day...)"
         $ daliapath = False
         $ daliau = False
+
+        # CCMOD: ACHIEVEMENT: Jerry's Big Chance
+        if renpy.loadable("achievements/achievements.rpy"):
+            $ award_by_name("Jerry's Big Chance")
+
         jump nightmare04
     play musicb waves2 fadein 7
     hide screen afewhourslater
@@ -574,6 +583,9 @@ label daliacove_mod:
     d "*Snorts* Shut up! Haha!"with dis
     d "Don't remind me of that!"
     show cd 22
+    # CCMOD: PHONE
+    if renpy.loadable("achievements/achievements.rpy"):
+        $ unlock_wallpaper_by_name("wp_dalia_4")
     mc "*Chuckles* Hey, it's true!" with dis15
     show cd 21
     d "*Chuckles* That was so embarrassing! I don't know what got into me. God, did you see the looks on their faces?"
@@ -617,6 +629,11 @@ label daliacove_mod:
         mc "Nice!"
         $ daliapath = False
         $ daliau = False
+
+        # CCMOD: ACHIEVEMENT: Jerry's Big Chance
+        if renpy.loadable("achievements/achievements.rpy"):
+            $ award_by_name("Jerry's Big Chance")
+
         jump nightmare04
     mc "Do you remember our bet in the Semper Invicta server?"
     show cd 27
@@ -756,6 +773,9 @@ label daliacove_mod:
         d "Well... I hope this is enough to get you in the mood."with dis12
     d "It's gonna be difficult to do my part otherwise."
     show cd 41
+    # CCMOD: PHONE
+    if renpy.loadable("achievements/achievements.rpy"):
+        $ unlock_wallpaper_by_name("wp_lewd_dalia_1")
     mc "I doubt that'll be a problem..."
     if dalianaked:
         show cd 40
@@ -1037,6 +1057,11 @@ label daliacove_mod:
     d "*Swallows*" with dis
     d "Mm-hm..."
     mc "Good girl..."
+
+    # CCMOD: ACHIEVEMENT: still waters
+    if renpy.loadable("achievements/achievements.rpy"):
+        $ award_by_name("Still Waters")
+
     stop music3 fadeout 7
     play music waves2 fadein 7
     show cd 71 with dis2
@@ -1136,11 +1161,9 @@ label mod_call_chat_21:
     eul "If you're still feeling... hungry by then, I could help you out. I know some good, cheap spots nearby."
     show gh 23
     mc "Oh..."
-    # $ _im_choice_flirt = im_walk_menu("Flirt", good=False)
-    # $ _im_choice_reject = im_walk_menu("Reject", good=True)
     menu:
         with dis
-        "[red]Flirt":
+        "{color=[walk_path]}[red]Flirt":
             $ eulalieflirt = True
             mc "Well... I'll certainly keep it in mind."with dis
             mc "I hate being hungry."
@@ -1152,7 +1175,7 @@ label mod_call_chat_21:
             show gh 23
             mc "Sounds like a solid plan..."
             eul "Mm-hm..."
-        "[gr]Reject":
+        "{color=[walk_points]}[gr]Reject":
             mc "Thank you, but my date must be about to arrive."with dis
             show gh 34
             eul "Yeah, sure..."
@@ -1508,6 +1531,9 @@ label mod_call_chat_21:
     a "Oh... I didn't do anything too fancy, really." with dis12
     a "I just teased the roots a bit and used a lot of hairspray to... you know, add some volume."
     show gh 81
+    # CCMOD: PHONE
+    if renpy.loadable("achievements/achievements.rpy"):
+        $ unlock_wallpaper_by_name("wp_annie_14")
     mc "You're gonna have to give me the brand of that hairspray."
     show gh 80
     a "Sure thing! It's one Penelope recommended me."
@@ -1535,14 +1561,13 @@ label mod_call_chat_21:
     a "Every detail, huh...? Let me check that!"
     a "What was I wearing?"
     show gh 85
-    # $ _im_choice_pandas = im_walk_menu("For Dad to finish the registration", good=True)
     menu:
         with dis
         "Denim overalls over a rainbow-striped t-shirt":
             mc "Denim overalls over a rainbow-striped t-shirt." with dis06
         "A pink hoodie paired with leggings":
             mc "A pink hoodie paired with leggings." with dis06
-        "An orange shirt tucked into a skirt with suspenders":
+        "{color=[walk_points]}[gr]An orange shirt tucked into a skirt with suspenders":
             mc "An orange shirt tucked into a skirt with suspenders." with dis06    
             show gh 84
             a "And what were we waiting for?"
@@ -1551,7 +1576,7 @@ label mod_call_chat_21:
                 with dis
                 "To go to Chang's house":
                     mc "To go to Chang's house." with dis06
-                "[gr]For Dad to finish the registration":
+                "{color=[walk_points]}[gr]For Dad to finish the registration":
                     mc "For Dad to finish the registration." with dis06
                     mc "You bugged him over and over until he was done."
                     $ annie_points += 1
@@ -1570,6 +1595,11 @@ label mod_call_chat_21:
     show gh 84
     a "Wrong!"
     a "SO wrong! *Chuckles* You said that so confidently that you almost made me doubt myself!"
+    
+    # CCMOD: ACHIEVEMENT: "You Know You Can Rollback?"
+    if renpy.loadable("achievements/achievements.rpy"):
+        $ award_by_name("You Know You Can Rollback?")
+    
     show gh 85
     mc "*Chuckles* In my defense, it was so long ago that no one would remember the details."
     jump rememberdinnersuccess
