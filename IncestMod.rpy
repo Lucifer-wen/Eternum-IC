@@ -6571,6 +6571,10 @@ init python:
         "Well, well, well... so you openly admit having fantasized about how my cum tastes, huh...?":
             "Well, well, well... so you openly admit having fantasized about how your cousin's cum tastes, huh...?",
         
+        # AU script4:4192 chat:950 (chat) (p)
+        "Thanks [mc]  {image=images/MENUS/e_heart.png}":
+            "Thanks little cuz  {image=images/MENUS/e_heart.png}",
+        
         # AU script4:5113 (other)
         "Nancy, Penelope, and Dalia are all very nice to me. They treat me as one of the family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!":
             "Nancy, Penelope, and Dalia are all very nice to me. They treat me as part of your family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!",
@@ -6978,15 +6982,15 @@ init python:
         
         # ST script:1047
         "(When I moved from Kredon, she was my next-door neighbor and the first person I met, along with Chang.)":
-            "(After we moved from Kredon, she and her mother were our next-door neighbors, and she was the first person I met, along with Chang.)",
+            "(When we moved from Kredon, she and her mother were our next-door neighbors, and she was the first person I met, along with Chang.)",
         
         # ST script:1049
         "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them.)":
-            "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them, especially after they divorced.)",
+            "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them, especially after they got divorced.)",
         
         # ST script:1050
         "(We were both lost... and lonely.)":
-            "(Even after my dad and her mom got remarried, nothing changed. We were both lost... and lonely.)",
+            "(Even after my dad and her mom remarried, nothing changed. We were both lost... and lonely.)",
         
         # ST script:1053
         "(Because of how close we were, people always believed we were dating... but the truth is, we're just friends.)":
@@ -7538,7 +7542,7 @@ init python:
         
         # ST script4:7431
         "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what best friends do, I guess.":
-            "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what family does, I guess.",
+            "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what brothers do, I guess.",
         
         
     # -----------------------------------------
