@@ -33,62 +33,70 @@ default _im_reloading_scripts = False
 init python:
     def _im_strip_multimod_tags(text):
         """
-        Remove unsupported multi-mod tags (e.g. [gr]) when the tag name
-        is not provided by MultiMod. Prevents NameError crashes if the
-        tag isn't defined in the current environment.
+        Remove unsupported multi-mod tags (e.g. [gr]) when
+        MultiMod is not installed. Prevents NameError crashes if the tag
+        isn't defined in the current environment.
         """
         try:
-            if renpy.loadable("mod_additions/cheats_hover.png"):
+            if renpy.loadable("mod_additions/mod_options.rpy"):
                 return text
         except Exception:
             pass
         try:
             import re
-            return re.sub(r'\[(?:gr|mm|red|blue|green|pink|mt)\]', '', text)
+            t = text
+            t = re.sub(r'\[red\]\(Insist\)', '(Insist)', t)
+            t = re.sub(r'\(attack afterward\)', '', t)
+            t = re.sub(r'\[(?:gr|mm|red|blue|green|pink|mt|nova_pts|nancy_pts|dalia_pts|annie_pts|alex_pts|penelope_pts|luna_pts|calypso_pts)\](?:(?:\{[^{}]+\})?\([^()]+\)(?:\{\/[^{}]+\})?)?', '', t)
+            return t.strip()
         except Exception:
             return text
 
     def _im_define_multimod_tags():
         try:
-            if renpy.loadable("mod_additions/cheats_hover.png"):
+            if renpy.loadable("mod_additions/mod_options.rpy"):
                 return
         except Exception:
             pass
-        for _tag in ("gr", "mm", "red", "blue", "green", "pink", "mt"):
+        for _tag in ("gr", "mm", "red", "blue", "green", "pink", "mt", "nova_pts", "nancy_pts", "dalia_pts", "annie_pts", "alex_pts", "penelope_pts", "luna_pts", "calypso_pts"):
             if not hasattr(store, _tag):
                 setattr(store, _tag, "")
 
     _im_define_multimod_tags()
 
-    # def _im_strip_bonusmod_tags(text):
-        # """
-        # Remove unsupported Bonus Mod tags (e.g. {color=[walk_points]}) when the tag name
-        # is not provided by Bonus Mod. Prevents NameError crashes if the
-        # tag isn't defined in the current environment.
-        # """
-        # try:
-            # if renpy.loadable("achievements/images/achievement_pop.jpg"):
-                # return text
-        # except Exception:
-            # pass
-        # try:
-            # import re
-            # return re.sub(r"\{color=\[(?:walk_points|walk_path|walk_points_chat|walk_path_chat)\]\}", "", text)
-        # except Exception:
-            # return text
+    def _im_strip_bonusmod_tags(text):
+        """
+        Remove unsupported Bonus Mod tags (e.g. {color=[walk_points]}) when
+        Bonus Mod is not installed. Prevents NameError crashes if the tag
+        isn't defined in the current environment.
+        """
+        try:
+            if renpy.loadable("achievements/achievements.rpy"):
+                return text
+        except Exception:
+            pass
+        try:
+            import re
+            t = text
+            t = re.sub(r'\{color=\[(?:walk_points|walk_path|walk_points_chat|walk_path_chat)\]\}', '', t)
+            return t.strip()
+        except Exception:
+            return text
 
-    # def _im_define_bonusmod_tags():
-        # try:
-            # if renpy.loadable("achievements/images/achievement_pop.jpg"):
-                # return
-        # except Exception:
-            # pass
-        # store.walk_points = "CCCCCC"
-        # store.walk_path = "CCCCCC"
-        # store.walk_points_chat = "000000"
-        # store.walk_path_chat = "000000"
+    def _im_define_bonusmod_tags():
+        try:
+            if renpy.loadable("achievements/achievements.rpy"):
+                return
+        except Exception:
+            pass
+        for _tag in ("walk_points", "walk_path"):
+            if not hasattr(store, _tag):
+                setattr(store, _tag, "CCCCCC")
+        for _tag in ("walk_points_chat", "walk_path_chat"):
+            if not hasattr(store, _tag):
+                setattr(store, _tag, "000000")
 
-    # _im_define_bonusmod_tags()
+    _im_define_bonusmod_tags()
 
     def _im_apply_persistent_mode():
         mode = getattr(persistent, "im_incest_mode", None)
@@ -683,38 +691,6 @@ init python:
     im_label_map_off = {
         # Beispiel: "some_label": "some_label_disabled_mod",
     }
-
-    def im_walk_menu(text, good=None, tag=None):
-        """
-        Returns menu text decorated with CCMOD walkthrough tags when available.
-        - good=True   -> highlight as optimal choice
-        - good=False  -> highlight as path-loss choice
-        - tag="0.1,foo" adds `{#0.1,foo}` suffix (optional)
-        """
-        try:
-            from renpy import store as _store
-        except Exception:
-            _store = None
-
-        def _resolve_color(attr):
-            if _store is None:
-                return ""
-            value = getattr(_store, attr, None)
-            if not value:
-                return ""
-            return "{color=%s}" % str(value)
-
-        prefix = ""
-        if good is True:
-            prefix = _resolve_color("walk_points")
-        elif good is False:
-            prefix = _resolve_color("walk_path")
-
-        suffix = ""
-        if tag:
-            suffix = "{#" + tag + "}"
-
-        return prefix + text + suffix
 
 # (Optional) You can still push maps into Ren'Py's config manually via
 # `im_apply_label_map()`, but dynamic routing below no longer relies on it.
@@ -2325,9 +2301,10 @@ init python:
         "Uhh... well, she's my not my wife, but... alright, let's do it.":
             "Uhh... well, she's my sister, not my wife, but... alright, let's do it.",
 
+        # l9453394 note: Changed to be fully compatible with and without either walkthrough
         # BM 69710
         "She's not my wife, yet":
-            "She's my sister...",
+            "{color=[walk_points]}She's my sister... [penelope_pts]",
 
         # BM 69711, Disabled, think it's better like that ~BA
         # "Well, she's not my wife {i}yet{/i}, but... alright, let's do it.":
@@ -3920,9 +3897,10 @@ init python:
         "*Jumps on the bed* Oh my god, [mc]! Look at this!":
             "*Jumps on the bed* Oh my god, bro! Look at this!",
 
+        # l9453394 note: Changed to be fully compatible with and without either walkthrough
         # AS 35431
         "Decline and stay as friends":
-            "Decline and stay as siblings",
+            "{color=[walk_path]}Decline and stay as siblings [red][mt](Closes Annie's path)",
 
         # AS 35434
         "I like you, and you're my best friend, you already know that.":
@@ -4436,9 +4414,10 @@ init python:
         "To the movie theater":
             "For Chang",
 
+        # l9453394 note: Changed to be fully compatible with and without either walkthrough
         # AS 88850
         # "To see the pandas at the zoo":
-        #     "For dad to finish the registration.",
+        #     "{color=[walk_points]}For dad to finish the registration. [annie_pts]",
 
         # AS 88852
         "Although... you had to cancel those plans.":
@@ -5377,9 +5356,10 @@ init python:
         "*Jumps on the bed* Oh my god, [mc]! Look at this!":
             "*Jumps on the bed* Oh my god, bro! Look at this!",
 
+        # l9453394 note: Changed to be fully compatible with and without either walkthrough
         # HS 35431
         "Decline and stay as friends":
-            "Decline and stay as siblings",
+            "{color=[walk_path]}Decline and stay as siblings [red][mt](Closes Annie's path)",
 
         # HS 35434
         "I like you, and you're my best friend, you already know that.":
@@ -5828,13 +5808,10 @@ init python:
             "And what where we waiting for?",
 
         # Editor note: With and without walkthrough mod should both be supported (I'm not sure I never checked without walkthrough mod)
+        # l9453394 note: Changed to be fully compatible with and without either walkthrough
         # HS 88850
         "To see the pandas at the zoo":
-            "For Dad to finish the registration",
-
-        # HS 88850
-        "To see the pandas at the zoo [annie_pts]":
-            "For Dad to finish the registration [annie_pts]",
+            "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
         # HS 88851
         "To see the pandas at the zoo.":
@@ -7411,13 +7388,9 @@ init python:
         "(Maybe... it's just not the right time yet...?)":
             "(Maybe... was this all a mistake...?)",
         
-        # ST script4:5311 (menu)
+        # ST script4:5311 and Multi-Mod script4:5339 and Bonus Mod script4:5366 (menu)
         "Decline and stay as friends":
-            "Decline and stay as stepsiblings",
-        
-        # ST Bonus Mod script4:5366 (menu)
-        "{color=[walk_path]}Decline and stay as friends":
-            "{color=[walk_path]}Decline and stay as stepsiblings",
+            "{color=[walk_path]}Decline and stay as stepsiblings [red][mt](Closes Annie's path)",
         
         # ST script4:5314
         "I like you, and you're my best friend, you already know that.":
@@ -7759,16 +7732,19 @@ init python:
 
         return who_name in ("mc", "mct", "mcd", "mcsc", "[mc]", "MC", "You")
 
-    def _in_transform_text(s: str) -> str:
-        t = s
-        # If neither mode is active, skip all replacements entirely.
-        if not (
+    def _in_any_mode_active():
+        return (
             getattr(renpy.store, 'annie_incest', False)
             or getattr(renpy.store, 'annie_sister', False)
             or getattr(renpy.store, 'annie_mom', False)
             or getattr(renpy.store, 'annie_half_sister', False)
             or getattr(renpy.store, 'annie_aunt', False)
-        ):
+        )
+
+    def _in_transform_text(s: str) -> str:
+        t = s
+        # If neither mode is active, skip all replacements entirely.
+        if not _in_any_mode_active():
             return t
         t_norm = _in_normalize_equiv_text(t)
         t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
@@ -7943,7 +7919,9 @@ init python:
                 t = re.sub(r"\bNancy\b", "Mom", t)
         except Exception:
             pass
-
+        
+        t = _im_strip_multimod_tags(t)
+        t = _im_strip_bonusmod_tags(t)
         return t
 
     def _in_replace_text_callable(s: str) -> str:
@@ -7954,7 +7932,7 @@ init python:
 
         try:
             sanitized = _im_strip_multimod_tags(s)
-            # sanitized = _im_strip_bonusmod_tags(sanitized)
+            sanitized = _im_strip_bonusmod_tags(sanitized)
         except Exception:
             sanitized = s
         result = _in_transform_text(sanitized)
@@ -7975,39 +7953,11 @@ init python:
 
         return result
 
-    def _in_is_chat_screen_active():
+    def _in_chat_display_text(text):
         """
-        True only when phone chat screens are actually shown. Avoids using
-        current_chat alone, which can stay set outside chat and cause UI lag.
-        """
-        try:
-            if renpy.get_screen("chat") is not None:
-                return True
-            if renpy.get_screen("chat_answers") is not None:
-                return True
-            if renpy.get_screen("chat_is_typing") is not None:
-                return True
-            if renpy.get_screen("chat_end") is not None:
-                return True
-            if renpy.get_screen("show_pic") is not None:
-                return True
-        except Exception:
-            return False
-        return False
-
-    def _in_any_mode_active():
-        return (
-            getattr(renpy.store, 'annie_incest', False)
-            or getattr(renpy.store, 'annie_sister', False)
-            or getattr(renpy.store, 'annie_mom', False)
-            or getattr(renpy.store, 'annie_half_sister', False)
-            or getattr(renpy.store, 'annie_aunt', False)
-        )
-
-    def _in_chatlog_display_text(text):
-        """
-        Apply incest replacements for chat_log message text only.
-        Keeps replace_text off for chat_log to avoid UI lag.
+        Apply incest replacements for chat message text.
+        Keeps replace_text off for chat_log, chat, and
+        chat_answers to avoid UI lag.
         """
         if not isinstance(text, str):
             return text
@@ -8058,32 +8008,6 @@ init python:
         cache[key] = out
         return out
 
-    def _in_replace_text_chat_only(s: str) -> str:
-        """
-        Apply replacements only during phone chat screens. Otherwise defer
-        to any previous replace_text handler or return input unchanged.
-        """
-        prev = globals().get('_in_prev_replace_text_dynamic', None)
-        if not _in_is_chat_screen_active():
-            if callable(prev):
-                try:
-                    return prev(s)
-                except Exception:
-                    return s
-            elif isinstance(prev, (list, tuple)):
-                out = s
-                for pat, rep in prev:
-                    try:
-                        if hasattr(pat, 'sub'):
-                            out = pat.sub(rep, out)
-                        else:
-                            out = out.replace(pat, rep)
-                    except Exception:
-                        pass
-                return out
-            return s
-        return _in_replace_text_callable(s)
-
 # -----------------------------------------
 # Installer (define before any call)
 # -----------------------------------------
@@ -8097,15 +8021,12 @@ init python:
 
     def in_apply_text_map():
         """
-        Install a chat-only replace_text hook so phone chat messages
-        still get replacements while UI text remains untouched.
+        Dialogue replacements now run via say/menu filters so
+        UI text remains untouched.
         """
         global _in_prev_replace_text_dynamic
         current = renpy.config.replace_text
-        if current is _in_replace_text_chat_only:
-            return
         _in_prev_replace_text_dynamic = current
-        renpy.config.replace_text = _in_replace_text_chat_only
 
 # -----------------------------------------
 # Install late (after definitions exist)
@@ -8139,7 +8060,7 @@ init 991 python:
             }
             try:
                 sanitized = _im_strip_multimod_tags(text)
-                # sanitized = _im_strip_bonusmod_tags(sanitized)
+                sanitized = _im_strip_bonusmod_tags(sanitized)
             except Exception:
                 sanitized = text
             try:
@@ -8446,12 +8367,13 @@ init 1000:
                                 if option_font is not None:
                                     text_font option_font
 
-                if renpy.loadable("achievements/images/achievement_pop.jpg"):
+                if renpy.loadable("achievements/achievements.rpy"):
                     vbox:
                         style_prefix "radio"
                         label _("Walkthrough")
                         textbutton _("Enabled") action [SetVariable("walk_points", "45E3C2"), SetVariable("walk_path", "FF073A"), SetVariable("walk_points_chat", "45E3C2"), SetVariable("walk_path_chat", "FF073A")]
                         textbutton _("Disabled") action [SetVariable("walk_points", "CCCCCC"), SetVariable("walk_path", "CCCCCC"), SetVariable("walk_points_chat", "000000"), SetVariable("walk_path_chat", "000000")]
+
                     vbox:
                         style_prefix "radio"
                         label _("Music popups")
@@ -8624,7 +8546,7 @@ init 1000:
             unhovered [ SetLocalVariable("return_h", 0) ]
 
 # -----------------------------------------
-# Bonus Mod chat_log override (Incest-aware, no global replace_text)
+# Bonus Mod chat_log, chat, chat_answers override (Incest-aware, no global replace_text)
 # -----------------------------------------
 init 1100:
     screen chat_log(girl_chats):
@@ -8651,9 +8573,9 @@ init 1100:
                 xfill True
                 ysize phone_height
                 spacing 10
-
+                    
                 frame:
-                    background "#000"
+                    background "#000" # "#fff"
                     has hbox
                     xfill True
 
@@ -8671,28 +8593,31 @@ init 1100:
                         style_prefix "normal"
                         outlines [ (absolute(2), "#000", absolute(0), absolute(0)) ]
 
+
                     imagebutton:
                         xalign 1.0
                         yalign 0.5
                         idle Transform(list(girl_chats.values())[-1]['thumbnail'], crop=(thumbnail_width - thumbnail_height, 0, thumbnail_height, thumbnail_height), fit="contain", xsize=100, ysize=100)
 
                 viewport:
-                    yfill True
+                    yfill True    
                     xsize (phone_width - chat_x_padding)
                     xalign 0.5
 
                     draggable True
                     mousewheel True
-
+                    
                     vbox:
                         xfill True
                         spacing 10
+                        $ print(girl_chats.items())
                         for index, chat_info in girl_chats.items():
-                            text "Chat {}".format(index):
+                            text "Chat {}".format(index): # TODO Check translation
                                 color "#fff"
                                 outlines [ (absolute(2), "#000", absolute(0), absolute(0)) ]
 
                             for message in chat_info['messages']:
+                                # Adapted from "screen chat()" in chats.rpy
                                 vbox:
                                     at message_popup
 
@@ -8704,32 +8629,148 @@ init 1100:
                                         padding (msg_padding, msg_top_padding, msg_padding, msg_padding)
 
                                         if message.who == "npc":
+                                            # White background for NPCs
                                             background Frame("chat_npc_background",17,17,17,17)
                                         else:
+                                            # Blue background for MC
                                             background Frame("chat_mc_background",17,17,17,17)
 
                                         vbox:
                                             xminimum 200
                                             xmaximum 400
 
+                                            # Handle Buu meme from 0.8 because idgaf
                                             if message.text == "{image=images/08/buumeme.jpg}":
                                                 $ picture = message.text.replace("}", "").split("=")[-1]
                                                 imagebutton:
                                                     xalign 0.5
                                                     idle Transform(picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=None)
-                                                    hover Transform(picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=BrightnessMatrix(0.2))
+                                                    hover Transform(picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=BrightnessMatrix(0.2)) 
                                                     action Show("show_pic", pic=picture)
                                             else:
-                                                text _in_chatlog_display_text(message.text)
+                                                text _in_chat_display_text(message.text)
 
                                                 if message.picture is not None:
                                                     imagebutton:
                                                         xalign 0.5
                                                         idle Transform(message.picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=None)
-                                                        hover Transform(message.picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=BrightnessMatrix(0.2))
+                                                        hover Transform(message.picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=BrightnessMatrix(0.2)) 
                                                         action Show("show_pic", pic=message.picture)
 
                                     if message.who == "npc":
-                                        add "chat_npc_background_tip"
+                                        add "chat_npc_background_tip" 
                                     else:
                                         add "chat_mc_background_tip" xalign 1.0
+
+    screen chat():
+        style_prefix "chat"
+
+        #
+        # Background image fullscreen
+        #
+        add current_chat["background"]
+
+        frame:
+            style "empty"
+            #
+            # White transparent background under the messages
+            #
+            background Frame("chat_background_messages", 60, 60, 60, 60)
+            xysize (1120, 930)
+            pos (50, 85)
+
+            viewport yadjustment chat_yadj:
+                pos (60, 150)
+                xsize 1000
+                ymaximum 740
+                mousewheel True
+                draggable True
+
+                vbox:
+                    xsize 1000
+                    spacing 10
+
+                    for msg in [ current_chat[key] for key in chat_history]:
+
+                        if len(msg.text) > 0:
+                            vbox:
+                                at message_popup
+                                if msg.who == "mc":
+                                    # MC's message are aligned on the right
+                                    xalign 1.0
+
+                                frame:
+                                    yalign 0.5
+                                    padding (25, 32, 25, 25)
+                                    if msg.who == "npc":
+                                        # White background for NPCs
+                                        background Frame("chat_npc_background",17,17,17,17)
+                                    else:
+                                        # Blue background fo MC
+                                        background Frame("chat_mc_background",17,17,17,17)
+
+                                    vbox:
+                                        xminimum 500
+                                        xmaximum 707
+
+                                        text _in_chat_display_text(msg.text)
+
+                                        if msg.picture is not None:
+                                            #
+                                            # Display a picture in the message
+                                            #
+                                            imagebutton:
+                                                xalign 0.5
+                                                idle Transform(msg.picture, zoom=0.2)
+                                                hover Transform(msg.picture, zoom=0.2, matrixcolor=BrightnessMatrix(0.2))
+                                                action Show("show_pic", pic=msg.picture)
+
+                                if msg.who == "npc":
+                                    add "chat_npc_background_tip"
+                                else:
+                                    add "chat_mc_background_tip" xalign 1.0
+
+
+        #
+        # NPC thumbnail in the top left corner
+        #
+        add current_chat["thumbnail"]
+
+    screen chat_answers():
+        vbox:
+            at answers_dissolve
+            xpos 1200
+            yalign 0.5
+            spacing 15
+
+            for key, msg in [ (key, current_chat[key]) for key in current_chat[chat_step].replies ]:
+                if msg.is_valid():
+                    vbox:
+                        button:
+                            padding (0, 0, 0, 0)
+                            action [ Function(chat_next_step, step=key), Return() ]
+
+                            frame:
+                                xsize 700
+                                padding (25, 32, 25, 25)
+                                background Frame("chat_mc_background",17,17,17,17)
+
+                                vbox:
+                                    xalign 0.5
+
+                                    text _(_in_chat_display_text(msg.text)):
+                                        style "chat_button_text"
+                                        if renpy.loadable("achievements/achievements.rpy"):
+                                            if msg.type == "points":
+                                                idle_color walk_points_chat
+                                            elif msg.type == "path":
+                                                idle_color walk_path_chat
+                                        xalign 0.5
+
+                                    if msg.picture is not None:
+                                        #
+                                        # Display a picture in the message
+                                        #
+                                        add Transform(msg.picture, zoom=0.2) xalign 0.5
+
+                        add "chat_mc_background_tip" xalign 1.0
