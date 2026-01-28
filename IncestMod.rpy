@@ -5813,6 +5813,10 @@ init python:
         "To see the pandas at the zoo":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
+        # HS 88851
+        "To see the pandas at the zoo.":
+            "For Dad to finish the registration.",
+
         # HS 88852
         "Although... you had to cancel those plans.":
             "You bugged your uncle over and over until Dad was done.",
