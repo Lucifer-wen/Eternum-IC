@@ -1,6 +1,6 @@
 ﻿# TODO: Translation updated at 2026-01-28 10:20 (Eternum-0.9.5-pc)
 
-translate incest_generic strings:
+translate incest_aunt strings:
 
     # game/chat.rpy:401
     old "[npc_name!ti] is typing..."

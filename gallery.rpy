@@ -1,6 +1,6 @@
 ﻿# TODO: Translation updated at 2026-01-28 10:20 (Eternum-0.9.5-pc)
 
-translate incest_generic strings:
+translate incest_aunt strings:
 
     # game/gallery.rpy:8
     old "All{#gallery,scenefilter}"

@@ -1,8 +1,8 @@
 ﻿# TODO: Translation updated at 2026-01-28 10:20 (Eternum-0.9.5-pc)
 init python:
-    language_titles["incest_generic"] = "Incest Mode: Generic (empty)"
+    language_titles["incest_aunt"] = "Incest Mode: Aunt/Stepsister"
 
-translate incest_generic strings:
+translate incest_aunt strings:
 
     # game/screens.rpy:321
     old "Back"
