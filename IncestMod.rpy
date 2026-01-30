@@ -8364,12 +8364,27 @@ init 1000:
                         textbutton _("English{#prefs}"):
                             action Language(None)
                         for lang in renpy.known_languages():
-                            $ option_title = language_titles.get(lang, lang)
-                            $ option_font = language_title_fonts.get(lang, None)
-                            textbutton option_title:
-                                action Language(lang)
-                                if option_font is not None:
-                                    text_font option_font
+                            if "incest" in lang:
+                                $ incest_translation = True
+                            else:
+                                $ option_title = language_titles.get(lang, lang)
+                                $ option_font = language_title_fonts.get(lang, None)
+                                textbutton option_title:
+                                    action Language(lang)
+                                    if option_font is not None:
+                                        text_font option_font
+                    if incest_translation:
+                        vbox:
+                            style_prefix "radio"
+                            label _("Incest Mode")
+                            for lang in renpy.known_languages():
+                                if "incest" in lang:
+                                    $ option_title = language_titles.get(lang, lang)
+                                    $ option_font = language_title_fonts.get(lang, None)
+                                    textbutton option_title:
+                                        action Language(lang)
+                                        if option_font is not None:
+                                            text_font option_font
 
                 if renpy.loadable("achievements/achievements.rpy"):
                     vbox:
