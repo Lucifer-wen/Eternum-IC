@@ -5916,7 +5916,7 @@ init python:
     }
 
     annie_aunt_map = {
-        
+
         # -----------------------------------------
         # Nancy as aunt (mother's sister), Penelope and Dalia as cousins
         # Combined with Annie as stepsister in annie_aunt_map
@@ -5931,1028 +5931,1029 @@ init python:
         # - Dalia: They're the same age, so never use diminutive nicknames. They should be just like childhood friends reuniting. Before she realizes it, she develops a crush on MC, and she doesn't pull very hard against it. Neither does MC. This path is much more innocent than Annie, despite the fact that it's (legally) more incestuous than Annie. It also has the fewest edits by far.
         # -----------------------------------------
         # AU = Nancy aunt/Penelope & Dalia cousin lines in annie_aunt_map
-        # script:0000 = file name:line number
+        # game/script.rpy:0000 = path/file name:line number
         # (menu) = Choice menu line
         # (chat) = Phone chat line
         # (n) = Nancy line
         # (p) = Penelope line
         # (d) = Dalia line
+        # (a) = Annie line
         # (other) = Other line (Any/all main)
         # (misc) = Miscellaneous line (Extras/side characters)
         # These tags aren't based on who's speaking, but who the line and scene are about.
         # ED/N = Editor's notes
         # -----------------------------------------
-        
-        
+
+
     # -----------------------------------------
-    # 0.1 script.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script:1085 (other)
+    # 0.1 game/script.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script.rpy:1085 (other)
         "(Nancy used to be my babysitter in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)":
-            "(Nancy is my mother's sister. She used to look after me in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)",
-        
-        # AU script:1086 (other)
+            "(Nancy is my aunt on my mother's side. She used to look after me in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)",
+
+        # AU game/script.rpy:1086 (other)
         "(I used to spend the entire afternoon playing with Nancy and her daughter Dalia, but then we had to move and ended up losing touch.)":
             "(I used to spend the entire afternoon playing with Auntie Nancy and my cousin Dalia, but then we had to move and ended up losing touch.)",
-        
-        # AU script:1089 (other)
+
+        # AU game/script.rpy:1089 (other)
         "(Come to find out, she actually had 2 rooms available, so Annie will have a place to stay as well!)":
             "(When she heard Annie was coming, she offered us a second room, so I can finally introduce her to my family back in Kredon!)",
-        
-        # AU script:1098 (other)
+
+        # AU game/script.rpy:1098 (other)
         "I know, but I can't help feeling a little bit nervous.":
             "I know, but I can't help feeling a little bit nervous to meet your family.",
-        
-        # AU script:1711 (n)
+
+        # AU game/script.rpy:1711 (n)
         "How could I forget you?":
             "How could I forget my Auntie Nancy?",
-        
-        # AU script:1749 (n)
+
+        # AU game/script.rpy:1749 (n)
         "You clearly need a strong female influence in your life. Seems like I have my work cut out for me, young man!":
             "You clearly need a strong female influence in your life. Seems like your aunt has her work cut out for her, young man!",
-        
-        # AU script:1767 (n)
+
+        # AU game/script.rpy:1767 (n)
         "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’ve been becoming good friends already! Isn't that right, Annie?":
             "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’re becoming family already! Isn't that right, Annie?",
-        
-        # AU script:1786 (n)
+
+        # AU game/script.rpy:1786 (n)
         "And of his babysitter!":
             "And of his aunt!",
-        
-        # AU script:1790 (n)
+
+        # AU game/script.rpy:1790 (n)
         "Yeah, since my Dad was constantly working, I've always said you were like a parent to me.":
             "Yeah, since my Dad was constantly working, I've always said you were like a mother to me.",
-        
-        # AU script:1793 (n)
+
+        # AU game/script.rpy:1793 (n)
         "Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came along and offered me the babysitting gig.":
             "Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came to me and offered me a babysitting gig taking care of [mc] while he was at work.",
-        
-        # AU script:1794 (n)
+
+        # AU game/script.rpy:1794 (n)
         "It was not only well-paid, but also allowed me the flexibility to take care of my daughters at the same time. And for me, being a single mother, that was essential.":
             "It was not only well-paid, but also allowed me the flexibility to take care of my daughters at the same time. And for both of us, being a single mother and a single father, that was essential.",
-        
-        # AU script:1798 (n)
+
+        # AU game/script.rpy:1798 (n)
         "Yes, Dalia and Penelope. Penny was a little older when I was [mc]'s nanny, so she used to play on her own, but Dalia got very close to him!":
             "Yes, Dalia and Penelope. Penny is a little older than [mc], so she used to play on her own, but Dalia got very close to him! They were like twins.",
-        
-        # AU script:1811 (n)
+
+        # AU game/script.rpy:1811 (n)
         "(I guess you don't notice that stuff when you're 8 years old...)":
             "(I guess you don't notice stuff like that about your aunt when you're 8 years old...)",
-        
-        # AU script:1916 (n)
+
+        # AU game/script.rpy:1916 (n)
         "I wasn't expecting you to be so excited to meet [mc] again!":
             "I wasn't expecting you to be so excited to meet your cousin again!",
-        
-        # AU script:1931 (p)
+
+        # AU game/script.rpy:1931 (p)
         "Oh... O-Of course! [mc]!":
             "Oh... O-Of course! Little [mc]!",
-        
-        # AU script:2395 (n)
+
+        # AU game/script.rpy:2395 (n)
         "It's like we're family now. I’m not bothered by you at all!":
             "It's like we're family again. I’m not bothered by you at all!",
-        
-        # AU script:2430 (n)
+
+        # AU game/script.rpy:2430 (n)
         "(Jesus, look at me. Fantasizing about the dick of the kid I used to care for.)":
             "(Jesus, look at me. Fantasizing about the dick of the kid I used to raise like my own son.)",
-        
-        # AU script:2431 (n)
+
+        # AU game/script.rpy:2431 (n)
         "(You're 20 years older than he is, Nancy, for fuck's sake.)":
             "(You're his aunt, Nancy, for fuck's sake.)",
-        
-        # AU script:2585 (other)
+
+        # AU game/script.rpy:2585 (other)
         "(I mean, I know they’re pretty much like family, so I don't mean it that way, but...)":
             "(I mean, I know they’re my family, so I don't mean it that way, but...)",
-        
-        # AU script:2657 (p)
+
+        # AU game/script.rpy:2657 (p)
         "Is that supposed to be a joke?":
             "Is that supposed to be a joke? You're my cousin.",
-        
-        # AU script:2678 (p)
+
+        # AU game/script.rpy:2678 (p)
         "Thanks, [mc].":
             "Thanks, little cousin.",
-        
-        # AU script:2697 (p)
+
+        # AU game/script.rpy:2697 (p)
         "Oh, I'm sorry I bored you, sir.":
             "Oh, I'm sorry I bored you, little cousin.",
-        
-        # AU script:3425 (d)
+
+        # AU game/script.rpy:3425 (d)
         "(It's just Dalia. You two grew up together! She's practically your sister...)":
             "(It's just Dalia. You two grew up together! She's literally your cousin...)",
-        
-        # AU script:3442 (d)
+
+        # AU game/script.rpy:3442 (d)
         "Dalia, the girl you live with?":
             "Dalia, your cousin?",
-        
-        # AU script:3591 (n)
+
+        # AU game/script.rpy:3591 (n)
         "And there's nothing like being on chore duty to strengthen a household bond!":
             "And there's nothing like being on chore duty to strengthen a family bond!",
-        
-        # AU script:3668 (p)
+
+        # AU game/script.rpy:3668 (p)
         "*Imitating Penelope's voice* {i}Wow, [mc]!":
             "*Imitating Penelope's voice* {i}Wow, little cuz!",
-        
-        # AU script:3828 (d)
+
+        # AU game/script.rpy:3828 (d)
         "(And that's... wrong! Bad [mc]! Get a hold of yourself.)":
-            "(And that's... wrong! Bad [mc]! This is your cousin! Get a hold of yourself.)",
-        
-        # AU script:4041 (p)
+            "(And that's... wrong! Bad [mc]! She is your cousin! Get a hold of yourself.)",
+
+        # AU game/script.rpy:4041 (p)
         "Alright [mc], you convinced me!":
             "Alright little cuz, you convinced me!",
-        
-        # AU script:4844 (p)
+
+        # AU game/script.rpy:4844 (p)
         "Well, I definitely do not share that opinion at all.":
             "Well, I definitely do not share that opinion. You're my family, Penny.",
-        
-        # AU script:4846 (p)
+
+        # AU game/script.rpy:4846 (p)
         "Thanks for trusting me, [mc]. It means a lot.":
             "Thanks for trusting me, little cuz. It means a lot.",
-        
-        # AU script:5479 (p)
+
+        # AU game/script.rpy:5479 (p)
         "(Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all these girls around me...)":
             "(Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all the girls in my family...)",
-        
-        # AU script:5541 (n)
+
+        # AU game/script.rpy:5541 (n)
         "(Who would’ve known he was hiding such a monster...)":
             "(Who would’ve known my nephew was hiding such a monster...)",
-        
-        # AU script:5559 (n)
+
+        # AU game/script.rpy:5559 (n)
         "(Oh Jesus, one man comes into my house and suddenly I turn into a nymphomaniac. What the hell is wrong with me?)":
             "(Oh Jesus, one man comes into my house and suddenly I turn into a nymphomaniac. What the hell is wrong with me? He's my family!)",
-        
-        # AU script:5583 (n)
+
+        # AU game/script.rpy:5583 (n)
         "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":
             "(I mean... If the girls never found out, then would it really be so bad? It’d be our little secret... my big boy...)",
-        
-        # AU script:6045 (d)
+
+        # AU game/script.rpy:6045 (d)
         "You said you were Dalia's friend?":
             "You said you were Dalia's cousin?",
-        
-        # AU script:6047 (d)
+
+        # AU game/script.rpy:6047 (d)
         "Yeah, we’ve known each other since we were little.":
             "Yeah, I used to stay at her house all the time when we were little.",
-        
-        # AU script:8503 (p)
+
+        # AU game/script.rpy:8503 (p)
         "Thanks for supporting me, I appreciate it.":
             "Thanks for supporting me, little cuz. I appreciate it.",
-        
-        # AU script:8552 (n)
+
+        # AU game/script.rpy:8552 (n)
         "(You're not a horny teenager. Show her you're a man now.)":
             "(You're not a horny teenager. Show her you're a man now. She's just your aunt.)",
-        
-        
+
+
     # -----------------------------------------
-    # 0.2 script2.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script2:4574 (n)
+    # 0.2 game/script2.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script2.rpy:4574 (n)
         "*Laughs* It's not that. [mc] is staying with us for a year until he finishes school. He’s part of the student exchange program.":
             "*Laughs* It's not that. [mc] is my nephew. He's staying with us for a year until he finishes school as part of the student exchange program.",
-        
-        # AU script2:4840 (n)
+
+        # AU game/script2.rpy:4840 (n)
         "What? I'm not Dalia. My name is [mc].":
             "What? I'm not Dalia. My name is [mc]. Dalia is my cousin.",
-        
-        # AU script2:4910 (n)
+
+        # AU game/script2.rpy:4910 (n)
         "No, I came with Nancy.":
             "No, I came with Nancy. I'm her nephew.",
-        
-        # AU script2:4912 (n)
+
+        # AU game/script2.rpy:4912 (n)
         "Oh, really? You two know each other? Well I’m glad to meet you, because I’m positive you’re going to be seeing a lot more of me soon...":
             "Oh, really? You two are related? Well I'm glad to meet you, because I'm positive you're going to be seeing a lot more of me soon...",
-        
-        # AU script2:4977 (n)
+
+        # AU game/script2.rpy:4977 (n)
         "(Or can I? I mean... Why am I so jealous in the first place? It's not like anything could happen between Nancy and I anyways...)":
             "(Or can I? I mean... Why am I so jealous in the first place? It's not like anything could happen between Nancy and I anyways. She's my aunt...)",
-        
-        # AU script2:5014 (n)
+
+        # AU game/script2.rpy:5014 (n)
         "Y-Yeah, I know Nancy very well, and honestly she’s been in quite a heightened emotional state lately. I can’t bear the thought of that guy taking advantage of her.":
             "Y-Yeah, Nancy's my aunt, and honestly she’s been in quite a heightened emotional state lately. I can’t bear the thought of that guy taking advantage of her.",
-        
-        # AU script2:5199 (n)
+
+        # AU game/script2.rpy:5199 (n)
         "*Giggles* Just like when I was your babysitter.":
             "*Giggles* Just like when you were a kid.",
-        
-        # AU script2:5294 (n)
+
+        # AU game/script2.rpy:5294 (n)
         "I can't be with him. It would be... weird. We’re not supposed to be together... like {i}that{/i}.":
             "I can't be with him. It would be... wrong. We’re not supposed to be together... like {i}that{/i}.",
-        
-        # AU script2:5321 (n)
+
+        # AU game/script2.rpy:5321 (n)
         "*Giggles* Um, maybe. No... But, I mean... could you imagine?!":
             "*Giggles* Um, maybe. No, that would be so wrong... But, I mean... could you imagine?!",
-        
-        # AU script2:5363 (n)
+
+        # AU game/script2.rpy:5363 (n)
         "(I can't just barge in and be like, \"Hi [mc], did you know you make me feel so horny all the time? Do you wanna fuck your old babysitter?\")":
             "(I can't just barge in and be like, \"Hi [mc], did you know you make me feel so horny all the time? Do you wanna fuck your old aunt?\")",
-        
-        # AU script2:5364 (n)
+
+        # AU game/script2.rpy:5364 (n)
         "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out.)":
             "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out... {w}And fucking my nephew, is that even legal?)",
-        
-        # AU script2:7088 (p)
+
+        # AU game/script2.rpy:7088 (p)
         "Is that a hint of jealousy, I’m sensing?":
             "Is that a hint of jealousy I’m sensing, little cousin?",
-        
-        # AU script2:7117 (p)
+
+        # AU game/script2.rpy:7117 (p)
         "(I mean... not that I care... or even had any chance, but still...)":
             "(I mean... not that I should care... or even had any chance, but still...)",
-        
-        # AU script2:7128 (p)
+
+        # AU game/script2.rpy:7128 (p)
         "(It's not like I was expecting her to wait for me like a nun, but... just imagining some guy banging her... ugh.)":
             "(It's not like I was expecting her to keep her chastity like a nun, but... just imagining some guy banging her... ugh.)",
-        
-        # AU script2:7134 (p)
+
+        # AU game/script2.rpy:7134 (p)
         "(Way out of your league.)":
             "(Way out of your league, and also, your cousin.)",
-        
-        # AU script2:7156 (p)
+
+        # AU game/script2.rpy:7156 (p)
         "Ahhh... yeah, that’s right. [mc]...":
             "Ahhh... yeah, that’s right. Your cousin, [mc]...",
-        
-        # AU script2:7306 (p)
+
+        # AU game/script2.rpy:7306 (p)
         "Someone is a good listener... thank you for remembering!":
             "My little cousin is a good listener... thank you for remembering!",
-        
-        # AU script2:7334 (p)
+
+        # AU game/script2.rpy:7334 (p)
         "(Wake up [mc], we're talking about Penelope here. Still not gonna happen.)":
             "(Wake up [mc], we're talking about your cousin Penelope here. Still not gonna happen.)",
-        
-        # AU script2:7404 (p)
+
+        # AU game/script2.rpy:7404 (p)
         "But that’s why I’m glad to have you here, [mc].":
             "But that’s why I’m glad to have you here, little cuz.",
-        
-        # AU script2:7534 (p)
+
+        # AU game/script2.rpy:7534 (p)
         "I might need you to be my photographer more often, [mc]!":
             "I might need you to be my photographer more often, little cuz!",
-        
-        # AU script2:7679 (p)
+
+        # AU game/script2.rpy:7679 (p)
         "Well, you sure do know how to push a button, [mc].":
             "Well, you sure do know how to push a button, cuz!",
-        
-        # AU script2:7705 (p)
+
+        # AU game/script2.rpy:7705 (p)
         "I don't mind you seeing me like this, because... I don't know, I just feel comfortable around you.":
             "I don't mind you seeing me like this... You're my little cousin, I feel comfortable around you.",
-        
-        # AU script2:7819 (p)
+
+        # AU game/script2.rpy:7819 (p)
         "Come on, you know you can trust me. I wouldn’t do you wrong.":
             "Come on, cuz, you know you can trust me. I wouldn’t do you wrong.",
-        
-        # AU script2:7961 (p)
+
+        # AU game/script2.rpy:7961 (p)
         "You know... this whole thing got me thinking...":
             "You know, little cuz... this whole thing got me thinking...",
-        
-        # AU script2:7973 (p)
+
+        # AU game/script2.rpy:7973 (p)
         "That Valentino guy made me realize that I'll never feel comfortable doing something like this with a stranger. But you’re no stranger, [mc], and since I have you here...":
             "That Valentino guy made me realize that I'll never feel comfortable doing something like this with a stranger. But you’re family, [mc], and since I have you here...",
-        
-        # AU script2:7992 (p)
+
+        # AU game/script2.rpy:7992 (p)
         "(Oh my god, am I about to see Penelope naked?)":
             "(Oh my god, am I about to see my cousin naked?)",
-        
-        # AU script2:8076 (p)
+
+        # AU game/script2.rpy:8076 (p)
         "Oh don’t be like that! It'll be fun!":
             "Oh don’t be like that, cuz! It'll be fun!",
-        
-        # AU script2:8115 (p)
+
+        # AU game/script2.rpy:8115 (p)
         "Oh, come on, [mc]!":
             "Oh, come on, little cuz!",
-        
-        # AU script2:8140 (p)
+
+        # AU game/script2.rpy:8140 (p)
         "(Is this huge thing I’m feeling... his...)":
             "(Is this huge thing I’m feeling... my little cousin's...)",
-        
-        # AU script2:8198 (p)
+
+        # AU game/script2.rpy:8198 (p)
         "I don't know what it is about you, but... I always have so much fun when you’re around.":
             "I don't know what it is about you, little cuz, but... I always have so much fun when you’re around.",
-        
-        # AU script2:8315 (p)
+
+        # AU game/script2.rpy:8315 (p)
         "I was wondering why Nancy and her shared the same last name on your followers list. Nancy is her mom!":
             "I was wondering why Nancy and her shared the same last name on your followers list. She must be your cousin!",
-        
-        # AU script2:8409 (p)
+
+        # AU game/script2.rpy:8409 (p)
         "(I’ve never been good at taking a hint.)":
             "(She's always been like a big sister to me.)",
-        
-        # AU script2:8420 (p)
+
+        # AU game/script2.rpy:8420 (p)
         "And now I’ve come to learn that you’re friends with Penelope too?!":
             "And now I’ve come to learn that you’re cousins with Penelope too?!",
-        
-        # AU script2:8624 (p)
+
+        # AU game/script2.rpy:8624 (p)
         "Have fun playing.":
             "Have fun playing, little cuz.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.3 script3.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script3:1248 (misc)
+    # 0.3 game/script3.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script3.rpy:1248 (misc)
         "We will not leave until every lustful desire of yours is satisfied. Use us as your personal toys, as we surrender ourselves to every inch of you... or lay back and let us take the lead... and do all of the work.":
             "We will not leave until every lustful desire of yours is satisfied. Use us sisters as your personal toys, as we surrender ourselves to every inch of you... or lay back and let us take the lead... and do all of the work.",
-        
-        # AU script3:2803 (d)
+
+        # AU game/script3.rpy:2803 (d)
         "Nah... I don’t need to sleep out here. I tricked a Kredon family into letting me live in their house for a whole year. They set me up with a bed to sleep in, too, so no park benches for me!":
             "Nah... I don’t need to sleep out here. I tricked some relatives in Kredon into letting me live in their house for a whole year. They set me up with a bed to sleep in, too, so no park benches for me!",
-        
-        # AU script3:2808 (d)
+
+        # AU game/script3.rpy:2808 (d)
         "Especially the youngest daughter. She's extremely naive and easily manipulated.":
             "Especially my youngest cousin. She's extremely naive and easily manipulated.",
-        
-        # AU script3:2912 (d)
+
+        # AU game/script3.rpy:2912 (d)
         "Don't worry, I’m not going to waste time on your whore anymore.":
             "Don't worry, I’m not going to waste time on your whore cousin anymore.",
-        
-        # AU script3:3941 (p)
+
+        # AU game/script3.rpy:3941 (p)
         "Penelope and I know each other from college, [mc].":
             "Penelope and I know each other from college, [mc]. I don't know why you never told me you were her cousin!",
-        
-        # AU script3:4615 (p)
+
+        # AU game/script3.rpy:4615 (p)
         "And this here is Penelope, and next to her...":
             "And this here is my cousin Penelope, and next to her...",
-        
-        # AU script3:4852 (n)
+
+        # AU game/script3.rpy:4852 (n)
         "If Nancy asks, I ate it all!":
             "If Auntie Nancy asks, I ate it all!",
-        
-        # AU script3:4916 (n)
+
+        # AU game/script3.rpy:4916 (n)
         "(This nanny gig just isn't enough to pay the bills, and between paying the girls’ tuition and the mortgage...)":
             "(This nanny gig with [mc] just isn't enough to pay the bills, and between paying the girls’ tuition and the mortgage...)",
-        
-        # AU script3:4919 (n)
+
+        # AU game/script3.rpy:4919 (n)
         "([mc]'s father is already generously paying me more than he should for taking care of his son. But even with that extra money, it’s only delaying the inevitable.)":
             "([mc]'s father is already generously paying me more than he should for taking care of his son. I don't know what we'd do without his support. But even with that extra money, it’s only delaying the inevitable.)",
-        
-        # AU script3:5200 (p)
+
+        # AU game/script3.rpy:5200 (p)
         "Has [mc] finished his dinner?":
             "Has little [mc] finished his dinner?",
-        
-        # AU script3:5234 (p)
+
+        # AU game/script3.rpy:5234 (p)
         "I can see the mud stains from here, mister!":
             "I can see the mud stains from here, little cousin!",
-        
-        # AU script3:5286 (p)
+
+        # AU game/script3.rpy:5286 (p)
         "*Giggles* That's a bold move!":
             "*Giggles* That's a bold move, little cuz!",
-        
-        # AU script3:5970 (p)
+
+        # AU game/script3.rpy:5970 (p)
         "We're just friends. I've only seen her half-naked once... during a photoshoot.":
             "She's my cousin. I've only seen her half-naked once... during a photoshoot.",
-        
-        # AU script3:5991 (p)
+
+        # AU game/script3.rpy:5991 (p)
         "So tell me... don't you wanna see a bit more? If I had a \"friend\" who looked like this, I’d be dying to find out what’s underneath all those clothes...":
             "So tell me... don't you wanna see a bit more? If I had a cousin who looked like this, I’d be secretly dying to find out what’s underneath all those clothes...",
-        
-        # AU script3:6005 (p)
+
+        # AU game/script3.rpy:6005 (p)
         "She's perfect...":
             "She's... my cousin is... perfect...",
-        
-        # AU script3:6044 (p)
+
+        # AU game/script3.rpy:6044 (p)
         "Or if you prefer, you can feel this huge, gorgeous ass right here...":
             "Or if you prefer, you can feel your cousin's huge, gorgeous ass right here...",
-        
-        # AU script3:6291 (p)
+
+        # AU game/script3.rpy:6291 (p)
         "Sometimes I forget I'm friends with a celebrity.":
             "Sometimes I forget I'm related to a celebrity.",
-        
-        # AU script3:6296 (p)
+
+        # AU game/script3.rpy:6296 (p)
         "That makes me very uncomfortable, to be honest. I’m gonna need a little more fanfare from you, [mc].":
             "That makes me very uncomfortable, to be honest. I’m gonna need a little more fanfare from you, little cousin.",
-        
-        # AU script3:6316 (p)
+
+        # AU game/script3.rpy:6316 (p)
         "I couldn't care less about your social network pages or how many followers you have... I only care about the person behind it. You became a special person to me just because of who you are.":
             "I couldn't care less about your social network pages or how many followers you have... I only care about the person behind it. You're my one and only big cousin, and you always looked after me. You're special to me just because of the person you are.",
-        
-        # AU script3:6374 (p)
+
+        # AU game/script3.rpy:6374 (p)
         "Nice to meet you. I’m [mc], and this is Penelope and Luna.":
             "Nice to meet you. I’m [mc], and this is Luna and my cousin Penelope.",
-        
-        # AU script3:6564 (p)
+
+        # AU game/script3.rpy:6564 (p)
         "A friend!":
             "Someone I like!",
-        
-        # AU script3:6583 (p)
+
+        # AU game/script3.rpy:6583 (p)
         "(That's too bad...)":
             "(Well yeah, she's my cousin...)",
-        
-        # AU script3:6646 (p)
+
+        # AU game/script3.rpy:6646 (p)
         "Your BDSM-lover friend said you’ve all been to the Emporium already, right?":
             "Your BDSM-lover cousin said you’ve all been to the Emporium already, right?",
-        
-        # AU script3:6984 (p)
+
+        # AU game/script3.rpy:6984 (p)
         "[mc]... can I confess something to you...? ":
             "Little cousin... can I confess something to you...? ",
-        
-        # AU script3:6991 (p)
+
+        # AU game/script3.rpy:6991 (p)
         "Are you gonna fuck me, daddy?":
             "Are you gonna fuck me, little cuz?",
-        
-        # AU script3:7664 (p)
+
+        # AU game/script3.rpy:7664 (p)
         "These are my friends, Penelope and Luna.":
             "This is my cousin, Penelope, and my friend Luna.",
-        
-        # AU script3:7688 (misc)
+
+        # AU game/script3.rpy:7688 (misc)
         "She's my cousin. Totally loves to roleplay as an elf.":
             "She's my... second cousin. Totally loves to roleplay as an elf.",
-        
-        # AU script3:7907 (p)
+
+        # AU game/script3.rpy:7907 (p)
         "Don't worry [mc], I'm in good hands!":
             "Don't worry little cuz, I'm in good hands!",
-        
-        # AU script3:8172 (d)
+
+        # AU game/script3.rpy:8172 (d)
         "Actually, I am! I'm looking for a friend of mine. She’s the one who invited me to the server.":
             "Actually, I am! I'm looking for my cousin. She’s the one who invited me to the server.",
-        
-        # AU script3:8330 (d)
+
+        # AU game/script3.rpy:8330 (d)
         "I was just looking for her! Her name is Dalia.":
             "I was just looking for her! Her name is Dalia. She's my cousin.",
-        
-        # AU script3:8780 (d)
+
+        # AU game/script3.rpy:8780 (d)
         "S-Seriously? You're a fucking pig!":
             "S-Seriously? You're a fucking pig! We're cousins!",
-        
-        # AU script3:8790 (d)
+
+        # AU game/script3.rpy:8790 (d)
         "Oh damn, so you'd do all that too?!":
             "Oh, so it's fine to do all that with your cousin?!",
-        
-        # AU script3:9576 (n)
+
+        # AU game/script3.rpy:9576 (n)
         "*Laughs* Oh, don’t you dare! You’re too much!":
             "*Laughs* Oh, don’t you dare! You’re my nephew, so that makes you a Prince too!",
-        
-        # AU script3:9585 (n)
+
+        # AU game/script3.rpy:9585 (n)
         "Well, enough about her. I want to hear more from my esteemed Champion. Did you know this Royal Bathhouse is open only to the Emperor and the Emperor’s special guests?":
             "Well, enough about her. I want to hear more from my noble Prince. Did you know this Royal Bathhouse is open only to chosen members of the imperial family and the Emperor’s special guests?",
-        
-        # AU script3:9587 (n)
+
+        # AU game/script3.rpy:9587 (n)
         "I had no idea! I feel so honored now. Does that make me your special guest?":
             "I had no idea! I feel so honored now. Does that make me your chosen family, or your special guest?",
-        
-        # AU script3:9588 (n)
+
+        # AU game/script3.rpy:9588 (n)
         "Indeed... I don’t see anyone else around here...":
             "Well... No one said you couldn’t be both...",
-        
-        # AU script3:9648 (n)
+
+        # AU game/script3.rpy:9648 (n)
         "You, my Champion. Will you be joining me, or do you have to get going?":
             "You, my Prince. Will you be joining me, or do you have to get going?",
-        
-        # AU script3:9663 (n)
+
+        # AU game/script3.rpy:9663 (n)
         "(Keep it together! She’s been like a mother to you. Focus, [mc]! This is strictly a bath!)":
             "(Keep it together! She’s your aunt, and she's like a mother to you. Focus, [mc]! This is strictly a bath!)",
-        
-        # AU script3:9694 (n)
+
+        # AU game/script3.rpy:9694 (n)
         "And I saw you! Back when you were my babysitter. I was too young to remember most of that time, but you looked exactly like you did in our old pictures!":
             "And I saw you! Back when you took care of me. I was too young to remember most of that time, but you looked exactly like you did in our old family pictures!",
-        
-        # AU script3:9706 (n)
+
+        # AU game/script3.rpy:9706 (n)
         "I owe it to my mother. It seems like once she reached 25, she stopped aging. She died shortly after Dalia was born, but she was always so full of life.":
             "I owe it to your grandmother. It seems like once she reached 25, she stopped aging. She died shortly after you and Dalia were born, but she was always so full of life.",
-        
-        # AU script3:9714 (n)
+
+        # AU game/script3.rpy:9714 (n)
         "Girlfriend. No doubt about it at all.":
             "Girlfriend. No doubt about it at all. No one would believe me if I said you're my aunt.",
-        
-        # AU script3:9736 (n)
+
+        # AU game/script3.rpy:9736 (n)
         "I see... my young [mc] has a little experience under his belt. Very interesting...":
             "I see... my young nephew has a little experience under his belt. Very interesting...",
-        
-        # AU script3:9768 (n)
+
+        # AU game/script3.rpy:9768 (n)
         "I mean... I'd never dare.":
             "I mean... th-they're my cousins. I'd never dare.",
-        
-        # AU script3:9770 (n)
+
+        # AU game/script3.rpy:9770 (n)
         "Why not? I wouldn’t mind having you as my son-in-law...":
             "Just forget about that for a moment, [mc]. I know it’s taboo, but I... wouldn’t mind having you as my son-in-law...",
-        
-        # AU script3:9780 (n)
+
+        # AU game/script3.rpy:9780 (n)
         "I'd be lying if I said that doesn’t sound like a dream come true.":
             "I know it would be incest, but... I'd be lying if I said that doesn’t sound like a dream come true.",
-        
-        # AU script3:9791 (n)
+
+        # AU game/script3.rpy:9791 (n)
         "*Chuckles* Is someone hinting that I might be good enough...?":
             "*Chuckles* Aren't you forgetting something important...?",
-        
-        # AU script3:9793 (n)
+
+        # AU game/script3.rpy:9793 (n)
         "*Giggles* I'm not sure yet. You definitely have most of the desirable qualities in a man, but still... there’s some areas of you I don’t know much about.":
             "*Giggles* You're their family, [mc]. I’ve watched you grow up together, and I know you’d treat them right. You definitely have most of the desirable qualities in a man, but still... there’s some areas of you I don’t know much about.",
-        
-        # AU script3:9802 (n)
+
+        # AU game/script3.rpy:9802 (n)
         "I couldn't. I don't know... I just see them as family.":
             "I couldn't. I don't know... they're my family.",
-        
-        # AU script3:9804 (n)
+
+        # AU game/script3.rpy:9804 (n)
         "Ah, I see. I guess it does make sense.":
             "Ah, I see. I guess you're probably right.",
-        
-        # AU script3:9820 (n)
+
+        # AU game/script3.rpy:9820 (n)
         "Your energy is infectious. Your charm is invigorating. When I’m with you, I feel like I can take on the world. And then you awaken so many other feelings within me that I thought were long gone...":
             "Your energy is infectious. Your charm is invigorating. When I’m with you, I feel like I can take on the world. And then you awaken so many other feelings within me that I thought were long gone... feelings that I know I shouldn’t have...",
-        
-        # AU script3:9822 (n)
+
+        # AU game/script3.rpy:9822 (n)
         "Wow... I had no idea, Nancy.":
             "Wow, I... I had no idea, Nancy.",
-        
-        # AU script3:9827 (n)
+
+        # AU game/script3.rpy:9827 (n)
         "No, really Nancy... it honestly feels so nice to hear that coming from you. I consider you to be someone very important in my life, so it’s truly appreciated.":
             "No, really Nancy... it honestly feels so nice to hear that coming from you. You're my family and one of the most important women in my life, so it’s truly appreciated.",
-        
-        # AU script3:9832 (n)
+
+        # AU game/script3.rpy:9832 (n)
         "*Chuckles* Very much. I’m honored to be your special guest... and feel so privileged to witness such a rare and honestly breathtaking sight.":
             "*Chuckles* Very much. I’m honored to be your chosen family and special guest... and feel so privileged to witness such a rare and honestly breathtaking sight.",
-        
-        # AU script3:9842 (n)
+
+        # AU game/script3.rpy:9842 (n)
         "Hmph. I invite a commoner to my private baths and he can’t even contain himself. What a shame.":
             "Hmph. I invite my own nephew to our private baths and he can’t even contain himself. What a shame.",
-        
-        # AU script3:9865 (n)
+
+        # AU game/script3.rpy:9865 (n)
         "(I’d hate myself if I didn’t at least try...)":
             "(She’s irresistible... even if it’s wrong, I can’t deny it...)",
-        
-        # AU script3:9900 (n)
+
+        # AU game/script3.rpy:9900 (n)
         "(I can tell she was looking forward to this.)":
             "(I can tell she was looking forward to this... my Auntie Nancy...)",
-        
-        # AU script3:9942 (n)
+
+        # AU game/script3.rpy:9942 (n)
         "Does the Champion truly want to serve his Empress?":
             "Does the Prince truly wish to serve his Empress?",
-        
-        # AU script3:9946 (n)
+
+        # AU game/script3.rpy:9946 (n)
         "You know... I remember from my history classes that it was always taboo for royalty to intermingle with common folk...":
             "You know... I remember from my history classes that it was common for royal families to \"intermingle\" with one another...",
-        
-        # AU script3:9947 (n)
+
+        # AU game/script3.rpy:9947 (n)
         "But I think we’ve broken enough rules today...":
             "As they say... {i}\"When in Rome, do as the Romans do...\"{/i}",
-        
-        # AU script3:9949 (n)
+
+        # AU game/script3.rpy:9949 (n)
         "I need to feel my Champion... taste the forbidden fruit...":
             "I need to feel my Prince... taste the forbidden fruit...",
-        
-        # AU script3:9970 (n)
+
+        # AU game/script3.rpy:9970 (n)
         "Oh, my C-Champion feels...":
             "Oh, my P-Prince feels...",
-        
-        # AU script3:9971 (n)
+
+        # AU game/script3.rpy:9971 (n)
         "Oh, s-screw the Champion shit...":
             "Oh, s-screw the Prince shit...",
-        
-        # AU script3:10096 (n)
+
+        # AU game/script3.rpy:10096 (n)
         "I've wanted you to fuck me ever since I first saw you in that park. I thought maybe it was just a fleeting urge and it’d pass quickly... but no...":
             "I've wanted you to fuck me ever since I first saw you in that park. I thought maybe it was just a forbidden urge and it’d pass quickly... but no...",
-        
-        # AU script3:10106 (n)
+
+        # AU game/script3.rpy:10106 (n)
         "This time though... I want you to lie back and let your babysitter do all the work...":
             "This time though... I want you to lie back and let your Auntie Nancy do all the work...",
-        
-        # AU script3:10133 (n)
+
+        # AU game/script3.rpy:10133 (n)
         "*Whispering* What for? It’s only a guard!":
             "*Whispering* What for? It’s only a guard! They don't know we're related.",
-        
-        # AU script3:10137 (n)
+
+        # AU game/script3.rpy:10137 (n)
         "*Whispering* Oh, that's a good point.":
             "*Whispering* Oh, shit... I told Maximo earlier that Dalia was my cousin.",
-        
-        # AU script3:10177 (n)
+
+        # AU game/script3.rpy:10177 (n)
         "(Why does God hate me?)":
             "(Why does God hate me? Is this divine punishment?)",
-        
-        # AU script3:10213 (n)
+
+        # AU game/script3.rpy:10213 (n)
         "(Man, I was so damn close to fucking Nancy...!)":
             "(Man, I was so damn close to fucking Nancy...! It's so... wrong...)",
-        
-        # AU script3:10221 (n)
+
+        # AU game/script3.rpy:10221 (n)
         "(Little do they know... heh.)":
             "(I hope I can still look them in the face after this...)",
-        
-        
+
+
     # -----------------------------------------
-    # 0.4 script4.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script4:2275 (n)
+    # 0.4 game/script4.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script4.rpy:2275 (n)
         "I'm not Nancy's daughter. I mean, I'm not even a girl! Do I have to spell it out or what?":
             "I'm not Nancy's daughter, I'm her nephew. I mean, I'm not even a girl! Do I have to spell it out or what?",
-        
-        # AU script4:2281 (n)
+
+        # AU game/script4.rpy:2281 (n)
         "(With so many people living under the same roof, it'll be hard to find some time alone.)":
             "(With all our family living under the same roof, it'll be hard to find some time alone.)",
-        
-        # AU script4:2425 (d)
+
+        # AU game/script4.rpy:2425 (d)
         "Thanks buddy. You're a good friend.":
             "Thanks cuz. You're a good friend.",
-        
-        # AU script4:3031 (d)
+
+        # AU game/script4.rpy:3031 (d)
         "I didn't know you were dating!":
             "I didn't know you were dating! Wait, aren't you two cousins?",
-        
-        # AU script4:3043 (d)
+
+        # AU game/script4.rpy:3043 (d)
         "Why didn't you tell me, [mc]?!":
             "Hold on, you two aren't actually cousins?! Is she adopted?! Why didn't you tell me, [mc]?!",
-        
-        # AU script4:3049 (d)
+
+        # AU game/script4.rpy:3049 (d)
         "We're not dating!":
             "W-What? No! We're not {i}dating!",
-        
-        # AU script4:3050 (d)
+
+        # AU game/script4.rpy:3050 (d)
         "We're just old friends!":
             "We're just cousins!",
-        
-        # AU script4:3056 (d)
+
+        # AU game/script4.rpy:3056 (d)
         "It doesn't mean anything!":
             "It doesn't mean anything! A-And I heard that in Europe, cousins kiss each other all the time!!",
-        
-        # AU script4:3145 (d)
+
+        # AU game/script4.rpy:3145 (d)
         "I'm the lame one? Go tell that to that crybaby girlfriend of yours.":
             "I'm the lame one? Go tell that to that crybaby cousin of yours.",
-        
-        # AU script4:3688 (d)
+
+        # AU game/script4.rpy:3688 (d)
         "I know you already saw me naked, but I hope this can still get you in the mood." :
             "I know you already saw me naked, but I hope this can still get you in the mood. I trust that us being cousins won't be an issue for little [mc].",
-        
-        # AU script4:3690 (d)
+
+        # AU game/script4.rpy:3690 (d)
         "Well... I hope this is enough to get you in the mood.":
             "Well... I hope this is enough to get you in the mood. I trust that us being cousins won't be an issue for little [mc].",
-        
-        # AU script4:3977 (d)
+
+        # AU game/script4.rpy:3977 (d)
         "Well, well, well... so you openly admit having fantasized about how my cum tastes, huh...?":
             "Well, well, well... so you openly admit having fantasized about how your cousin's cum tastes, huh...?",
-        
-        # AU script4:4192 chat:950 (chat) (p)
+
+        # AU game/script4.rpy:4192 game/chat.rpy:950 (chat) (p)
         "Thanks [mc]  {image=images/MENUS/e_heart.png}":
             "Thanks little cuz  {image=images/MENUS/e_heart.png}",
-        
-        # AU script4:5113 (other)
+
+        # AU game/script4.rpy:5113 (other)
         "Nancy, Penelope, and Dalia are all very nice to me. They treat me as one of the family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!":
             "Nancy, Penelope, and Dalia are all very nice to me. They treat me as part of your family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!",
-        
-        # AU script4:7330 (p)
+
+        # AU game/script4.rpy:7330 (p)
         "Thanks! You’re a sweetheart. I've been practicing with Luna these past few days. I can't stop playing!":
             "Thanks, little cuz! You’re a sweetheart. I've been practicing with Luna these past few days. I can't stop playing!",
-        
-        # AU script4:7347 (p)
+
+        # AU game/script4.rpy:7347 (p)
         "There's no way out of this friend zone...":
             "Guess she still just sees me as her little cousin...",
-        
-        # AU script4:7402 (p)
+
+        # AU game/script4.rpy:7402 (p)
         "What other people? You? Mom? Annie? I'm sure [mc] doesn't mind either. He's like... family. Like a little brother, almost.":
             "What other people? You? Mom? Annie? I'm sure [mc] doesn't mind either. He's just family. Like a little brother, almost.",
-        
-        # AU script4:7408 (p)
+
+        # AU game/script4.rpy:7408 (p)
         "With [mc]? Pffft, please, my bar is WAY higher. You’ve seen my Instagram DMs: models, actors, influencers... did you know that that Gigachad meme guy from a few years ago tried sliding into my DMs?":
             "With [mc]? Pffft, please, even if he {i}wasn't{/i} our cousin, my bar is WAY higher. You’ve seen my Instagram DMs: models, actors, influencers... did you know that that Gigachad meme guy from a few years ago tried sliding into my DMs?",
-        
-        # AU script4:8176 (misc)
+
+        # AU game/script4.rpy:8176 (misc)
         "Actually, he was caught with HER sister in HIS office!":
             "Actually, he was caught with HIS OWN sister in HIS office!",
-        
-        
+
+
     # -----------------------------------------
-    # 0.5 script5.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script5:448 (d)
+    # 0.5 game/script5.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script5.rpy:448 (d)
         "(Yeah, that would be fair. Just so we're even.)":
             "(If I had to go down on my own cousin, he should do it too. Just so we're even.)",
-        
-        # AU script5:465 (d)
+
+        # AU game/script5.rpy:465 (d)
         "(I don't even like him. The only guy I kinda liked lately wasn’t even into me.)":
             "(I don't even like him. The only guy I kinda liked lately was my own cousin... and he wasn’t even into me.)",
-        
-        # AU script5:1124 (n)
+
+        # AU game/script5.rpy:1124 (n)
         "What have I done to deserve this? What god have I pissed off?!":
             "What have I done to deserve this? What god have I pissed off?! I haven't committed any sins...{w} other than, um... {w}lust, fornication, incest, greed, pride, and {i}so{/i} much temptation...",
-        
-        # AU script5:4799 (p)
+
+        # AU game/script5.rpy:4799 (p)
         "*Knocks on the door* [mc]? Is that you?":
             "*Knocks on the door* Little cuz? Is that you?",
-        
-        # AU script5:4858 (p)
+
+        # AU game/script5.rpy:4858 (p)
         "*Chuckles* Are you alright?":
             "*Chuckles* Are you alright, little cuz?",
-        
-        # AU script5:4902 (p)
+
+        # AU game/script5.rpy:4902 (p)
         "Yeah, I'll let you finish your shower, sorry. Didn’t mean to give you a {i}hard{/i} time.":
             "Yeah, I'll let you finish your shower. Sorry, cuz. Didn’t mean to give you a {i}hard{/i} time.",
-        
-        # AU script5:5086 (p)
+
+        # AU game/script5.rpy:5086 (p)
         "*Chuckles* Don’t be silly! You're staying with us until we say so. No escaping the Carters!":
             "*Chuckles* Don’t be silly, little cuz! You're staying with us until we say so. No escaping the Carters!",
-        
+
         # ED/N: I completely rewrote the next three lines.
         # I've added the most incest lines for Penelope, and it's especially prevalent in casual conversation, which I left almost entirely untouched for Nancy and Dalia. During the party, I decided to dial it all back, so they're pretending to be just friends. Hopefully, you can feel the distinct absence of all the "little cuz"es, even though the lines are just vanilla. It also matches with the incest roleplay theme of Nancy's path in 0.5, except instead of pretending to be related, they're pretending not to be.
         # It's definitely not because I was going insane trying to figure out how to rewrite the truth or dare game if everyone knows they're related without them seeming absolutely insane...
-        
-        # AU script5:5217 (p)
+
+        # AU game/script5.rpy:5217 (p)
         "*Chuckles* You're too excited, [mc].":
             "Hey, cuz... before we go in, let's agree not to tell anyone we're related.",
-        
-        # AU script5:5218 (p)
+
+        # AU game/script5.rpy:5218 (p)
         "If you think this is going to be like American Pie, you'll be disappointed.":
             "There are a few people here I have some... {i}disagreements{/i} with, and I don't want to get you involved in it.",
-        
-        # AU script5:5219 (p)
+
+        # AU game/script5.rpy:5219 (p)
         "Hey, there's a passed out Power Ranger next to a bottle of vodka by the entrance. That's promising.":
             "Alright, that makes sense... But if they pick a fight with me, that's fair game, right?",
-        
-        # AU script5:5286 (p)
+
+        # AU game/script5.rpy:5286 (p)
         "Y-You... what?!":
             "Y-You... what?! B-But aren't you guys... y'know, blood-related?",
-        
+
         # ED/N: I combined the next two lines to make space for a new line.
-        # AU script5:5288 (p)
+        # AU game/script5.rpy:5288 (p)
         "Isn't it crazy?!":
             "Isn't it crazy?! I've never been attracted to guys younger than me, let alone my little cousin, but I don't know... he's really cute! And...",
-        
-        # AU script5:5289 (p)
+
+        # AU game/script5.rpy:5289 (p)
         "I've never been attracted to guys younger than me, but I don't know... he's really cute!":
             "*Whispering* Honestly, the fact that we're related makes it {i}{b}so{/b}{/i} much more exciting!",
-        
-        # AU script5:5302 (p)
+
+        # AU game/script5.rpy:5302 (p)
         "But he might not be into me like that so... keep it secret!":
             "But we're still family, and he might not be into me like that so... keep it secret!",
-        
-        # AU script5:5316 (p)
+
+        # AU game/script5.rpy:5316 (p)
         "(A BIG one!)":
             "(A BIG one! The biggest one I've ever heard!)",
-        
-        # AU script5:5322 (p)
+
+        # AU game/script5.rpy:5322 (p)
         "(But holy shit, did she say she has a crush on [mc] too?!)":
             "(But holy shit, did she say she has a crush on [mc] too?! Her own {i}cousin!!{/i} I mean, I'm an only child, so I don't really know how their family works, but...)",
-        
-        # AU script5:5344 (p)
+
+        # AU game/script5.rpy:5344 (p)
         "(Nothing happened. So what if my new bestie Penny and I have a crush on the same boy?)":
             "(Nothing happened. So what if my new bestie Penny and I have a crush on the same boy? So what if h-he's her cousin?)",
-        
-        # AU script5:7840 (p)
+
+        # AU game/script5.rpy:7840 (p)
         "Or... your girlfriend, or anything.":
             "Or... your girlfriend, or anything. We're just cousins.",
-        
-        # AU script5:7888 (p)
+
+        # AU game/script5.rpy:7888 (p)
         "I'd be mad too if someone had ignored me like that just to try to hook up with someone I don't like.":
             "I'd be mad too if my own cousin had ignored me like that just to try to hook up with someone I don't like.",
-        
-        # AU script5:7981 (p)
+
+        # AU game/script5.rpy:7981 (p)
         "So... did you need anything, or were you just missing me?":
             "So... did you need anything, little cuz? Or were you just missing me?",
-        
-        # AU script5:7990 (p)
+
+        # AU game/script5.rpy:7990 (p)
         "And you thought of asking your big titty blonde bimbo friend to lend you hers, right?":
             "And you thought of asking your big titty blonde bimbo cousin to lend you hers, right?",
-        
-        # AU script5:8022 (p)
+
+        # AU game/script5.rpy:8022 (p)
         "And I need to wash my hair before it's too late! See ya!":
             "And I need to wash my hair before it's too late! See ya, cuzzy!",
-        
-        # AU script5:8317 (p)
+
+        # AU game/script5.rpy:8317 (p)
         "I came with Penelope. I live with her, as part of the Student Exchange Program.":
             "I came with Penelope. I- uhh, I live with her, as part of the Student Exchange Program.",
-        
-        # AU script5:9062 (p)
+
+        # AU game/script5.rpy:9062 (p)
         "Okay, it's about that damn yearbook.":
             "Okay, it's about that damn yearbook. I just didn't wanna get you mixed up in this.",
-        
-        # AU script5:9088 (p)
+
+        # AU game/script5.rpy:9088 (p)
         "*Giggles* I knew I could count on you.":
             "*Giggles* I knew I could count on you, little cuz.",
-        
-        # AU script5:9149 (p)
+
+        # AU game/script5.rpy:9149 (p)
         "Don't be such a bore! Where did you leave your spine, [mc]?":
             "Don't be such a bore! Where did you leave your spine, little cuz?",
-        
-        # AU script5:9217 (p)
+
+        # AU game/script5.rpy:9217 (p)
         "But... wait, she's {i}interested{/i}?":
             "But... w-wait, she's {i}interested{/i}?",
-        
-        # AU script5:9218 (p)
+
+        # AU game/script5.rpy:9218 (p)
         "What do you know? Did she tell you anything?":
             "What do you know? D-Did she tell you anything?",
-        
-        # AU script5:9303 (p)
+
+        # AU game/script5.rpy:9303 (p)
         "Just a friend who's gonna help me sneak into the dorm room of someone who stole something from me.":
             "Just a kid who's gonna help me sneak into the dorm room of someone who stole something from me.",
-        
-        # AU script5:9505 (p)
+
+        # AU game/script5.rpy:9505 (p)
         "*Whispering* I'm sorry I dragged you into this, [mc].":
             "*Whispering* I'm sorry I dragged you into this, cuz.",
-        
-        # AU script5:9577 (p)
+
+        # AU game/script5.rpy:9577 (p)
         "My fucking god, [mc], you're hung like a fucking horse. That cock is a weapon!":
             "My fucking god, little cuz, you're hung like a fucking horse. That cock is a weapon!",
-        
-        # AU script5:9630 (p)
+
+        # AU game/script5.rpy:9630 (p)
         "I'm {i}so{/i} very sorry for flaunting my lewd body in front of you, [mc]. I had no idea it would cause you so much stress...":
             "I'm {i}so{/i} very sorry for flaunting my lewd body in front of you, little cousin. I had no idea it would cause you so much stress...",
-        
-        # AU script5:9670 (p)
+
+        # AU game/script5.rpy:9670 (p)
         "Okay, take a good look, [mc].":
             "Okay, take a good look, little cuz.",
-        
-        # AU script5:9681 (p)
+
+        # AU game/script5.rpy:9681 (p)
         "Do you forgive me for acting naughty? For being such a tease? For flaunting myself all around you?":
             "Do you forgive me for acting naughty? For being such a tease? For flaunting myself all around my own cousin?",
-        
-        # AU script5:9725 (p)
+
+        # AU game/script5.rpy:9725 (p)
         "You move closer to Penelope, frantically trying to memorize every square inch of the model’s ethereal body.":
             "You move closer to Penelope, frantically trying to memorize every square inch of your cousin’s ethereal body.",
-        
-        # AU script5:9747 (p)
+
+        # AU game/script5.rpy:9747 (p)
         "*Giggles* You're crazy, [mc]...":
             "*Giggles* You're crazy, little cuz...",
-        
-        # AU script5:9750 (p)
+
+        # AU game/script5.rpy:9750 (p)
         "You wrap your arms around Penelope's waist, holding her in place with a firm grip before beginning to suck on the blonde's voluptuous breasts.":
             "You wrap your arms around Penelope's waist, holding her in place with a firm grip before beginning to suck on your cousin's voluptuous breasts.",
-        
-        # AU script5:9765 (p)
+
+        # AU game/script5.rpy:9765 (p)
         "She's mine... For at least tonight, Penelope Carter is all mine...":
             "She's mine... For at least tonight, my big cousin, Penelope Carter, is all mine...",
-        
-        # AU script5:9784 (p)
+
+        # AU game/script5.rpy:9784 (p)
         "*Giggles* You're a filthy little degenerate.":
             "*Giggles* You're a filthy little degenerate, aren't you, cousin?",
-        
-        # AU script5:9797 (p)
+
+        # AU game/script5.rpy:9797 (p)
         "*Giggles* Jesus, [mc], how long can you keep up an erection like that?":
             "*Giggles* Jesus, cuz, how long can you keep up an erection like that?",
-        
-        # AU script5:9813 (p)
+
+        # AU game/script5.rpy:9813 (p)
         "What if it slips out of your costume again? We can’t have Nova or another girl accidentally catching sight of this monster dick, can we?":
             "What if it slips out of your costume again? We can’t have Nova or another girl accidentally catching sight of my cousin's monster dick, can we?",
-        
-        # AU script5:9823 (p)
+
+        # AU game/script5.rpy:9823 (p)
         "*Giggles* I can imagine. Do you like feeling my big titties wrapped around your cock like this?":
             "*Giggles* I can imagine. Do you like feeling my big titties wrapped around your cock like this, little cousin?",
-        
-        # AU script5:9841 (p)
+
+        # AU game/script5.rpy:9841 (p)
         "I rejected all their requests, but here I am doing it for free, for some high school kid with a fat dick.":
             "I rejected all their requests, but here I am doing it for free, for my kid cousin's fat dick.",
-        
-        # AU script5:9844 (p)
+
+        # AU game/script5.rpy:9844 (p)
         "But I’m not just some high school kid, y’know...":
             "But I’m not just some kid, y’know...",
-        
-        # AU script5:9851 (p)
+
+        # AU game/script5.rpy:9851 (p)
         "Yeah, I guess you can take a shot...":
             "Yeah, I guess you can take a shot, little cuz...",
-        
-        # AU script5:9859 (p)
+
+        # AU game/script5.rpy:9859 (p)
         "I'm FUCKING the best tits on Instagram!":
             "I'm FUCKING my cousin's tits! The best tits on Instagram!",
-        
-        # AU script5:9888 (p)
+
+        # AU game/script5.rpy:9888 (p)
         "Besides, we don't even have a condom...":
             "Besides, that would be incest. We're blood-related and... w-we don't even have a condom...",
-        
-        # AU script5:9899 (p)
+
+        # AU game/script5.rpy:9899 (p)
         "AAaaaah... What are you d-doing to me?":
             "AAaaaah... What are you d-doing to me, c-cuz?",
-        
-        # AU script5:9910 (p)
+
+        # AU game/script5.rpy:9910 (p)
         "Do you like this? Gliding your pussy along my cock?":
             "Do you like this? Gliding your pussy along your little cousin's thick cock?",
-        
-        # AU script5:9927 (p)
+
+        # AU game/script5.rpy:9927 (p)
         "Your hands wrap around Penelope’s soft neck as you hasten your pace, your hips slamming relentlessly against the blonde's buttocks.":
             "Your hands wrap around Penelope’s soft neck as you hasten your pace, your hips slamming relentlessly against your cousin's buttocks.",
-        
-        # AU script5:9933 (p)
+
+        # AU game/script5.rpy:9933 (p)
         "K-Keep up that pace, [mc]...":
             "K-Keep up that pace, cuzzy...",
-        
-        # AU script5:9954 (p)
+
+        # AU game/script5.rpy:9954 (p)
         "*Choking* Y-Yeagh... u-use me as your fucking toy, [mc]...":
             "*Choking* Y-Yeagh... u-use me as your fucking toy, little cuz...",
-        
-        # AU script5:10010 (p)
+
+        # AU game/script5.rpy:10010 (p)
         "I'm gonna have to ask you to come to all the parties I'm invited to from now on, [mc].":
             "I'm gonna have to ask you to come to all the parties I'm invited to from now on, little cuz.",
-        
-        # AU script5:10143 (p)
+
+        # AU game/script5.rpy:10143 (p)
         "What are your plans, [mc]?":
             "What are your plans, cuz?",
-        
-        # AU script5:10274 (p)
+
+        # AU game/script5.rpy:10274 (p)
         "Thanks, [mc]. You're a good friend.":
             "Thanks, [mc]. You're a good cousin.",
-        
-        # AU script5:10276 (p)
+
+        # AU game/script5.rpy:10276 (p)
         "Hey, that's what friends are for.":
             "Hey, that's what family is for.",
-        
-        # AU script5:10307 (p)
+
+        # AU game/script5.rpy:10307 (p)
         "Good night, [mc]...":
             "Good night, little cuz...",
-        
-        # AU script5:10317 (p)
+
+        # AU game/script5.rpy:10317 (p)
         "I'm glad to have you as a friend.":
             "I'm glad I have you as my family.",
-        
-        # AU script5:10483 (n)
+
+        # AU game/script5.rpy:10483 (n)
         "After all these years, you’re still taking care of me like a babysitter, eh Nancy?":
             "After all these years, you’re still taking care of me like a mother, eh Nancy?",
-        
-        # AU script5:10599 (n)
+
+        # AU game/script5.rpy:10599 (n)
         "I'm not a girl, and I'm not Nancy's child.":
             "I'm not a girl, and Nancy isn't my mom. She's my aunt.",
-        
-        # AU script5:10730 (n)
+
+        # AU game/script5.rpy:10730 (n)
         "And you, dear [mc]... are going to retrieve that information.":
             "And you, dear nephew... are going to retrieve that information.",
-        
-        # AU script5:11331 (n)
+
+        # AU game/script5.rpy:11331 (n)
         "And that's not even taking into account our age difference or my background as your old nanny.":
             "And that's not even taking into account our age difference or the fact that you're my sister's child, and I raised you like my own son until you were 9 years old.",
-        
-        # AU script5:11374 (n)
+
+        # AU game/script5.rpy:11374 (n)
         "Our age difference, my daughters, the Student Exchange Program, my history as your former nanny...":
             "Our age difference, our family, the Student Exchange Program... the fact that you're my sister's child, and I raised you like my own son until you were 9 years old...",
-        
-        # AU script5:11406 (n)
+
+        # AU game/script5.rpy:11406 (n)
         "I'll take what I want.":
             "I don't care if it's wrong. I don't care if it's incest. I'll take what I want.",
-        
-        # AU script5:11446 (n)
+
+        # AU game/script5.rpy:11446 (n)
         "Let me take care of you...":
             "Let your Auntie Nancy take care of you. You’ve been such a good boy, after all...",
-        
-        # AU script5:11458 (n)
+
+        # AU game/script5.rpy:11458 (n)
         "Oh my, are you not excited enough? Wanna play with my titties in front of your face again?":
             "Oh my, are you not excited enough? Wanna play with my titties in front of your face again, baby boy?",
-        
-        # AU script5:11502 (n)
+
+        # AU game/script5.rpy:11502 (n)
         "*Kneeling down* You know, my mother used to say that risk-takers defy destiny with every decision. I’ve always kept that thought in my head.":
             "*Kneeling down* You know, your grandmother used to say that risk-takers defy destiny with every decision. I’ve always kept that thought in my head.",
-        
-        # AU script5:11636 (n)
+
+        # AU game/script5.rpy:11636 (n)
         "S-She's about to fuck me!":
             "M-My aunt is about to fuck me!",
-        
-        # AU script5:11670 (n)
+
+        # AU game/script5.rpy:11670 (n)
         "Nancy starts moving up and down. Your penis spreads her wet lips apart, while quickly adjusting to the redhead's vicious pace.":
             "Nancy starts moving up and down. Your penis spreads her wet lips apart, while quickly adjusting to your aunt's vicious pace.",
-        
-        # AU script5:11712 (n)
+
+        # AU game/script5.rpy:11712 (n)
         "Can you handle me going faster, sweetie? I’ll start slowly... and it’ll make your old babysitter feel so much better...":
             "Can you handle me going faster, sweetie? I’ll start slowly... and it’ll make your Auntie Nancy feel so much better...",
-        
-        # AU script5:11778 (n)
+
+        # AU game/script5.rpy:11778 (n)
         "The poor security guard having to watch the two of us – AGH... FUCK! – h-having sweaty, animal sex in an elevator in the middle of the day...":
             "The poor security guard having to watch the two of us – AGH... FUCK! – h-having sweaty, incestuous sex in an elevator in the middle of the day...",
-        
-        # AU script5:11816 (n)
+
+        # AU game/script5.rpy:11816 (n)
         "What a naughty mommy... what if your daughters could see you being fucked like this?":
             "What a naughty mommy... what if your daughters could see you being fucked like this by their own cousin?",
-        
-        # AU script5:11818 (n)
+
+        # AU game/script5.rpy:11818 (n)
         "What a naughty empress... what if your subjects could see you being fucked like this?":
             "What a naughty empress... what if your subjects could see you being fucked like this by your own nephew?",
-        
-        # AU script5:11857 (n)
+
+        # AU game/script5.rpy:11857 (n)
         "Don't worry, my queen, just lean against the wall and let me do the work here...":
             "Don't worry, my queen, just lean against the wall and let your prince do the work here...",
-        
-        # AU script5:11871 (n)
+
+        # AU game/script5.rpy:11871 (n)
         "F-Fuck me again, [mc]...":
             "F-Fuck your Auntie again, [mc]...",
-        
-        # AU script5:11907 (n)
+
+        # AU game/script5.rpy:11907 (n)
         "[mc] s-s-stop joking!":
             "[mc] s-s-stop joking! Th-this is incest! I-I can't have a baby w{size=40}AAAHHHHhhh{/size}... {w=1.5}w-with my own n-nephew!",
-        
-        # AU script5:11911 (n)
+
+        # AU game/script5.rpy:11911 (n)
         "I can’t upset her, though... not if I want to do this again...":
             "I can’t cross that line, though... not if I want to do this again...",
-        
-        # AU script5:11963 (n)
+
+        # AU game/script5.rpy:11963 (n)
         "I can't be fired, [mc], I have a family to feed!":
             "I can't be fired, [mc], I have to feed our family!",
-        
-        # AU script5:12409 (n)
+
+        # AU game/script5.rpy:12409 (n)
         "You’ve really made the household... authentic. It’s almost like we were missing something before you came back.":
             "You’ve really made our family... authentic. It’s almost like we were missing something before you came back.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.6 script6.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script6:
-        
-        
+    # 0.6 game/script6.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script6:
+
+
     # -----------------------------------------
-    # 0.7 script7.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script7:
-        
-        
+    # 0.7 game/script7.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script7:
+
+
     # -----------------------------------------
-    # 0.8 script8.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script8:
-        
-        
+    # 0.8 game/script8.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script8:
+
+
     # -----------------------------------------
-    # 0.9 script9.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script9:
-        
-        
+    # 0.9 game/script9.rpy Nancy aunt/Penelope & Dalia cousin lines
+
+        # AU game/script9:
+
+
     # -----------------------------------------
-        
-        
-        # -----------------------------------------
+
+
+    # -----------------------------------------
         # Annie as stepsister, MC's dad remarried in UK
         # Combined with Nancy as aunt (mother's sister), Penelope and Dalia as cousins in annie_aunt_map
         # No name changes
@@ -6964,622 +6965,634 @@ init python:
         # - Annie: Only add references to not being blood-related during lines where they waver on sibling boundaries. Note: Never use "stepsibling" in their dialogue, especially when it gets emotional. Their relationship is 100% brother and sister, even if they're not biologically related. The "step-" doesn't matter to them in terms of boundaries. They should only call each other "big bro" and "little sis" in intimate lines as a little "younger sister" kick, and they usually just refer to each other by name. This path is the most emotionally incestuous, since they have a much more intimate relationship than anyone else.
         # -----------------------------------------
         # ST = Annie stepsister lines in annie_aunt_map
-        # script:0000 = file name:line number
+        # game/script.rpy:0000 = path/file name:line number
         # (menu) = Choice menu line
         # (chat) = Phone chat line
         # (n) = Nancy line
+        # (p) = Penelope line
+        # (d) = Dalia line
+        # (a) = Annie line
+        # (other) = Other line (Any/all main)
+        # (misc) = Miscellaneous line (Extras/side characters)
         # These tags aren't based on who's speaking, but who the line and scene are about.
         # ED/N = Editor's notes
+        # (REVIEW) = Line needs to be reviewed
         # -----------------------------------------
-        
-        
+
+
     # -----------------------------------------
-    # 0.1 script.rpy Annie stepsister lines
-        
-        # ST script:1046
+    # 0.1 game/script.rpy Annie stepsister lines
+
+        # ST game/script.rpy:1046 (a)
         "(Annie is a close friend from my childhood.)":
             "(Annie is my stepsister.)",
-        
-        # ST script:1047
+
+        # ST game/script.rpy:1047 (a)
         "(When I moved from Kredon, she was my next-door neighbor and the first person I met, along with Chang.)":
             "(When we moved from Kredon, she and her mother were our next-door neighbors, and she was the first person I met, along with Chang.)",
-        
-        # ST script:1049
+
+        # ST game/script.rpy:1049 (a)
         "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them.)":
-            "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them, especially after they got divorced.)",
-        
-        # ST script:1050
+            "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them, especially after they divorced.)",
+
+        # ED/N: I combined this line with the next line to make space for a new line.
+        # ST game/script.rpy:1050 (a)
         "(We were both lost... and lonely.)":
-            "(Even after my dad and her mom remarried, nothing changed. We were both lost... and lonely.)",
-        
-        # ST script:1053
+            "(Even after my dad and her mom got remarried, nothing changed. All we gained was one more absent parent.)",
+
+        # ST game/script.rpy:1051 (a)
+        "(After finding a companion within each other, we’ve been inseparable ever since.)":
+            "(We were both lost... and lonely. After finding a companion within each other, we’ve been inseparable ever since.)"
+
+        # ST game/script.rpy:1053 (a)
         "(Because of how close we were, people always believed we were dating... but the truth is, we're just friends.)":
             "(Because of how close we were, people always assumed we were dating... but the truth is, we're just siblings. Stepsiblings.)",
-        
-        # ST script:1054
+
+        # ST game/script.rpy:1054 (a)
         "(I mean… she's cute, and we love spending time with each other, but I've never tried to make a move on her.)":
             "(I mean… she's cute, and we love spending time with each other, but she's my little sister. I'd never try to make a move on her.)",
-        
-        # ST script:1059
+
+        # ST game/script.rpy:1059 (a)
         "(It would be... weird for us. Yeah! That's the word. Weird.)":
             "(It would be... weird for us. Yeah! What would our parents say?)",
-        
-        # ST script:1060
+
+        # ST game/script.rpy:1060 (a)
         "(It's just not the kind of relationship we have.)":
             "(She's my family, and we'll always be close friends. It's just not the kind of relationship we have.)",
-        
-        # ST script:1179
+
+        # ST game/script.rpy:1179 (a)
         "You're nothing but a big ball of envy because your best friend can play Eternum and you can't since you didn't save any money.":
-            "You're nothing but a big ball of envy because your one-and-only little sister and best friend can play Eternum and you can't since you didn't save any money.",
-        
-        # ST script:1233
+            "You're nothing but a big ball of envy because your one-and-only little sister and best friend can play Eternum, and you can't since you didn't save any money.",
+
+        # ST game/script.rpy:1233 (a)
         "I guess it would be you, Annie.":
             "I guess it would be you, sis.",
-        
-        # ST script:1254
+
+        # ST game/script.rpy:1254 (misc)
         "You're my best... male friend!":
             "You're my best... bro!",
-        
-        # ST script:1262
+
+        # ST game/script.rpy:1262 (misc)
         "Ahh, it's a deal, my friend!":
             "Ahh, it's a deal, brother!",
-        
-        # ST script:1344
+
+        # ST game/script.rpy:1344 (a)
         "I know you're excited Annie, but I'd appreciate it if you could at least carry your hand baggage!":
             "I know you're excited sis, but I'd appreciate it if you could at least carry your hand baggage!",
-        
-        # ST script:1757
+
+        # ST game/script.rpy:1757 (a)
         "Mission failed, [mc]...":
             "Mission failed, bro...",
-        
-        # ST script:1970
+
+        # ST game/script.rpy:1970 (a)
         "Oh, and you must be Annie! Nice to meet you too!":
             "Oh, and you must be Annie, [mc]'s stepsister! Nice to meet you too!",
-        
-        # ST script:2799
+
+        # ST game/script.rpy:2799 (a)
         "(I guess I should let them walk to school on their own, since I don't wanna look like a jealous boyfriend or something.)":
             "(I guess I should let them walk to school on their own, since I don't wanna look like an overprotective older brother or something.)",
-        
-        # ST script:2816
+
+        # ST game/script.rpy:2816 (a)
         "(Bah, Annie's a big girl. She doesn't need protecting.)":
             "(Bah, Annie isn't my baby sister anymore. She doesn't need protecting.)",
-        
-        # ST script:2910
+
+        # ST game/script.rpy:2910 (a)
         "The lady said no, buddy.":
             "Hands off my little sister, buddy. The lady said no.",
-        
-        # ST script:2934
+
+        # ST game/script.rpy:2934 (a)
         "The lady said no.":
             "Hands off my little sister. The lady said no.",
-        
-        # ST script:2952 and script4:4803
+
+        # ST game/script.rpy:2952 and game/script4.rpy:4803 (a)
         "Are you okay, Annie?":
             "Are you okay, sis?",
-        
-        # ST script:3006
+
+        # ST game/script.rpy:3006 (a)
         "And... thank you again for helping me out back there, [mc].":
             "And... thank you again for helping me out back there, big bro.",
-        
-        # ST script:5178
+
+        # ST game/script.rpy:5178 (a)
         "I don't know, it felt pretty special to me. I never had a nice, home-cooked meal when I was living with my dad.":
             "I don't know, it felt pretty special to me. I never had a nice, home-cooked meal when I was living with my dad and stepmom.",
-        
-        # ST script:6697
+
+        # ST game/script.rpy:6697 (a)
         "So this is the [mc] you're always talking about?":
             "So this is the {i}big brother{/i} you're always talking about?",
-        
-        # ST script:7130
+
+        # ST game/script.rpy:7130 (a)
         "(That's a bad idea...)":
             "(That's a bad idea... she's my little sister.)",
-        
-        # ST script:7176
+
+        # ST game/script.rpy:7176 (a)
         "(Jeez, I've always tried to not think of Annie in \"that\" way because I don't want to ruin our friendship, but now...)":
             "(Shit, I've always tried to not think of Annie in \"that\" way because I don't want to ruin our relationship, but now...)",
-        
-        # ST script:7186
+
+        # ST game/script.rpy:7186 (a)
         "(Damn... I guess she’s not the skinny kid she used to be...)":
             "(Damn... I guess she’s not the skinny baby sister she used to be...)",
-        
-        # ST script:8102
+
+        # ST game/script.rpy:8102 (a)
         "Erm... Y-You're the best friend ever!":
-            "Erm... Y-You're the best brother ever!",
-        
-        # ST script:8468
+            "Erm... Y-You're the best big brother ever!",
+
+        # ST game/script.rpy:8468 (a)
         "The pleasure was all mine, Annie. Eternum is awesome. I’m so grateful I had you by my side.":
             "The pleasure was all mine, little sis. Eternum is awesome. I’m so grateful I had you by my side.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.2 script2.rpy Annie stepsister lines
-        
-        # ST script2:106
+    # 0.2 game/script2.rpy Annie stepsister lines
+
+        # ST game/script2.rpy:106 (a)
         "*Laughs* Don't mind him...":
             "*Laughs* Don't mind my brother...",
-        
-        # ST script2:138
+
+        # ST game/script2.rpy:138 (a)
         "*Laughs* Come on, the last time we watched a horror movie, you couldn’t sleep alone for an entire two weeks!":
             "*Laughs* Come on, sis! The last time we watched a horror movie, you couldn’t sleep alone for an entire two weeks!",
-        
-        # ST script2:1014
+
+        # ST game/script2.rpy:1014 (a)
         "Annie should be waiting for us already.":
             "Your sister should be waiting for us already.",
-        
-        # ST script2:3408
+
+        # ST game/script2.rpy:3408 (a)
         "Oh, [mc]! I wasn’t sure if you were asleep already!":
             "Oh, hey bro! I wasn’t sure if you were asleep already!",
-        
-        # ST script2:3418
+
+        # ST game/script2.rpy:3418 (a)
         "I told you! You shouldn't have played in Luna's server, Annie! You can't handle that scary stuff! Remember when we played Dead Space?":
             "I told you! You shouldn't have played in Luna's server, sis! You can't handle that scary stuff! Remember when we played Dead Space?",
-        
-        # ST script2:3474
+
+        # ST game/script2.rpy:3474 (a)
         "You can sleep here as many times as you want. You don’t even have to ask, alright?":
             "You can sleep here as many times as you want. You don’t even have to ask, alright? Just like when we were little.",
-        
-        # ST script2:3479
+
+        # ST game/script2.rpy:3479 (a)
         "Anytime, Annie.":
             "Anytime, sis.",
-        
-        # ST script2:3504
+
+        # ST game/script2.rpy:3504 (a)
         "G-Goodnight, [mc].":
             "G-Goodnight, bro.",
-        
-        # ST script2:3506
+
+        # ST game/script2.rpy:3506 (a)
         "Goodnight Annie.":
             "Goodnight sis.",
-        
-        # ST script2:3530
+
+        # ST game/script2.rpy:3530 (a)
         "(We're in quite an... intimate position... I don't want her to think I'm trying to take advantage of her while she sleeps.)":
             "(We're in quite an... intimate position... I don't want her to think her brother is trying to take advantage of her while she sleeps.)",
-        
-        # ST script2:3557
+
+        # ST game/script2.rpy:3557 (a)
         "Baloo?":
             "Mr. Baloo? That teddy bear your mom gave you when you were 5?",
-        
-        # ST script2:3559
+
+        # ST game/script2.rpy:3559 (a)
         "Oh... Well... It's a stuffed bear that my mother gave me when I was 5, and...":
             "Y-yeah, Mr. Baloo...",
-        
-        # ST script2:3564
+
+        # ST game/script2.rpy:3564 (a)
         "Oh... I didn't know about Baloo.":
             "Oh... I didn't know you still had him.",
-        
-        # ST script2:3594
+
+        # ST game/script2.rpy:3594 (a)
         "(He probably just sees me as the little girl who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)":
             "(He probably just sees me as the little sister who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)",
-        
-        # ST script2:3595
+
+        # ST game/script2.rpy:3595 (a)
         "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack.)":
             "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. Not a weirdo like me who has feelings for her own big brother...)",
-        
-        # ST script2:3596
+
+        # ST game/script2.rpy:3596 (a)
         "(I'll always just be Annie, the \"best friend\".)":
             "(I'll always just be Annie, the \"little sister\".)",
-        
-        # ST script2:3602
+
+        # ST game/script2.rpy:3602 (a)
         "(I'm a fucking mess. She needs someone more mature.)":
             "(I'm a fucking mess. She needs someone more mature... not a creep who has a crush on his little sister.)",
-        
-        # ST script2:3603
+
+        # ST game/script2.rpy:3603 (a)
         "(This is why I'll always just be [mc], the \"best friend\"...)":
             "(This is why I'll always just be [mc], the \"big brother\"...)",
-        
-        # ST script2:3631
+
+        # ST game/script2.rpy:3631 (a)
         "It’s just a shirt after all, right...?":
             "It’s just a shirt after all, right...? You've seen me without it before...",
-        
-        # ST script2:3633
+
+        # ED/N: I combined this line with the next line to make space for a new line.
+        # ST game/script2.rpy:3633 (a)
         "(I'm not sure where she’s going with all of this...)":
             "(The last time I saw her topless was when we were 9 and still bathing together, though...)",
-        
-        # ST script2:3634
+
+        # ST game/script2.rpy:3634 (a)
         "(But I sure as hell want to find out...)":
             "(I'm not sure where she’s going with all of this... but I sure as hell want to find out...)",
-        
-        # ST script2:3642
+
+        # ST game/script2.rpy:3642 (a)
         "(This doesn't seem like the Annie I’ve known since I was young... Is she trying to prove something?)":
             "(This doesn't seem like my sister... Is she trying to prove something?)",
-        
-        # ST script2:3647
+
+        # ST game/script2.rpy:3647 (a)
         "(Holy shit, I’ve never seen her in such an... intimate way...)":
             "(Holy shit, I never noticed know how much she had... grown up...)",
-        
-        # ST script2:3652
+
+        # ST game/script2.rpy:3652 (a)
         "(This is really Annie... {i}my{/i} Annie.)":
             "(This is really my sister... {i}my{/i} sister.)",
-        
-        # ST script2:3658
+
+        # ST game/script2.rpy:3658 (a)
         "We're just... friends getting a little more comfortable.":
-            "We're just... siblings getting a little more comfortable.",
-        
-        # ST script2:3703
+            "We're just... a brother and sister getting a little more comfortable.",
+
+        # ST game/script2.rpy:3703 (a)
         "Your skin feels so soft, Annie. It feels... really nice holding you...":
             "Your skin feels so soft, sis. It feels... really nice holding you...",
-        
-        # ST script2:3711
+
+        # ST game/script2.rpy:3711 (a)
         "(Oh my god, am I the only one feeling all this tension in the air? I want to make a move, but... I don’t want to overstep my bounds...)":
             "(Oh my god, am I the only one feeling all this tension in the air? I want to make a move, but... I really don’t want to overstep my bounds...)",
-        
-        # ST script2:3718
+
+        # ST game/script2.rpy:3718 (a)
         "(But it’s not just any guy. It’s [mc].)":
             "(But it’s not just any guy. It’s [mc]. Your big brother.)",
-        
-        # ST script2:3721
+
+        # ST game/script2.rpy:3721 (a)
         "(But... I don't want to scare her away. Annie has always been so special to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)":
             "(But... I don't want to scare her away. Annie has always been more than a friend, more than a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
-        
-        # ST script2:3722
+
+        # ST game/script2.rpy:3722 (a)
         "(I can’t deny it... I want more of him...)":
             "(I can’t deny it, I want more of him... I mean, we aren’t even blood-related...)",
-        
-        # ST script2:3729
+
+        # ST game/script2.rpy:3729 (a)
         "(Baby steps, [mc]. Baby steps.)":
             "(A-And this all still feels so wrong... we shouldn't go any further than this... {w}right...?)",
-        
-        # ST script2:3740
+
+        # ST game/script2.rpy:3740 (a)
         "Um... Annie...?":
             "Um... sis...?",
-        
-        # ST script2:3763
+
+        # ST game/script2.rpy:3763 (a)
         "I’m sorry, Annie... I can’t help it... you’re driving me insane...":
             "I’m sorry, sis... I can’t help it... you’re driving me insane...",
-        
-        # ST script2:3800
+
+        # ST game/script2.rpy:3800 (a)
         "[mc]. I said I’m nervous, but that doesn’t mean I... don’t want to...":
             "Big bro. I said I’m nervous, but that doesn’t mean I... don’t want to...",
-        
-        # ST script2:3826
+
+        # ST game/script2.rpy:3826 (a)
         "I thought you weren’t interested in me...":
             "I thought you weren’t interested in me... I was just your little sister...",
-        
-        # ST script2:3828
+
+        # ST game/script2.rpy:3828 (a)
         "Where did you get that idea from?":
             "Annie, you've never been {i}just{/i} my little sister.",
-        
-        # ST script2:3829
+
+        # ST game/script2.rpy:3829 (a)
         "You're perfect.":
             "You're... perfect.",
-        
-        # ST script2:3830
+
+        # ST game/script2.rpy:3830 (a)
         "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our friendship.":
             "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our relationship as brother and sister.",
-        
-        # ST script2:3840
+
+        # ST game/script2.rpy:3840 (a)
         "*Chuckles* You know I’m not one to break my promises.":
             "*Chuckles* You know I’m not one to break my promises, sis.",
-        
-        # ST script2:3867
+
+        # ST game/script2.rpy:3867 (a)
         "(Holy shit, this is really happening! I'm fucking Annie's thighs!)":
             "(Holy shit, this is really happening! I'm fucking my little sister's thighs!)",
-        
-        # ST script2:3870
+
+        # ST game/script2.rpy:3870 (a)
         "(I never would’ve thought I’d have a chance with him...)":
             "(I never would’ve thought I’d have a chance to do this with my big brother...)",
-        
-        # ST script2:3872
+
+        # ST game/script2.rpy:3872 (a)
         "Jesus, Annie...":
             "Jesus, sis...",
-        
-        # ST script2:3924
+
+        # ST game/script2.rpy:3924 (a)
         "Oh shit, I'm sorry, Annie...":
             "Oh shit, I'm sorry, sis...",
-        
-        # ST script2:3942
+
+        # ST game/script2.rpy:3942 (a)
         "I only came here t-to sleep and then... next thing I know I’m doing that...":
             "I only came here t-to sleep and then... next thing I know I’m doing that... with my big brother!",
-        
-        # ST script2:3946
+
+        # ST game/script2.rpy:3946 (a)
         "I started m-moving and then I c-couldn't stop and... now I’m not going to have my fairy tale ending... because what kind of Disney princess romance begins with a THIGH JOB?! AHAHAH!!":
             "I started m-moving and then I c-couldn't stop and... now I’m not going to have my fairy tale ending... because what kind of Disney princess romance begins with a BROTHER-SISTER THIGH JOB?! AHAHAH!!",
-        
-        # ST script2:3952
+
+        # ST game/script2.rpy:3952 (a)
         "We skipped like 14 steps! In one night!":
             "We skipped like 14 steps and broke a dozen rules! In one night!",
-        
-        # ST script2:3964
+
+        # ST game/script2.rpy:3964 (a)
         "I'm gonna... go... think! Good night [mc]!":
             "I'm gonna... go... think! Good night bro!",
-        
-        # ST script2:3981
+
+        # ST game/script2.rpy:3981 (a)
         "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing Annie’s secret kinky side... and I loved every moment of it!)":
             "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing my sister's secret kinky side... it felt so wrong... and I loved every moment of it!)",
-        
-        # ST script2:5413 (n)
+
+        # ST game/script2.rpy:5413 (n)
         "(I bet if I tried to do anything at home, Dalia or Penny would surely notice.)":
             "(I bet if I tried to do anything at home, one of the girls would surely notice.)",
-        
-        # ST script2:5937
+
+        # ST game/script2.rpy:5937 (a)
         "And on the first day of school, I saw him harassing a close friend of mine.":
             "And on the first day of school, I saw him harassing my sister.",
-        
-        # ST script2:6103
+
+        # ST game/script2.rpy:6103 (a)
         "I never met my mother and my father was always absent in my life. He was constantly too occupied with his work.":
             "I never met my mother, and my father and stepmother were always absent in my life. They were constantly too occupied with their work.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.3 script3.rpy Annie stepsister lines
-        
-        # ST script3:3343
+    # 0.3 game/script3.rpy Annie stepsister lines
+
+        # ST game/script3.rpy:3343 (a)
         "Not a worry in mah noggin, homie. I just be... chillaxin’ all day! Yeahhhh...":
             "Not a worry in mah noggin, bro. I just be... chillaxin’ all day! Yeahhhh...",
-        
-        # ST script3:3402
+
+        # ST game/script3.rpy:3402 (a)
         "(That's all I want... just to stay friends with her.)":
             "(That's all I want... just to be brother and sister again.)",
-        
-        # ST script3:3428
+
+        # ST game/script3.rpy:3428 (a)
         "I've liked you ever since we were 10. If I’m being real with you, the only reason why I was willing to come back to Kredon at all was because you were coming too.":
             "I've liked you ever since we were 10. If I’m being real with you, the only reason why I was willing to come back to Kredon at all was because you were coming with me.",
-        
-        # ST script3:3431
+
+        # ST game/script3.rpy:3431 (a)
         "You're my best friend.":
             "You're my little sister and my best friend.",
-        
-        # ST script3:3434
+
+        # ST game/script3.rpy:3434 (a)
         "And in my heart I know, I want us to be so much more than that, too...":
             "And in my heart I know, even if it's wrong, I want us to be so much more than that, too...",
-        
-        # ST script3:3439
+
+        # ST game/script3.rpy:3439 (a)
         "And, as much as I loved that night, I know things might’ve felt like they were moving way too fast for you.":
             "And, as much as I loved that night, I think we both felt like things were moving way too fast.",
-        
-        # ST script3:3446
+
+        # ST game/script3.rpy:3446 (a)
         "I don't want to lose our friendship, Annie. I’d be miserable without you in my life.":
             "I don't want to lose you, sis. I’d be miserable without you in my life.",
-        
-        # ST script3:3449
+
+        # ST game/script3.rpy:3449 (a)
         "I just want us to stay friends forever!":
             "I just want us to stay together forever!",
-        
-        # ST script3:3467
+
+        # ST game/script3.rpy:3467 (a)
         "That sounds great! Just spending some time together as good friends. Like how we’ve always done it!":
             "That sounds great! Just spending some time together as siblings. Like how we’ve always done it!",
-        
-        # ST script3:3483
+
+        # ST game/script3.rpy:3483 (a)
         "Like... a fun date between friends?":
             "Like... a fun date between siblings?",
-        
-        # ST script3:3484
+
+        # ST game/script3.rpy:3484 (a)
         "Hmmm... no, more like a date with a girl that I like. And I just happen to be so lucky in that, she’s also my best friend too. As for what the future holds? Who knows...":
             "Hmmm... no, more like a date with a girl that I like. And it just happens to be that she’s also my adorable little sister, and my best friend too. As for what the future holds? Who knows...",
-        
-        # ST script3:3511
+
+        # ST game/script3.rpy:3511 (a)
         "And not a word to anyone. I mean... there's no need for it, really. We’re just two people going on a date, and there’s no need to overthink it.":
             "And not a word to anyone. I mean... there's no need for it, really. We’re just two {i}totally non-blood-related{/i} people going on a date, and there’s no need to overthink it.",
-        
-        # ST script3:3540
+
+        # ST game/script3.rpy:3540 (a)
         "I know you want to take things slow. And I’m perfectly okay with that.":
             "I know you want to take things slow, sis. And I’m perfectly okay with that.",
-        
-        # ST script3:3561
+
+        # ST game/script3.rpy:3561 (a)
         "That was quite the goodbye for just a couple of... friends.":
             "That was quite the goodbye for just a brother and sister...",
-        
-        # ST script3:9866 (n)
+
+        # ST game/script3.rpy:9866 (n)
         "I think this goes without saying, but let’s not mention this to anyone. My daughters especially... heaven knows what they’d think if they learned we bathed together.":
             "I think this goes without saying, but let’s not mention this to anyone. My daughters and your stepsister especially... heaven knows what they’d think if they learned we bathed together.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.4 script4.rpy Annie stepsister lines
-        
-        # ST script4:4335
+    # 0.4 game/script4.rpy Annie stepsister lines
+
+        # ST game/script4.rpy:4335 (a)
         "(A date with [mc]!)":
             "(A date with my big brother!)",
-        
-        # ST script4:4336
+
+        # ST game/script4.rpy:4336 (a)
         "(A date in Eternum WITH [mc]!)":
             "(A date in Eternum WITH my big brother!)",
-        
-        # ST script4:4914
+
+        # ST game/script4.rpy:4914 (a)
         "I feel so comfortable with Annie that sometimes I forget we're not really... a couple.":
             "I feel so comfortable with Annie that sometimes I forget we're just siblings, not really a... a couple.",
-        
-        # ST script4:5004
+
+        # ST game/script4.rpy:5004 (a)
         "You and Chang have always been my best friends, and neither of you played Eternum until recently, so... I've always felt kind of alone here.":
             "You and Chang have always been by my side, and neither of you played Eternum until recently, so... I've always felt kind of alone here.",
-        
-        # ST script4:5008
+
+        # ST game/script4.rpy:5008 (a)
         "You’re the one who’s really made these first few weeks in Eternum worthwhile, Annie. I couldn't have asked for anyone better to spend time with.":
             "You’re the one who’s really made these first few weeks in Eternum worthwhile, sis. I couldn't have asked for anyone better to spend time with.",
-        
-        # ST script4:5131
+
+        # ST game/script4.rpy:5131 (a)
         "Oh! Come on, Annie! You can't be serious!":
             "Oh! Come on, sis! You can't be serious!",
-        
-        # ST script4:5250
+
+        # ST game/script4.rpy:5250 (a)
         "(Maybe... it's just not the right time yet...?)":
             "(Maybe... was this all a mistake...?)",
-        
-        # ST script4:5311 and Multi-Mod script4:5339 and Bonus Mod script4:5366 (menu)
+
+        # ST game/script4.rpy:5311 and Multi-Mod game/script4.rpy:5339 and Bonus Mod game/script4.rpy:5366 (menu)
         "Decline and stay as friends":
             "{color=[walk_path]}Decline and stay as stepsiblings [red][mt](Closes Annie's path)",
-        
-        # ST script4:5314
+
+        # ST game/script4.rpy:5314 (a)
         "I like you, and you're my best friend, you already know that.":
             "I like you, and you're my beloved little sister and my best friend. You already know that.",
-        
-        # ST script4:5315
+
+        # ST game/script4.rpy:5315 (a)
         "But... I also feel like we're not meant to be more than that. Things would get awkward if we tried to get together, and our friendship is too important to risk, for me at least.":
             "But... I also feel like we're not meant to be more than that. Things would get so complicated if we tried to get together as stepsiblings, and our friendship, our {i}family{/i}, is too important to risk, for me at least.",
-        
+
         # ED/N: I completely rewrote the next four lines.
         # This is the biggest change I've made so far in the writing, beyond just adding incest themes. I felt like this scene needed more conversation and emotional weight, especially for his little sister. He sounds way too flippant in the original. The theme is, "Maybe MC is right and this would ruin their relationship... or maybe he's just growing up and scared of change. But he's definitely not mature enough to deal with it now."
         # Shit, it took me a whole afternoon to think of what to say to her, and 99% of players won't even see it. I'll try not to make these rewrites a habit, since I also think it's important to preserve the original writing.
-        
-        # ST script4:5316
+
+        # ST game/script4.rpy:5316 (a)
         "I just like spending time with you!":
             "I just... Annie, I don’t want these feelings to overwrite all the memories and the relationship we’ve built until now.",
-        
-        # ST script4:5317
+
+        # ST game/script4.rpy:5317 (a)
         "I... I think we're meant to be friends. Best friends!":
             "Sometimes, when I look at you, I don’t recognize the Annie I’ve always known.",
-        
-        # ST script4:5318
+
+        # ST game/script4.rpy:5318 (a)
         "So... let's just stay like this for now, okay?":
             "Sometimes, I don’t recognize myself.",
-        
-        # ST script4:5319
+
+        # ST game/script4.rpy:5319 (a)
         "I just don’t have those feelings for you right now.":
             "It feels like we’re on the edge of losing something we’ve always had, and I’m...{w}{i}{size=27} I-I’m scared we’ll never get it back.",
-        
-        # ST script4:5320
+
+        # ST game/script4.rpy:5320 (a)
         "In the future... who knows? Maybe. But I don’t want to lead you on, either.":
             "I can’t commit to this... {i}thing{/i} between us. Not right now. In the future... I don’t know. Maybe. But I don’t want to lead you on, either.",
-        
-        # ST script4:5326
+
+        # ST game/script4.rpy:5326 (a)
         "No worries! I totally understand. My head has been all over the place too, you know, with all this back and forth...":
             "It's not your fault, Annie, it's mine. I know I've been sending you mixed signals, bringing you here today. My head has been all over the place too, you know, with all this back and forth...  You don't deserve that.",
-        
-        # ST script4:5327
+
+        # ST game/script4.rpy:5327 (a)
         "We can have this conversation again after we gather the 10 Gems!":
             "I'm sorry, sis. This isn't how I wanted today to go. For what it's worth, I still enjoyed spending this time with you.",
-        
-        # ST script4:5369
+
+        # ST game/script4.rpy:5369 (a)
         "Y-Yeah... It's been like... 10 years since we first met?":
             "Y-Yeah... It's been like... 10 years since we became family?",
-        
-        # ST script4:5405
+
+        # ST game/script4.rpy:5405 (a)
         "Seeing you undressing just for me was hot as fuck, Annie.":
             "Seeing you undressing just for me was hot as fuck, sis.",
-        
-        # ST script4:5436
+
+        # ST game/script4.rpy:5436 (a)
         "But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding an adorably precious, absolutely gorgeous girl whom I’ve liked for years.":
             "But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding my adorably precious, absolutely gorgeous little sister whom I’ve liked for years.",
-        
-        # ST script4:5438
+
+        # ST game/script4.rpy:5438 (a)
         "I know it's scary to get out of your comfort zone, but... I think we can overcome it together.":
             "After so long together, I know it's scary to go outside what's familiar to us, but... I think we can overcome it together.",
-        
-        # ST script4:5442
+
+        # ST game/script4.rpy:5442 (a)
         "That’s how I feel. If you don't feel the same way... we can always go back to where we were a month ago and stay friends!":
             "That’s how I feel. If you don't feel the same way... we can always go back to where we were a month ago and stay as siblings and friends!",
-        
-        # ST script4:5443
+
+        # ST game/script4.rpy:5443 (a)
         "It’ll be a little awkward at first, but our friendship is strong, and I know we’d be back to normal in no time.":
             "It’ll be a little awkward at first, but our relationship is strong, and I know we’d be back to normal in no time.",
-        
-        # ST script4:5447
+
+        # ST game/script4.rpy:5447 (a)
         "I know it's scary to cross this bridge when you're not sure what your partner might want, so let me be clear...":
             "I know it's scary to cross this bridge when you're not sure what your partner might want, or what our relationship is even supposed to be, so let me be clear...",
-        
-        # ST script4:5449
+
+        # ST game/script4.rpy:5449 (a)
         "You are so ridiculously pretty, Annie, that I can’t help but want to take our relationship to the next level.":
             "You’re my beloved little sister and my best friend, and that part of us will never change. But... you’re so ridiculously pretty, Annie, that I can’t help but want to take our relationship to the next level.",
-        
-        # ST script4:5471
+
+        # ST game/script4.rpy:5471 (a)
         "*Caressing her cheek* I feel like I could never get enough of you, Annie...":
             "*Caressing her cheek* I feel like I could never get enough of you, sis...",
-        
-        # ST script4:5518
+
+        # ST game/script4.rpy:5518 (a)
         "Have I been fooled all these years? Innocent, shy Annie is actually a horny, perverted little girl?":
             "Have I been fooled all these years? My innocent, shy sister is actually a horny, perverted little girl?",
-        
-        # ST script4:5526
+
+        # ST game/script4.rpy:5526 (a)
         "God, there are so many things I want to do to Annie right now... but it's still Annie. I don't wanna cross any line too fast.":
             "God, there are so many things I want to do to Annie right now... but she's still my little sister. I don't wanna cross any line too fast.",
-        
-        # ST script4:5562
+
+        # ST game/script4.rpy:5562 (a)
         "It'll only get better from here, babe...":
             "It'll only get better from here, sis...",
-        
-        # ST script4:5604
+
+        # ST game/script4.rpy:5604 (a)
         "*Panting* K-Keep going, [mc]! Y-You’re hitting just the... r-right spot!":
             "*Panting* K-Keep going, b-big bro! Y-You’re hitting just the... r-right spot!",
-        
-        # ST script4:5619
+
+        # ST game/script4.rpy:5619 (a)
         "W-What are you *moans* doooooing to m-me...?":
             "W-What are you *moans* doooooing to m-me, b-big brotheeeerrrr...?",
-        
-        # ST script4:5624
+
+        # ST game/script4.rpy:5624 (a)
         "Don't worry, babe...":
             "Don't worry, sis...",
-        
-        # ST script4:5665
+
+        # ST game/script4.rpy:5665 (a)
         "([mc] made me... {i} cum{/i}!)":
             "(My big brother made me... {i} cum{/i}!)",
-        
-        # ST script4:5682
+
+        # ST game/script4.rpy:5682 (a)
         "Of course you can see it... After all, you’re responsible for it...":
             "Of course you can see it, little sis... After all, you’re responsible for it...",
-        
-        # ST script4:5724
+
+        # ST game/script4.rpy:5724 (a)
         "You’re such a good girl, Annie...":
             "You’re such a good little sister, Annie...",
-        
-        # ST script4:5758
+
+        # ST game/script4.rpy:5758 (a)
         "I love beating off your... massive... pulsing... d-dirty cock...":
             "I love beating off my b-big brother's... massive... pulsing... d-dirty cock...",
-        
-        # ST script4:5765
+
+        # ST game/script4.rpy:5765 (a)
         "*Panting* F-Fuck, I won't last much longer, Annie...":
             "*Panting* F-Fuck, I won't last much longer, sis...",
-        
-        # ST script4:5767
+
+        # ST game/script4.rpy:5767 (a)
         "I want to make you cum, [mc]... You were so kind to me...":
             "I want to make you cum, big bro... You were so kind to me...",
-        
-        # ST script4:5823
+
+        # ST game/script4.rpy:5823 (a)
         "I want you so bad, Annie... I can’t wait ‘til the day you can finally take this dick... But not yet...":
             "I want you so bad, sis... I can’t wait ‘til the day you can finally take this dick... But not yet...",
-        
-        # ST script4:5825
+
+        # ST game/script4.rpy:5825 (a)
         "W-We’ve g-gotta do some practicing b-beforehand, [mc]...":
             "W-We’ve g-gotta do some practicing b-beforehand, b-bro...",
-        
-        # ST script4:6924
+
+        # ST game/script4.rpy:6924 (a)
         "Oh Annie... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?":
             "Oh sis... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?",
-        
-        # ST script4:7250
+
+        # ST game/script4.rpy:7250 (a)
         "Thank you for an amazing day, [mc].":
             "Thank you for an amazing day, big bro.",
-        
-        # ST script4:7252
+
+        # ST game/script4.rpy:7252 (a)
         "I'm glad you enjoyed it, Annie. Even with the alien attack, and... well, the bloodbath... it was still one of the best days I've ever had.":
             "I'm glad you enjoyed it, sis. Even with the alien attack, and... well, the bloodbath... it was still one of the best days I've ever had.",
-        
-        # ST script4:7431
+
+        # ST game/script4.rpy:7431 (a)
         "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what best friends do, I guess.":
             "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what brothers do, I guess.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.5 script5.rpy Annie stepsister lines
-        
-        # ST script5:842
+    # 0.5 game/script5.rpy Annie stepsister lines
+
+        # ST game/script5.rpy:842 (a)
         "I don't really mind anymore. I'm happy being just a good friend.":
             "I don't really mind anymore. I'm happy just being his little sister.",
-        
-        # ST script5:12104 (n)
+
+        # ST game/script5.rpy:12104 (n)
         "*Chuckles* Let's keep these dreams of yours between us, though. I don’t know how my daughters would take the news.":
             "*Chuckles* Let's keep these dreams of yours between us, though. I don’t know how my daughters or your sister would take the news.",
-        
-        
+
+
     # -----------------------------------------
-    # 0.6 script6.rpy Annie stepsister lines
-        
-        # ST script6:
-        
-        
+    # 0.6 game/script6.rpy Annie stepsister lines
+
+        # ST game/script6:
+
+
     # -----------------------------------------
-    # 0.7 script7.rpy Annie stepsister lines
-        
-        # ST script7:
-        
-        
+    # 0.7 game/script7.rpy Annie stepsister lines
+
+        # ST game/script7:
+
+
     # -----------------------------------------
-    # 0.8 script8.rpy Annie stepsister lines
-        
-        # ST script8:
-        
-        
+    # 0.8 game/script8.rpy Annie stepsister lines
+
+        # ST game/script8:
+
+
     # -----------------------------------------
-    # 0.9 script9.rpy Annie stepsister lines
-        
-        # ST script9:
-        
+    # 0.9 game/script9.rpy Annie stepsister lines
+
+        # ST game/script9:
+
     }
 
     def _build_replace_map():
