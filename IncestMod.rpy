@@ -78,7 +78,7 @@ init python:
         try:
             import re
             t = text
-            t = re.sub(r'\{color=\[(?:walk_points|walk_path|walk_points_chat|walk_path_chat)\]\}', '', t)
+            t = re.sub(r'\{color=\[(?:walk_points|walk_path|walk_points_chat|walk_path_chat|computer_color|birthday_color|reception_color|read_this_color|leave_color|stand_up_color|right_elevator_color|left_elevator_color)\]\}', '', t)
             return t.strip()
         except Exception:
             return text
@@ -89,7 +89,7 @@ init python:
                 return
         except Exception:
             pass
-        for _tag in ("walk_points", "walk_path"):
+        for _tag in ("walk_points", "walk_path", "computer_color", "birthday_color", "reception_color", "read_this_color", "leave_color", "stand_up_color", "right_elevator_color", "left_elevator_color"):
             if not hasattr(store, _tag):
                 setattr(store, _tag, "CCCCCC")
         for _tag in ("walk_points_chat", "walk_path_chat"):
