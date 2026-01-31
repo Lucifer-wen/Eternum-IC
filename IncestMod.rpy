@@ -3146,7 +3146,7 @@ init python:
             "T-Thank you, Mom.",
 
         # AS 1643
-            "It's me, Nancy! Even though we've only been speaking on the phone for the past few days, I feel like we've been becoming good friends already! Isn't that right, Annie?":
+            "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’ve been becoming good friends already! Isn't that right, Annie?":
                 "God, you can't imagine how much I missed you two!",
 
         # AS 1645
