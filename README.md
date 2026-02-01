@@ -22,7 +22,7 @@
 
 10. The new translation should be in the translation folder game/tl/incest_*name*.
 
-11. (Optional) Open all .RPY files, scroll to the bottom and add a note on each new TODO line for what game version was added. (ex. # TODO: Translation updated at 2026-01-28 10:20 (Eternum-0.9.5-pc))
+11. (Optional) Open all .RPY files, scroll to the bottom and add a note on each new TODO line for what game version was added. (ex. # TODO: Translation updated at 2026-01-28 10:20 **(Eternum-0.9.5-pc)**)
 
 12. Run the game to compile .RPYCs.
 
@@ -53,7 +53,7 @@
 
 6. Download [Eternum Bonus Mod](https://cncmods.itch.io/eternum-bonus-mod) or [Eternum Multi-Mod](https://f95zone.to/threads/93424/). For the Bonus Mod, download the non-RPA version.
 
-**Note: Do Steps 8-14 once for each mod.**
+**Note: Repeat Steps 7-14 once for each mod.**
 
 7. Extract mod files into Eternum-X.XX.XX-pc/game.
 
@@ -69,7 +69,7 @@
 
 13. Delete mod files from Eternum-X.XX.XX-pc/game.
 
-14. (Optional) Open all .RPY files, scroll to the bottom and add a note on each new TODO line for what mod version was added/updated. (ex. # TODO: Translation updated at 2026-01-28 12:09 (Eternum_feature_mod_0.9.5.v3))
+14. (Optional) Open all .RPY files, scroll to the bottom and add a note on each new TODO line for what mod version was added/updated. (ex. # TODO: Translation updated at 2026-01-28 12:09 **(Eternum_feature_mod_0.9.5.v3)**)
 
 15. Run the game to compile .RPYCs.
 
@@ -104,7 +104,7 @@
 
 12. Press 'Generate Translations'.
 
-13. (Optional) Open all .RPY files, scroll to the bottom and add a note on each new TODO line for what game version was updated. (ex. # TODO: Translation updated at 2026-01-28 10:20 (Eternum-0.9.5-pc))
+13. (Optional) Open all .RPY files, scroll to the bottom and add a note on each new TODO line for what game version was updated. (ex. # TODO: Translation updated at 2026-01-28 10:20 **(Eternum-0.9.5-pc)**)
 
 14. Run the game to compile .RPYCs.
 
@@ -134,7 +134,7 @@
 
 # Preparing a Translation for Release
 
-**Note: This should be done for each translation that has been updated since the last mod release, for every release. It massively reduces file size and loading time. You can do all translations at the same time by opening game/tl instead of the translation folder in Step 5. Consider writing a program to do the regex replacements automatically.**
+**Note: This should be done for each translation that has been updated since the last mod release, for every release. It massively reduces file size and loading time. Consider writing a program to do the regex replacements automatically.**
 
 1. Clone [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC) and switch to a translation branch (ex. tl/incest_mom).
 
@@ -143,6 +143,8 @@
 3. Copy translation branch files to translation folder.
 
 4. Switch to experimental/translations_main branch.
+
+**Note: You can do all translations at the same time by opening game/tl instead of the translation folder in Step 5 and moving the game/tl/None folder outside of game/tl until after Step 7 so it doesn't get modified.**
 
 5. Open translation folder in VSCODE or other IDE.
 
@@ -181,7 +183,9 @@
 
 11. The new Release should be in the folder renpy-8.3.2-sdk/Eternum-X.XX.XX-dists.
 
-12. To install, just drag Eternum-IC.rpa into Eternum-X.XX.XX-pc/game.
+12. Release on [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC) and [Eternum Incest Mod thread](https://f95zone.to/threads/267184/). Don't forget to update the Mod Version and Changelog.
+
+13. To install, just drag Eternum-IC.rpa into Eternum-X.XX.XX-pc/game.
 
 
 ## Regex Replacements
