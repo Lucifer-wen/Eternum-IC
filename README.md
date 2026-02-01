@@ -218,7 +218,7 @@ translate incest_aunt strings:
 
 # Important
 
-Translation branches (ex. tl/incest_mom) should keep *ALL* lines for adding mod compatibility or updating translations with Ren'Py SDK. Only delete unchanged lines in experimental/translations-main branch to prepare for a release.
+The experimental/translations-main branch should keep *ALL* lines for adding mod compatibility or updating translations with Ren'Py SDK. Only delete unchanged lines in experimental/translations-release branch to prepare for a release.
 
 Make sure you *ALWAYS* include the .RPYC files as well as the .RPY files and *NEVER* delete them.
 
