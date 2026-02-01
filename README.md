@@ -165,6 +165,8 @@
 
 2. Extract Eternum-X.XX.XX-pc.zip into renpy-8.3.2-sdk folder.
 
+**Note: You do not need to extract game/archive_X.XX.XX.rpa for building a release.**
+
 3. Clone [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC) and switch to experimental/translations_main branch.
 
 4. Copy game folder from experimental/translations_main branch to Eternum-X.XX.XX-pc folder.
