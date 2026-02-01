@@ -1,12 +1,13 @@
 ﻿# ==========================
 # Incest Mod Translation Version (EXPERIMENTAL)
 # - Most features have been replaced by Translations
-# - Incest Mod Updates are WIP
+# - Incest Mod Updates are planned
 # ==========================
 
 default persistent.text_offset = 1
 # Mod update metadata (Step 1)
-default persistent.im_mod_version = "1.4.1.2"
+define im_mod_version = "1.4.1.2"
+default persistent.im_current_version = "1.4.1.2"
 default persistent.im_update_info_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/version.json"
 default persistent.im_update_zip_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/IncestMod.zip"
 default persistent.im_update_pending = False
@@ -16,7 +17,6 @@ default persistent.im_update_target_version = None
 default persistent.im_update_debug_hotkey = True
 default persistent.im_reload_hotkey_enabled = True
 default _im_reloading_scripts = False
-# default persistent.im_cousin_override = None
 
 # -----------------------------------------
 # Update check (Step 2: check + prompt)
@@ -146,7 +146,7 @@ init python:
         remote_ver = info.get("version", None)
         remote_url = info.get("url", None) or getattr(persistent, "im_update_zip_url", None)
         remote_hash = info.get("sha256", None)
-        local_ver = getattr(persistent, "im_mod_version", None)
+        local_ver = getattr(persistent, "im_current_version", None)
         _im_log("update check: local=%s remote=%s" % (local_ver, remote_ver))
         if _im_parse_version(remote_ver) > _im_parse_version(local_ver):
             store.im_update_info = {
@@ -397,7 +397,7 @@ init python:
             pass
         target_ver = getattr(persistent, "im_update_target_version", None)
         if target_ver:
-            persistent.im_mod_version = target_ver
+            persistent.im_current_version = target_ver
         persistent.im_update_pending = False
         persistent.im_update_zip_path = None
         persistent.im_update_target_version = None
@@ -484,11 +484,11 @@ init python:
         pass
 
 label im_debug_set_version:
-    $ _curr = getattr(persistent, "im_mod_version", "unknown")
+    $ _curr = getattr(persistent, "im_current_version", "unknown")
     $ _new = renpy.input("Set mod version:", default=_curr, length=32)
     $ _new = _new.strip()
     if _new:
-        $ persistent.im_mod_version = _new
+        $ persistent.im_current_version = _new
         $ renpy.save_persistent()
         $ _im_update_checked = False
         $ renpy.notify("Mod version set to " + _new)
@@ -503,7 +503,7 @@ init 5 python:
 label im_update_prompt:
     $ _info = getattr(store, "im_update_info", None)
     $ _ver = _info.get("version", None) if _info else None
-    $ _curr = getattr(persistent, "im_mod_version", None)
+    $ _curr = getattr(persistent, "im_current_version", None)
     menu:
         "Incest Mod update available (current [_curr], latest [_ver]). Download and install now?"
         "Yes":
@@ -685,7 +685,7 @@ init 1000:
                 # translation files.
                 $ other_lang = False
                 for lang in renpy.known_languages():
-                    if "incest" not in lang:
+                    if "incest_" not in lang:
                         $ other_lang = True
                         break
                 if other_lang:
@@ -695,7 +695,7 @@ init 1000:
                         textbutton _("English{#prefs}"):
                             action Language(None)
                         for lang in renpy.known_languages():
-                            if "incest" not in lang:
+                            if "incest_" not in lang:
                                 $ option_title = language_titles.get(lang, lang)
                                 $ option_font = language_title_fonts.get(lang, None)
                                 textbutton option_title:
