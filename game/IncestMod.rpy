@@ -7,7 +7,7 @@
 default persistent.text_offset = 1
 # Mod update metadata (Step 1)
 define im_mod_version = "1.4.1.2"
-default persistent.im_current_version = "1.4.1.2"
+default persistent.im_current_version = im_mod_version
 default persistent.im_update_info_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/version.json"
 default persistent.im_update_zip_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/IncestMod.zip"
 default persistent.im_update_pending = False
