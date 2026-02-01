@@ -277,6 +277,8 @@ init python:
 
     build.classify("game/IncestMod.rpy", IC_ARCHIVE_NAME)
     build.classify("game/IncestMod.rpyc", IC_ARCHIVE_NAME)
+    build.classify("game/IncestLables.rpy", IC_ARCHIVE_NAME)
+    build.classify("game/IncestLables.rpyc", IC_ARCHIVE_NAME)
     build.classify("game/tl/incest_*/**.rpy", IC_ARCHIVE_NAME)
     build.classify("game/tl/incest_*/**.rpyc", IC_ARCHIVE_NAME)
 
