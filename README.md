@@ -1,6 +1,6 @@
 # Generating a New Translation
 
-**Note: The translations for incest_full, incest_mom, incest_only_sister, incest_half_sister, and incest_aunt have already been generated and updated to the latest version (as of 01-Feb-26). You should not have to generate a new translation.**
+**Note: The translations for incest_full, incest_mom, incest_only_sister, incest_half_sister, and incest_aunt have already been generated and updated to the latest version of the base game and mods (as of 01-Feb-26). You should not have to generate a new translation, and can skip to Editing.**
 
 1. Download and install [Ren'Py 8.3.2 SDK](https://www.renpy.org/release/8.3.2) (the version Eternum runs on).
 
@@ -33,7 +33,7 @@
 15. Commit experimental/translations-main branch, push to origin.
 
 
-# Adding Mod Compatibility to Translations
+## Adding Mod Compatibility to Translations
 
 **Note: The process is exactly the same for mod updates.**
 
@@ -76,7 +76,7 @@
 16. Commit experimental/translations-main branch, push to origin.
 
 
-# Updating Translations
+## Updating Translations
 
 1. Download and install [Ren'Py 8.3.2 SDK](https://www.renpy.org/release/8.3.2) (the version Eternum runs on).
 
@@ -130,7 +130,7 @@
 
 # Preparing Translations for Release
 
-**Note: This should be done for every release. It massively reduces file size and loading time. Consider writing a program to do the regex replacements automatically.**
+**Note: This should be done for every release. It massively reduces file size and loading time. Consider writing a program to do the regex replacements automatically (but it's honestly pretty easy).**
 
 1. Clone [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC) and switch to experimental/translations_main branch.
 
@@ -165,7 +165,7 @@
 
 3. Clone [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC) and switch to experimental/translations_release branch.
 
-4. Copy Eternum-IC/game folder, paste in Eternum-X.XX.XX-pc.
+4. Copy Eternum-IC/game folder, paste in Eternum-X.XX.XX-pc folder.
 
 5. Run the game to compile .RPYCs one last time.
 
@@ -181,14 +181,14 @@
 
 11. The new Release should be in the folder renpy-8.3.2-sdk/Eternum-X.XX.XX-dists.
 
-12. Release on [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC) and [Eternum Incest Mod thread](https://f95zone.to/threads/267184/). Don't forget to update the Mod Version and Changelog.
+12. Release on [Eternum-IC repo](https://github.com/Lucifer-wen/Eternum-IC/releases) and [Eternum Incest Mod thread](https://f95zone.to/threads/267184/). Don't forget to update the Mod Version and Changelog.
 
 13. To install, just drag Eternum-IC.rpa into Eternum-X.XX.XX-pc/game.
 
 
-## Regex Replacements
+# Regex Replacements
 
-### Regex Find Modified
+## Regex Find Modified
 
 You can use regex Find with
 ```
@@ -196,7 +196,7 @@ You can use regex Find with
 ```
 to find lines you've modified. Useful for editing.
 
-### Regex Delete Unchanged
+## Regex Delete Unchanged
 
 You can use regex Find with
 ```
@@ -204,7 +204,7 @@ You can use regex Find with
 ```
 and Replace All with nothing to delete all unchanged lines for RELEASE versions in order to reduce file size and loading time.
 
-### Regex Delete Empty Strings
+## Regex Delete Empty Strings
 
 Then, you can use regex Find with
 ```
