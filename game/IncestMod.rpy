@@ -762,46 +762,14 @@ init 1000:
                 vbox:
                     style_prefix "radio"
                     label _("Incest Mode")
-                    if "incest_full" in renpy.known_languages():
-                        $ lang = "incest_full"
-                        $ option_title = language_titles.get(lang, lang)
-                        $ option_font = language_title_fonts.get(lang, None)
-                        textbutton option_title:
-                            action Language(lang)
-                            if option_font is not None:
-                                text_font option_font
-                    if "incest_mom" in renpy.known_languages():
-                        $ lang = "incest_mom"
-                        $ option_title = language_titles.get(lang, lang)
-                        $ option_font = language_title_fonts.get(lang, None)
-                        textbutton option_title:
-                            action Language(lang)
-                            if option_font is not None:
-                                text_font option_font
-                    if "incest_only_sister" in renpy.known_languages():
-                        $ lang = "incest_only_sister"
-                        $ option_title = language_titles.get(lang, lang)
-                        $ option_font = language_title_fonts.get(lang, None)
-                        textbutton option_title:
-                            action Language(lang)
-                            if option_font is not None:
-                                text_font option_font
-                    if "incest_half_sister" in renpy.known_languages():
-                        $ lang = "incest_half_sister"
-                        $ option_title = language_titles.get(lang, lang)
-                        $ option_font = language_title_fonts.get(lang, None)
-                        textbutton option_title:
-                            action Language(lang)
-                            if option_font is not None:
-                                text_font option_font
-                    if "incest_aunt" in renpy.known_languages():
-                        $ lang = "incest_aunt"
-                        $ option_title = language_titles.get(lang, lang)
-                        $ option_font = language_title_fonts.get(lang, None)
-                        textbutton option_title:
-                            action Language(lang)
-                            if option_font is not None:
-                                text_font option_font
+                    for lang in ["incest_full", "incest_mom", "incest_only_sister", "incest_half_sister", "incest_aunt"]:
+                        if lang in renpy.known_languages():
+                            $ option_title = language_titles.get(lang, lang)
+                            $ option_font = language_title_fonts.get(lang, None)
+                            textbutton option_title:
+                                action Language(lang)
+                                if option_font is not None:
+                                    text_font option_font
                     textbutton _("Disabled"):
                         action Language(None)
 
