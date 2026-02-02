@@ -47,7 +47,7 @@ init python:
             t = text
             t = re.sub(r'\[red\]\(Insist\)', '(Insist)', t)
             t = re.sub(r'\(attack afterward\)', '', t)
-            t = re.sub(r'\[(?:gr|mm|red|blue|green|pink|mt|nova_pts|nancy_pts|dalia_pts|annie_pts|alex_pts|penelope_pts|luna_pts|calypso_pts)\](?:(?:\{[^{}]+\})?\([^()]+\)(?:\{\/[^{}]+\})?)?', '', t)
+            t = re.sub(r'\[(?:gr|mm|red|blue|green|pink|mt|nova_pts|nancy_pts|dalia_pts|annie_pts|alex_pts|penelope_pts|luna_pts|calypso_pts)\](?:\([^()]+\)|\{([^{}]+)\}\([^()]+\)\{\/\1\})?', '', t)
             return t.strip()
         except Exception:
             return text
