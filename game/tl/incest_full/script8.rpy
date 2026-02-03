@@ -25824,11 +25824,11 @@ translate incest_full menurestaurant_d3c458b3:
     # mct "At least this little wait helped me shake off those stupid jitters I had earlier."
     mct "At least this little wait helped me shake off those stupid jitters I had earlier."
 
-# game/script8.rpy:8047
+# AS game/script8.rpy:8047
 translate incest_full menurestaurant_cbac3e25:
 
     # mct "You said it yourself. It's just a meal with Annie, like it's been a hundred times over the past 10 years."
-    mct "You said it yourself. It's just a meal with Annie, like it's been a hundred times over the past 10 years."
+    mct "You said it yourself. It's just another meal alone with Annie, like we’ve usually had these last 10 years."
 
 # game/script8.rpy:8048
 translate incest_full menurestaurant_77a89e99:
@@ -25848,11 +25848,11 @@ translate incest_full menurestaurant_da3026fb:
     # mct "Man, time flies by."
     mct "Man, time flies by."
 
-# game/script8.rpy:8051
+# AS game/script8.rpy:8051
 translate incest_full menurestaurant_dcc550df:
 
     # mct "Can't believe it's been that long already."
-    mct "Can't believe it's been that long already."
+    mct "Can't believe it's been that long since everything changed."
 
 # game/script8.rpy:8052
 translate incest_full menurestaurant_87161b37:
@@ -25938,17 +25938,17 @@ translate incest_full menurestaurant_18235d39:
     # kid "No chance, I have no money! My mom got it for me."
     kid "No chance, I have no money! My mom got it for me."
 
-# game/script8.rpy:8077
+# AS game/script8.rpy:8077
 translate incest_full menurestaurant_61ea28f0:
 
     # mc "Oh... well, I didn't buy mine either. Nancy did."
-    mc "Oh... well, I didn't buy mine either. Nancy did."
+    mc "Oh... well, I didn't buy mine either. Mom did."
 
-# game/script8.rpy:8078
+# AS game/script8.rpy:8078
 translate incest_full menurestaurant_dcb823c4:
 
     # mc "My... nanny. She got it for my birthday."
-    mc "My... nanny. She got it for my birthday."
+    mc "She got it for my birthday."
 
 # game/script8.rpy:8079
 translate incest_full menurestaurant_da8cdf85:
@@ -26118,35 +26118,35 @@ translate incest_full menurestaurant_659bcca8:
     # c "*Gasps* That's SO awesome!"
     c "*Gasps* That's SO awesome!"
 
-# game/script8.rpy:8125
+# AS game/script8.rpy:8125
 translate incest_full menurestaurant_36e05085:
 
     # c "I live here too! My parents have a hotpot restaurant just around the corner! You and Annie should totally come someday!"
-    c "I live here too! My parents have a hotpot restaurant just around the corner! You and Annie should totally come someday!"
+    c "I live here too! My parents have a hotpot restaurant just around the corner! You should totally come someday! Hey, you wanna come too?"
 
-# game/script8.rpy:8127
+# AS game/script8.rpy:8127
 translate incest_full menurestaurant_c0d07726:
 
     # mc "Who's Annie?"
-    mc "Who's Annie?"
+    mc "Who are you talking to?"
 
-# game/script8.rpy:8129
+# AS game/script8.rpy:8129
 translate incest_full menurestaurant_81ec6133:
 
     # c "Annie from school!"
-    c "Annie from school!"
+    c "The girl!"
 
-# game/script8.rpy:8131
+# AS game/script8.rpy:8131
 translate incest_full menurestaurant_0d63d0ac:
 
     # mc "Oh... I don't know her. I just arrived here."
-    mc "Oh... I don't know her. I just arrived here."
+    mc "Which girl?"
 
-# game/script8.rpy:8133
+# AS game/script8.rpy:8133
 translate incest_full menurestaurant_81fa0db8:
 
     # c "Oh... really? And then why is she here?"
-    c "Oh... really? And then why is she here?"
+    c "The one behind you?"
 
 # game/script8.rpy:8135
 translate incest_full menurestaurant_41d53014:
@@ -26160,23 +26160,23 @@ translate incest_full menurestaurant_5fb7b3e6:
     # mc ". . ." with dis15
     mc ". . ." with dis15
 
-# game/script8.rpy:8139
+# AS game/script8.rpy:8139
 translate incest_full menurestaurant_684c85cc:
 
     # mc "O-Oh..." with dis12
-    mc "O-Oh..." with dis12
+    mc "Oh..." with dis12
 
-# game/script8.rpy:8140
+# AS game/script8.rpy:8140
 translate incest_full menurestaurant_1a78a7a8:
 
     # mc "Hi."
-    mc "Hi."
+    mc "Hey, Annie."
 
-# game/script8.rpy:8141
+# AS game/script8.rpy:8141
 translate incest_full menurestaurant_6a14f1a6:
 
     # mc "Are you Annie?"
-    mc "Are you Annie?"
+    mc "Why aren't you with Dad?"
 
 # game/script8.rpy:8142
 translate incest_full menurestaurant_26c8c55e:
@@ -26190,29 +26190,31 @@ translate incest_full menurestaurant_77a89e99_2:
     # mc ". . ."
     mc ". . ."
 
-# game/script8.rpy:8144
+# AS game/script8.rpy:8144
 translate incest_full menurestaurant_d40ab563:
 
     # mc "*Whispering* Why isn't she talking...?"
-    mc "*Whispering* Why isn't she talking...?"
+    mc "Annie?"
 
-# game/script8.rpy:8146
+# AS game/script8.rpy:8146
 translate incest_full menurestaurant_4d2ef23a:
 
     # c "*Whispering* I know her from school, but she never talks there either."
-    c "*Whispering* I know her from school, but she never talks there either."
+    c "*Whispering* Do you know each other?"
+    show gh 47b
+    mc "Yes, she's my-"
 
-# game/script8.rpy:8147
+# AS game/script8.rpy:8147
 translate incest_full menurestaurant_52c512c4:
 
     # c "*Whispering* I think she's mute."
-    c "*Whispering* I think she's mute."
+    pass
 
-# game/script8.rpy:8149
+# AS game/script8.rpy:8149
 translate incest_full menurestaurant_5c834b17:
 
     # a "I can speak!"
-    a "I can speak!"
+    a "I'm Annie, [mc]'s twin sister."with dis08
 
 # game/script8.rpy:8151
 translate incest_full menurestaurant_c244aae5:
@@ -26232,137 +26234,147 @@ translate incest_full menurestaurant_d243dcf6:
     # a "I heard you talking earlier."
     a "I heard you talking earlier."
 
-# game/script8.rpy:8155
+# AS game/script8.rpy:8155
 translate incest_full menurestaurant_897f518c:
 
     # a "I go to school with Chang. I'm Annie."
-    a "I go to school with Chang. I'm Annie."
+    pass
 
-# game/script8.rpy:8157
+# AS game/script8.rpy:8157
 translate incest_full menurestaurant_843449c5:
 
     # mc "Hi Annie. I'm [mc]."
-    mc "Hi Annie. I'm [mc]."
+    a "..."
+    mc "This is Chang, Annie."
 
-# game/script8.rpy:8159
+# AS game/script8.rpy:8159
 translate incest_full menurestaurant_36fbb028:
 
     # a "Hi [mc]."
-    a "Hi [mc]."
+    a "Hi Chang."
 
-# game/script8.rpy:8160
+# AS game/script8.rpy:8160
 translate incest_full menurestaurant_35352d9a:
 
     # a "D-Did you..."
-    a "D-Did you..."
+    a "W-We just moved here..."
 
-# game/script8.rpy:8161
+# AS game/script8.rpy:8161
 translate incest_full menurestaurant_cbadf16e:
 
     # a "Did you move here?"
-    a "Did you move here?"
+    a "Did [mc] already tell you?"
 
-# game/script8.rpy:8163
+# AS game/script8.rpy:8163
 translate incest_full menurestaurant_bde01f2a:
 
     # mc "Yep! From the US, with my dad."
-    mc "Yep! From the US, with my dad."
+    mc "Yep! I did."
 
-# game/script8.rpy:8165
+# AS game/script8.rpy:8165
 translate incest_full menurestaurant_5b6e19cb:
 
     # a "Cool..."
-    a "Cool..."
+    a "Okay."
 
-# game/script8.rpy:8167
+# AS game/script8.rpy:8167
 translate incest_full menurestaurant_b5b4e999:
 
     # c "You shouldn't be out here alone either, Annie."
-    c "You shouldn't be out here alone either, Annie."
+    show gh 56
+    c "Nice to meet you, Annie!"
 
-# game/script8.rpy:8168
+# AS game/script8.rpy:8168
 translate incest_full menurestaurant_fc143e6c:
 
     # c "You could be kidnapped. Or kidnapped and then sold."
-    c "You could be kidnapped. Or kidnapped and then sold."
+    c "Do you want to be my friend, too?"
 
-# game/script8.rpy:8170
+# AS game/script8.rpy:8170
 translate incest_full menurestaurant_d6b86527:
 
     # a "I'm not alone, my dad's over there."
-    a "I'm not alone, my dad's over there."
+    show gh 48
 
-# game/script8.rpy:8172
+# AS game/script8.rpy:8172
 translate incest_full menurestaurant_d5a1dd2c:
 
     # a "He's a businessman. He's doing business calls now."
-    a "He's a businessman. He's doing business calls now."
+    show gh 48
 
-# game/script8.rpy:8173
+# AS game/script8.rpy:8173
 translate incest_full menurestaurant_d36d3b09:
 
     # mc "Ohh..."
-    mc "Ohh..."
+    pass
 
-# game/script8.rpy:8174
+# AS game/script8.rpy:8174
 translate incest_full menurestaurant_8354869f:
 
     # a "We were gonna see the pandas at the zoo, but... he got a call. So I guess we’re not going anymore."
-    a "We were gonna see the pandas at the zoo, but... he got a call. So I guess we’re not going anymore."
+    pass
 
-# game/script8.rpy:8175
+# AS game/script8.rpy:8175
 translate incest_full menurestaurant_7ee764b4:
 
     # c "Oh... I see."
-    c "Oh... I see."
+    pass
 
-# game/script8.rpy:8177
+# AS game/script8.rpy:8177
 translate incest_full menurestaurant_a9a07cb2:
 
     # a "I like your... h-hair, American boy."
-    a "I like your... h-hair, American boy."
+    a "S-Sure Chang."
 
-# game/script8.rpy:8178
+# AS game/script8.rpy:8178
 translate incest_full menurestaurant_cfe73dd9:
 
     # a "And your shirt."
-    a "And your shirt."
+    a "I would like to be your friend."
 
 # game/script8.rpy:8180
 translate incest_full menurestaurant_6d04953c:
 
     # mc "Thanks!"
-    mc "Thanks!"
+    show gh 48
 
-# game/script8.rpy:8182
+# AS game/script8.rpy:8182
 translate incest_full menurestaurant_0dfa5192:
 
     # c "OHHH, YOU LIKE ANIME TOO?!"
+    c "Yay! Now we're all friends!"
+    show gh 52
+    a "B-But I still like [mc] more than you."
+    show gh 58
+    c "Oh... Ok."
+    show gh 52
+    a "B-But I like your... s-shirt, Chang."
+    show gh 56
     c "OHHH, YOU LIKE ANIME TOO?!"
 
-# game/script8.rpy:8184
+# AS game/script8.rpy:8184
 translate incest_full menurestaurant_9a811e50:
 
     # a "N-Not really. I mean... my mom doesn't let me watch it."
-    a "N-Not really. I mean... my mom doesn't let me watch it."
+    a "Y-Yeah."
 
-# game/script8.rpy:8185
+# AS game/script8.rpy:8185
 translate incest_full menurestaurant_91bcc3e4:
 
     # a "She says those Japanese cartoons aren't for kids."
-    a "She says those Japanese cartoons aren't for kids."
+    a "I like Sailor Moon."
 
-# game/script8.rpy:8187
+# AS game/script8.rpy:8187
 translate incest_full menurestaurant_80f596e7:
 
     # mc "Oh... too bad."
-    mc "Oh... too bad."
+    mc "You wanted to be Sailor Moon once."
 
-# game/script8.rpy:8189
+# AS game/script8.rpy:8189
 translate incest_full menurestaurant_31f5d532:
 
     # c "No problem! Do you wanna play with us?! Let's meet at school tomorrow at lunch and pretend to be something we all know!"
-    c "No problem! Do you wanna play with us?! Let's meet at school tomorrow at lunch and pretend to be something we all know!"
+    c "Cool! Do you wanna play with us?! Let's meet at school tomorrow at lunch and pretend to be something we all know!"
 
 # game/script8.rpy:8190
 translate incest_full menurestaurant_7e724e23:
@@ -26370,11 +26382,11 @@ translate incest_full menurestaurant_7e724e23:
     # c "How about... Spiderman?!"
     c "How about... Spiderman?!"
 
-# game/script8.rpy:8192
+# AS game/script8.rpy:8192
 translate incest_full menurestaurant_e3a8374c:
 
     # a "My mom says superhero movies are too violent."
-    a "My mom says superhero movies are too violent."
+    a "I don't know that one."
 
 # game/script8.rpy:8194
 translate incest_full menurestaurant_9f013c4b:
@@ -26394,11 +26406,11 @@ translate incest_full menurestaurant_18df5e4f:
     # c "How about... Harry Potter?"
     c "How about... Harry Potter?"
 
-# game/script8.rpy:8199
+# AS game/script8.rpy:8199
 translate incest_full menurestaurant_86ece106:
 
     # a "Haven't seen it. My mom says witchcraft is the devil's work."
-    a "Haven't seen it. My mom says witchcraft is the devil's work."
+    a "Haven't seen it yet."
 
 # game/script8.rpy:8201
 translate incest_full menurestaurant_a3c2a6db:
@@ -26436,11 +26448,11 @@ translate incest_full menurestaurant_9a48e51f:
     # a "I haven't–"
     a "I haven't–"
 
-# game/script8.rpy:8213
+# AS game/script8.rpy:8213
 translate incest_full menurestaurant_ab2da64c:
 
     # a "Wait... yes! I saw it at my uncle's house!" with dis06
-    a "Wait... yes! I saw it at my uncle's house!" with dis06
+    a "Wait... yes! I saw it!" with dis06
 
 # game/script8.rpy:8214
 translate incest_full menurestaurant_53b09255:
@@ -26586,53 +26598,54 @@ translate incest_full menurestaurant_69b987cf:
     # c "Don't miss me too much!"
     c "Don't miss me too much!"
 
-# game/script8.rpy:8264
+# AS game/script8.rpy:8264
 translate incest_full menurestaurant_24cc2120:
 
     # a "Yeah, I should go before my dad gets mad too." with dis2
-    a "Yeah, I should go before my dad gets mad too." with dis2
+    a "Guess we still have to wait for Dad..." with dis2
 
-# game/script8.rpy:8265
+# AS game/script8.rpy:8265
 translate incest_full menurestaurant_11644fec:
 
     # a "Will you... will you be at school tomorrow?"
-    a "Will you... will you be at school tomorrow?"
+    a "Do you really think we'll see Chang again?"
 
-# game/script8.rpy:8267
+# AS game/script8.rpy:8267
 translate incest_full menurestaurant_412bb0e3:
 
     # mc "I will!"
-    mc "I will!"
+    mc "Yeah, he said he's going to our school."
 
-# game/script8.rpy:8269
+# AS game/script8.rpy:8269
 translate incest_full menurestaurant_866a4a5b:
 
     # a "You sure...?"
-    a "You sure...?"
+    a "You really think so...?"
 
-# game/script8.rpy:8271
+# AS game/script8.rpy:8271
 translate incest_full menurestaurant_e9a28e46:
 
     # mc "Yeah!"
-    mc "Yeah!"
+    mc "Yeah... is something wrong?"
 
-# game/script8.rpy:8273
+# AS game/script8.rpy:8273
 translate incest_full menurestaurant_a44484f5:
 
     # a "You won't ignore me there...?"
-    a "You won't ignore me there...?"
+    show gh 48
+    a "I don’t want people to disappear again... like with Mom, and Dalia, and Penny..."
 
-# game/script8.rpy:8275
+# AS game/script8.rpy:8275
 translate incest_full menurestaurant_5f144b4a:
 
     # mc "Of course not. Why would I...?"
-    mc "Of course not. Why would I...?"
+    mc "Awh... don’t worry, you’ll always have me!"
 
-# game/script8.rpy:8277
+# AS game/script8.rpy:8277
 translate incest_full menurestaurant_657e82c7:
 
     # a "Pinky promise!" with dis
-    a "Pinky promise!" with dis
+    a "Then pinky promise!" with dis
 
 # game/script8.rpy:8278
 translate incest_full menurestaurant_1d01d210:
@@ -26640,17 +26653,17 @@ translate incest_full menurestaurant_1d01d210:
     # mc "What...? What for?"
     mc "What...? What for?"
 
-# game/script8.rpy:8279
+# AS game/script8.rpy:8279
 translate incest_full menurestaurant_843309dd:
 
     # a "Promise me we'll be friends!"
-    a "Promise me we'll be friends!"
+    a "Promise you'll never leave me!"
 
 # game/script8.rpy:8280
 translate incest_full menurestaurant_6b0ed824_1:
 
     # mc "Um..."
-    mc "Um..."
+    pass
 
 # game/script8.rpy:8282
 translate incest_full menurestaurant_f963cd39:
@@ -26658,17 +26671,17 @@ translate incest_full menurestaurant_f963cd39:
     # mc "Yeah, sure. Pinky promise." with dis
     mc "Yeah, sure. Pinky promise." with dis
 
-# game/script8.rpy:8283
+# AS game/script8.rpy:8283
 translate incest_full menurestaurant_8cc19c03:
 
     # mc "Friends."
-    mc "Friends."
+    mc "I'll always be by your side, sis."
 
-# game/script8.rpy:8284
+# AS game/script8.rpy:8284
 translate incest_full menurestaurant_52efe796:
 
     # a "Friends forever!"
-    a "Friends forever!"
+    a "Forever!"
 
 # game/script8.rpy:8286
 translate incest_full menurestaurant_97f9f728:
@@ -26676,23 +26689,23 @@ translate incest_full menurestaurant_97f9f728:
     # a "Okay!" with dis12
     a "Okay!" with dis12
 
-# game/script8.rpy:8287
+# AS game/script8.rpy:8287
 translate incest_full menurestaurant_5daeeead:
 
     # a "I'll leave now!"
-    a "I'll leave now!"
+    a "I'll go see if Dad is done yet!"
 
-# game/script8.rpy:8288
+# AS game/script8.rpy:8288
 translate incest_full menurestaurant_14f3cd84:
 
     # a "See you tomorrow... [mc]!"
-    a "See you tomorrow... [mc]!"
+    a "Wait here!"
 
-# game/script8.rpy:8290
+# AS game/script8.rpy:8290
 translate incest_full menurestaurant_4c85d272:
 
     # mc "See ya!"
-    mc "See ya!"
+    mc "I won't go anywhere!"
 
 # game/script8.rpy:8292
 translate incest_full menurestaurant_7467ba59:
@@ -26700,11 +26713,11 @@ translate incest_full menurestaurant_7467ba59:
     # mc ". . ." with dis2
     mc ". . ." with dis2
 
-# game/script8.rpy:8293
+# AS game/script8.rpy:8293
 translate incest_full menurestaurant_d529e7ff:
 
     # mct "They said there weren’t many kids around here, but it seems like it’s full of weird ones."
-    mct "They said there weren’t many kids around here, but it seems like it’s full of weird ones."
+    mct "We made a friend already... and Annie's starting to smile again..."
 
 # game/script8.rpy:8294
 translate incest_full menurestaurant_77a89e99_3:
@@ -27066,11 +27079,11 @@ translate incest_full menurestaurant_c0481b7b:
     # a "Looks like you don't need me to keep you entertained."
     a "Looks like you don't need me to keep you entertained."
 
-# game/script8.rpy:8399
+# AS game/script8.rpy:8399
 translate incest_full menurestaurant_b2a3bca1:
 
     # mc "Actually, just before you got here, I was reminiscing about the day I met you and Chang."
-    mc "Actually, just before you got here, I was reminiscing about the day I met you and Chang."
+    mc "Actually, just before you got here, I was reminiscing about the day we arrived in Europe and met Chang."
 
 # game/script8.rpy:8401
 translate incest_full menurestaurant_853f744b:
@@ -27078,11 +27091,11 @@ translate incest_full menurestaurant_853f744b:
     # a "Ohh... I'm surprised you still remember that."
     a "Ohh... I'm surprised you still remember that."
 
-# game/script8.rpy:8403
+# AS game/script8.rpy:8403
 translate incest_full menurestaurant_290e167d:
 
     # mc "By all means! When I moved to London, I felt like my life was falling apart. You and Chang turned everything around for me."
-    mc "By all means! When I moved to London, I felt like my life was falling apart. You and Chang turned everything around for me."
+    mc "By all means! When we moved to London, everything felt like it was falling apart. But Chang helped turn that around, and the two of us grew closer than ever."
 
 # game/script8.rpy:8404
 translate incest_full menurestaurant_ad6485af:
@@ -27120,29 +27133,29 @@ translate incest_full menurestaurant_70922b56:
     # mc "An orange shirt tucked into a skirt with suspenders." with dis06
     mc "An orange shirt tucked into a skirt with suspenders." with dis06
 
-# game/script8.rpy:8418
+# AS game/script8.rpy:8418
 translate incest_full menurestaurant_7060dc7e:
 
     # a "And where was I going that day with my dad?"
-    a "And where was I going that day with my dad?"
+    a "And what were we waiting for?"
 
-# game/script8.rpy:8423
+# AS game/script8.rpy:8423
 translate incest_full menurestaurant_0d9eaa4d:
 
     # mc "To the movie theater." with dis06
-    mc "To the movie theater." with dis06
+    mc "To go to Chang's house." with dis06
 
-# game/script8.rpy:8425
+# AS game/script8.rpy:8425
 translate incest_full menurestaurant_dd1080d5:
 
     # mc "To see the pandas at the zoo." with dis06
-    mc "To see the pandas at the zoo." with dis06
+    mc "For Dad to finish the registration." with dis06
 
-# game/script8.rpy:8426
+# AS game/script8.rpy:8426
 translate incest_full menurestaurant_69c8701b:
 
     # mc "Although... you had to cancel those plans."
-    mc "Although... you had to cancel those plans."
+    mc "You bugged him over and over until he was done."
 
 # game/script8.rpy:8431
 translate incest_full menurestaurant_69817af8:
@@ -27168,11 +27181,11 @@ translate incest_full menurestaurant_a992efea:
     # a "What do you mean, “unlike me”?!"
     a "What do you mean, “unlike me”?!"
 
-# game/script8.rpy:8439
+# AS game/script8.rpy:8439
 translate incest_full menurestaurant_bf5e5107:
 
     # mc "To play mini golf." with dis06
-    mc "To play mini golf." with dis06
+    mc "A bus to go see pandas at the zoo." with dis06
 
 # game/script8.rpy:8441
 translate incest_full menurestaurant_28b9f04e:
@@ -57668,17 +57681,17 @@ translate incest_full strings:
     old "An orange shirt tucked into a skirt with suspenders"
     new "An orange shirt tucked into a skirt with suspenders"
 
-    # game/script8.rpy:8422
+    # AS game/script8.rpy:8422
     old "To the movie theater"
-    new "To the movie theater"
+    new "To go to Chang's house"
 
-    # game/script8.rpy:8424
+    # AS game/script8.rpy:8424
     old "To see the pandas at the zoo"
-    new "To see the pandas at the zoo"
+    new "For Dad to finish the registration"
 
-    # game/script8.rpy:8438
+    # AS game/script8.rpy:8438
     old "To play mini golf"
-    new "To play mini golf"
+    new "A bus to go see pandas at the zoo"
 
     # game/script8.rpy:9227
     old "Throw her onto the bed"
@@ -57846,9 +57859,9 @@ translate incest_full strings:
     old "{color=[walk_points]}An orange shirt tucked into a skirt with suspenders"
     new "{color=[walk_points]}An orange shirt tucked into a skirt with suspenders"
 
-    # game/script8.rpy:8545
+    # AS game/script8.rpy:8545
     old "{color=[walk_points]}To see the pandas at the zoo"
-    new "{color=[walk_points]}To see the pandas at the zoo"
+    new "{color=[walk_points]}For Dad to finish the registration"
 
     # game/script8.rpy:9358
     old "{color=[walk_path]}Throw her onto the bed"
@@ -58098,9 +58111,9 @@ translate incest_full strings:
     old "[gr]An orange shirt tucked into a skirt with suspenders"
     new "[gr]An orange shirt tucked into a skirt with suspenders"
 
-    # game/script8.rpy:8452
+    # AS game/script8.rpy:8452
     old "To see the pandas at the zoo [annie_pts]"
-    new "To see the pandas at the zoo [annie_pts]"
+    new "For Dad to finish the registration [annie_pts]"
 
     # game/script8.rpy:9299
     old "[gr]Continue the foreplay"

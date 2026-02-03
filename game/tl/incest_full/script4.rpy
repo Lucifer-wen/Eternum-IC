@@ -10050,11 +10050,14 @@ translate incest_full daliacove_53b16a17:
     # mc "(Oh my fucking god, those hips...)" with dissolve
     mc "(Oh my fucking god, those hips...)" with dissolve
 
-# game/script4.rpy:3602
+# BM game/script4.rpy:3602
 translate incest_full daliacove_0627118d:
 
     # mc "(Those abs... is it bad that I want to lick them?)"
-    mc "(Those abs... is it bad that I want to lick them?)"
+    if nancy03scene:
+        mc "(Those abs... is it bad that I want to lick them? Well, after what happened with Mom...)"
+    else:
+        mc "(Those abs... is it bad that I want to lick them?)"
 
 # game/script4.rpy:3604
 translate incest_full daliacove_53e271d6:
