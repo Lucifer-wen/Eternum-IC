@@ -72,7 +72,7 @@ translate incest_aunt start_1bb89422:
 translate incest_aunt start_6946b9e8:
 
     # a "You're nothing but a big ball of envy because your best friend can play Eternum and you can't since you didn't save any money."
-    a "You're nothing but a big ball of envy because your one-and-only little sister and best friend can play Eternum and you can't since you didn't save any money."
+    a "You're nothing but a big ball of envy because your one-and-only little sister and best friend can play Eternum, and you can't since you didn't save any money."
 
 # ST game/script.rpy:1233 (a)
 translate incest_aunt start_863beebc:
