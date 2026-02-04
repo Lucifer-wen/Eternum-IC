@@ -5646,8 +5646,9 @@ init python:
             "You better take care of your sister while you're in the USA, [mc].",
 
         # HS 58986
-        "Rest assured Mr. Winters, I won’t let anything happen to her!":
-            "Rest assured Grandpa, I won’t let anything happen to her!",
+        #Unessesary for the new version. ~LW
+        # "Rest assured Mr. Winters, I won’t let anything happen to her!":
+        #     "Rest assured Uncle, I won’t let anything happen to her!",
 
         # HS 58987
         "I'll take care of Annie as if she was my sister!":
@@ -7893,9 +7894,9 @@ init python:
                     store = renpy.store
                     default_name = "Annie's father"
                     stored_original = getattr(store, orig_attr, None)
-                    if stored_original in (None, "", "Grandpa"):
+                    if stored_original in (None, "", "Grandpa", "Annie's Uncle"):
                         base_name = _adad.name
-                        if not base_name or base_name == "Grandpa":
+                        if not base_name or base_name in ("Grandpa", "Annie's Uncle"):
                             base_name = default_name
                         setattr(store, orig_attr, base_name)
                         stored_original = base_name
@@ -7903,6 +7904,9 @@ init python:
                     if getattr(store, 'annie_sister', False):
                         if _adad.name != "Grandpa":
                             _adad.name = "Grandpa"
+                    elif getattr(store, 'annie_half_sister', False):
+                        if _adad.name != "Annie's Uncle":
+                            _adad.name = "Annie's Uncle"
                     else:
                         original = stored_original or default_name
                         if original and _adad.name != original:
