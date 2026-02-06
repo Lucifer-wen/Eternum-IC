@@ -1,6 +1,6 @@
 ﻿# TODO: Translation updated at 2026-01-28 10:20 (Eternum-0.9.5-pc)
 init python:
-    language_titles["incest_only_sister"] = "Sister"
+    language_titles["incest_only_sister"] = "Annie as Sister"
 
 translate incest_only_sister strings:
 

@@ -41538,11 +41538,14 @@ translate incest_aunt poswenlin_7b4b17bb:
     # mc "*Chuckles* (Those two are something else.)" with dis12
     mc "*Chuckles* (Those two are something else.)" with dis12
 
-# game/script7.rpy:12220
+# AU game/script7.rpy:12220 (p)
 translate incest_aunt poswenlin_56f4550a:
 
     # we "Say hi to your hot girls from me!"
-    we "Say hi to your hot girls from me!"
+    if polyp and not lunapoly:
+        we "Say hi to your hot cousin from me!"
+    else:
+        we "Say hi to your hot girls from me!"
 
 # game/script7.rpy:12221
 translate incest_aunt poswenlin_2d31bd2e:

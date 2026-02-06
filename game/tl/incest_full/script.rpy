@@ -31076,6 +31076,10 @@ translate incest_full ending1_8620dc9f:
 
 translate incest_full strings:
 
+    # game/script.rpy:725
+    old "Annie's father"
+    new "Grandpa"
+    
     # game/script.rpy:925
     old "Orion"
     new "Orion"
