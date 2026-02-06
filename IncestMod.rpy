@@ -8144,6 +8144,7 @@ init python:
 
 # Und ändere den Auto-Call-Screen:
 screen _in_incest_autocall():
+    timer 0.01 action Function(_im_apply_incest_mode)
     # Füge eine zusätzliche Bedingung hinzu
     if (
         ((not _in_incest_prompted) or (im_incest_mode == None))
