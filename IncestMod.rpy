@@ -5,6 +5,7 @@
 # - Speaker-aware "Nancy" -> "Mom" only for MC lines
 # ==========================
 
+default im_incest_mode = None
 default annie_incest = False
 default annie_sister = False
 default annie_mom = False
@@ -15,7 +16,6 @@ default _in_incest_prompted = False
 default im_redirect_enabled = True
 default im_label_overrides = {}
 default im_debug_redirect = False
-default persistent.im_incest_mode = None
 default persistent.text_offset = 1
 # Mod update metadata (Step 1)
 default persistent.im_mod_version = "1.4.1.2"
@@ -98,8 +98,8 @@ init python:
 
     _im_define_bonusmod_tags()
 
-    def _im_apply_persistent_mode():
-        mode = getattr(persistent, "im_incest_mode", None)
+    def _im_apply_incest_mode():
+        mode = getattr(store, "im_incest_mode", None)
         # store.im_cousin_override = bool(getattr(persistent, "im_cousin_override", False))
         if mode == "incest":
             store.annie_incest = True
@@ -107,45 +107,39 @@ init python:
             store.annie_mom = True
             store.annie_half_sister = False
             store.annie_aunt = False
-            store._in_incest_prompted = True
         elif mode == "mom":
             store.annie_incest = False
             store.annie_sister = False
             store.annie_mom = True
             store.annie_half_sister = False
             store.annie_aunt = False
-            store._in_incest_prompted = True
         elif mode == "sister":
             store.annie_incest = False
             store.annie_sister = True
             store.annie_mom = False
             store.annie_half_sister = False
             store.annie_aunt = False
-            store._in_incest_prompted = True
         elif mode == "half":
             store.annie_incest = False
             store.annie_sister = False
             store.annie_mom = True
             store.annie_half_sister = True
             store.annie_aunt = False
-            store._in_incest_prompted = True
         elif mode == "aunt":
             store.annie_incest = False
             store.annie_sister = False
             store.annie_mom = False
             store.annie_half_sister = False
             store.annie_aunt = True
-            store._in_incest_prompted = True
         elif mode == "off":
             store.annie_incest = False
             store.annie_sister = False
             store.annie_mom = False
             store.annie_half_sister = False
             store.annie_aunt = False
-            store._in_incest_prompted = True
 
     try:
-        _im_apply_persistent_mode()
+        _im_apply_incest_mode()
     except Exception:
         pass
 
@@ -8087,49 +8081,19 @@ init 991 python:
 # -----------------------------------------
 label annie_incest_optin:
     menu:
-        "Select Incest mode:"
-        "Disabled":
-            $ annie_incest = False
-            $ annie_sister = False
-            $ annie_mom = False
-            $ annie_half_sister = False
-            $ annie_aunt = False
-            $ persistent.im_incest_mode = "off"
-        "I only want Nancy as Mom":
-            $ annie_incest = False
-            $ annie_sister = False
-            $ annie_mom = True
-            $ annie_half_sister = False
-            $ annie_aunt = False
-            $ persistent.im_incest_mode = "mom"
-        "I only want Annie as a sister (coming soon)":
-            $ annie_incest = False
-            $ annie_sister = True
-            $ annie_mom = False
-            $ annie_half_sister = False
-            $ annie_aunt = False
-            $ persistent.im_incest_mode = "sister"
-        "Nancy as Mom and Annie as half-sister":
-            $ annie_incest = False
-            $ annie_sister = False
-            $ annie_mom = True
-            $ annie_half_sister = True
-            $ annie_aunt = False
-            $ persistent.im_incest_mode = "half"
-        "Nancy as aunt and Annie as stepsister (coming soon maybe)":
-            $ annie_incest = False
-            $ annie_sister = False
-            $ annie_mom = False
-            $ annie_half_sister = False
-            $ annie_aunt = True
-            $ persistent.im_incest_mode = "aunt"
+        "Which Incest Mode would you like to use? (You can always toggle it in the Preferences menu.)"
         "Full Incest (Nancy as Mom and Annie as sister)":
-            $ annie_incest = True
-            $ annie_sister = True
-            $ annie_mom = True
-            $ annie_half_sister = False
-            $ annie_aunt = False
-            $ persistent.im_incest_mode = "incest"
+            $ im_incest_mode = "incest"
+        "I only want Nancy as Mom":
+            $ im_incest_mode = "mom"
+        "I only want Annie as sister (coming soon)":
+            $ im_incest_mode = "sister"
+        "Nancy as Mom and Annie as half-sister":
+            $ im_incest_mode = "half"
+        "Nancy as aunt and Annie as stepsister (coming soon)":
+            $ im_incest_mode = "aunt"
+        "Disabled":
+            $ im_incest_mode = "off"
     # menu:
     #     "Do you want a cousin?"
     #     "Yes":
@@ -8139,6 +8103,7 @@ label annie_incest_optin:
     #         $ im_cousin_override = False
     #         $ persistent.im_cousin_override = False
     # After flags change, refresh label overrides immediately
+    $ _im_apply_incest_mode()
     $ im_apply_label_map()
     $ in_apply_text_map()
     $ _in_incest_prompted = True
@@ -8148,6 +8113,7 @@ label annie_incest_optin:
 # Re-apply after loading
 # -----------------------------------------
 label after_load:
+    $ _im_apply_incest_mode()
     $ in_apply_text_map()
     $ _im_update_checked = False
     $ _im_check_for_update()
@@ -8180,7 +8146,7 @@ init python:
 screen _in_incest_autocall():
     # Füge eine zusätzliche Bedingung hinzu
     if (
-        (not _in_incest_prompted)
+        ((not _in_incest_prompted) or (im_incest_mode == None))
         and (renpy.get_screen('choice') is None)
         and (not renpy.context()._main_menu)
         and (not _im_reloading_scripts)
@@ -8432,82 +8398,52 @@ init 1000:
                     label _("Incest Mode")
                     textbutton _("Full Incest"):
                         action [
-                            SetVariable("annie_incest", True),
-                            SetVariable("annie_sister", True),
-                            SetVariable("annie_mom", True),
-                            SetVariable("annie_half_sister", False),
-                            SetVariable("annie_aunt", False),
-                            SetVariable("_in_incest_prompted", True),
-                            SetVariable("persistent.im_incest_mode", "incest"),
+                            SetVariable("im_incest_mode", "incest"),
+                            Function(_im_apply_incest_mode),
                             Function(im_apply_label_map),
                             Function(in_apply_text_map),
                         ]
-                        selected annie_incest
+                        selected im_incest_mode == "incest"
                     textbutton _("Nancy as Mom"):
                         action [
-                            SetVariable("annie_incest", False),
-                            SetVariable("annie_sister", False),
-                            SetVariable("annie_mom", True),
-                            SetVariable("annie_half_sister", False),
-                            SetVariable("annie_aunt", False),
-                            SetVariable("_in_incest_prompted", True),
-                            SetVariable("persistent.im_incest_mode", "mom"),
+                            SetVariable("im_incest_mode", "mom"),
+                            Function(_im_apply_incest_mode),
                             Function(im_apply_label_map),
                             Function(in_apply_text_map),
                         ]
-                        selected (not annie_incest and annie_mom and not annie_sister and not annie_half_sister)
-                    textbutton _("Sister"):
+                        selected im_incest_mode == "mom"
+                    textbutton _("Annie as Sister"):
                         action [
-                            SetVariable("annie_incest", False),
-                            SetVariable("annie_sister", True),
-                            SetVariable("annie_mom", False),
-                            SetVariable("annie_half_sister", False),
-                            SetVariable("annie_aunt", False),
-                            SetVariable("_in_incest_prompted", True),
-                            SetVariable("persistent.im_incest_mode", "sister"),
+                            SetVariable("im_incest_mode", "sister"),
+                            Function(_im_apply_incest_mode),
                             Function(im_apply_label_map),
                             Function(in_apply_text_map),
                         ]
-                        selected (not annie_incest and not annie_mom and annie_sister)
-                    textbutton _("Half-Sister"):
+                        selected im_incest_mode == "sister"
+                    textbutton _("Mom+Half-Sister"):
                         action [
-                            SetVariable("annie_incest", False),
-                            SetVariable("annie_sister", False),
-                            SetVariable("annie_mom", True),
-                            SetVariable("annie_half_sister", True),
-                            SetVariable("annie_aunt", False),
-                            SetVariable("_in_incest_prompted", True),
-                            SetVariable("persistent.im_incest_mode", "half"),
+                            SetVariable("im_incest_mode", "half"),
+                            Function(_im_apply_incest_mode),
                             Function(im_apply_label_map),
                             Function(in_apply_text_map),
                         ]
-                        selected (annie_mom and annie_half_sister)
-                    textbutton _("Aunt"):
+                        selected im_incest_mode == "half"
+                    textbutton _("Aunt+Stepsister"):
                         action [
-                            SetVariable("annie_incest", False),
-                            SetVariable("annie_sister", False),
-                            SetVariable("annie_mom", False),
-                            SetVariable("annie_half_sister", False),
-                            SetVariable("annie_aunt", True),
-                            SetVariable("_in_incest_prompted", True),
-                            SetVariable("persistent.im_incest_mode", "aunt"),
+                            SetVariable("im_incest_mode", "aunt"),
+                            Function(_im_apply_incest_mode),
                             Function(im_apply_label_map),
                             Function(in_apply_text_map),
                         ]
-                        selected annie_aunt
+                        selected im_incest_mode == "aunt"
                     textbutton _("Disabled"):
                         action [
-                            SetVariable("annie_incest", False),
-                            SetVariable("annie_sister", False),
-                            SetVariable("annie_mom", False),
-                            SetVariable("annie_half_sister", False),
-                            SetVariable("annie_aunt", False),
-                            SetVariable("_in_incest_prompted", True),
-                            SetVariable("persistent.im_incest_mode", "off"),
+                            SetVariable("im_incest_mode", "off"),
+                            Function(_im_apply_incest_mode),
                             Function(im_apply_label_map),
                             Function(in_apply_text_map),
                         ]
-                        selected (not annie_incest and not annie_sister and not annie_mom and not annie_half_sister and not annie_aunt)
+                        selected im_incest_mode == "off" or im_incest_mode == None
 
                 # vbox:
                 #     style_prefix "radio"
