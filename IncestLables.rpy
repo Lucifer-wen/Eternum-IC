@@ -10,7 +10,7 @@
 
 # Example skeleton (uncomment and adapt):
 
-# Used in annie sister map
+# Used in annie sister map, replaces a few short lines that would affect other lines
 label welcome_mod:
     play sound carstop fadein 2
     stop musicb fadeout 5
@@ -72,7 +72,7 @@ label welcome_mod:
     show welcome 7
     mc "Everything looks like it hasn’t changed a bit... Damn, it feels so good to be back." with Dissolve(1.2)
     mc "Is Dalia still the same hyperactive, pigtailed girl that I remember?"
-    mc "*Laughs* And Penelope the preteen that was too \"cool\" to play with her younger siblings?"
+    a "*Laughs* And Penelope the preteen that was too \"cool\" to play with her younger siblings?"
     n "Well... see for yourself!"
     show welcome 8
     n "Dalia! Penelope!!" with hpunch
@@ -110,11 +110,11 @@ label welcome_mod:
     play soundlow whoosh3
     show pendaliap
     p "Oh... O-Of course! [mc]!"
-    d "Oh, y-yeah, so excited! Hi bro!"
+    d "Oh, y-yeah, so excited! Hi [mc]!"
     p "It's been a while!"
     d "Yeah, welcome back!"
     mc "Thanks!"
-    mc "So good to see you, sis!"
+    a "So good to see you, sis!"
     d "Same here!"
     p "Yes! So good!"
     mc "Yeah!"
@@ -140,7 +140,7 @@ label welcome_mod:
     show welcome 14
     d "I need my running shoes! I can't find them! They say it's going to rain in half an hour!"
     show welcome 15
-    n "Both of those things can wait! You didn't even welcome your brother and sister properly!"
+    n "Both of those things can wait! You didn't even welcome [mc] and Annie properly!"
     n "They're gonna live with us for a whole year. You know that, right?"
     show welcome 12
     p "But we just did!"
@@ -148,7 +148,7 @@ label welcome_mod:
     p "[mc]! I can't wait to properly meet you!" with dis
     p "I wish I could stay, but I really need to go!"
     show welcome 13a
-    p "Oh, and you must be Annie! Nice to see you again!"
+    p "Oh, and you must be Annie! Nice to meet you too!"
     a "Thank you!"
     d "Welcome to the family!"
     d "By the way, I love your haircut!"
@@ -200,7 +200,7 @@ label welcome_mod:
             p "See?!" with dissolve
             p "Even [mc] is asking you to let us go!"
             show welcome 13c
-            d "Because he's cool! It's good to see the city didn't change you, bro." with dis
+            d "Because he's cool! It's good to see the city didn't change you, [mc]." with dis
     show welcome 13
     n "*Sighs* What do you need the car for?" with dis
     show welcome 16
@@ -235,7 +235,7 @@ label welcome_mod:
     n "They're next to the garage door, but you're not going anywhere."
     d "Mom!! You can't do this to me!"
     d "I need to run 10 miles every day or I'll stay behind!"
-    d "Kredon's annual race is next week!"
+    d "The gym's annual competition is just two weeks away!"
     n "So what's the big deal? You're already one of the best athletes in town!"
     show welcome 18
     d "But not the best. That damn Micaela always lifts more weight than I do!" with dis
@@ -302,14 +302,14 @@ label welcome_mod:
     a "I'd love that!"
     mc "Okay! I'll leave you two alone! Good night, girls."
     show welcome 22
-    a "Goodnight bro! Sweet dreams!" with dis
+    a "Goodnight [mc]! Sweet dreams!" with dis
     show welcome 26
     n "Tomorrow is your first day at your new school, so it's probably a good idea to get a good night’s rest."
     n "Goodnight, [mc]."
     mc "See you tomorrow!"
     jump dream1
 
-# Used in base map
+# Used in base map, adds a few flavor lines
 label daliacove_mod:
     stop music fadeout 6
     show black with Dissolve(2.2)
@@ -583,9 +583,11 @@ label daliacove_mod:
     d "*Snorts* Shut up! Haha!"with dis
     d "Don't remind me of that!"
     show cd 22
+
     # CCMOD: PHONE
     if renpy.loadable("achievements/achievements.rpy"):
         $ unlock_wallpaper_by_name("wp_dalia_4")
+
     mc "*Chuckles* Hey, it's true!" with dis15
     show cd 21
     d "*Chuckles* That was so embarrassing! I don't know what got into me. God, did you see the looks on their faces?"
@@ -773,9 +775,11 @@ label daliacove_mod:
         d "Well... I hope this is enough to get you in the mood."with dis12
     d "It's gonna be difficult to do my part otherwise."
     show cd 41
+
     # CCMOD: PHONE
     if renpy.loadable("achievements/achievements.rpy"):
         $ unlock_wallpaper_by_name("wp_lewd_dalia_1")
+
     mc "I doubt that'll be a problem..."
     if dalianaked:
         show cd 40
@@ -1114,14 +1118,164 @@ label daliacove_mod:
     jump nightmare04
 
 # Used in annie sister map, replaces meeting Annie flashback
-label mod_call_chat_21:
-    if photonovatan:
-        mct "Holy smokes, Nova's butt is severely underrated." with dis08
-        scene gh 21 
-        mct "I have to see those tan lines from the front before they disappear." with dis14
-        mct "I wonder how–"
-    else:
-        eul "*Clears throat* Ahem." 
+# BA/N: modified to trigger more reliably, seems to work?  revert if it breaks anything else
+    # has two call spots (mod_call_chat_18 and menurestaurant_mod) for the sake of redundancy
+label mod_call_chat_18:
+    mct "I know that underpass, it always floods." with dis08
+    mct "If I hadn't come from Chang's, I'd be stuck there too."
+    show gh 8
+    mct "Welp, looks like I’ve got a few minutes to myself until Annie shows up."with dis08
+    mct "Maybe I could start asking for the..."
+    show gh 9
+    mct "Hey... it's Raul and Noah!" 
+    mct "I love how I keep running into people I know in this town."
+    mct "I don't recognize their friend, though."
+    stop music3 fadeout 12
+    play music2 mafia fadein 10 volume 0.7
+    show gh 10 with Dissolve(3.6)
+    giu "Ah, Raul... you’ve got a knack for picking out just the right wine. This one’s got the same rich notes as the vintage back in Palermo." with dis17
+    rau "We brought it straight from Bosnia, just for you, old friend." 
+    show gh 12
+    giu "However... as much as I’m savoring this, I’m here to talk business."with dis17
+    show gh 11
+    rau "What’s on your mind?"
+    rau "Anything specific you need to discuss with me and my brother?"
+    show gh 12
+    giu "Don’t play the fool with me, Raul. It doesn’t suit you."
+    giu "We both know why I'm here."
+    giu "I’ve come to deliver one final warning."
+    giu "Consider it... a gesture of respect. For all the history between our families."
+    show gh 14
+    rau "A last warning, he says, brother."
+    show gh 15
+    rau "Do you have any idea what he’s referring to?"
+    rau "No, right?"
+    rau "Hmm, you'll have to be more specific."
+    show gh 13
+    giu ". . ."
+    show gh 12
+    giu "For over 20 years, the seven big families have maintained a delicate balance."with dis
+    giu "El Lobo Mendoza rules over South America, Hugo controls Mexico, Ivanov holds sway in Russia, Hiromi in Asia, Callahan on the East Coast..."
+    giu "And finally... you’ve got the West Coast... and I got Europe AND Eternum."
+    giu "It’s {i}always{/i} been this way."
+    show gh 11
+    rau "It started being {i}this way{/i} when Eternum was released and you assumed control of it during an extraordinary meeting where only four of the big families were present."
+    show gh 12
+    giu "*Sighs* It's simple, really."
+    giu "Stay out of Eternum, and we won't have any issues."
+    show gh 11
+    rau "We never questioned your illegitimate grip on this new market, not for a second."
+    rau "But let me remind you, my friend, Eternum is vast. I'm pretty sure it's big enough for the both of us."
+    show gh 13
+    giu "Hmph."
+    show gh 12
+    giu "So... is this how it's going to be?"with dis
+    giu "You want to start a war? Do you really think you stand a chance with Mendoza and Callahan on my side?"
+    show gh 11
+    rau "We'd never start a war without provocation."
+    rau "That's not how we do business."
+    show gh 16
+    noa "Please, let's eat first and take a moment to cool down."with dis
+    noa "It'd be a shame to let the food go cold."
+    show gh 12
+    giu "Yeah..."
+    giu "You'd be wise to listen to your brother, amico mio."
+    giu "Maybe you should have heeded his advice a long time ago..."
+    show gh 11
+    rau "You might be right about that, old friend."
+    rau "You just might be right..."
+    play sound risingshort5b
+    show gh13 with dis22
+    pause 1.5
+    show gh11b with dis22
+    pause 1.5
+    stop music2
+    play music3 jazzbar
+    stop sound
+    scene gh 17
+    mct "The fuck is going on over there...?"
+    mct "They look tense as hell."
+    eul "Hi, handsome."
+    show gh 18
+    mc "Hmm?" with dis
+    mc "Oh, hi there."
+    show gh 19
+    eul "Can I get you started with a drink while you check out the menu?"
+    show gh 18
+    mc "Uuh... sure!"
+    mc "It almost feels weird being offered alcohol at a restaurant."
+    mc "I'm still getting used to this whole “legal adult” thing."
+    show gh 19
+    eul "Gotta thank former President Stabb for the lowered drinking age."
+    show gh 18
+    mc "*Chuckles* Yeah, I should probably send him a thank-you card."
+    show gh 19
+    eul "Can I recommend the Grand Rouge from 2008?"
+    show gh 18
+    mc "Depends. Will it cost me more than my student loans?"
+    show gh 19
+    eul "*Giggles* It's actually discounted today. It’s our cheapest wine on the menu, but also one of the best."
+    show gh 18
+    mc "Well, that's a hard offer to refuse, then."
+    show gh 19
+    eul "Excellent choice! Would you like to look at the menu too?"
+    show gh 18
+    mc "I checked it out online, actually. We’re going to have one of those five-course menus, but please don’t start serving until my date arrives."
+    show gh 19
+    eul "Of course."
+    eul "If you need {i}anything{/i} to make your wait shorter, please just let me know."
+    show gh 18
+    mc "I will, thank you!"
+    show gh 20 with dis17
+    mct "Damn, service here is top-notch." with dis
+    mct "We'll have to leave a good tip, I suppose. I'm still not fully used to how the tipping system works in the US either..."
+    play sound vibration
+    play sound2 vibration
+    bla "{sc=1}Your phone buzzes.{/sc}"
+    mct "Oh wow, more messages."
+    mct "Feeling popular today."
+    menu menurestaurant_mod:
+        with dis
+        "Chang" if changaskmicaelaout and chacha1:
+            $ chacha1 = False
+            call chat(chang_chat2) from _call_chat_19
+            if changborrowjoke:
+                $ changmicaela += 1
+                mc "*Snorts* (I swear, if Chang doesn't end up with Micaela I'm gonna be even more heartbroken than him.)" with dis08
+            else:
+                mct "I really want them to end up together, but... bro, there are limits." with dis08
+                mct "That joke is way too good."
+            jump menurestaurant_mod
+        "Alex" if alexpath and chacha2:
+            $ chacha2 = False
+            call chat(alex_chat4) from _call_chat_20
+            mct "Damn, Alex has really been pushing herself lately."with dis08
+            mct "Since William Bardot basically made her an outcast, she’s been juggling studying, working, and keeping up with her swimming lessons."
+            mct "And all on minimum wage."
+            mct "If she weren’t so stubborn and let us help her..."
+            mct "I’ve got to figure out how to help her without her realizing I’m actually helping her."
+            jump menurestaurant_mod
+        "Nova" if novapath and ((not chacha1 or not changaskmicaelaout) and (not chacha2 or not alexpath)):
+            call chat(nova_chat4) from mod_call_chat_21
+            if photonovatan:
+                mct "Holy smokes, Nova's butt is severely underrated." with dis08
+                scene gh 21 
+                mct "I have to see those tan lines from the front before they disappear." with dis14
+                mct "I wonder how–"
+            else:
+                mct "Huh, I didn’t even think about that. Entering Eternum without the implant also means all physical impacts carry over to the real world."with dis08
+                mct "Interesting."
+        "Put your phone away":
+            if changaskmicaelaout or alexpath:
+                mct "Mmmh, well, I can also reply later." with dis08
+                mct "I'll just scroll through Insta and X for a bit."
+            else:
+                mct "Oh... it was just spam as usual..."
+                mct "Well, I guess I'll just scroll through Insta and X for a bit."
+            show gh 21
+            mct "Heh, I love this new trending meme." with dis14
+            mct "It's me for real."
+    eul "*Clears throat* Ahem."
     if photonovatan:
         play sound2 whoosh3b
         play soundlow slam3
@@ -1197,7 +1351,7 @@ label mod_call_chat_21:
     mct "Hopefully she'll arrive soon, though. I'm starving." with dis
     mc "Hmm."
     mct "At least this little wait helped me shake off those stupid jitters I had earlier."
-    mct "You said it yourself. It's just another meal alone with Annie, like we’ve usually had these last 10 years."
+    mct "You said it yourself. It's just another meal with Annie, like we've normally had these last 10 years."
     mc ". . ."
     mct "Ten years..."
     mct "Man, time flies by."
@@ -1337,7 +1491,7 @@ label mod_call_chat_21:
     a "Y-Yeah."
     a "I like Sailor Moon."
     show gh 53
-    mc "You wanted to be Sailor Moon once."
+    mc "She wanted to be Sailor Moon for Halloween."
     show gh 56
     c "Cool! Do you wanna play with us?! Let's meet at school tomorrow at lunch and pretend to be something we all know!"
     c "How about... Spider-man?!"
@@ -1363,7 +1517,7 @@ label mod_call_chat_21:
     show gh 48
     a "I haven't–"
     show gh 54
-    a "Wait... yes! I saw it!" with dis06
+    a "Wait... yes! We saw it!" with dis06
     a "They were super old movies!"
     show gh 56
     c "Oh, NICE! Let's play that!"
@@ -1531,9 +1685,11 @@ label mod_call_chat_21:
     a "Oh... I didn't do anything too fancy, really." with dis12
     a "I just teased the roots a bit and used a lot of hairspray to... you know, add some volume."
     show gh 81
+
     # CCMOD: PHONE
     if renpy.loadable("achievements/achievements.rpy"):
         $ unlock_wallpaper_by_name("wp_annie_14")
+
     mc "You're gonna have to give me the brand of that hairspray."
     show gh 80
     a "Sure thing! It's one Penelope recommended me."
@@ -1574,8 +1730,8 @@ label mod_call_chat_21:
             show gh 85
             menu:
                 with dis
-                "To go to Chang's house":
-                    mc "To go to Chang's house." with dis06
+                "For Chang's hotpot restaurant to open":
+                    mc "For Chang's hotpot restaurant to open." with dis06
                 "{color=[walk_points]}[gr]For Dad to finish the registration":
                     mc "For Dad to finish the registration." with dis06
                     mc "You bugged him over and over until he was done."
@@ -1590,8 +1746,8 @@ label mod_call_chat_21:
                     show gh 84
                     a "What do you mean, “unlike me”?!"  
                     jump rememberdinnersuccess                
-                "A bus to go see pandas at the zoo":
-                    mc "A bus to go see pandas at the zoo." with dis06
+                "For a bus to go see pandas at the zoo":
+                    mc "For a bus to go see pandas at the zoo." with dis06
     show gh 84
     a "Wrong!"
     a "SO wrong! *Chuckles* You said that so confidently that you almost made me doubt myself!"
@@ -1602,4 +1758,5 @@ label mod_call_chat_21:
     
     show gh 85
     mc "*Chuckles* In my defense, it was so long ago that no one would remember the details."
+    show gh 84
     jump rememberdinnersuccess
