@@ -3397,7 +3397,7 @@ init python:
 
         # BM script9:17032
         "I get to be with the guy I love and still have my sister’s love!":
-           "I get to be with my beloved brother and still have my sister’s love!",
+            "I get to be with my beloved brother and still have my sister’s love!",
 
     }
 
