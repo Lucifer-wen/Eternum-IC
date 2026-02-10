@@ -1236,7 +1236,7 @@ label mod_call_chat_18:
     mct "Feeling popular today."
     menu menurestaurant_mod:
         with dis
-        "Chang" if changaskmicaelaout and chacha1:
+        "{color=[walk_points]}[gr]Chang" if changaskmicaelaout and chacha1:
             $ chacha1 = False
             call chat(chang_chat2) from _call_chat_19
             if changborrowjoke:
@@ -1246,7 +1246,7 @@ label mod_call_chat_18:
                 mct "I really want them to end up together, but... bro, there are limits." with dis08
                 mct "That joke is way too good."
             jump menurestaurant_mod
-        "Alex" if alexpath and chacha2:
+        "{color=[walk_points]}[gr]Alex" if alexpath and chacha2:
             $ chacha2 = False
             call chat(alex_chat4) from _call_chat_20
             mct "Damn, Alex has really been pushing herself lately."with dis08
@@ -1255,7 +1255,7 @@ label mod_call_chat_18:
             mct "If she weren’t so stubborn and let us help her..."
             mct "I’ve got to figure out how to help her without her realizing I’m actually helping her."
             jump menurestaurant_mod
-        "Nova" if novapath and ((not chacha1 or not changaskmicaelaout) and (not chacha2 or not alexpath)):
+        "{color=[walk_points]}[gr]Nova" if novapath and ((not chacha1 or not changaskmicaelaout) and (not chacha2 or not alexpath)):
             call chat(nova_chat4) from mod_call_chat_21
             if photonovatan:
                 mct "Holy smokes, Nova's butt is severely underrated." with dis08
@@ -1317,7 +1317,7 @@ label mod_call_chat_18:
     mc "Oh..."
     menu:
         with dis
-        "{color=[walk_path]}[red]Flirt":
+        "{color=[walk_path]}Flirt [red][mt]{s}(Annie Path){/s}":
             $ eulalieflirt = True
             mc "Well... I'll certainly keep it in mind."with dis
             mc "I hate being hungry."
@@ -1732,7 +1732,7 @@ label mod_call_chat_18:
                 with dis
                 "For Chang's hotpot restaurant to open":
                     mc "For Chang's hotpot restaurant to open." with dis06
-                "{color=[walk_points]}[gr]For Dad to finish the registration":
+                "{color=[walk_points]}For Dad to finish the registration [annie_pts]":
                     mc "For Dad to finish the registration." with dis06
                     mc "You bugged him over and over until he was done."
                     $ annie_points += 1
