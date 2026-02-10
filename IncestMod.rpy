@@ -946,7 +946,7 @@ init python:
             "(I used to spend the entire afternoon playing with Mom and my sister Dalia, but then we had to move and ended up losing touch.)",
 
         # BM 964
-        # LW/N:  FIXED: Handle both versions
+        # LW/N: FIXED: Handle both versions
         "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Nancy and Dalia again.)":
             "Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see my mom, Dalia, and Penelope again.",
 
@@ -2776,6 +2776,10 @@ init python:
         "You sound exhausted, Dalia.":
             "You sound exhausted, sis.",
 
+        # BM script8:15862
+        "Well, I don't know, then I just thank my mom for making me the way I am.":
+            "Well, I don't know, then I just thank Mom for making me the way I am.",
+
         # BM 96729
         "(Hmm, yeah.)":
             "(Imagine her face if I tell her it was with my brother.)",
@@ -3085,9 +3089,13 @@ init python:
         "Hey... can I... a-ask you something, [mc]?":
             "Hey... can I... a-ask you something, bro?",
 
-        # BM script9:125519 (menu)
+        # BM script9:12519 (menu)
         "Have anal sex with Penny":
-            "Have anal sex with your big sister",
+            "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
+
+        # BA/N: temp fix for multi-mod tags not being stripped
+        "Have anal sex with Penny [gr][mt](Anal)":
+            "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
 
         # BM script9:12535
         "I’ll remember it next time, Penny... word for word.":
@@ -4373,7 +4381,7 @@ init python:
         "*Jumps on the bed* Oh my god, [mc]! Look at this!":
             "*Jumps on the bed* Oh my god, bro! Look at this!",
 
-        # AS 35431
+        # AS 35431 (menu)
         # l9/N: Changed to be fully compatible with and without either walkthrough
         "Decline and stay as friends":
             "{color=[walk_path]}Decline and stay as siblings [red][mt](Closes Annie's path)",
@@ -4969,6 +4977,10 @@ init python:
         # l9/N: Changed to be fully compatible with and without either walkthrough
         # BA/N: Not sure why this was originally disabled, but I've reenabled it for the backup
         "To see the pandas at the zoo":
+            "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
+
+        # BA/N: temp fix for multi-mod tags not being stripped
+        "To see the pandas at the zoo [annie_pts]":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
         # AS script8:8425
@@ -5973,7 +5985,7 @@ init python:
         "*Jumps on the bed* Oh my god, [mc]! Look at this!":
             "*Jumps on the bed* Oh my god, bro! Look at this!",
 
-        # HS 35431
+        # HS 35431 (menu)
         # l9/N: Changed to be fully compatible with and without either walkthrough
         "Decline and stay as friends":
             "{color=[walk_path]}Decline and stay as siblings [red][mt](Closes Annie's path)",
@@ -6456,6 +6468,10 @@ init python:
         # l9/N: Changed to be fully compatible with and without either walkthrough
         # HS script8:8424 (menu)
         "To see the pandas at the zoo":
+            "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
+
+        # BA/N: temp fix for multi-mod tags not being stripped
+        "To see the pandas at the zoo [annie_pts]":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
         # HS script8:8425
