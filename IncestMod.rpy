@@ -98,6 +98,38 @@ init python:
 
     _im_define_bonusmod_tags()
 
+    def _im_sync_adad_alias():
+        """
+        Ensure Annie's dad NPC uses the correct alias for the active mode
+        and restore the original name when incest modes are disabled.
+        """
+        try:
+            store = renpy.store
+            _adad = getattr(store, "adad", None)
+            if _adad is None or not hasattr(_adad, "name"):
+                return
+            orig_attr = "_im_adad_orig_name"
+            default_name = "Annie's father"
+            stored_original = getattr(store, orig_attr, None)
+            if stored_original in (None, "", "Grandpa", "Annie's Uncle"):
+                base_name = getattr(_adad, "name", None)
+                if not base_name or base_name in ("Grandpa", "Annie's Uncle"):
+                    base_name = default_name
+                setattr(store, orig_attr, base_name)
+                stored_original = base_name
+
+            if getattr(store, "annie_sister", False):
+                target_name = "Grandpa"
+            elif getattr(store, "annie_half_sister", False):
+                target_name = "Annie's Uncle"
+            else:
+                target_name = stored_original or default_name
+
+            if _adad.name != target_name:
+                _adad.name = target_name
+        except Exception:
+            pass
+
     def _im_apply_incest_mode():
         mode = getattr(store, "im_incest_mode", None)
         # store.im_cousin_override = bool(getattr(persistent, "im_cousin_override", False))
@@ -137,6 +169,7 @@ init python:
             store.annie_mom = False
             store.annie_half_sister = False
             store.annie_aunt = False
+        _im_sync_adad_alias()
 
     try:
         _im_apply_incest_mode()
@@ -3437,6 +3470,7 @@ init python:
 
         # BA/N: Want to mention "Grandparents" at some point in the intro, otherwise their appearence comes out of no where later on. 
         # not sure where tho
+        #LW/N: Sounds like a good Idea maybe with a new lable or adding to the intro lable.
 
         # AS 826
         "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
@@ -4534,6 +4568,8 @@ init python:
         "B-Bye, [mc]! I'll see you at home!":
             "B-Bye, bro! I'll see you at home!",
 
+
+        #LW/N: Is NOT used in the HS map the replacement comes elsewhere but I can't find where.
         # AS 44139 phone chats (annie_chat)
         "I've been shopping all day with Nancy and I had no signal!":
             "I've been shopping all day with Mom and I had no signal!",
@@ -8261,11 +8297,11 @@ init python:
         # cousin_override = getattr(renpy.store, 'im_cousin_override', False)
         mapping = {}
 
-        if mom_enabled:
+        if mom_enabled and not half_enabled:
             # Nancy Mom uses base map only.
             mapping.update(mom_map)
 
-        if incest_enabled:
+        if incest_enabled and not half_enabled:
             # Full Incest uses base + sister map (as requested).
             mapping.update(annie_sister_map)
         elif sister_enabled:
@@ -8273,6 +8309,8 @@ init python:
             mapping.update(annie_only_sister_map)
 
         if half_enabled:
+            for key in _HALF_SISTER_DISABLE_KEYS:
+                mapping.pop(key, None)
             # Half-sister uses base + half-sister map.
             mapping.update(annie_half_sister_map)
 
@@ -8414,6 +8452,10 @@ init python:
 
     def _in_transform_text(s: str) -> str:
         t = s
+        try:
+            _im_sync_adad_alias()
+        except Exception:
+            pass
         # If neither mode is active, skip all replacements entirely.
         if not _in_any_mode_active():
             return t
@@ -8556,33 +8598,6 @@ init python:
                     skip_nancy_swap = True
             except Exception:
                 pass
-            # Ensure Grandpa alias only while sister route is active
-            try:
-                _adad = getattr(renpy.store, 'adad', None)
-                if _adad is not None and hasattr(_adad, 'name'):
-                    orig_attr = '_im_adad_orig_name'
-                    store = renpy.store
-                    default_name = "Annie's father"
-                    stored_original = getattr(store, orig_attr, None)
-                    if stored_original in (None, "", "Grandpa", "Annie's Uncle"):
-                        base_name = _adad.name
-                        if not base_name or base_name in ("Grandpa", "Annie's Uncle"):
-                            base_name = default_name
-                        setattr(store, orig_attr, base_name)
-                        stored_original = base_name
-
-                    if getattr(store, 'annie_sister', False):
-                        if _adad.name != "Grandpa":
-                            _adad.name = "Grandpa"
-                    elif getattr(store, 'annie_half_sister', False):
-                        if _adad.name != "Annie's Uncle":
-                            _adad.name = "Annie's Uncle"
-                    else:
-                        original = stored_original or default_name
-                        if original and _adad.name != original:
-                            _adad.name = original
-            except Exception:
-                pass
             who_obj, who_name = _in_current_speaker()
             if (
                 _is_mc_like(who_obj, who_name)
@@ -8635,10 +8650,15 @@ init python:
         """
         if not isinstance(text, str):
             return text
-        if not _in_any_mode_active():
-            return text
         if text.startswith("{image=") and text.endswith("}"):
             return text
+        try:
+            sanitized = _im_strip_multimod_tags(text)
+            sanitized = _im_strip_bonusmod_tags(sanitized)
+        except Exception:
+            sanitized = text
+        if not _in_any_mode_active():
+            return sanitized
         try:
             mc_display = renpy.substitute("[mc]")
             if not mc_display:
@@ -8664,7 +8684,7 @@ init python:
                 pass
 
         key = (
-            text,
+            sanitized,
             mc_display,
             lastname_display,
             getattr(renpy.store, 'annie_incest', False),
@@ -8676,7 +8696,7 @@ init python:
         if key in cache:
             return cache[key]
 
-        out = _in_transform_text(text)
+        out = _in_transform_text(sanitized)
         if len(cache) > 5000:
             cache.clear()
         cache[key] = out
