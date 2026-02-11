@@ -8369,6 +8369,10 @@ init python:
     except NameError:
         _last_say_who_name = None
     try:
+        _in_chat_speaker_override
+    except NameError:
+        _in_chat_speaker_override = None
+    try:
         _in_ast_module = renpy.ast
     except Exception:
         _in_ast_module = None
@@ -8378,6 +8382,57 @@ init python:
             return None
         return str(getattr(who, "name", who)).strip()
 
+    def _in_build_mc_override():
+        """
+        Resolve the best-known MC speaker tuple for override contexts
+        (e.g. chat bubbles rendered outside say statements).
+        """
+        store = renpy.store
+        fallback = (None, "mc")
+        try:
+            for attr in ("mc", "mct", "mcd", "mcsc"):
+                obj = getattr(store, attr, None)
+                if obj is not None:
+                    return (obj, _normalize_who(obj) or attr)
+        except Exception:
+            pass
+        return fallback
+
+    def _in_chat_hint_is_mc(hint):
+        if hint is None:
+            return False
+        if isinstance(hint, bool):
+            return bool(hint)
+        if isinstance(hint, str):
+            norm = hint.strip().lower()
+            return norm in ("mc", "mct", "mcd", "mcsc", "[mc]", "you", "player")
+        return False
+
+    def _in_normalize_speaker_hint(hint):
+        """
+        Normalize any hint value into a (who_obj, who_name) tuple.
+        Falls back to (None, None) to explicitly indicate 'not MC'.
+        """
+        if hint is None:
+            return (None, None)
+        if isinstance(hint, tuple) and len(hint) == 2:
+            who_obj, who_name = hint
+            norm_name = _normalize_who(who_obj)
+            if not norm_name:
+                if isinstance(who_name, str):
+                    who_name = who_name.strip()
+                norm_name = who_name if who_name else None
+            return (who_obj, norm_name)
+        if hasattr(hint, "name"):
+            return (hint, _normalize_who(hint))
+        if isinstance(hint, str):
+            stripped = hint.strip()
+            return (None, stripped or None)
+        try:
+            return (None, str(hint))
+        except Exception:
+            return (None, None)
+
     def _in_current_speaker():
         """
         Identify the active speaker while the say/menu filter runs.
@@ -8386,6 +8441,10 @@ init python:
         """
         global _last_say_who
         global _last_say_who_name
+        global _in_chat_speaker_override
+        override = _in_chat_speaker_override
+        if override is not None:
+            return override
         ast_mod = _in_ast_module
         if ast_mod is None:
             return (_last_say_who, _last_say_who_name)
@@ -8641,7 +8700,7 @@ init python:
 
         return result
 
-    def _in_chat_display_text(text):
+    def _in_chat_display_text(text, speaker_hint=None):
         """
         Apply incest replacements for chat message text.
         Keeps replace_text off for chat_log, chat, and
@@ -8658,6 +8717,7 @@ init python:
             sanitized = text
         if not _in_any_mode_active():
             return sanitized
+        force_mc = _in_chat_hint_is_mc(speaker_hint)
         try:
             mc_display = renpy.substitute("[mc]")
             if not mc_display:
@@ -8691,11 +8751,24 @@ init python:
             getattr(renpy.store, 'annie_mom', False),
             getattr(renpy.store, 'annie_half_sister', False),
             getattr(renpy.store, 'annie_aunt', False),
+            force_mc,
         )
         if key in cache:
             return cache[key]
 
-        out = _in_transform_text(sanitized)
+        global _in_chat_speaker_override
+        prev_override = _in_chat_speaker_override
+        if force_mc:
+            override_target = _in_build_mc_override()
+        else:
+            override_target = _in_normalize_speaker_hint(speaker_hint)
+        if override_target is None:
+            override_target = (None, None)
+        _in_chat_speaker_override = override_target
+        try:
+            out = _in_transform_text(sanitized)
+        finally:
+            _in_chat_speaker_override = prev_override
         if len(cache) > 5000:
             cache.clear()
         cache[key] = out
@@ -9284,7 +9357,7 @@ init 1100:
                                                     hover Transform(picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=BrightnessMatrix(0.2)) 
                                                     action Show("show_pic", pic=picture)
                                             else:
-                                                text _in_chat_display_text(message.text)
+                                                text _in_chat_display_text(message.text, message.who)
 
                                                 if message.picture is not None:
                                                     imagebutton:
@@ -9349,7 +9422,7 @@ init 1100:
                                         xminimum 500
                                         xmaximum 707
 
-                                        text _in_chat_display_text(msg.text)
+                                        text _in_chat_display_text(msg.text, msg.who)
 
                                         if msg.picture is not None:
                                             #
@@ -9394,7 +9467,7 @@ init 1100:
                                 vbox:
                                     xalign 0.5
 
-                                    text _(_in_chat_display_text(msg.text)):
+                                    text _(_in_chat_display_text(msg.text, "mc")):
                                         style "chat_button_text"
                                         if renpy.loadable("achievements/achievements.rpy"):
                                             if msg.type == "points":
