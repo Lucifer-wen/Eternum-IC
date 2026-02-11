@@ -2929,7 +2929,7 @@ init python:
 
         # BM script9:448
         "Oh, so he's {i}your{/i} boyfriend now.":
-            "As if I'm the {i}only{/i} one here screwing her brother here.",
+            "As if I'm the {i}only{/i} one here screwing her brother.",
 
         # BM script9:449
         "You do realize you could've told me too, right?":
@@ -7007,8 +7007,9 @@ init python:
             "So tell me... don't you wanna see a bit more? If I had a cousin who looked like this, I’d be secretly dying to find out what’s underneath all those clothes...",
         
         # AU script3:6005 (p)
-        "She's perfect...":
-            "She's... my cousin is... perfect...",
+        # interferes with script:1493
+        # "She's perfect...":
+        #     "She's... my cousin is... perfect...",
         
         # AU script3:6044 (p)
         "Or if you prefer, you can feel this huge, gorgeous ass right here...":
@@ -8297,11 +8298,11 @@ init python:
         # cousin_override = getattr(renpy.store, 'im_cousin_override', False)
         mapping = {}
 
-        if mom_enabled and not half_enabled:
+        if mom_enabled:
             # Nancy Mom uses base map only.
             mapping.update(mom_map)
 
-        if incest_enabled and not half_enabled:
+        if incest_enabled:
             # Full Incest uses base + sister map (as requested).
             mapping.update(annie_sister_map)
         elif sister_enabled:
@@ -8309,8 +8310,6 @@ init python:
             mapping.update(annie_only_sister_map)
 
         if half_enabled:
-            for key in _HALF_SISTER_DISABLE_KEYS:
-                mapping.pop(key, None)
             # Half-sister uses base + half-sister map.
             mapping.update(annie_half_sister_map)
 
