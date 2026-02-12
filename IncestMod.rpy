@@ -170,6 +170,12 @@ init python:
             store.annie_half_sister = False
             store.annie_aunt = False
         _im_sync_adad_alias()
+        try:
+            refresh = getattr(store, "icmod_refresh_chat_last_names", None)
+            if refresh:
+                refresh(mode)
+        except Exception:
+            pass
 
     try:
         _im_apply_incest_mode()
