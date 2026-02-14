@@ -924,6 +924,8 @@ init python:
         # formerly known as base map
         # Nancy as Mom, Penny and Dalia as older sisters
         # They have the same last name as MC
+        # MC is Dalia's "Irish twin" (born within 12 months), hence being in the same grade
+        #   until he gets an official birthdate that screws us over lmao
         # -----------------------------------------
         # BM 0000 = Base Map, Line Number
         # Line numbers based on compiled script from v0.9.0, subject to change in future updates
@@ -940,157 +942,180 @@ init python:
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
 
-        # BM 826
+        # BM script:948
+        "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
+            "My name is [mc] [lastname]. I was born into a family of five in the city of Kredon, a relatively small town on the west coast of the United States.",
+
+        # BM script:949
         "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
-            "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This left my mom as the only parent, taking care of three young kids while juggling school.",
+            "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This basically left my mom as the only parent taking care of three young kids while still juggling school.",
 
-        # BM 827
+        # BM script:950
         "That’s actually why we ended up moving to the UK; Dad needed to relocate there to keep his position.":
-            "Frustrated, this led to tension between my mom and dad, which boiled over to the point where the two were constantly fighting. My dad's performance at his job started suffering as a result. That's why we ended up moving to the UK.",
+            "This led to constant tension between my parents, which reached a boiling point when Dad needed to relocate to the UK to keep his position. Unable to resolve their differences, they divorced.",
 
-        # BM 828
+        # BM script:951
         "I know, I know, this all sounds pretty gloomy... but don't worry! This is not about to be one long sob story.":
-            "Dad relocated to keep his job and his sanity. He and Mom agreed he'd take me, while she stayed with my two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.",
+            "He got custody of me, taking me with him to the UK while she stayed behind with my two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.",
 
-        # BM 952
-        "I was saying that I spoke with Nancy.":
-            "I was saying that I spoke with your mom.",
+        # BM script:1076
+        # BA/N: Disabled to establish her name. It's clarified she's the mom two lines later anyway.
+        # "I was saying that I spoke with Nancy.":
+        #     "I was saying that I spoke with your mom.",
 
-        # BM 958
+        # BM script:1082
         "*Laughs* I'm sure she will.":
             "*Laughs* I'm sure she will. She is your mother after all.",
 
-        # BM 961
+        # BM script:1085
         # LW/N: FIXED: Handle both "Nancy" and "Mom" versions
         "(Nancy used to be my babysitter in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)":
             "(My mom used to look after me and my sisters in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)",
 
-        # BM 961
         "(Mom used to be my babysitter in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)":
             "(My mom used to look after me and my sisters in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)",
 
-        # BM 962
+        # BM script:1086
         # LW/N: FIXED: Handle both versions
         "(I used to spend the entire afternoon playing with Nancy and her daughter Dalia, but then we had to move and ended up losing touch.)":
-            "(I used to spend the entire afternoon playing with Mom and my sister Dalia, but then we had to move and ended up losing touch.)",
+            "(I used to spend entire afternoons playing with Mom and my older sister Dalia, but then we had to move and ended up losing touch.)",
 
-        # BM 962
-        "(I used to spend the entire afternoon playing with Mom and her daughter Dalia, but then we had to move and ended up losing touch.)":
-            "(I used to spend the entire afternoon playing with Mom and my sister Dalia, but then we had to move and ended up losing touch.)",
+        "(I used to spend the entire afternoons playing with Mom and her daughter Dalia, but then we had to move and ended up losing touch.)":
+            "(I used to spend entire afternoons playing with Mom and my older sister Dalia, but then we had to move and ended up losing touch.)",
 
-        # BM 964
+        # BM script:1088
         # LW/N: FIXED: Handle both versions
         "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Nancy and Dalia again.)":
-            "Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see my mom, Dalia, and Penelope again.",
+            "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see my mom, Dalia, and my oldest sister Penelope again.)",
 
-        # BM 964
         "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Mom and Dalia again.)":
-            "Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see my mom, Dalia, and Penelope again.",
+            "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see my mom, Dalia, and my oldest sister Penelope again.)",
 
-        # BM 1230
+        # BM script:1354
         "Anyway, do you know where Nancy is?":
             "Anyway, do you know where your mom is?",
 
-        # BM 1587
+        # BM script:1711
         "How could I forget you?":
             "How could I forget my own mom?",
 
-        # BM 1643 minor grammar change
+        # BM script:1767 minor grammar change
         "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’ve been becoming good friends already! Isn't that right, Annie?":
             "It's me, Nancy! Even though we've only been speaking on the phone for the past few days, I feel like we're becoming good friends already! Isn't that right, Annie?",
 
-        # BM 1655
+        # BM script:1779
         # BA/N: lines are identical?
         "I hope so! And please, just call me Nancy!":
             "I hope so! And please, just call me Nancy!",
 
-        # BM 1657
+        # BM script:1781
         # BA/N: lines are identical?
         "Okay! Thank you, Nancy!":
             "Okay! Thank you, Nancy!",
 
-        # BM 1662
+        # BM script:1786
         "And of his babysitter!":
             "And of his mother!",
 
-        # BM 1666
+        # BM script:1790
         "Yeah, since my Dad was constantly working, I've always said you were like a parent to me.":
-            "Yeah!",
+            "Of course! You were the one taking care of us, after all.",
 
-        # BM 1669
+        # BM script:1793
         "Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came along and offered me the babysitting gig.":
-            "Now I work in a laboratory, but back then I was still finishing my thesis. Luckily, [mc]'s father made enough money.",
+            "Now I work in a laboratory, but back then I was still finishing my studies. Luckily, [mc]'s father made enough money for the family.",
 
-        # BM 1670
+        # BM script:1794
         "It was not only well-paid, but also allowed me the flexibility to take care of my daughters at the same time. And for me, being a single mother, that was essential.":
-            "I was able to focus on my thesis and take care of our three children.",
+            "I was able to focus on my thesis and taking care of our three children.",
 
-        # BM 1674
+        # BM script:1796
+        "You have 2 daughters, right?":
+            "You also have 2 daughters, right?",
+
+        # BM script:1798
         "Yes, Dalia and Penelope. Penny was a little older when I was [mc]'s nanny, so she used to play on her own, but Dalia got very close to him!":
             "Yes, Dalia and Penelope. Penny is a little older than [mc], so she used to play on her own, but Dalia was always very close to him!",
 
-        # BM 1687
+        # BM script:1811
         "(I guess you don't notice that stuff when you're 8 years old...)":
             "(I guess you don't notice that stuff when you're a kid...)",
 
-        # BM 1689
+        # BM script:1813
         "(Okay, now I sound like some old perv.)":
             "(Okay, now I sound like an old pervert. Especially since she's my mother.)",
 
         # BM script:1842
         "(Nancy used to pick me up after school and we'd come here.)":
-            "(The blissful, carefree days of my childhood–especially once school was done!)",
+            "(Those blissful, carefree days of my childhood–especially once school was done!)",
 
-        # BM 1719
+        # BM script:1843
         "(Each day I would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove me home once it got late.)":
             "(My afternoons were spent playing with Mom and Dalia. We had dinner every night at eight, and then went to bed.)",
 
-        # BM 1740
+        # BM script:1845
+        "(She would always call me on my birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)":
+            "(Mom would always call me on my birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)",
+
+        # BM script:1864
         "Although he left before she was born, so I was left paying the mortgage all by myself...":
             "Although when he left, I had to pay the rest of the mortgage all by myself.",
 
-        # BM 1792
+        # BM script:1894
+        "*Laughs* And Penelope the preteen that was too \"cool\" to play with Dalia and me?":
+            "*Laughs* And Penelope the preteen that was too \"cool\" to play with her younger siblings?",
+
+        # BM script:1916
         "I wasn't expecting you to be so excited to meet [mc] again!":
             "I wasn't expecting you to be so excited to meet your brother again!",
 
-        # BM 1808
-        "Oh, y-yeah, so excited! Hi [mc]!":
-            "Oh, y-yeah, so excited! Hi bro!",
+        # BA/N: disabling most bro/sis lines here to give them a sense of "warming up" to each other again
 
-        # BM 1838
+        # BM script:1932
+        #"Oh, y-yeah, so excited! Hi [mc]!":
+        #    "Oh, y-yeah, so excited! Hi bro!",
+
+        # BM script:1962
         "Both of those things can wait! You didn't even welcome [mc] and Annie properly!":
             "Both of those things can wait! You didn't even welcome your brother and Annie properly!",
 
-        # BM 1843
+        # BM script:1967
         "[mc]! I can't wait to properly meet you!":
-            "Hey, bro, I can't wait to hear all about what happened to you!",
+            "Hey, [mc], I can't wait to hear all about what happened to you!",
 
-        # BM 1852
-        "Damn [mc], you look... tall!":
-            "Damn, bro, you look... tall!",
+        # BM script:1976
+        #"Damn [mc], you look... tall!":
+        #    "Damn, bro, you look... tall!",
 
-        # BM 1853
-        "Thanks, Dalia. You look... tall too.":
-            "Thanks, sis. You look... tall too.",
+        # BM script:1977
+        #"Thanks, Dalia. You look... tall too.":
+        #    "Thanks, sis. You look... tall too.",
 
-        # BM 1991
+        # BM script:2022
+        "Because he's cool! It's good to see the city didn't change you, [mc].":
+            "Because he's cool! It's good to see the city didn't change you, bro.",
+
+        # BM script:2115
         "Your room will be on the second floor—the last one on the right.":
             "I cleaned up your old room. I hope you still remember it?",
 
-        # BM 2015
+        # BM script:2137
+        "(Well, this is gonna be my room for a whole year.)":
+            "(Well, this is gonna be my room again for a whole year.)",
+
+        # BM script:2139
         # LW/N: FIXED: Handle both "Nancy" and "Mom" versions
         "(There wasn't a bed here before. I guess Nancy fitted it out to serve as a bedroom.)":
             "(My bed is bigger than before. I guess Mom replaced my old furniture.)",
 
-        # BM 2015
         "(There wasn't a bed here before. I guess Mom fitted it out to serve as a bedroom.)":
             "(My bed is bigger than before. I guess Mom replaced my old furniture.)",
 
-        # BM 2081
+        # BM script:2205
         "N-Nancy?":
             "M-Mom?",
 
-        # BM 2087
+        # BM script:2212
         "N-Nancy? W-Who is this kid?":
             "M-Mom? W-Who is this kid?",
 
@@ -1352,7 +1377,8 @@ init python:
         "Flattery...? No, my Nancy. I am only speaking my truth. And truth should never be told to someone who is not worthy of it.":
             "Flattery...? No, my Nancy. I am only speaking my truth. And truth should never be told to someone who is not worthy of it.",
 
-        # BM 14680 Handle both versions
+        # BM 14680
+        # Handle both versions. Bypass added in skip_nancy_swap, edit down there if this line is changed
         "No, I came with Nancy.":
             "No, I came with Nancy, my mother.",
 
@@ -2929,7 +2955,7 @@ init python:
 
         # BM script9:448
         "Oh, so he's {i}your{/i} boyfriend now.":
-            "As if I'm the {i}only{/i} one here screwing her brother here.",
+            "As if I'm the {i}only{/i} one here screwing her brother.",
 
         # BM script9:449
         "You do realize you could've told me too, right?":
@@ -3447,10 +3473,10 @@ init python:
 
     annie_sister_map = {
         # -----------------------------------------
-        # aka the Full Incest map
-        # Annie as twin sister and Nancy’s child. Add on to base map.
+        # aka the Full Incest map, is an add on to base map.
+        # Annie as twin sister and Nancy’s child. Thus Dalia's Irish twin (triplet?) as well. 
         # Annie has same last name as MC
-        # Annie’s father converted to paternal grandparents
+        # Annie’s father and mother mentions converted to paternal grandparents
         #     half sis map based on this, if edits are made here check if they can be applied there too.
         # -----------------------------------------
         # AS 0000 = Annie Sister map, Line number
@@ -3470,233 +3496,287 @@ init python:
 
         # BA/N: Want to mention "Grandparents" at some point in the intro, otherwise their appearence comes out of no where later on. 
         # not sure where tho
-        #LW/N: Sounds like a good Idea maybe with a new lable or adding to the intro lable.
+        # LW/N: Sounds like a good Idea maybe with a new lable or adding to the intro lable.
+        # BA/N: Added in the train scene
 
-        # AS 826
+        # AS script:948
+        "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
+            "My name is [mc] [lastname]. I was born into a family of six in the city of Kredon, a relatively small town on the west coast of the United States.",
+
+        # AS script:949
         "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
-            "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This left Mom to be the only parent taking care of four young kids all while juggling school.",
+            "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This basically left my mom as the only parent taking care of four young kids while still juggling school.",
 
-        # AS 828
+        # AS script:951
         "I know, I know, this all sounds pretty gloomy... but don't worry! This is not about to be one long sob story.":
-            "Dad relocated to keep his job and his sanity. He and Mom agreed he'd take me and my twin sister, while she stayed with my two older sisters. I know it sounds a bit bleak, but don't worry—this isn't a sob story.",
+            "He got custody of me and my twin sister, taking us with him to the UK while my mom stayed behind with our two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.",
 
-        # AS 833
+        # AS script:956
         "He had to work to support us both. Heaven knows where I'd be without him.":
             "He had to work to support the three of us. Heaven knows where we'd be without him.",
-
-        # AS 922
+        # AS script:1046
         "(Annie is a close friend from my childhood.)":
             "(Annie is my younger twin sister.)",
 
-        # AS 923
+        # BA/N: reworked next few lines to flesh out UK backstory and mention grandparents. Still a bit clunky ngl
+
+        # AS script:1047
         "(When I moved from Kredon, she was my next-door neighbor and the first person I met, along with Chang.)":
-            "(When we moved from Kredon, she was the only familiar person I knew, until I met Chang.)",
+            "(When we moved from Kredon, all we had were each other until we met Chang. He helped fill the gap of our missing family, but obviously couldn't be around us all the time.)",
 
-        # AS 924
+        # AS script:1048
         "(We quickly bonded after discovering we both had something in common... the absence of our parents.)":
-            "(Naturally we became really close.)",
+            "(We did also have our paternal grandparents living in the UK. They loved to pamper us when they could, but rarely were able to visit.)",
 
-        # AS 925
+        # AS script:1049
         "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them.)":
-            "(It was a chaotic time and we gave each other stability.)",
+            "(With our father always off working, it was pretty much just the two of us at home most of the time.)",
 
-        # AS 929
+        # AS script:1050
+        "(We were both lost... and lonely.)":
+            "(In those chaotic and lonely times, we gave each other stability.)",
+
+        # AS script:1051
+        "(After finding a companion within each other, we’ve been inseparable ever since.)":
+            "(As cliche as it may be for twins, we've naturally become inseparable ever since.)",
+
+        # AS script:1053
         "(Because of how close we were, people always believed we were dating... but the truth is, we're just friends.)":
-            "(Because of how close we were, people always joked we would make a great couple... but the truth is, we're just siblings.)",
+            "(Because of how close we were, people liked to joke that we would've make a great couple... but the truth is, we're just siblings.)",
 
-        # AS 930
+        # AS script:1054
         "(I mean… she's cute, and we love spending time with each other, but I've never tried to make a move on her.)":
             "(...)",
 
-        # AS 931
+        # AS script:1055
         "(I could never do it.)":
-            "(Well you know... I mean if...)",
+            "(Well... she is cute... and we love spending time with each other...){p}(I mean, if–){nw=1}",
 
-        # AS 932
+        # AS script:1056
         "(She'd probably freak out if I did.)":
-            "(NO. Stop it. She'd probably freak out if I did.)",
+            "(NO.{w=0.5} Stop it.{w=1} She'd probably freak out if I did.)",
 
-        # AS 936
+        # AS script:1059
+        "(It would be... weird for us. Yeah! That's the word. Weird.)":
+            "(It would be... so weird for us. Yeah! She's my sister after all.)",
+
+        # AS script:1060
         "(It's just not the kind of relationship we have.)":
-            "(Why am I even thinking about that!?)",
+            "(Why am I even thinking about this!?)",
 
-        # AS 952
+        # AS script:1076
         "I was saying that I spoke with Nancy.":
             "I was saying that I spoke with Mom.",
 
-        # AS 956
+        # AS script:1080
         "I can't wait to see her. I hope she recognizes me.":
             "I can't wait to see her. I hope she recognizes us.",
 
-        # AS 958
+        # AS script:1082
         "*Laughs* I'm sure she will.":
             "*Laughs* I'm sure she will. She is our mother after all.",
 
-        # AS 962
+        # AS script:1085
+        # bypass added in skip_nancy_swap, edit down there if this line is changed
+        "(Nancy used to be my babysitter in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)":
+            "(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)",
+
+        # AS script:1086
         # LW/N: FIXED: Handle both versions
         "(I used to spend the entire afternoon playing with Nancy and her daughter Dalia, but then we had to move and ended up losing touch.)":
-            "(I used to spend the entire afternoon playing with Mom and my sisters Dalia and Annie, but then we had to move and ended up losing touch.)",
-        
-        # AS 962
-        "(I used to spend the entire afternoon playing with Mom and her daughter Dalia, but then we had to move and ended up losing touch.)":
-            "(I used to spend the entire afternoon playing with Mom and my sisters Dalia and Annie, but then we had to move and ended up losing touch.)",
+            "(The two of us used to spend entire afternoons playing with Mom and our older sister Dalia, but then we had to move and ended up losing touch.)",
 
-        # AS 965
+        "(I used to spend the entire afternoon playing with Mom and her daughter Dalia, but then we had to move and ended up losing touch.)":
+            "(The two of us used to spend entire afternoons playing with Mom and our older sister Dalia, but then we had to move and ended up losing touch.)",
+
+        # AS script:1088
+        # Handle both versions
+        "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Nancy and Dalia again.)":
+            "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see Mom, Dalia, and our oldest sister Penelope again.)",
+
+        "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Mom and Dalia again.)":
+            "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see Mom, Dalia, and our oldest sister Penelope again.)",
+
+        # AS script:1089
         "(Come to find out, she actually had 2 rooms available, so Annie will have a place to stay as well!)":
             "(Come to find out, she actually had our old rooms available!)",
 
-        # AS 966
+        # AS script:1090
         "(She’s actually been the one who’s been coordinating with Nancy over the phone, even though they didn’t know each other beforehand.)":
-            "(She’s actually been the one who’s been coordinating with Nancy over the phone, I didn't have to do anything.)",
+            "(Annie’s actually been the one who’s been coordinating with Mom over the phone, I didn't have to do anything.)",
 
-        # AS 969
+        # AS script:1093
         "Do you think she will like me?":
             "I'm really excited, do you think everything will go well?",
 
-        # AS 971
+        # AS script:1095
         "Nancy? Of course!":
             "Don't worry sis, it'll be alright.",
 
-        # AS 972
+        # AS script:1096
         "Don't worry about it, Annie. I haven't seen her in over 10 years, so it’ll probably feel like I’m meeting her for the first time too!":
             "And anyways, it's not like it's a stranger we're meeting, it's our family.",
 
-        # AS 988
+        # AS script:1112
         "What's the first thing you're going to do when we get to our new home?":
             "What's the first thing you're going to do when we get to our old home?",
 
-        # AS 1033
+        # AS script:1157
         "You should go to sleep too, Annie. We have to wake up early tomorrow.":
             "You should go to sleep too, sis. We have to wake up early tomorrow.",
 
-        # AS 1116
-        "We've been through too much together, Annie.":
-            "We've literally been together since birth, Annie.",
+        # AS script:1179
+        "You're nothing but a big ball of envy because your best friend can play Eternum and you can't since you didn't save any money.":
+            "You're nothing but a big ball of envy because your twin sister and bestie can play Eternum and you can't since you didn't save any money.",
 
-        # AS 1215
+        # AS script:1184
+        "B-Best friend?":
+            "B-Bestie?",
+
+        # AS script:1220
+        "But that doesn't mean you aren’t also my best friend, Annie!":
+            "But that doesn't mean you aren’t also my best friend, Annie! And my precious twin sister!",
+
+        # AS script:1241
+        "We've been through too much together, Annie.":
+            "We've literally been together since birth, sis.",
+
+        # AS script:1254
+        "You're my best... male friend!":
+            "You're my best... male friend! Basically my brother!",
+
+        # AS script:1262
+        "Ahh, it's a deal, my friend!":
+            "Ahh, it's a deal, bro!",
+
+        # AS script:1339
         "Hello everyone! Annie is here!":
             "Hello everyone! Annie is back!",
 
-        # AS 1220
+        # AS script:1344
         "I know you're excited Annie, but I'd appreciate it if you could at least carry your hand baggage!":
             "I know you're excited sis, but I'd appreciate it if you could at least carry your hand baggage!",
 
-        # AS 1223
+        # AS script:1347
         "It's just that I'm excited to discover the town where you grew up!":
             "It's just that I'm excited to be home again!",
 
-        # AS 1224
+        # AS script:1348
         "Well, I left this place when I was 8, so I don’t really remember anything.":
             "Well, I understand, but we left this place when we were 8, so I don't really remember anything.",
 
-        # AS 1225
+        # AS script:
         "I’ve never had a chance to come back ‘til now, so I'm excited to relive all my childhood memories!":
             "We’ve never had a chance to come back ‘til now, so I'm excited to relive all our childhood memories!",
 
-        # AS 1230
+        # AS script:1354
         "Anyway, do you know where Nancy is?":
             "Anyway, do you know where Mom is?",
 
-        # AS 1633
+        # AS script:1758
         "Mission failed, [mc]...":
             "Mission failed, bro...",
 
-        # AS 1638
+        # AS script:1762
         "You must be Annie!":
-            "Annie!",
+            "Annie! My precious little girl!",
 
-        # AS 1639
+        # AS script:1763
         "Is that right?!":
             "I missed you so much!",
 
-        # AS 1640
+        # AS script:1764
         # Disabled, interferes with other lines
         # "Y-Yeah.":
         #     "Y-Yeah me too.",
 
-        # AS 1641
+        # AS script:1765
         "You're even cuter than I imagined! Your voice matches your appearance so much!":
             "You're even cuter than when I last saw you. You've grown so much!",
 
-        # AS 1642
+        # AS script:1766
         "T-Thank you, miss.":
             "T-Thank you, Mom.",
 
-        # AS 1643
+        # AS script:1767
         "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’ve been becoming good friends already! Isn't that right, Annie?":
             "God, you can't imagine how much I missed my little twins!",
 
-        # AS 1645
+        # AS script:1769
         "Definitely! I’d say we’ve been hitting it off pretty well!":
             "We missed you too, Mom...",
 
-        # AS 1646
+        # AS script:1770
         "It's so nice to finally meet you!":
             "It's so nice to finally see you again!",
 
-        # AS 1651
+        # AS script:1775
         "I've prepared a room for each of you, though I must warn you – don't expect anything fancy. The bedrooms are pretty small.":
             "I've prepared your old rooms for each of you, though I must warn you – don't expect anything fancy.",
 
-        # AS 1653
+        # AS script:1777
         "No worries, miss! I'm sure it'll be more than enough!":
             "No worries, Mom! I'm sure it'll be more than enough!",
 
-        # AS 1655
+        # AS script:1779
         "I hope so! And please, just call me Nancy!":
             "I hope so!",
 
-        # AS 1657
+        # AS script:1781
         "Okay! Thank you, Nancy!":
-            "If they didn't shrink since last time, it'll be alright.",
+            "If the rooms didn't shrink since last time, it'll be alright.",
 
-        # AS 1659
+        # AS script:1783
         "Have you ever been to the USA before, Annie?":
             "Do you remember your time in the USA, Annie?",
 
-        # AS 1661
+        # AS script:1785
         "Never! But I’ve always wanted to visit. [mc] has always spoken very well of his time in Kredon.":
             "Kind of, but it's been so many years.",
 
-        # AS 1662
+        # AS script:1786
         "And of his babysitter!":
             "But I do remember all the fun we had playing together!",
 
-        # AS 1669
+        # BM script:1790
+        "Yeah, since my Dad was constantly working, I've always said you were like a parent to me.":
+            "Of course! How could we forget those times?",
+
+        # BA/N: flow of the next 2 lines still could use improvement
+
+        # AS script:1763
         "Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came along and offered me the babysitting gig.":
-            "I work in a laboratory now thanks to my thesis.",
+            "After you left, I was able to finish my thesis.",
 
-        # AS 1670
+        # AS script:1794
         "It was not only well-paid, but also allowed me the flexibility to take care of my daughters at the same time. And for me, being a single mother, that was essential.":
-            "It pays some good money.",
+            "Thanks to that, I work in laboratory now. It pays pretty well.",
 
-        # AS 1672
+        # AS script:1796
         "You have 2 daughters, right?":
-            "That's good... so how are our sisters?",
+            "That's great! So how are our sisters doing?",
 
-        # AS 1674
+        # AS script:1798
         "Yes, Dalia and Penelope. Penny was a little older when I was [mc]'s nanny, so she used to play on her own, but Dalia got very close to him!":
             "They're doing well, they've grown up wonderfully like you.",
 
-        # AS 1676
+        # AS script:1800
         "*Laughs* I remember she was always stealing my games!":
-            "*Laughs* Then they must be doing great!",
+            "*chuckles* That's good to hear!",
 
-        # AS 1678
+        # AS script:1802
         "But then, after my daughters grew up, I was able to start a better job within a local company.":
             "Yes... in the beginning I worked a lower-paying job but now that those two are older, I was able to start a better job within a local company.",
 
-        # AS 1683
+        # AS script:1807
         "Ahh, aren't you cute!":
             "Ahh, thank you, honey!",
 
-        # AS 1697
+        # AS script:1821
         "Alright then! Let's go to the car! Dalia and Penelope are dying to see you again!":
             "Alright then! Let's go to the car! Dalia and Penelope are dying to see you two again!",
 
-
         # label welcome_mod activates here. Numbers for both original and mod provided.
-
 
         # AS script:1843 IncestLables:24
         "(Each day I would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove me home once it got late.)":
@@ -3780,11 +3860,11 @@ init python:
 
         # AS script:1967 IncestLables:148
         "[mc]! I can't wait to properly meet you!":
-            "Hey bro, I can't wait to hear all about what happened to you and Annie!",
+            "Hey [mc], I can't wait to hear all about what happened to you and Annie!",
 
         # AS script:1970 IncestLables:151
         "Oh, and you must be Annie! Nice to meet you too!":
-            "Oh, and Annie! Nice to see you again, sis!",
+            "Oh, and Annie! Nice to see you again!",
 
         # AS script:1972 IncestLables:153
         "Welcome to the family!":
@@ -3797,10 +3877,6 @@ init python:
         # AS script:1983 IncestLables:164
         "Of course he doesn't mind!":
             "Of course they don't mind!",
-
-        # AS script:2022 IncestLables:203
-        "Because he's cool! It's good to see the city didn't change you, [mc].":
-            "Because he's cool! It's good to see the city didn't change you, bro.",
 
         # AS script:2078 IncestLables:259
         "Annie, you must have gotten the wrong impression of my daughters...":
@@ -3818,6 +3894,14 @@ init python:
         "You're so nice, Annie. Is there anything I can do for you?":
             "That's nice of you to say, honey. Is there anything I can do for you?",
 
+        # BM script:2115 IncestLables:296
+        "Your room will be on the second floor—the last one on the right.":
+            "Do you remember the way to your old room?",
+
+        # BM script:2116 IncestLables:297
+        "Ah, I remember that room! It was the one with a lot of natural light.":
+            "I think so. Second floor, last one on the right, right? The one with a lot of natural light.",
+
         # AS script:2119 IncestLables:300
         "Well, since [mc] seems to remember where everything is already... Do you want a tour of the house, Annie?":
             "Well, since [mc] doesn't want any supper... Do you want something to eat, Annie?",
@@ -3826,9 +3910,7 @@ init python:
         "Goodnight [mc]! Sweet dreams!":
             "Goodnight, bro! Sweet dreams!",
 
-
         # end label welcome_mod section
-
 
         # AS 2638
         "Oh yeah, that sounds like Annie. I guess she already told you she also plays Eternum?":
@@ -5102,6 +5184,10 @@ init python:
         # AS 90370
         "My perfect, beautiful, innocent little Miss Winters...":
             "My perfect, beautiful, innocent little twin sister...",
+
+        # AS script8:10057
+        "You came over and helped me study, even though you missed a football game with some other kids from school because of it.":
+            "You stayed home and helped me study, even though you missed a football game with some other kids from school because of it.",
 
         # AS 90495
         "B-But I've liked you since the day I met you!":
@@ -7007,8 +7093,9 @@ init python:
             "So tell me... don't you wanna see a bit more? If I had a cousin who looked like this, I’d be secretly dying to find out what’s underneath all those clothes...",
         
         # AU script3:6005 (p)
-        "She's perfect...":
-            "She's... my cousin is... perfect...",
+        # interferes with script:1493
+        # "She's perfect...":
+        #     "She's... my cousin is... perfect...",
         
         # AU script3:6044 (p)
         "Or if you prefer, you can feel this huge, gorgeous ass right here...":
@@ -8297,11 +8384,11 @@ init python:
         # cousin_override = getattr(renpy.store, 'im_cousin_override', False)
         mapping = {}
 
-        if mom_enabled and not half_enabled:
+        if mom_enabled:
             # Nancy Mom uses base map only.
             mapping.update(mom_map)
 
-        if incest_enabled and not half_enabled:
+        if incest_enabled:
             # Full Incest uses base + sister map (as requested).
             mapping.update(annie_sister_map)
         elif sister_enabled:
@@ -8309,8 +8396,6 @@ init python:
             mapping.update(annie_only_sister_map)
 
         if half_enabled:
-            for key in _HALF_SISTER_DISABLE_KEYS:
-                mapping.pop(key, None)
             # Half-sister uses base + half-sister map.
             mapping.update(annie_half_sister_map)
 
@@ -8370,6 +8455,10 @@ init python:
     except NameError:
         _last_say_who_name = None
     try:
+        _in_chat_speaker_override
+    except NameError:
+        _in_chat_speaker_override = None
+    try:
         _in_ast_module = renpy.ast
     except Exception:
         _in_ast_module = None
@@ -8379,6 +8468,57 @@ init python:
             return None
         return str(getattr(who, "name", who)).strip()
 
+    def _in_build_mc_override():
+        """
+        Resolve the best-known MC speaker tuple for override contexts
+        (e.g. chat bubbles rendered outside say statements).
+        """
+        store = renpy.store
+        fallback = (None, "mc")
+        try:
+            for attr in ("mc", "mct", "mcd", "mcsc"):
+                obj = getattr(store, attr, None)
+                if obj is not None:
+                    return (obj, _normalize_who(obj) or attr)
+        except Exception:
+            pass
+        return fallback
+
+    def _in_chat_hint_is_mc(hint):
+        if hint is None:
+            return False
+        if isinstance(hint, bool):
+            return bool(hint)
+        if isinstance(hint, str):
+            norm = hint.strip().lower()
+            return norm in ("mc", "mct", "mcd", "mcsc", "[mc]", "you", "player")
+        return False
+
+    def _in_normalize_speaker_hint(hint):
+        """
+        Normalize any hint value into a (who_obj, who_name) tuple.
+        Falls back to (None, None) to explicitly indicate 'not MC'.
+        """
+        if hint is None:
+            return (None, None)
+        if isinstance(hint, tuple) and len(hint) == 2:
+            who_obj, who_name = hint
+            norm_name = _normalize_who(who_obj)
+            if not norm_name:
+                if isinstance(who_name, str):
+                    who_name = who_name.strip()
+                norm_name = who_name if who_name else None
+            return (who_obj, norm_name)
+        if hasattr(hint, "name"):
+            return (hint, _normalize_who(hint))
+        if isinstance(hint, str):
+            stripped = hint.strip()
+            return (None, stripped or None)
+        try:
+            return (None, str(hint))
+        except Exception:
+            return (None, None)
+
     def _in_current_speaker():
         """
         Identify the active speaker while the say/menu filter runs.
@@ -8387,6 +8527,10 @@ init python:
         """
         global _last_say_who
         global _last_say_who_name
+        global _in_chat_speaker_override
+        override = _in_chat_speaker_override
+        if override is not None:
+            return override
         ast_mod = _in_ast_module
         if ast_mod is None:
             return (_last_say_who, _last_say_who_name)
@@ -8596,6 +8740,8 @@ init python:
             try:
                 if t_norm == _in_normalize_equiv_text("No, I came with Nancy, my mother."):
                     skip_nancy_swap = True
+                if t_norm == _in_normalize_equiv_text("(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)"):
+                    skip_nancy_swap = True
             except Exception:
                 pass
             who_obj, who_name = _in_current_speaker()
@@ -8642,7 +8788,7 @@ init python:
 
         return result
 
-    def _in_chat_display_text(text):
+    def _in_chat_display_text(text, speaker_hint=None):
         """
         Apply incest replacements for chat message text.
         Keeps replace_text off for chat_log, chat, and
@@ -8659,6 +8805,7 @@ init python:
             sanitized = text
         if not _in_any_mode_active():
             return sanitized
+        force_mc = _in_chat_hint_is_mc(speaker_hint)
         try:
             mc_display = renpy.substitute("[mc]")
             if not mc_display:
@@ -8692,11 +8839,24 @@ init python:
             getattr(renpy.store, 'annie_mom', False),
             getattr(renpy.store, 'annie_half_sister', False),
             getattr(renpy.store, 'annie_aunt', False),
+            force_mc,
         )
         if key in cache:
             return cache[key]
 
-        out = _in_transform_text(sanitized)
+        global _in_chat_speaker_override
+        prev_override = _in_chat_speaker_override
+        if force_mc:
+            override_target = _in_build_mc_override()
+        else:
+            override_target = _in_normalize_speaker_hint(speaker_hint)
+        if override_target is None:
+            override_target = (None, None)
+        _in_chat_speaker_override = override_target
+        try:
+            out = _in_transform_text(sanitized)
+        finally:
+            _in_chat_speaker_override = prev_override
         if len(cache) > 5000:
             cache.clear()
         cache[key] = out
@@ -9285,7 +9445,7 @@ init 1100:
                                                     hover Transform(picture, fit="contain", xsize=(phone_width - msg_padding * 2 - chat_x_padding), matrixcolor=BrightnessMatrix(0.2)) 
                                                     action Show("show_pic", pic=picture)
                                             else:
-                                                text _in_chat_display_text(message.text)
+                                                text _in_chat_display_text(message.text, message.who)
 
                                                 if message.picture is not None:
                                                     imagebutton:
@@ -9350,7 +9510,7 @@ init 1100:
                                         xminimum 500
                                         xmaximum 707
 
-                                        text _in_chat_display_text(msg.text)
+                                        text _in_chat_display_text(msg.text, msg.who)
 
                                         if msg.picture is not None:
                                             #
@@ -9395,7 +9555,7 @@ init 1100:
                                 vbox:
                                     xalign 0.5
 
-                                    text _(_in_chat_display_text(msg.text)):
+                                    text _(_in_chat_display_text(msg.text, "mc")):
                                         style "chat_button_text"
                                         if renpy.loadable("achievements/achievements.rpy"):
                                             if msg.type == "points":
