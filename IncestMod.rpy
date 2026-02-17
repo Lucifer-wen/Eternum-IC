@@ -31,14 +31,15 @@ default _im_reloading_scripts = False
 # default persistent.im_cousin_override = None
 
 init python:
-    def _im_strip_multimod_tags(text):
+    def _im_strip_multimod_tags(text, *, force=False):
         """
         Remove unsupported multi-mod tags (e.g. [gr]) when
         MultiMod is not installed. Prevents NameError crashes if the tag
-        isn't defined in the current environment.
+        isn't defined in the current environment. Set force=True to strip
+        tags unconditionally (useful when matching dialogue variants).
         """
         try:
-            if renpy.loadable("mod_additions/mod_options.rpy"):
+            if (not force) and renpy.loadable("mod_additions/mod_options.rpy"):
                 return text
         except Exception:
             pass
@@ -170,6 +171,12 @@ init python:
             store.annie_half_sister = False
             store.annie_aunt = False
         _im_sync_adad_alias()
+        try:
+            refresh = getattr(store, "icmod_refresh_chat_last_names", None)
+            if refresh:
+                refresh(mode)
+        except Exception:
+            pass
 
     try:
         _im_apply_incest_mode()
@@ -3260,9 +3267,9 @@ init python:
         "Have anal sex with Penny":
             "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
 
-        # BA/N: temp fix for multi-mod tags not being stripped
-        "Have anal sex with Penny [gr][mt](Anal)":
-            "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
+        # BA/N: NO LONGER NEEDED temp fix for multi-mod tags not being stripped
+        #"Have anal sex with Penny [gr][mt](Anal)":
+        #    "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
 
         # BM script9:12535
         "I’ll remember it next time, Penny... word for word.":
@@ -5245,9 +5252,9 @@ init python:
         "To see the pandas at the zoo":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
-        # BA/N: temp fix for multi-mod tags not being stripped
-        "To see the pandas at the zoo [annie_pts]":
-            "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
+        # BA/N: NO LONGER NEEDED temp fix for multi-mod tags not being stripped
+        #"To see the pandas at the zoo [annie_pts]":
+        #    "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
         # AS script8:8425
         "To see the pandas at the zoo.":
@@ -6740,9 +6747,9 @@ init python:
         "To see the pandas at the zoo":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
-        # BA/N: temp fix for multi-mod tags not being stripped
-        "To see the pandas at the zoo [annie_pts]":
-            "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
+        # BA/N: NO LONGER NEEDED temp fix for multi-mod tags not being stripped
+        #"To see the pandas at the zoo [annie_pts]":
+        #    "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
         # HS script8:8425
         "To see the pandas at the zoo.":
@@ -8753,6 +8760,12 @@ init python:
             return t
         t_norm = _in_normalize_equiv_text(t)
         t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+        try:
+            t_norm_multimod = _in_normalize_equiv_text(
+                _im_strip_multimod_tags(t, force=True)
+            )
+        except Exception:
+            t_norm_multimod = None
 
         # 2) resolve [mc] and [lastname] as shown on screen
         mc_display = None
@@ -8819,6 +8832,12 @@ init python:
                         t = rep
                         t_norm = _in_normalize_equiv_text(t)
                         t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                        try:
+                            t_norm_multimod = _in_normalize_equiv_text(
+                                _im_strip_multimod_tags(t, force=True)
+                            )
+                        except Exception:
+                            t_norm_multimod = None
                         replaced_once = True
                         break
 
@@ -8836,6 +8855,12 @@ init python:
                             t = rep
                             t_norm = _in_normalize_equiv_text(t)
                             t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                            try:
+                                t_norm_multimod = _in_normalize_equiv_text(
+                                    _im_strip_multimod_tags(t, force=True)
+                                )
+                            except Exception:
+                                t_norm_multimod = None
                             replaced_once = True
                     except Exception:
                         pass
@@ -8854,6 +8879,12 @@ init python:
                             t = rep
                             t_norm = _in_normalize_equiv_text(t)
                             t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                            try:
+                                t_norm_multimod = _in_normalize_equiv_text(
+                                    _im_strip_multimod_tags(t, force=True)
+                                )
+                            except Exception:
+                                t_norm_multimod = None
                             replaced_once = True
                     except Exception:
                         pass
@@ -8876,6 +8907,41 @@ init python:
                             t = rep
                             t_norm = _in_normalize_equiv_text(t)
                             t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                            try:
+                                t_norm_multimod = _in_normalize_equiv_text(
+                                    _im_strip_multimod_tags(t, force=True)
+                                )
+                            except Exception:
+                                t_norm_multimod = None
+                            replaced_once = True
+                            break
+                # compare strings with Multi-Mod tags stripped so replacements still
+                # match when point markers like [annie_pts] are present.
+                if (not replaced_once) and (t_norm_multimod is not None):
+                    for cand2 in candidates:
+                        if not cand2:
+                            continue
+                        try:
+                            cand_mm = _in_normalize_equiv_text(
+                                _im_strip_multimod_tags(cand2, force=True)
+                            )
+                        except Exception:
+                            continue
+                        if cand_mm == t_norm_multimod:
+                            rep = new
+                            if "[mc]" in rep:
+                                rep = rep.replace("[mc]", mc_display)
+                            if "[lastname]" in rep:
+                                rep = rep.replace("[lastname]", lastname_display)
+                            t = rep
+                            t_norm = _in_normalize_equiv_text(t)
+                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                            try:
+                                t_norm_multimod = _in_normalize_equiv_text(
+                                    _im_strip_multimod_tags(t, force=True)
+                                )
+                            except Exception:
+                                t_norm_multimod = None
                             replaced_once = True
                             break
         except Exception:
@@ -8902,7 +8968,6 @@ init python:
                 t = re.sub(r"\bNancy\b", "Mom", t)
         except Exception:
             pass
-        
         t = _im_strip_multimod_tags(t)
         t = _im_strip_bonusmod_tags(t)
         return t
