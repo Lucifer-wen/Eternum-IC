@@ -702,6 +702,7 @@ init python:
     # - Full Incest: nutzt `im_label_map_sister`
     im_label_map_base = {
         "daliacove": "daliacove_mod",
+        "poolalex": "poolalex_mod",
     }
     im_label_map_incest = {
         # Beispiel: "some_label": "some_label_incest_mod",
@@ -899,6 +900,57 @@ init python early hide:
             rconfig.label_callback = _im_label_cb
 
     _im_ensure_label_callback()
+
+    # Ensure fall-through labels (no explicit jump) are still intercepted.
+    try:
+        import renpy.ast as _im_ast
+        from renpy import game as _im_game
+    except Exception:
+        _im_ast = None
+        _im_game = None
+
+    if _im_ast and not hasattr(_im_ast.Label, "_im_prev_execute"):
+        _im_ast.Label._im_prev_execute = _im_ast.Label.execute
+
+        def _im_label_execute_with_redirect(self):
+            if getattr(store, "_im_redirecting", False):
+                return _im_ast.Label._im_prev_execute(self)
+            if not getattr(store, "im_redirect_enabled", True):
+                return _im_ast.Label._im_prev_execute(self)
+
+            alt = None
+            try:
+                alt = _im_get_override(self.name)
+            except Exception:
+                alt = None
+
+            if alt and alt != self.name:
+                abnormal = False
+                if _im_game is not None:
+                    try:
+                        abnormal = bool(_im_game.context().last_abnormal)
+                    except Exception:
+                        pass
+                for cb in list(_im_label_chain):
+                    try:
+                        cb(self.name, abnormal)
+                    except Exception:
+                        pass
+                if getattr(store, 'im_debug_redirect', False):
+                    try:
+                        rpy.notify("IM redirect: {} -> {}".format(self.name, alt))
+                    except Exception:
+                        pass
+                store._im_redirecting = True
+                try:
+                    rpy.jump(alt)
+                finally:
+                    store._im_redirecting = False
+                return
+
+            return _im_ast.Label._im_prev_execute(self)
+
+        _im_ast.Label.execute = _im_label_execute_with_redirect
 
     # Keep overrides in sync before each statement executes
     def _im_stmt_cb(loc):
