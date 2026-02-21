@@ -1760,3 +1760,609 @@ label mod_call_chat_18:
     mc "*Chuckles* In my defense, it was so long ago that no one would remember the details."
     show gh 84
     jump rememberdinnersuccess
+
+# used in base map, add exposition lines towards the end
+label poolalex_mod:
+    stop music2 fadeout 3
+    show b with Dissolve(2.5)
+    pause
+    show screen afewhourslater with dis12
+    pause
+    play soundlow schoolbell
+    hide screen afewhourslater
+    scene ale 38c
+    with Dissolve(3)
+    pause
+    play music2b happy3 fadein 5
+    bla "If you're seeing this, poolalex_mod has successfully activated. delete this line from incestlables.rpy once testing is done."
+    mc "Just 1 more hour, Chang!" with dis
+    show ale 38b
+    mc "1 more hour and I'll be playing Eternum!" with Dissolve(1.5)
+    mc "It's been a long day, but we're almost at the finish line!"
+    show ale 39
+    c "We should really start studying for next week's exam, though." with dissolve
+    c "Especially you... you’re going to be very pre-occupied in the days to come."
+    mc "Yeah, it almost seems like Mr. Keating is trying to sabotage me."
+    mc "But it doesn't matter much. The subject isn’t that difficult, so I'll just take a look at it the day before and I’m sure I’ll get an A like always. I’ll even settle for a B+."
+    c "*Laughs* Goddammit, I’m so jealous of how you always manage to get good grades somehow..."
+    c "I wish I was as smart as you..."
+    mc "I'm not smart... I just have a good memory, I guess."
+    show ale 40
+    mc "Also, why the fuck is he also here?! Is he the only teacher in the school?!" with dis
+    prof "Um... Yeah, guys, swim class is over. You should probably go take a shower and get back to the fourth floor."
+    class "Mr. Keating, do we have to pick this up?"
+    prof "I don't know Elijah, I'm just filling in for the swim teacher today. You should ask her when she's back."
+    mc "(Ah, always nice to see a man who goes above and beyond for his job.)"
+    show ale 41
+    c "You know what, I'll go pick that up. If it starts raining it will get ruined."
+    mc "Always thinking about others, huh?"
+    c "I'm trying to build up some good karma. Always try helping out other people and the universe will be sure to return the favor."
+    mc "That's a good philosophy! Alrighty buddy, see you in the locker room."
+    c "See you!"
+    show ale 42
+    d "Well, what did you think of your first swim class here?" with dis
+    show ale 42b
+    mc "Hey Dalia!"
+    mc "(Oh my god, I love this school's swimsuit...)"
+    mc "It wasn’t too bad! We actually didn’t have this class at my previous school."
+    show ale 42
+    d "Are you any good at swimming?"
+    show ale 42b
+    mc "Good enough. I’m no mermaid, but enough of a decent swimmer to avoid drowning."
+    show ale 42
+    d "Yeah, kind of like me. I prefer sports that take place on dry land."
+    d "Nothing like doing deep squats!"
+    d "Ass to grass! Ass to grass!"
+    show ale 42b
+    mc "*Laughs* True."
+    show ale 42
+    d "I bet you're super excited to finally play Eternum for the first time."
+    show ale 42b
+    if dalianaked:
+        mc "Well, seeing that you're actually speaking to me again makes me even happier."
+        mc "I'm glad you're not still angry with me about what happened yesterday."
+        show ale 43
+        d "Well, I haven't forgiven you just yet." with dissolve
+        d "I still think you're a nasty pervert."
+        mc "I'm sorry about that, Dalia."
+        mc "I’ll make it up to you somehow, I promise!"
+        show ale 42
+        d "*Laughs* You better!" with dissolve
+        show ale 42b
+    else:
+        mc "Sure, I am! Can't wait to play it!"
+    mc "So... Annie said she'd help me log in for the first time. Will you join us afterward?"
+    show ale 44
+    d "I can't. I have to hit the gym after school." with dis
+    d "I need to follow a strict exercise regimen if I’m to take first place in the upcoming competition."
+    show ale 42
+    d "But maybe we can play a bit after dinner, if it's not too late." with dis
+    show ale 42b
+    mc "Sure, sounds good!"
+    mc "Real life should always come first."
+    mc "So, if I were to guess, I’d say you’re trying to become the school’s top swimmer too?"
+    show ale 44
+    d "Nah, impossible. Alex is hands down the best swimmer in our school. And the town. And probably even the region." with dis
+    mc "Alex?"
+    d "Yeah, haven't you seen her? She’s pretty hard to miss."
+    mc "Huh?"
+    show alex1 with dis
+    pause 6.3
+    $ alexu = True
+    hide alex1
+    show ale 44b
+    mc "Oh, yeah... I think I’ve seen her before. She’s the one that was swimming fast as fuck, right?" with dis
+    d "Hell yeah she was. She could probably even compete in the Olympics if she wanted to."
+    mc "She chooses not to?"
+    d "Maybe, I don't know. She pretty much keeps to herself."
+    d "Sometimes she skips class for a day, sometimes a whole week! Mr. Keating always yells at her for it, but she doesn't seem to care much."
+    mc "Oh, so that's why I didn't see her yesterday..."
+    show ale 45
+    mc "What group is she in?" with dis
+    mc "The Jocks? The Populars?"
+    show ale 46
+    d "She's not in any group. She's a lone wolf." with dis
+    mc "Oh, so a bit like you, then?"
+    show ale 47
+    d "Hmm... maybe." with dis
+    d "I don't like being pigeonholed into any \"group\" either."
+    d "Maybe that's why we get along."
+    mc "Oh, so you two are friends?"
+    d "Well, it's hard to get close to her, but yeah, you could say that."
+    mc "I see..."
+    x "Hey Dalia. Are you gonna hit the showers?"
+    show ale 48
+    d "Hi Alex! Yeah, I'm coming." with dis
+    d "Damn girl, it looked like you were flying on the water today!"
+    x "*Laughs* Really? I trained all yesterday. I’m trying to improve my times."
+    d "Well, you totally did!"
+    play soundlow doorclose2
+    show ale 49
+    d "*Going down the stairs*" with dis
+    mc "Hi!"
+    mc "Nice to meet you! I'm [mc]!"
+    stop music2b fadeout 6
+    play music wind fadein 6
+    play soundlow doorclose2
+    show ale 50
+    x "*Leaves*" with Dissolve(1.2)
+    mc "(Um...)"
+    mc "(I guess she didn't hear me...)"
+    mc "(Anyway, since everyone already left, I should go shower too.)"
+    mc "(Only one class to go and then I'll...)"
+    play sound punch
+    show ale 51 with hpunch
+    show ale 51 with hpunch
+    pause
+    play sound3 fall
+    play sound2 fall2
+    show ale 52 with dis
+    mc "AAArgh... What the fuck..." with dissolve
+    show ale 53
+    mc "Son of a bitch..." with dis
+    show ale 54
+    ben "You should be more careful, rookie."
+    ben "No running by the pool. You might fall and break your nose."
+    show ale 53
+    if axelspeak:
+        mc "This is your doing, isn’t it, Axel? You filthy rat..."
+        if axelpunch:
+            mc "Did I hurt you that much yesterday? Had to cry to Papa and tell him all about your ouchie eyeball??"
+        mc "Were you so embarrassed that you needed to bring your personal bulldog to intimidate me?"
+        mc "2 vs 1? When no one else is around? And you’ve gotta attack me from behind?"
+    else:
+        mc "You again? What the fuck do you want?"
+        mc "Are you so scared of me that you have to attack me from behind?"
+    mc "You're both fucking cowards."
+    show ale 54
+    ben "*Laughs*"
+    ben "Nah, it's not like that. It's just that I don't like your stupid, pretty-boy face."
+    ben "Or your attitude, strutting around like you’re the king of the world."
+    ben "Someone needs to put you in your place."
+    show ale 53
+    mc "Fuck you. You're a pair of scumbags."
+    show ale 54
+    ben "You should show some respect when you're talking to Mr. Bardot, you fucking worm."
+    ben "You better learn quick, otherwise we’re gonna have to keep teaching you a lesson."
+    ben "Be careful, loser."
+    mc "Fuck off!"
+    show ale 55
+    ax "*Laughs*" with Dissolve(1.5)
+    ax "I will make your life miserable. I’ll turn your existence into a nightmare."
+    ax "For both you and your loved ones."
+    mc "Shut the fuck up, dickhead!"
+    ax "*Laughs* I almost feel bad for you."
+    ax "You messed with the wrong guy."
+    ax "Take care, [mc]."
+    show ale 56 with Dissolve(1.5)
+    play sound doorclose2
+    pause
+    show ale 57
+    mc "*Sighs*" with dis
+    mc "(Back in trouble again, [mc]...)"
+    mc "(What the fuck is wrong with this guy?)"
+    mc "(I've never cared much about bullies, but as soon as he mentioned my \"loved ones\"... I felt a chill down my spine.)"
+    mc "(I hope he's just a cocky asshole that’s all talk and nothing else...)"
+    show ale 56
+    mc "(Anyway, I should get going. I don't want Mr. Keating to give me detention for being late.)" with dis
+    mc "(Not today!)"
+    stop music fadeout 4
+    play soundlow schoolbell
+    show ale 58 with Dissolve(3)
+    play music2 happy5 fadein 4
+    prof "Okay guys, that’s all I’ve got for you." with dissolve
+    prof "You’re released to go home."
+    play sound2 chairmove
+    show ale 59
+    mc "(Holy shit, finally!)" with hpunch
+    mc "(This was the longest day ever, but it's finally over!)"
+    show ale 58
+    prof "Oh class, really quick! Before you leave, I need to assign partners for the project that’s due next week."
+    prof "The last time I let you pair up on your own, it was utter chaos."
+    mc "(What a damn buzzkill...)"
+    show ale 60
+    prof "Let's see..." with dis
+    prof "Um... Chang with Micaela..."
+    c "W-What?!"
+    show ale 58
+    prof "Raul with Noah, Cassie with Aysha, Axel with Benjamin, Dalia with..." with dissolve
+    prof "...Charlotte."
+    d "Whaaat?" with hpunch
+    d "I don't wanna go with her..."
+    cha "Excuse me?! I'm the one who should be complaining, bitch!" with hpunch
+    show ale 60
+    prof "And [mc] with..." with dissolve
+    prof "Um..."
+    prof "Alex."
+    mc "(Uhh...)"
+    show ale 61
+    x "Huh? Who?" with dis
+    prof "[mc]. He and Chang are the two new guys."
+    prof "You didn't meet him yesterday because you missed class... again."
+    x "[mc]?"
+    show ale 62
+    x ". . ." with dis
+    show ale 63
+    x "Ahh... Him..." with dis
+    mc ". . ."
+    show ale 65 with Dissolve(1.2)
+    rau "Mr. Keating, we won't be able to complete this project." with dissolve
+    prof "What?! Again?!"
+    rau "Yeah, Noah and I have something that we can't postpone."
+    prof "This is unacceptable, guys. If this keeps happening, you guys are gonna end up repeating this grade again!"
+    rau "Meh, what's one more year?"
+    rau "We've grown fond of you, Mr. Keating."
+    rau "Anyway, see you next week."
+    prof "No! I won't allow it!"
+    prof "And what's this \"something\" that can't be postponed?!"
+    rau "It's personal."
+    prof "I DEMAND TO KNOW!"
+    play music2b risinglong fadein 5
+    stop music2 fadeout 4
+    show raul1 with Dissolve(2.5)
+    pause
+    show raul2 with dis
+    pause
+    show raul3 with dis
+    pause
+    prof "I m-mean..." with dis
+    prof "If you don't want to tell me, it's okay..."
+    prof "I..."
+    hide raul2
+    hide raul3
+    hide raul1
+    show raul1
+    rau "Noah's mom is coming to the city." with dis
+    hide raul1
+    show raul2
+    noa "Yeah, I... haven't seen my... mom... for a very long time, Mr. Keating." with dis
+    noa "We have to pick her up at the harbor."
+    hide raul2
+    show raul3
+    prof "Oh... T-That's g-great." with dis
+    prof "You can do the p-project another day then. N-No problem."
+    prof "F-Family comes first."
+    hide raul3
+    show raul2
+    noa "Good." with dis
+    hide raul3
+    show raul1
+    rau "We'd also appreciate if you could keep this information to yourself." with dis
+    hide raul1
+    show raul2
+    noa "My momma is a very shy and reserved woman, Mr. Keating." with dis
+    noa "She doesn't like the craziness of daily life."
+    noa "And she definitely doesn't like Americans."
+    noa "American police, to be more precise. They’re on par with snitches—she believes they should get... stitches."
+    hide raul2
+    show raul3
+    prof "I u-understand!" with dis
+    prof "I'll tell everyone you've b-been here all week!"
+    hide raul3
+    show raul1
+    rau "You're a good man, Mr. Keating." with dis
+    rau "I'm sure Noah's mom will appreciate it."
+    hide raul1
+    show raul3
+    prof "...G-Give her a k-kiss for me." with dis
+    hide raul3
+    show raul1
+    rau "Oh, we will, Mr. Keating..." with dis
+    rau "We will..."
+    stop music2b fadeout 4
+    play music2 happy5 fadein 3
+    show ale 68b
+    hide raul1
+    with Dissolve(1.2)
+    mc "(Hmm? What's up with those two?)" with dissolve
+    mc "(Why is Mr. Keating sweating so much?)"
+    play sound chairmove
+    pause .8
+    show ale 69
+    mc "Huh?" with dissolve
+    show ale 70
+    mc "Hey! Alex! Wait!" with dis
+    show ale 72 with Dissolve(1.2)
+    mc "We have to talk about the project!" with dissolve
+    show ale 71
+    x "It's Alexandra."
+    show ale 72
+    mc "What?"
+    show ale 71
+    x "My name. Alexandra."
+    show ale 72
+    mc "Oh, yeah, of course. Sorry."
+    mc "Um... About the project... We should decide on a day to work on it."
+    show ale 71
+    x "Yeah, I guess."
+    x "This Saturday? Are you free in the afternoon?"
+    show ale 72
+    mc "Sure, sounds good."
+    mc "I'd say we could do it at my place, but there’s a lot of people there and we’d probably need to work somewhere more quiet..."
+    show ale 71
+    x "We can go to my house. I'm normally by myself on Saturdays."
+    mc "(Nice...)"
+    show ale 72
+    mc "Sweet!"
+    mc "Do you know what we could do the project on?"
+    mc "Mr. Keating said we had to write a paper on something related to the topic of social control."
+    mc "Maybe we could write about the influence of the media? Or about a cult! Have you heard about the Sons of..."
+    show ale 71
+    x "We can talk about it on Saturday."
+    show ale 72
+    mc "Oh... yeah, of course."
+    mc "Um..."
+    mc "By the way, I'm [mc]. I saw you before, at the pool."
+    show ale 71
+    x "Yes, I know."
+    show ale 72
+    mc "Oh... I thought you didn't notice me."
+    show ale 71
+    x "Anything else?"
+    show ale 72
+    mc "Um..."
+    menu:
+        with dis
+        "Compliment her tattoos":
+            $ alexpen = False
+            mc "Can I tell you something?" with dis
+            mc "I love your tattoos."
+            mc "I noticed them at the pool and..."
+            show ale 73
+            x "Yeah, yeah, okay." with dis
+            x "I’ve heard it all before. You don’t need to kiss my ass, alright?"
+            x "I don't need any new friends."
+            mc "Oh... I just..."
+            x "What are you gonna mention next?"
+            x "My hair? Yeah, it's ashen. Swimming? Yep, I'm pretty good at it. Thanks, but no thanks."
+            show ale 75
+            mc "Um..." with dis
+            mc "(Damn, she's a tough one to talk to...)"
+            show ale 74
+            x "Are we done?"
+            show ale 75
+            mc "I... guess so, yeah."
+        "Compliment her swimming skills":
+            $ alexpen = False
+            mc "Can I tell you something?" with dis
+            mc "You're the best swimmer I've ever seen."
+            mc "I saw you at the pool and..."
+            show ale 73
+            x "Yeah, yeah, okay." with dis
+            x "I’ve heard it all before. You don’t need to kiss my ass, alright?"
+            x "I don't need any new friends."
+            mc "Oh... I just..."
+            x "What are you gonna mention next?"
+            x "My hair? Yeah, it's ashen. My tattoos? Yep, I have a lot of them. Thanks, but no thanks."
+            show ale 75
+            mc "Um..." with dis
+            mc "(Damn, she's a tough one to talk to...)"
+            show ale 74
+            x "Are we done?"
+            show ale 75
+            mc "I... guess so, yeah."
+        "Compliment her hair":
+            $ alexpen = False
+            mc "Can I tell you something?" with dis
+            mc "I love your hair."
+            mc "I noticed how cool it looked when you got out of the pool and–"
+            show ale 73
+            x "Yeah, yeah, okay." with dis
+            x "I’ve heard it all before. You don’t need to kiss my ass, alright?"
+            x "I don't need any new friends."
+            mc "Oh... I just..."
+            x "What are you gonna mention next?"
+            x "My tattoos? Yeah, I have a lot of them. Swimming? Yep, I'm pretty good at it. Thanks, but no thanks."
+            show ale 75
+            mc "Um..." with dis
+            mc "(Damn, she's a tough one to talk to...)"
+            show ale 74
+            x "Are we done?"
+            show ale 75
+            mc "I... guess so, yeah."
+        "{color=[walk_points]}Compliment her pen [pink][mt](Alex +1)":
+            mc "Can I tell you something?"with dis
+            mc "You have a nice pen."
+            show ale 73
+            x "Um... Excuse me? My... pen?"with dis
+            show ale 75
+            mc "Yeah, I happened to notice it earlier and it's a good one. Good brand. Made of good quality materials."with dis
+            x ". . ."
+            show ale 74
+            x "Are you seriously complimenting me on that?"
+            x "My fucking pen?"
+            show ale 75
+            mc "Erm... Yes?"
+            show ale 74
+            x "Aren't you gonna mention my hair? My tattoos? That you saw my swimming at the pool?"
+            show ale 75
+            mc "Uhh... Should I?"
+            mc "I mean, your hair is... pretty hairy...? And yeah, I saw you swimming, but it wasn’t anything to write home about..."
+            mc "To be honest, I could probably swim faster than you if I trained seriously."
+            mc "And now that you mention it... yeah, looks like it's true, you have some tattoos."
+            mc "Cool, I guess."
+            x ". . ."
+            mc ". . ."
+            x ". . ."
+            $ alex_points += 1
+            play sound "beat.ogg"
+            show ale 76
+            show heartr at topleft
+            with dissolve
+            hide heartr with dissolve
+            pause
+            show ale 78
+            x "Maybe you're not just another boring dummy after all." with dis
+            x "I like your style."
+            show ale 77
+            mc "Oh well... thanks."
+            mc "Was it something I said?"
+            show ale 78
+            x "No, it's what you didn't say. I don't like having my ass kissed, or having everyone tell me over and over what they think I want to hear."
+            x "I like your sarcasm... [mc]."
+            x "You said you were Dalia's friend?"
+            show ale 77
+            mc "Yeah, we’ve known each other since we were little."
+            # ===== new stuff =====
+            if im_incest_mode=="incest":
+                show ale 74
+                x "Now that I think about, Dalia did mention having younger siblings before." with dis
+                x "How are you in the same class as us?"
+                show ale 75
+                mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."
+                mc "The other younger sibling is my twin sister, so she's also in our grade."
+                mc "She's in a different class though."
+                show ale 78
+                x "Oh, wow. That's quite the family." with dis
+                x "Well, you and Dalia probably the only people in this class that are actually worth talking to. Maybe your twin would be, too."
+            else:
+                show ale 74
+                x "Now that I think about, Dalia did mention having a brother before." with dis
+                x "You're younger aren't you? How are you in the same class as us?"
+                show ale 75
+                mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."
+                show ale 78
+                x "So you're practically twins, huh?" with dis
+                x "Well, you two are probably the only people in this class that are actually worth talking to."
+            # ===== end changes =====
+            show ale 77
+            mc "Thanks, but I don't like having my ass kissed."
+            show ale 78
+            x "*Chuckles* Well... anything else, [mc]?"
+            show ale 77
+            mc "Hmm... nope, I think that was all."
+    show ale 79
+    x "Cool. I'll see you tomorrow. Peace." with dis
+    mc "Sure. Goodbye, Alex!"
+    show ale 80
+    x "Alexandra." with Dissolve(.8)
+    mc "Oh... shit, yeah sorry, I forgot."
+    mc "Didn't Dalia call you Alex, though?"
+    x "She can do it. You can't."
+    mc "Gotcha."
+    mc "Goodbye, Alexandra."
+    x "Bye."
+    play sound doorsliding
+    show ale 81 with Dissolve(1.5)
+    mc "(Hmm...)" with dissolve
+    mc "(She seems... interesting.)"
+    mc "(Let's see how Saturday's meeting goes.)"
+    mc "*Looking at your phone* Hmm..."
+    mc "(Oh shit!)" with hpunch
+    mc "(I have to go home!!)" with hpunch
+    mc "(IT’S ETERNUM TIME!)" with hpunch
+    jump preeternum
+
+# Used in annie sister map, wholesale replacement due to interfering lines
+label preeternum_mod:
+    stop music2 fadeout 5
+    play sound2 keys
+    play music2b tictoc fadein 4
+    scene welcome 6 with Dissolve(3.5)
+    play sound doorclose
+    bla "If you're seeing this, preeternum_mod has successfully activated. delete this line from incestlables.rpy once testing is done."
+    mc "Go, go, go!" with dissolve
+    play sound3 stairsrun
+    show login 15 with Dissolve(2.3)
+    play sound4 doorclose
+    mc "Annie?" with dissolve
+    play sound5 dooropen1
+    show login 16 with dis
+    a "Finally!" with dissolve
+    a "Let's go, bro! We're already late!"
+    mc "*Laughs* Already got your Eternum E-Suit on, I see!"
+    a "Of course! Now, come on already!"
+    mc "Okay, okay!"
+    play sound dooropen1
+    show login 17 with Dissolve(1.6)
+    mc "Let's get star- Oh crap, I don't have an E-Suit yet!" with dissolve
+    show login 18
+    a "It should've been included with the game." with dis
+    a "Did you look through everything in the box?"
+    show login 17
+    mc "Ohhh... that makes sense." with dis
+    mc "To be honest... no, I didn't. I only took out the implant to charge it."
+    mc "So... do I need to put on the whole suit?"
+    show login 18
+    a "Yep!" with dis
+    a "I mean, technically you only really need the visor and neural implant connected, but without the suit, you might experience some bugs during your gameplay."
+    a "You don’t want a buggy playthrough, do you?"
+    show login 17
+    mc "Hell no!" with dis
+    mc "But... does that mean that you're playing right now? Are you inside Eternum?"
+    show login 18
+    a "Of course not! I'd be sitting still if I was, remember?" with dis
+    show login 17
+    mc "Oh. You always played in your room, so I never wanted to come in and bother you." with dis
+    show login 19
+    a "Well, I'm not playing yet, so I can remove my visor at any time." with dis
+    show login 20
+    a "See?" with dis
+    mc "Nice!"
+    show login 21
+    a "Alright then, let's not waste any more time!"with dis
+    a "Put on the E-Suit. I won’t look."
+    mc "No need to look way, sis. I don't mind."
+    a "H-hey now! We're not little kids anymore!"with hpunch
+    mc "*Laughs* Okay, okay..."
+    play sound clothes
+    a "First I'll help you connect your neural implant and visor, and then after you're all set up, I'll go to my room to log in myself."
+    a "You’re gonna start off by talking to the Eternum Lady. It’s a required step for all new players."
+    a "I should be connected by the time you're done, and then all you’ll have to do is accept the invitation to my server."
+    mc "Got it."
+    mc "I'm ready."
+    show login 22
+    a "Nice! That suit looks good on you!" with dis
+    a "Now sit down!"
+    play sound chair1
+    show login 23 with dis
+    mc "And now what?" with dissolve
+    a "You just have to insert the E-3X implant under your skin and then connect the other end to the visor."
+    mc "T-The what?? Under my what?!"
+    show login 24
+    a "Don't worry, it’ll sting only a tiny bit! I bet you won't even feel it." with dis
+    mc "Okay, if you sa-"
+    play sound plugin
+    mc "FUCK!!" with hpunch
+    a "Sorry! Did that hurt?!"
+    mc "N-No, no, I barely felt it..."
+    a "Alright, now put on the visor..."
+    play sound2 plugin
+    a "This goes there..."
+    play sound3 plugin
+    a "And then this here..."
+    a "And now..."
+    play soundlow login
+    show evisor
+    pause 3
+    mc "Wow!" with dis
+    a "Is it working?"
+    mc "Yeah! I mean, I don't know, all I see is blue."
+    hide evisor
+    show login 25
+    a "Then it's working! Awesome! You're officially connected to Eternum!" with dis
+    a "This will only happen on your very first time, don't worry. After that, the loading will be much faster."
+    a "You should be getting access any moment now..."
+    a "First, you'll lose the sense of feeling in your legs."
+    a "After that, your sense of hearing will seem to fade away."
+    a "Lastly, your vision will slowly start to blur and then you won’t be able to see this room anymore."
+    stop music2b fadeout 3
+    mc "Hmmm... now that you mention it, it does kind of feel like my legs have fallen asleep or something..."
+    show login 26 with dis
+    pause
+    mc "Hmm? Three what?" with dissolve
+    mc ". . ."
+    show login 27
+    mc "Oh damn, I can't hear you!" with dis
+    mc "I can't hear a thing!"
+    mc "Two what? Is it something important?"
+    show login 28
+    mc "Hey, sis?!" with dis
+    mc "C-Can we stop for a second?"
+    mc "Oh shit, I forgot to go to the bathroom..."
+    mc "I hope I don’t lose control of my bowels next..."
+    show login 29
+    mc "Annie!"with dis
+    mc "Why are you making that face?"
+    mc "Is something wrong?!"
+    jump eternum
