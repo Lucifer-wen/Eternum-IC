@@ -1774,7 +1774,6 @@ label poolalex_mod:
     with Dissolve(3)
     pause
     play music2b happy3 fadein 5
-    bla "If you're seeing this, poolalex_mod has successfully activated. delete this line from incestlables.rpy once testing is done."
     mc "Just 1 more hour, Chang!" with dis
     show ale 38b
     mc "1 more hour and I'll be playing Eternum!" with Dissolve(1.5)
@@ -2260,7 +2259,6 @@ label preeternum_mod:
     play music2b tictoc fadein 4
     scene welcome 6 with Dissolve(3.5)
     play sound doorclose
-    bla "If you're seeing this, preeternum_mod has successfully activated. delete this line from incestlables.rpy once testing is done."
     mc "Go, go, go!" with dissolve
     play sound3 stairsrun
     show login 15 with Dissolve(2.3)
