@@ -10,7 +10,7 @@
 
 # Example skeleton (uncomment and adapt):
 
-# Used in annie sister map, replaces a few short lines that would affect other lines
+# Used in annie sister map, replaces a few short lines that would affect other lines and switches a few MC lines to Annie
 label welcome_mod:
     play sound carstop fadein 2
     stop musicb fadeout 5
@@ -679,10 +679,12 @@ label daliacove_mod:
     play sound sand
     show cd 33 with dis15
     mc "(Oh my fucking god, those hips...)"with dissolve
+    # ===== new stuff =====
     if nancy03scene:
             mc "(Those abs... is it bad that I want to lick them? Well, after what happened with Mom...)"
     else:
             mc "(Those abs... is it bad that I want to lick them?)"
+    # ===== end new stuff =====
     show cd 34
     d "Okay, so... what did you want to tell me? I'm all ears."
     show cd 33
@@ -730,10 +732,12 @@ label daliacove_mod:
     mc "Anyway, let's go home."
     mc "I loved spending some time with you in your server, Dalia. Thanks for letting me visit."
     d ". . ."
+    # ===== new stuff =====
     d "{size=15}Fuck it"
     mc "What did you say?"
     show cd 34
     d "I said okay... let's do it."
+    # ===== end new stuff =====
     show cd 33
     mc "The Exit Portal inside the cave is the only one around? Have you ever explored the rest of the island?"
     show cd 34
@@ -790,10 +794,12 @@ label daliacove_mod:
         d "*Giggles* I still have my doubts..."
     show cd 42 with dis15
     d "*Starts to slowly open your fly*"with dis08
+    # ===== new stuff =====
     if nancy03scene:
             mc "(Oh... fuck yeah! Screw it! No matter if she's my sister, I already did it with my mom, so this can't be any worse.)"
     else:
             mc "(Oh... fuck yeah! My sister’s gonna give me a blowjob!)"
+    # ===== end new stuff =====
     play sound zip
     pause .2
     play sound2 clothes3
@@ -2193,6 +2199,11 @@ label poolalex_mod:
             show ale 78
             x "Maybe you're not just another boring dummy after all." with dis
             x "I like your style."
+
+            # CCMOD: PHONE
+            if renpy.loadable("achievements/achievements.rpy"):
+                $ unlock_wallpaper_by_name("wp_alex_1")
+
             show ale 77
             mc "Oh well... thanks."
             mc "Was it something I said?"
