@@ -106,7 +106,7 @@ label welcome_mod:
     $ penelopeu = True
     p "Who?" with dissolve
     hide daliapen_presentation
-    d "[mc]?"
+    d "[mc]? Annie?"
     play soundlow whoosh3
     show pendaliap
     p "Oh... O-Of course! [mc]!"
@@ -114,7 +114,7 @@ label welcome_mod:
     p "It's been a while!"
     d "Yeah, welcome back!"
     mc "Thanks!"
-    a "So good to see you, sis!"
+    a "So good to see you, sisters!"
     d "Same here!"
     p "Yes! So good!"
     mc "Yeah!"
@@ -2199,12 +2199,12 @@ label poolalex_mod:
             show ale 78
             x "Maybe you're not just another boring dummy after all." with dis
             x "I like your style."
+            show ale 77
 
             # CCMOD: PHONE
             if renpy.loadable("achievements/achievements.rpy"):
                 $ unlock_wallpaper_by_name("wp_alex_1")
 
-            show ale 77
             mc "Oh well... thanks."
             mc "Was it something I said?"
             show ale 78
@@ -2375,3 +2375,357 @@ label preeternum_mod:
     mc "Why are you making that face?"
     mc "Is something wrong?!"
     jump eternum
+
+# Used in all maps, adds extra dialogue I personally wanted to add
+label versiontwo_mod:
+    show screen afewminuteslater with Dissolve(3)
+    pause
+    scene aaa 1
+    show screen heart
+    hide screen afewminuteslater
+    with Dissolve(3)
+    a "W-What?" with dis
+    a "Are you... Are you serious?"
+    a "Benjamin..."
+    a "...is d-dead?"
+    $ money = 1200
+    show aaa 3
+    mc "I swear! Mr. Keating told us in computer class." with dis
+    mc "He said he had a stroke or some shit."
+    scene aaa 2
+    a "Damn... That's a bizarre coincidence..."
+    scene aaa 3
+    mc "Coincidence?! That's bullshit!"
+    scene aaa 2
+    a "Bullshit...?"
+    a "What are you saying? Do you think Mr. Keating made all that up?"
+    scene aaa 3
+    mc "Not Mr. Keating! Whoever made that information public... is trying to cover this whole thing up."
+    scene aaa 2
+    a "Are you... are you implying that he's dead because the Praetorians excommunicated him?"
+    a "Other people have been excommunicated before... and they didn't die."
+    scene aaa 3
+    mc "Are you sure about that? Have you met any?"
+    scene aaa 2
+    a "Um... Well, no, but..."
+    scene aaa 3
+    mc "I'm telling you... there's something strange about this entire situation."
+    show aaa 4
+    mc "But we shouldn't talk about this here..." with dis
+    mc "We don't know who could be eavesdropping..."
+    scene aaa 2
+    a "W-What? You think someone’s spying on us?!"
+    scene aaa 4
+    mc "I have a feeling this shit is much bigger than we think, Annie."
+    mc "We witnessed the Praetorians killing Benjamin in Eternum, and somehow he's also dead in real life now. We know too much."
+    scene aaa 2
+    a "Y-You're starting to scare me!"
+    a "Eternum is just a game!"
+    mc "Just a game? I wouldn't be so sure about that..."
+    show aaa 5
+    mc "*Whispering* I just noticed..." with dis
+    mc "*Whispering* Do you know who that guy is?"
+    a "W-What?"
+    mc "*Whispering* He's been standing there ever since we sat down..."
+    mc "*Whispering* I've never seen him before..."
+    mc "*Whispering* I don't like this, Annie..."
+    a "But..."
+    a "Isn't..."
+    a "Isn't that Chang?"
+    mc "What?"
+    stop music2 fadeout 2
+    play soundlow schoolbell
+    show aaa 6
+    c "'Sup, [mc]!" with dis
+    c "All good?"
+    mc "Oh..."
+    play music2 happy5 fadein 5
+    show aaa 7
+    mc "Hi Chang!" with dis
+    mc "Everything’s just peachy, yep!"
+    mc "I'll text you later!"
+    mc "Take care, buddy!"
+    show aaa 8
+    a "Aren't you being just a little too paranoid?" with Dissolve(1.2)
+    scene aaa 9
+    mc "Okay, maybe they're not spying on us... yet."
+    mc "But seriously, there's something fishy about Benjamin's death."
+    scene aaa 8
+    a "Do you seriously believe the Praetorians killed him in real life?"
+    scene aaa 9
+    mc "Well... maybe not, but I'm sure it's all connected somehow."
+    scene aaa 8
+    a "I really believe you're overthinking this."
+    a "Not everything has to become a conspiracy thriller, you know?"
+    scene aaa 9
+    mc "I don't know, Annie... him having a stroke? I'm not buying it."
+    show aaa 10
+    a "Well, what can we do?" with dissolve
+    a "You know I love summoning my inner-Sherlock Holmes as much as you do, but we can't go to Benjamin's house and just start interrogating his parents!"
+    show aaa 9
+    mc "Yeah, I guess it would be a little awkward if we did that..."with dissolve
+    show aaa 10
+    a "We both know that Benjamin was not a good person, but it'd be disrespectful to his family..."with dissolve
+    a "And we wouldn't get anything out of it anyway."
+    a "I think the best thing we could do right now is put all this behind us."
+    mc "*Sighs* Maybe you're right..."
+    show aaa 11
+    l "Hi guys... Mind if I sit with you?" with Dissolve(1.2)
+    mc "Luna!"
+    show aaa 12
+    l "I usually eat alone, but... then I saw you two here, and..." with dis
+    show aaa 17b
+    mc "SEAT'S TAKEN! CAN'T SIT HERE!" with hpunch
+    l ". . ."
+    mc ". . ."
+    mc "...Sorry, bad Forrest Gump joke. Of course Luna, you’re always welcome with us!" with dis08
+    show aaa 17c
+    l "Thanks!"
+    show aaa 13
+    a "*Laughs* Don't mind him..." with dis08
+    a "Please, sit down!"
+    play sound chair2
+    show aaa 15
+    l "Thank you." with Dissolve(1.2)
+    scene aaa 14
+    a "It's so nice to meet you, Luna!"
+    # ===== new stuff =====
+    scene aaa 15
+    l "Same to you. You must be Annie, [mc]'s told me about you."
+    scene aaa 14
+    a "Yep! I heard [mc] managed to win a neural implant at your cafe!"
+    # ===== end new stuff =====
+    a "Giving away a prize like that is so generous of you!"
+    scene aaa 15
+    l "No worries. I already have my own, so I wouldn't have much use for another."
+    scene aaa 14
+    a "You play Eternum too?!"
+    scene aaa 15
+    l "Yes. Actually, [mc] and I are gonna play together later tonight."
+    l "We’ll be on a server called \"The Red Herring\"."
+    l "Do you wanna join us?"
+    scene aaa 14
+    a "Oh my god, yes! I'd love to!"
+    show aaa 18
+    a "Can I play with you guys, [mc]?!" with dis
+    a "Please, please, please!"
+    show aaa 17
+    mc "Wait... Did you say the server was called \"The Red Herring\", Luna? That’s a pretty ominous-sounding name..."
+    show aaa 16
+    l "Yes. It's a mystery-themed server, with a hint of horror to it as well." with dissolve
+    show aaa 17
+    mc "Horror? Okay... maybe it'd be better if you didn't join us, Annie." with dissolve
+    mc "You know how easily you get spooked."
+    scene aaa 19c
+    a "W-Whaaat? That's not true!"
+    scene aaa 19b
+    mc "*Laughs* Come on, the last time we watched a horror movie, you couldn’t sleep alone for an entire two weeks!"
+    scene aaa 19c
+    a "But that's because I was a kid! I've grown up since then!"
+    scene aaa 19b
+    mc "Oh yeah? Could’ve sworn that happened less than a month ago..."
+    show aaa 20
+    l "To be fair, it's definitely more of a mystery server than a horror one." with dis
+    l "There’s tales of gory murders, gruesome kidnappings—all sorts of cold cases to crack. You roleplay as a detective and try to figure things out."
+    l "I’ve been on a spree of success so far, but I recently ran into one case that I just can't seem to solve."
+    l "Maybe with our three minds put together, we can unravel the mystery."
+    show aaa 18
+    a "See?! It's just a fun-filled mystery server!" with dis
+    a "We both love mysteries!"
+    default anniehorror = True
+    show aaa 19
+    l "It's not a very crowded server, so odds are we’ll be by ourselves most of the time."
+    menu:
+        with dis
+        "{color=[walk_points]}Let Annie come with you [pink][mt](Annie +1)":
+            mc "*Sighs* Okay, okay." with dis
+            mc "I guess you can join us..."
+            $ annie_points += 1
+            play sound "beat.ogg"
+            show aaa 18
+            show heartr at topleft
+            with dissolve
+            hide heartr
+            a "Yay!" with dissolve
+            show aaa 19
+            mc "But you're not allowed to complain if you’re scared, Annie!"
+            show aaa 18
+            a "Who, me? Scared? Never!"
+            show aaa 19
+            mc "We'll see about that..."
+        "Don't let her come with you":
+            $ anniehorror = False
+            mc "I'm sorry Annie, we both know you can't handle horror... no matter how light it is." with dis
+            show aaa 19c
+            a "What? Seriously?!" with dis
+            a "You’re just going to ditch me like that?!"
+            show aaa 19b
+            mc "It’s in your best interest!"
+            show aaa 19c
+            a "Bah! Fine. I'll go back to Ion!"
+            show aaa 19b
+            mc "That's a better idea!"
+    show aaa 16
+    l "I'm sorry if I interrupted your conversation before." with dis
+    show aaa 17
+    mc "Nah, no worries. We were talking about Benjamin. I was just about to head out, anyways..." with dissolve
+    show aaa 16
+    l "Oh, yeah... Benjamin's death... That whole situation is really tragic..."with dissolve
+    scene aaa 18
+    a "[mc] actually thinks there's some sort of conspiracy behind it."
+    show aaa 19
+    l "Conspiracy? How so?"
+    show aaa 17
+    mc "Well... Don't tell anyone, but..."
+    mc "When we were playing yesterday, Annie and I saw Benjamin get shot by a Praetorian."
+    mc "He was about to rape a girl, but then a Praetorian appeared and excommunicated him."
+    mc "Between that and his death in real life... I think the timing of everything is an odd coincidence, to say the least."
+    mc "I want to dig further into the cause of his death, but wouldn’t even know where to start."
+    mc "So... yeah, I guess we're better off just forgetting about the whole thing."
+    show aaa 16
+    l "Well, actually..." with dissolve
+    l "If you really want to investigate... I might know someone who could help."
+    show aaa 17
+    mc "Oh really? Who?"with dissolve
+    show aaa 16
+    l "It's someone I met at my dad's cafe. Her name is Nova." with dissolve
+    l "She owes me a favor... or, at least, that’s what she said last time we were together."
+    l "I wasn't going to ask her for anything, but... if you tell her I sent you, she might be able to lend a helping hand."
+    l "If there’s anyone that could help in a situation like this, it’s her. She's an... \"investigator\"."
+    l "To be honest, I'm a little curious about it too. Something does feel a little off about Benjamin's death..."
+    show aaa 17
+    mc "Awesome! She sounds like just what we need." with dissolve
+    mc "I feel like in this situation, every second counts, but I don't wanna visit her today if that means we have to postpone playing together..."
+    show aaa 16
+    l "I think there's time for everything."with dissolve
+    l "Nova lives near me, so... you can just come over to my place to play. Of course, that’s if you want to..."
+    l "To save the trip of having to go all the way back to your house..."
+    l "You’ll only need your neural implant — I have an extra visor and suit you can borrow."
+    show aaa 17
+    mc "That sounds perfect! Thanks Luna!" with dissolve
+    play sound chairmove
+    show aaa 20
+    mc "I should get going then! I don't wanna be late." with Dissolve(1.2)
+    l "Sure, I'll see you later."
+    l "I'll text you my address. And Nova’s."
+    mc "Sounds good!"
+    mc "Take care girls, I'll see you both in a couple of hours!"
+    play music2b rain3 fadein 5
+    stop music2 fadeout 4
+    scene aaa 21 with Dissolve(3)
+    mc "(Oh shit, I got too excited and forgot I still have a couple of classes left.)" with dis
+    mc "(Well, there’s only two hours left in the school day. Maybe it wouldn’t hurt if I left early. I’ll just have to make up an excuse tomorrow and tell the teachers I felt sick or something.)"
+    scene aaa 22 with Dissolve(2)
+    play sound vibration
+    pause .5
+    play sound vibration
+    pause .3
+    mc "*Looking at your phone* (Ah, there's Luna's message.)" with dissolve
+    mc "(Hmm... Nova's house isn’t that far. I should be able to get there within the hour. I just have to make sure I make it to Luna’s place by...)"
+    mc "(What?! Raining again?!)"
+    mc "(But... the sun was just shining 5 minutes ago...)"
+    show aaa 23 with Dissolve(1.5)
+    mc "(Well, the clouds don’t look that bad.)" with dis
+    mc "(Hopefully the rain will pass quickly.)"
+    play sound2 punchlocker
+    play soundlow thunder
+    show aaa 24
+    mc "WHAT THE...!" with hpunch
+    ax "Grrr..."
+    show aaa 25
+    mc "What the fuck do you want now, Axel?!" with dis08
+    show aaa 26
+    ax "You..."with dissolve
+    ax "You motherfucker..."
+    ax "YOU KILLED BENJAMIN!!" with hpunch
+    show aaa 25
+    mc "What?! What the hell are you talking about?!"with dissolve
+    show aaa 26
+    ax "I saw you during computer class! You were nervous and sweating! You know something, don’t you?!"with dissolve
+    show aaa 25
+    mc "Are you out of your mind? I didn't kill Benjamin!"with dissolve
+    show aaa 26
+    ax "I know a fucking pussy like you could never do it, but you must’ve been involved somehow!"with dissolve
+    show aaa 25
+    mc "I told you! I don't know shit about that fucking bastard!"with dissolve
+    show aaa 26
+    ax "WHAT DID YOU JUST SAY?" with hpunch
+    show aaa 25
+    mc "You heard me! Benjamin was an awful person."with dissolve
+    mc "Am I supposed to speak well of him just because he died? Forget that he was a jerk and a fucking rapist?!"
+    mc "He deserves no respect. Not now and not ever!"
+    mc "That scumbag is better off dead."
+    play soundlow thunder
+    show aaa 26
+    ax "SHUT THE FUCK UP! YOU DON'T KNOW ANYTHING ABOUT HIM!" with hpunch
+    show aaa 25
+    mc "I know enough."with dissolve
+    show aaa 26
+    ax "You're so done!!"with dissolve
+    ax "I will ruin your life! And the lives of all the whores around you!"
+    show aaa 27
+    mc "What?"with dis
+    ax "I saw you at the cafeteria... Hanging out with that nerd and the other freak."
+    ax "Probably bragging about how well your plan to kill Benjamin went!"
+    default axelpunch2 = False
+    menu:
+        with dis
+        "{color=[walk_points]}Punch him [pink][mt](Alex +1)":
+            $ axelpunch2 = True
+            play sound punch
+            play sound2 bonebreak
+            scene aaa 28
+            ax "Aaaargh!"with hpunch
+            play sound punch
+            scene aaa 29
+            mc "MMMPGH...!" with hpunch
+        "Try to calm him down":
+            mc "Okay, that's enough." with dis
+            mc "I had nothing to do with Benjamin's death and neither did the girls. Now leave me alone!"
+            ax "LIAR!!" with hpunch
+    if axelpunch2:
+        play soundlow punch
+    scene aaa 30 with Dissolve(2)
+    if axelpunch2:
+        play soundlow punch
+    prof "Huh??!" with dissolve
+    prof "What in tarnation is going on here?!"
+    if axelpunch2:
+        show aaa 31
+    else:
+        show aaa 32
+    prof "Axel! [mc]! THAT'S ENOUGH!" with dis
+    ax "You're dead! You hear me? DEAD!"
+    if axelpunch2:
+        show aaa 33
+    mc "In case your simple brain didn’t hear me earlier, I said I don't know shit about Benjamin's death."with dis
+    mc "But I swear to God, if you ever insult Annie and Luna again, or lay even a finger on them... you’ll be reunited with Benjamin in no time!"
+    play soundlow thunder
+    prof "[mc]! I said that's enough!" with hpunch
+    ax "You'll regret the day you ever messed with a Bardot, you fucking cocksucker!"
+    ax "Just wait... When you least expect it, I’ll be there to teach you your lesson."
+    play soundlow punch
+    show aaa 34
+    ax "AND YOU! Take your hands off me, beggar!" with hpunch
+    ax "Touch me again and my family will have you fired before you know it!"
+    prof "I-I'm sorry Axel, I d-didn't..."
+    ax "Shut the fuck up."
+    scene aaa 35 with Dissolve(2.1)
+    prof "Okay, can you explain to me what the hell just happened?" with dis
+    prof "Getting into fights at school already? You haven’t even made it through your first week! Seriously, [mc]?"
+    mc "He's the one who..."
+    prof "I don't want to hear any excuses."
+    prof "I'll have to record this incident in your permanent record. One more infraction and you'll be expelled."
+    prof "If that happens, you'll forfeit your scholarship and have to return to the UK."
+    mc "What? Why am I being singled out here?! He's the one who threatened me!"
+    prof "I said that’s enough! Consider this your final warning."
+    scene aaa 22 with Dissolve(2)
+    mc "*Sighs*" with dissolve
+    mc "(Son of a bitch...)"
+    mc "(Axel can threaten me all he wants... I'm not gonna back down.)"
+    if axelpunch2:
+        mc "(Although... Perhaps I shouldn't have punched him. I don't wanna be expelled...)"
+        mc "(Bah, fuck it. I'd do it again in a heartbeat.)"
+    mc "*Sighs* (Anyway, I need to get out of here.)"
+    mc "(Let's see if Luna's contact can help me with this whole thing...)"
+    jump novafirstencounter
