@@ -702,6 +702,7 @@ init python:
     # - Full Incest: nutzt `im_label_map_sister`
     im_label_map_base = {
         "poolalex": "poolalex_mod",
+        "versiontwo": "versiontwo_mod",
         "daliacove": "daliacove_mod",
     }
     im_label_map_incest = {
@@ -988,7 +989,7 @@ init python:
         #     until he gets an official birthdate that screws us over lmao
         # -----------------------------------------
         # Character notes
-        # Penny called "sis", "Penny", sometimes "big sis"
+        # Penny called "sis", "Penny", sometimes "big sis". She uses "bro", "lttle bro/brother", but more sparingly
         # Dalia mix of "sis" and "Dal/Daly"
         # -----------------------------------------
         # BM 0000 = Base Map, Line Number
@@ -1064,6 +1065,11 @@ init python:
         "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Mom and Dalia again.)":
             "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see my mom, Dalia, and my oldest sister Penelope again.)",
 
+        # BM script:1112
+        # BA/N: moved from half-sis map
+        "What's the first thing you're going to do when we get to our new home?":
+            "What's the first thing you're going to do when we get to your old home?",
+
         # BM script:1354
         "Anyway, do you know where Nancy is?":
             "Anyway, do you know where your mom is?",
@@ -1075,16 +1081,6 @@ init python:
         # BM script:1767 minor grammar change
         "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’ve been becoming good friends already! Isn't that right, Annie?":
             "It's me, Nancy! Even though we've only been speaking on the phone for the past few days, I feel like we're becoming good friends already! Isn't that right, Annie?",
-
-        # BM script:1779
-        # BA/N: lines are identical?
-        "I hope so! And please, just call me Nancy!":
-            "I hope so! And please, just call me Nancy!",
-
-        # BM script:1781
-        # BA/N: lines are identical?
-        "Okay! Thank you, Nancy!":
-            "Okay! Thank you, Nancy!",
 
         # BM script:1786
         "And of his babysitter!":
@@ -1155,6 +1151,11 @@ init python:
         # BM script:1967 (p)
         "[mc]! I can't wait to properly meet you!":
             "Hey, [mc], I can't wait to hear all about what happened to you!",
+
+        # BM script:1970
+        # BA/N: moved from half-sis map
+        "Oh, and you must be Annie! Nice to meet you too!":
+            "Oh, and you must be Annie! Nice to meet you!",
 
         # BM script:1976 (d)
         #"Damn [mc], you look... tall!":
@@ -1289,7 +1290,7 @@ init python:
             "(They're letting me and Annie stay here for a year after all. This is the least I can do to show my gratitude.)",
 
         # BM script:3369 (p)
-        # BA/N: come back to this one, maybe tone down the horny?
+        # BA/N: come back to this, maybe tone down the horny?
         #"{i}You did this?! You're sooo amazing! Do you want to celebrate by taking a hot, steamy bath with me?":
         #    "{i}You did this?! You're sooo amazing! Do you want to celebrate by test",
 
@@ -1354,7 +1355,7 @@ init python:
         "She was going with my mom to do some shopping, or at least that’s what I was told. They should be back in time for supper.":
             "She was going with Mom to do some shopping, or at least that's what I was told. They should be back in time for supper.",
 
-        # BM script:2041   
+        # BM script:4041   
         # BA/N: Disabled, penny will start using bro after the cafe
         # "Alright [mc], you convinced me!":
         #     "Alright bro, you convinced me!",
@@ -1362,6 +1363,10 @@ init python:
         # BM script:4055
         "Thanks, Penelope!":
             "Thanks, sis!",
+
+        # BM script:4188
+        "Penelope!":
+            "Penny!",
 
         # BM script:4200 (p)
         # BA/N: Disabled, penny will start using bro after the cafe
@@ -1391,11 +1396,6 @@ init python:
         # BM script:5178
         "I don't know, it felt pretty special to me. I never had a nice, home-cooked meal when I was living with my dad.":
             "I don't know, it felt pretty special to me. I never had a nice, home-cooked meal while I was living with Dad.",
-
-        # BM script:5207
-        # BA/N: lines are identical?
-        "We're only missing Nancy and Penelope, then our group would be complete!":
-            "We're only missing Nancy and Penelope, then our group would be complete!",
 
         # BM script:5218 (p)
         "It was a nice breath of fresh air. Thank you for pushing me out of my comfort zone, [mc].":
@@ -1460,23 +1460,23 @@ init python:
         # ========== START label mod "poolalex_mod" ==========
         # line numbers for both files
 
-        # BM script:5647 IncestLables:1805, also overwrites script6:1516 and script6:9319, both okay
+        # BM script:5647 IncestLables:1810, also overwrites script6:1516 and script6:9319, both okay
         "Hey Dalia!":
             "Hey sis!",
 
-        # BM script:5669 IncestLables:1827
+        # BM script:5669 IncestLables:1832
         "I'm sorry about that, Dalia.":
             "I'm sorry about that, Dal.",
 
-        # BM script:5937 (x) IncestLables:2095
+        # BM script:5937 (x) IncestLables:2100
         "By the way, I'm [mc]. I saw you before, at the pool.":
             "By the way, I'm [mc], Dalia's brother. I saw you earlier, at the pool.",
 
-        # BM script:6045 (x) IncestLables:2203
+        # BM script:6045 (x) IncestLables:2213
         "You said you were Dalia's friend?":
             "You said you were Dalia's brother?",
 
-        # BM script:6047 IncestLables:2205
+        # BM script:6047 IncestLables:2215
         "Yeah, we've known each other since we were little.":
             "Yeah, we were separated as kids when our parents divorced.",
 
@@ -1492,9 +1492,9 @@ init python:
         "*Laughs* I'm not a simp, I promise.":
             "*Laughs* Gotta help out my big sister, of course.",
 
-        # AS script:8525 (p)
+        # BM script:8525 (p)
         "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I got a little annoyed.":
-            "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I didn't know what to think.",
+            "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I didn't know what to think. You coming back after ten years, with a stranger on top of that...",
 
         # BM script:8528 (p)
         "Thank you, Penelope. It means a lot hearing that from you.":
@@ -1516,12 +1516,13 @@ init python:
         "Please, Dalia! Please!":
             "Please, Dal! Please!",
 
-        # BM script:8732
-        # overwrites multiple other lines, okay for now
+        # BM script:8731 (d)
+        # also overwrites script:9368, script:9395, script2:4200 (n) + other lines, okay for now?
+        # BA/N: Come back to this
         "Dalia!":
             "Dal!",
 
-        # BM script:9096
+        # BM script:9069
         "*Standing up* Thank god you knocked him down, Dalia...":
             "*Standing up* Thank god you knocked him down, Dal...",
 
@@ -1534,14 +1535,14 @@ init python:
             "*Standing up* Dal? Holy shit, sis, that was unbelievable!",
 
         # BM script:9368
-        # Overwritten by BM script:8732, okay
+        # Overwritten by BM script:8731, okay
 
         # BM script:9382
         "*Laughs* First lesson of Eternum, [mc].":
             "*Laughs* First lesson of Eternum, dear brother.",
 
         # BM script:9395
-        # Overwritten by BM script:8732, okay
+        # Overwritten by BM script:8731, okay
 
         # BM script:9617
         "Thanks Dalia, it means a lot coming from you.":
@@ -1551,191 +1552,248 @@ init python:
     # -----------------------------------------
     # v0.2 script2.rpy Lines 9770-19471
 
-        # BM 13783
+        # ========== START label mod "versiontwo_mod" ==========
+            # BA/N: added label mod to add two dialogue lines I felt should've been in the intro between Luna and Annie in the first place.
+            # Will also be used in other incest options too.
+        # ========== END label mod "versiontwo_mod" ==========
+
+        # BM script2:4013
         "*Knocks* [mc]? Are you up?":
             "*Knocks* Honey? Are you up?",
 
-        # BM 14051
+        # BM script2:4158
+        "Dalia? Good morning!":
+            "Dal? Good morning!",
+
+        # BM script2:4200 (n)
+        # Overwritten by BM script:8731 (d), okay?
+        # BA/N: Come back to this
+
+        # BM script2:4281
         "Dalia? Are you up?":
             "Sis? Are you up?",
 
-        # BM 14084
+        # BM script2:4314
         "I gotta say, those were some damn good pancakes. Thank you, [mc].":
             "I gotta say, those were some damn good pancakes. Thank you, bro.",
 
-        # BM 14108
+        # BM script2:4338
         "Hmmm... I'm not so sure about that, Dalia. I've seen broom sticks thicker than your biceps.":
             "Hmmm... I'm not so sure about that, sis. I've seen broom sticks thicker than your biceps.",
 
-        # BM 14144
+        # BM script2:4374
         "A-Are you okay, Dalia?":
-            "A-Are you okay, sis?",
+            "A-Are you okay, Dal?",
 
-        # BM 14344
+        # BM script2:4540
+        "You’re just saying that because you feel sorry for me.":
+            "You’re just saying that because you're my mom.",
+
+        # BM script2:4544
+        "Yeah, that’s just your maternal instinct. It’s like when a mom says that her son is the most beautiful baby in the world, even though it looks like E.T.":
+            "Yeah, that’s just your maternal instinct. Every mom thinks their kid is the most beautiful baby in the world, even if they look like E.T.",
+
+        # BM script2:4558
+        "Oh, there's a lot you don't know about me, [mc]...":
+            "Oh, there's a lot you don't know about me, sweetie...",
+
+        # BM script2:4574
         "*Laughs* It's not that. [mc] is staying with us for a year until he finishes school. He’s part of the student exchange program.":
-            "*Laughs* It's not that. He's my son I told you about. [mc] is staying with us for a year until he finishes school. He’s part of the student exchange program.",
+            "*Laughs* It's not that. This is my son I've told you about. [mc] is staying with us for a year until he finishes school. He came back as part of the student exchange program.",
 
-        # BM 14350
+        # BM script2:4580
         "Well, well, well, [mc]!":
             "Well, well, well, the fabled lost son is here!",
 
-        # BM 14610
+        # BM script2:4840
         "What? I'm not Dalia. My name is [mc].":
             "What? I'm not Dalia. My name is [mc]. Dalia is my sister.",
 
-        # BM 14627
-        # BA/N: lines are identical?
-        "You know, maybe Nancy would also hear more compliments if she ever left her lab!":
-            "You know, maybe Nancy would also hear more compliments if she ever left her lab!",
-
-        # BM 14659
-        # BA/N: lines are identical?
-        "And of course... my beautiful little dove, Nancy.":
-            "And of course... my beautiful little dove, Nancy.",
-
-        # BM 14661
-        # BA/N: lines are identical?
-        "Flattery...? No, my Nancy. I am only speaking my truth. And truth should never be told to someone who is not worthy of it.":
-            "Flattery...? No, my Nancy. I am only speaking my truth. And truth should never be told to someone who is not worthy of it.",
-
-        # BM 14680
+        # BM script2:4910
         # Handle both versions. Bypass added in skip_nancy_swap, edit down there if this line is changed
         "No, I came with Nancy.":
             "No, I came with Nancy, my mother.",
 
-        # BM 14680
         "No, I came with Mom.":
             "No, I came with Nancy, my mother.",
 
-        # BM 14682
+        # BM script2:4912
         "Oh, really? You two know each other? Well I'm glad to meet you, because I'm positive you're going to be seeing a lot more of me soon...":
             "Oh, really? You are her son? Well I'm glad to meet you, because I'm positive you're going to be seeing a lot more of me soon...",
 
-        # BM 14704
-        # BA/N: lines are identical?
-        "Perfect, Nancy... your graceful movements are simply unmatched...":
-            "Perfect, Nancy... your graceful movements are simply unmatched...",
-
-        # BM 14723
-        # BA/N: lines are identical?
-        "Our last movement will be an Acro pose and must be done in pairs. So... Raul should go with Noah, [mc] with Gertrude, and... oh! I guess that leaves me with you, Nancy.":
-            "Our last movement will be an Acro pose and must be done in pairs. So... Raul should go with Noah, [mc] with Gertrude, and... oh! I guess that leaves me with you, Nancy.",
-
-        # BM 14733
+        # BM script2:4963
         "I mean, obviously Kai would've asked me out if I wasn't already married, but since I'm happily taken... Nancy will be a very good fit for him.":
             "I mean, obviously Kai would've asked me out if I wasn't already married, but since I'm happily taken... your mom will be a very good fit for him.",
 
-        # BM 14864
+        # BM script2:5002
+        "Well, maybe not you, but... it just seems like he’s trying awfully hard to get close to Nancy...":
+            "Well, maybe not you, but... it just seems like he’s trying awfully hard to get close to my mom...",
+
+        # BM script2:5014
+        "Y-Yeah, I know Nancy very well, and honestly she’s been in quite a heightened emotional state lately. I can’t bear the thought of that guy taking advantage of her.":
+            "Y-Yeah. Honestly, she’s been in quite a heightened emotional state lately. I can’t bear the thought of that guy taking advantage of her.",
+
+        # BM script2:5094
         "Look at that perfectly toned stomach... And to think she's had 2 daughters! Unbelievable.":
             "Look at that perfectly toned stomach... And to think she's had 3 children! Unbelievable.",
 
-        # BM 14969
+        # BA/N: lines around below could use more work
+
+        # BM script2:5199
         "*Giggles* Just like when I was your babysitter.":
             "*Giggles* Just like when you were still living with us.",
 
-        # BM 15027
-        # BA/N: lines are identical?
-        "*Breathing heavily* I'm... so relieved... you didn't leave yet, Nancy.":
-            "*Breathing heavily* I'm... so relieved... you didn't leave yet, Nancy.",
+        # BM script2:5294
+        # BA/N: borrowed from aunt map
+        "I can't be with him. It would be... weird. We’re not supposed to be together... like {i}that{/i}.":
+            "I can't be with him. It would be... wrong. We’re not supposed to be together... like {i}that{/i}.",
 
-        # BM 15067
-        # BA/N: lines are identical?
-        "What? That's absurd! You're a goddess, Nancy! You're a modern day Aphrodite!":
-            "What? That's absurd! You're a goddess, Nancy! You're a modern day Aphrodite!",
+        # BM script2:5321
+        # BA/N: borrowed from aunt map
+        "*Giggles* Um, maybe. No... But, I mean... could you imagine?!":
+            "*Giggles* Um, maybe. No, that would be {i}so{/i} wrong... But, I mean... could you imagine?!",
 
-        # BM 15098
-        # BA/N: lines are identical?
-        "Nancy, sex is a beautiful part of life. If you have needs, you need to be taken care of. You deserve to be pampered... desired... lusted after. Even more so with you being such a beautiful woman.":
-            "Nancy, sex is a beautiful part of life. If you have needs, you need to be taken care of. You deserve to be pampered... desired... lusted after. Even more so with you being such a beautiful woman.",
-
-        # BM 15133
+        # BM script2:5363
         "(I can't just barge in and be like, \"Hi [mc], did you know you make me feel so horny all the time? Do you wanna fuck your old babysitter?\")":
             "(I can't just barge in and be like, \"Hi [mc], did you know you make me feel so horny all the time? Do you wanna fuck your mother?\")",
 
-        # BM 15134
+        # BM script2:5364
         "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out.)":
-            "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out. And fucking my son, is that even legal?)",
+            "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be {i}furious{/i} if they ever found out. And fucking my son... God, there's so much that could go wrong for everyone...)",
 
-        # BM 15873
+        # BM script2:5416
+        "(God, that would be so embarrassing.)":
+            "(God, that would be {i}mortifying{/i}. How would I explain anything to them?)",
+
+        # BM script2:6103 (x)
         "I never met my mother and my father was always absent in my life. He was constantly too occupied with his work.":
-            "I was separated from my mother at a young age and my father was always absent in my life. He was always too occupied with his work.",
+            "My father was always absent in my life, always too occupied with his work. When my parents divorced, I had to live with him for the last ten years, if you can even call it \"living with him\".",
 
-        # BM 16858
+        # BM script2:6106 (x)
+        "Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
+            "Right, you {i}are{/i} Dalia's brother...{p}Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life...",
+
+        # BM script2:7046 (p)
+        # interferes with script5:2321
+        # "Good morning, [mc]!"
+        #   "Good morning, little brother!"
+
+        # BM script2:7088
         "Is that a hint of jealousy, I'm sensing?":
-            "Is that a hint of overprotectiveness I'm sensing?",
+            "Is that a hint of overprotectiveness I'm sensing, little bro?",
 
-        # BM 16898
+        # BM script2:7128
         "(It's not like I was expecting her to wait for me like a nun, but... just imagining some guy banging her... ugh.)":
             "(It's not like I was expecting her to wait for marriage like a nun, but... just imagining some guy banging her... ugh.)",
 
-        # BM 16904
+        # BM script2:7134
         "(Way out of your league.)":
-            "(I am her brother.)",
+            "(And I'm her little brother.)",
 
-        # BM 16922
+        # BM script2:7152
         "[mc] here is gonna be my photographer this time.":
             "My brother here is gonna be my photographer this time.",
 
-        # BM 16926
+        # BM script2:7156
         "Ahhh... yeah, that's right. [mc]...":
             "Ahhh... yeah, that's right. Your brother, [mc]...",
 
-        # BM 17104
+        # BM script2:7334
         "(Wake up [mc], we're talking about Penelope here. Still not gonna happen.)":
-            "(Wake up [mc], we're talking about your sister here. Still not gonna happen.)",
+            "(Wake up [mc], we're talking about your big sister here. Not gonna happen.)",
 
-        # BM 17174
+        # BM script2:7404
         "But that's why I'm glad to have you here, [mc].":
             "But that's why I'm glad to have you here, bro.",
 
-        # BM 17475
+        # BM script2:7534
+        "I might need you to be my photographer more often, [mc]!":
+            "I might need you to be my photographer more often, little brother!",
+
+        # BM script2:7691
+        "Come on Penny, don't tell me you're actually embarrassed about yourself in these pictures?":
+            "Come on sis, don't tell me you're actually embarrassed about yourself in these pictures?",
+
+        # BM script2:7705
         "I don't mind you seeing me like this, because... I don't know, I just feel comfortable around you.":
             "I don't mind you seeing me like this, because you're my little brother.",
 
-        # BM 17478
+        # BM script2:7708
         "And besides, what would my mom say if she saw me posting those pictures? She'd probably think it was an introductory photoshoot to a porno or something...":
             "And besides, what would Mom say if she saw me posting those pictures? She'd probably think it was an introductory photoshoot to a porno or something...",
 
-        # BM 17743
+        # BM script2:7720
+        "Thank you for understanding my absurdities, [mc].":
+            "Thank you for understanding my absurdities, bro.",
+
+        # BM script2:7722
+        "Anytime, Penny. I hope you’ll tolerate mine too.":
+            "Anytime, sis. I hope you’ll tolerate mine too.",
+
+        # BM script2:7973
         "That Valentino guy made me realize that I'll never feel comfortable doing something like this with a stranger. But you're no stranger, [mc], and since I have you here...":
-            "That Valentino guy made me realize that I'll never feel comfortable doing something like this with a stranger. But you're no stranger, you're my brother, [mc], and since I have you here...",
+            "That Valentino guy made me realize that I'll never feel comfortable doing something like this with a stranger. But you're my little brother, [mc], and since I have you here...",
 
-        # BM 17762
+        # BM script2:7992
         "(Oh my god, am I about to see Penelope naked?)":
-            "(Oh my god, am I about to see my older sister naked?)",
+            "(Oh my god, am I about to see my big sister naked?)",
 
-        # BM 17877
+        # BM script2:8104
+        "(Don’t think about Penelope's huge, perfect tits.)":
+            "(Don’t think about your sister's huge, perfect tits.)",
+
+        # BM script2:8107
         "(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see her breasts in who knows how long... and...)":
-            "(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see your sister's breasts in who knows how long...{p} Shit... Why does it feel so good knowing this?)",
+            "(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see your sister's breasts in who knows how long...{p}Shit... Why does it feel so good knowing this?)",
 
-        # BM 17885
+        # BM script2:8115
         "Oh, come on, [mc]!":
             "Oh, come on, bro!",
 
-        # BM 17910
+        # BM script2:8119
+        "I think that’s good enough, Penny. Valentino is gonna come back at any moment.":
+            "I think that’s good enough, sis. Valentino is gonna come back at any moment.",
+
+        # BM script2:8140
         "(Is this huge thing I'm feeling... his...)":
             "(Is this huge thing I'm feeling... my brother's...)",
 
-        # BM 17950
-        "Um... Hey Penny, do you have all of your belongings?":
-            "Um... Hey sis, do you have all of your belongings?",
+        # BM script2:8180
+        #"Um... Hey Penny, do you have all of your belongings?":
+        #    "Um... Hey sis, do you have all of your belongings?",
 
-        # BM 17970
+        # BM script2:8198
+        "I don't know what it is about you, but... I always have so much fun when you’re around.":
+            "I don't know what it is about you, little brother, but... I always have so much fun when you’re around.",
+
+        # BM script2:8200
         "Me too, Penelope.":
             "Me too, sis.",
 
-        # BM 18085
-        "I was wondering why Nancy and her shared the same last name on your followers list. Nancy is her mom!":
-            "I was wondering why Nancy, you, and her shared the same last name on your followers list. Nancy is your mom!",
+        # BM script2:8241
+        "Awesome! I can't wait to play with you, Penny!":
+            "Awesome! I can't wait to play with you, sis!",
 
-        # BM 18180
+        # BM script2:8306
+        "Um... Yeah. Why? Do you know her?":
+            "Um... Yeah, she's my sister. Why? Do you know her?",
+
+        # BM script2:8315
+        "I was wondering why Nancy and her shared the same last name on your followers list. Nancy is her mom!":
+            "I was wondering why you, Nancy, and her shared the same last name on your followers list. You're all related!",
+
+        # BM script2:8410
         # BA/N: moved from half-sis map
         "(Nah, I'm probably imagining things... just like Chang does all the time.)":
-            "(Nah, I'm probably imagining things... after all, she's my sister. There's no way she's actually flirting with me... right?)",
+            "(Nah, I'm probably imagining things... after all, she is my sister. There's no way she's actually flirting with me... right?)",
 
-        # BM 18190
+        # BM script2:8420
         "And now I’ve come to learn that you’re friends with Penelope too?!":
             "And now I’ve come to learn that you’re Penelope’s brother too?!",
+
+        # BM script2:8624
+        "Have fun playing.":
+            "Have fun playing, bro.",
 
 
     # -----------------------------------------
@@ -3764,6 +3822,7 @@ init python:
         # AS script:956
         "He had to work to support us both. Heaven knows where I'd be without him.":
             "He had to work to support the three of us. Heaven knows where we'd be without him.",
+
         # AS script:1046
         "(Annie is a close friend from my childhood.)":
             "(Annie is my younger twin sister.)",
@@ -3808,7 +3867,7 @@ init python:
 
         # AS script:1059
         "(It would be... weird for us. Yeah! That's the word. Weird.)":
-            "(It would be... so weird for us. Yeah! She's my sister after all.)",
+            "(It would be... wrong. Very wrong! We're twin siblings after all.)",
 
         # AS script:1060
         "(It's just not the kind of relationship we have.)":
@@ -3877,7 +3936,7 @@ init python:
 
         # AS script:1179
         "You're nothing but a big ball of envy because your best friend can play Eternum and you can't since you didn't save any money.":
-            "You're nothing but a big ball of envy because your twin sister and bestie can play Eternum and you can't since you didn't save any money.",
+            "You're nothing but a big ball of envy because your dear sister and bestie can play Eternum and you can't since you didn't save any money.",
 
         # AS script:1184
         "B-Best friend?":
@@ -3915,7 +3974,7 @@ init python:
         "Well, I left this place when I was 8, so I don’t really remember anything.":
             "Well, I understand, but we left this place when we were 8, so I don't really remember anything.",
 
-        # AS script:
+        # AS script:1363
         "I’ve never had a chance to come back ‘til now, so I'm excited to relive all my childhood memories!":
             "We’ve never had a chance to come back ‘til now, so I'm excited to relive all our childhood memories!",
 
@@ -3923,7 +3982,7 @@ init python:
         "Anyway, do you know where Nancy is?":
             "Anyway, do you know where Mom is?",
 
-        # AS script:1758
+        # AS script:1757
         "Mission failed, [mc]...":
             "Mission failed, bro...",
 
@@ -4094,6 +4153,9 @@ init python:
         "I wasn't expecting you to be so excited to meet [mc] again!":
             "I wasn't expecting you to be so excited to meet your brother and sister again!",
 
+        # AS script:1928
+        # replaced by IncestLables:109
+
         # AS script:1932 IncestLables:113
         "Oh, y-yeah, so excited! Hi [mc]!":
             "Oh, y-yeah, so excited! Hi Annie!",
@@ -4145,13 +4207,13 @@ init python:
         "You're so nice, Annie. Is there anything I can do for you?":
             "That's nice of you to say, honey. Is there anything I can do for you?",
 
-        # BM script:2115 IncestLables:296
+        # AS script:2115 IncestLables:296
         "Your room will be on the second floor—the last one on the right.":
             "Do you remember the way to your old room?",
 
-        # BM script:2116 IncestLables:297
+        # AS script:2116 IncestLables:297
         "Ah, I remember that room! It was the one with a lot of natural light.":
-            "I think so. Second floor, last one on the right, right? The one with a lot of natural light.",
+            "I think so. Second floor, last one on the right, right? The one with a lot of natural light.{p}(Hey, that rhymed!)",
 
         # AS script:2119 IncestLables:300
         "Well, since [mc] seems to remember where everything is already... Do you want a tour of the house, Annie?":
@@ -4185,7 +4247,7 @@ init python:
 
         # AS script:2799
         "(I guess I should let them walk to school on their own, since I don't wanna look like a jealous boyfriend or something.)":
-            "(I guess I should let them walk to school on their own, since I don't wanna look like the cliche, overprotective brother.)",
+            "(I guess I should let them walk to school on their own, since I don't wanna look like the cliche overprotective brother.)",
 
         # AS script:2826
         "Believe me, Kredon can seem like a very boring place until you’re able to discover it with someone that knows all the hotspots.":
@@ -4207,7 +4269,7 @@ init python:
         "The lady said no.":
             "Her brother. And she said no.",
 
-        # AS script:2952 and script4:4803 (ok)
+        # AS script:2952, also overwrites script4:4803, okay
         "Are you okay, Annie?":
             "Are you okay, sis?",
 
@@ -4219,7 +4281,7 @@ init python:
         "And... thank you again for helping me out back there, [mc].":
             "And... thank you again for helping me out back there, bro.",
 
-        # AS script:
+        # AS script:5178
         "I don't know, it felt pretty special to me. I never had a nice, home-cooked meal when I was living with my dad.":
             "I don't know, it felt pretty special to me. Annie and I never really had a nice, home-cooked meal while we were living with Dad.",
 
@@ -4261,7 +4323,7 @@ init python:
             "Let's go, bro! We're already late!",
 
         # AS script:6094
-        # interferes script:7111 (a), the source of all my problems
+        # interferes with script:7111 (a), the source of all my problems
         #"*Laughs* What are you wearing?":
         #    "*Laughs* Already got your Eternum E-Suit on, huh?",
 
@@ -4378,6 +4440,10 @@ init python:
         "I'm glad you like it, Annie.":
             "I'm glad you like it, sis.",
 
+        # AS script:8224
+        "No. You have much more to lose, Annie.":
+            "No. You have much more to lose, sis.",
+
         # AS script:8467
         "Thank you so much for playing with me, [mc]. It means a lot.":
             "Thank you so much for playing with me, bro. It means a lot.",
@@ -4388,7 +4454,7 @@ init python:
 
         # AS script:8525 (p)
         "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I got a little annoyed.":
-            "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna come back for a while, I didn't know what to think.",
+            "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna come back for a while, I wasn't sure what to feel. Ten years apart is a long time after all.",
 
         # AS script:8526 (p)
         "But hey, I’m glad to say I was wrong. Both of you breathe so much life into this house. It almost feels like you've always lived here.":
@@ -4398,285 +4464,433 @@ init python:
     # -----------------------------------------
     # v0.2 script2.rpy Lines 9770-19471
 
-        # AS 9810
+        # AS script2:40
         "I have a feeling this shit is much bigger than we think, Annie.":
             "I have a feeling this shit is much bigger than we think, sis.",
 
-        # AS 9852
+        # AS script2:52
+        "*Whispering* I don't like this, Annie...":
+            "*Whispering* I don't like this, sis...",
+
+        # AS script2:82
         "I don't know, Annie... him having a stroke? I'm not buying it.":
             "I don't know, sis... him having a stroke? I'm not buying it.",
 
-        # AS 9876
+        # AS script2:106
         "*Laughs* Don't mind him...":
             "*Laughs* Don't mind my brother...",
 
-        # AS 9883
+        # ========== START label mod "versiontwo_mod" ==========
+        # edit of lines added by "versiontwo_mod"
+
+        # AS IncestLables:2494
+        "Same to you. You must be Annie, [mc]'s told me about you.":
+            "Same to you. You must be Annie, his twin sister. [mc]'s told me about you.",
+
+        # AS IncestLables:2496
+        "Yep! I heard [mc] managed to win a neural implant at your cafe!":
+            "Yep! I heard my brother managed to win a neural implant at your cafe!",
+
+        # ========== END label mod "versiontwo_mod" ==========
+
+        # AS script2:113
         "I heard [mc] managed to win a neural implant at your cafe!":
             "I heard my brother managed to win a neural implant at your cafe!",
 
-        # AS 9896
+        # AS script2:126
         "Can I play with you guys, [mc]?!":
             "Can I play with you guys, bro?!",
 
-        # AS 9903
+        # AS script2:133
         "Horror? Okay... maybe it'd be better if you didn't join us, Annie.":
             "Horror? Okay... maybe it'd be better if you didn't join us, sis.",
 
-        # AS 9937
+        # AS script2:167
         "But you're not allowed to complain if you’re scared, Annie!":
             "But you're not allowed to complain if you’re scared, sis!",
 
-        # AS 10580
-        "(Maybe his girlfriend...?)":
-            "(Maybe his sister...?)",
+        # AS script2:174
+        "I'm sorry Annie, we both know you can't handle horror... no matter how light it is.":
+            "I'm sorry sis, we both know you can't handle horror... no matter how light it is.",
 
-        # AS 10784
+        # AS script2:810
+        "(Maybe his girlfriend...?)":
+            "(Maybe his girlfriend... or his sister...?)",
+
+        # AS script2:1014
         "Annie should be waiting for us already.":
             "Your sister should be waiting for us already.",
 
-        # AS 10887
+        # AS script2:1117
         "I love your outfit, Annie!":
             "I love your outfit, sis!",
 
-        # AS 11159
+        # AS script2:1389
         "Y-You're scaring me, [mc].":
             "Y-You're scaring me, bro.",
 
-        # AS 11735
+        # AS script2:1965
         "It's okay Annie, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!":
             "It's okay sis, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!",
 
-        # AS 12675
+        # AS script2:2051
+        "Right, Annie?!":
+            "Right, sis?!",
+
+        # AS script2:2085, also overwrites script4:4995, okay
+        "Right, Annie?":
+            "Right, sis?",
+
+        # AS script2:2187
+        "(Then Luna will shower me with hugs and Annie will gush non-stop about how I'm the bravest man she's ever met.)":
+            "(Then Luna will shower me with hugs and Annie will gush non-stop about how I'm the bravest man she's ever known.)",
+
+        # AS script2:2905
         "What about you, Annie?":
             "What about you, sis?",
 
-        # AS 13178
+        # AS script2:3331
+        "(He must think I'm a useless, scared kid...)":
+            "(He must think I'm still a kid-a useless, scared kid...)",
+
+        # AS script2:3339
+        "(Yeah, nice job impressing [mc] in Eternum, Annie.)":
+            "(Yeah, nice job impressing your brother in Eternum, Annie.)",
+
+        # AS script2:3408
         "Oh, [mc]! I wasn’t sure if you were asleep already!":
             "Oh, hey bro! I wasn’t sure if you were asleep already!",
 
-        # AS 13188
+        # AS script2:3418
         "I told you! You shouldn't have played in Luna's server, Annie! You can't handle that scary stuff! Remember when we played Dead Space?":
-            "I told you! You shouldn't have played in Luna's server, sis! You can't handle that scary stuff! Remember when we played Dead Space?",
+            "I told you, sis! You shouldn't have played in Luna's server! You can't handle that scary stuff! Remember when we played Dead Space?",
 
-        # AS 13244
+        # AS script2:3474
         "You can sleep here as many times as you want. You don’t even have to ask, alright?":
             "You can sleep here as many times as you want. You don’t even have to ask, alright? Just like when we were little.",
 
-        # AS 13249
+        # AS script2:3479
         "Anytime, Annie.":
             "Anytime, sis.",
 
-        # AS 13274
+        # AS script2:3488
+        "Hey, your room is so cozy!":
+            "Wow, I forgot how cozy your room was!",
+
+        # AS script2:3489
+        "And you have a nice view of the backyard!":
+            "And how nice the view of the backyard is from here!",
+
+        # AS script2:3490
+        "It is pretty nice!":
+            "Yeah, sometimes I like to just look out the window and reminisce about playing down there when we were kids.",
+
+        # AS script2:3491
+        "My room faces the front yard. It’s a nice view too, but sometimes you can hear all the cars passing by.":
+            "*Giggles* We'd always get so muddy because of how much it rained.",
+
+        # AS script2:3495
+        "Luckily your bed is big enough for the both of us. You could probably even fit three or four people on here!":
+            "Luckily your new bed is big enough for the both of us. You could probably even fit three or four people on here!",
+
+        # AS script2:3499
+        "For sure... She's been super nice so far.":
+            "For sure... There's so much more we need to thank Mom for too.",
+
+        # AS script2:3500
+        "We gotta prepare something to thank her one of these days.":
+            "We gotta prepare something extra special for her one of these days.",
+
+        # AS script2:3504
         "G-Goodnight, [mc].":
             "G-Goodnight, bro.",
 
-        # AS 13276
+        # AS script2:3506
         "Goodnight Annie.":
             "Goodnight sis.",
 
-        # AS 13288
+        # AS script2:3518
         "(Oh yeah... I forgot that Annie came to sleep in my room.)":
             "(Oh yeah... I forgot that sis came to sleep in my room.)",
 
-        # AS 13296
+        # AS script2:3526
         "(She's probably used to hugging a pillow while she sleeps, or something.)":
-            "(She's used to hugging a pillow or stuffed animal while she sleeps.)",
+            "(She used to hug a pillow or stuffed animal while she sleeps. I guess that hasn't changed.)",
 
-        # AS 13300
+        # AS script2:3530
         "(We're in quite an... intimate position... I don't want her to think I'm trying to take advantage of her while she sleeps.)":
             "(We're in quite an... intimate position... I don't want her to think her brother is trying to take advantage of her while she sleeps.)",
 
-        # AS 13315
+        # AS script2:3545
         "A-Are you awake, Annie?":
             "A-Are you awake, sis?",
 
-        # AS 13327
+        # AS script2:3557
         "Baloo?":
             "Baloo? The teddy bear Mom gave you when you were 5?",
 
-        # AS 13329
+        # AS script2:3559
         "Oh... Well... It's a stuffed bear that my mother gave me when I was 5, and...":
             "Yes, that Baloo...",
 
-        # AS 13334
+        # AS script2:3562
+        "(Oh my god, why did I say that?! Now I probably sound like a child to him...)":
+            "(Oh my god, why did I say that?! Now he probably thinks I'm still a child...)",
+
+        # AS script2:3564
         "Oh... I didn't know about Baloo.":
-            "Oh... I didn't know you still had him.",
+            "Oh... I didn't know you still slept with Baloo.",
 
-        # AS 13364
+        # AS script2:3594
         "(He probably just sees me as the little girl who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)":
-            "(He probably just sees me as his little sister who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)",
+            "(He probably still sees me as his little sister who plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)",
 
-        # AS 13365
+        # AS script2:3595
         "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack.)":
-            "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he is not a weirdo like me who has feelings for their twin.)",
+            "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he's not a weirdo like me who has feelings for her twin brother.)",
 
-        # AS 13366
+        # AS script2:3596
         "(I'll always just be Annie, the \"best friend\".)":
             "(I'll always just be Annie, the \"little sister\".)",
 
-        # AS 13371
+        # AS script2:3602
         "(I'm a fucking mess. She needs someone more mature.)":
-            "(I'm a fucking mess. She needs someone more mature... And someone not blood-related... she is not a weirdo like me who has feelings for their twin.)",
+            "(I'm a fucking mess. She needs someone more mature... And someone not blood-related... she's not a weirdo like me who has feelings for his twin sister.)",
 
-        # AS 13372
+        # AS script2:3607
         "(This is why I'll always just be [mc], the \"best friend\"...)":
             "(This is why I'll always just be [mc], the \"big brother\"...)",
 
-        # AS 13373
+        # AS script2:3630
+        "I'm not s-shy...":
+            "I'm not s-shy... It’s just a shirt after all, right...?",
+
+        # AS script2:3631
         "It’s just a shirt after all, right...?":
-            "It’s just a shirt after all, right... you've seen me without it before...?",
+            "I-It’s not like we haven't seen each other naked before...",
 
-        # AS 13403
-        "I mean, yeah, as long as you don't mind...":
-            "I mean, yeah, as long as you don't mind... (Even though the last time I saw you topless was when we were 9 and bathing together...)",
+        # AS script2:3633
+        "(I'm not sure where she’s going with all of this...)":
+            "(Yeah, but... not since we last bathed together when we were nine.)",
 
-        # AS 13412
+        # AS script2:3634
+        "(But I sure as hell want to find out...)":
+            "(I'm not sure where she’s going with all of this... But I sure as hell want to find out...)",
+
+        # AS script2:3642
         "(This doesn't seem like the Annie I’ve known since I was young... Is she trying to prove something?)":
             "(This doesn't seem like the sister I know... Is she trying to prove something?)",
 
-        # AS 13414
+        # AS script2:3644
         "(...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to [mc].) ":
             "(...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to your brother.)",
 
-        # AS 13417
+        # AS script2:3647
         "(Holy shit, I’ve never seen her in such an... intimate way...)":
             "(Holy shit, I never noticed know how much she grew over the past years...)",
 
-        # AS 13422
-        "(This is really Annie... {i}my{/i} Annie.)":
-            "(This is really Annie... {i}my{/i} sister.)",
+        # AS script2:3652
+        # BA/N: Disabled, name simply works better
+        #"(This is really Annie... {i}my{/i} Annie.)":
+        #    "(This is really Annie... {i}my{/i} sister.)",
 
-        # AS 13428
+        # AS script2:3658
         "We're just... friends getting a little more comfortable.":
             "We're just... siblings getting a little more comfortable.",
 
-        # AS 13442
+        # AS script2:3672
         "(My precious Annie...)":
-            "(My precious sister...)",
+            "(My precious little sister...)",
 
-        # AS 13445
+        # AS script2:3675
         "Um, [mc]...? Oh man, I must look weird or someth—":
             "Um, bro...? Oh man, I must look weird or someth—",
 
-        # AS 13447
+        # AS script2:3677
         "Annie... you are so... beautiful...":
             "Sis... you are so... beautiful...",
 
-        # AS 13473
+        # AS script2:3703
         "Your skin feels so soft, Annie. It feels... really nice holding you...":
             "Your skin feels so soft, sis. It feels... really nice holding you...",
 
-        # AS 13481
+        # AS script2:3711
         "(Oh my god, am I the only one feeling all this tension in the air? I want to make a move, but... I don’t want to overstep my bounds...)":
             "(Oh my god, am I the only one feeling all this tension in the air? I kind of want to make a move, but... I don’t want to overstep my bounds... I'm her brother, after all.)",
 
-        # AS 13488
+        # AS script2:3718
         "(But it’s not just any guy. It’s [mc].)":
             "(But it’s not just any guy. It’s [mc]. My twin brother!)",
 
-        # AS 13489
+        # AS script2:3719
         "(You've had a crush on him since you were nine years old. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)":
             "(You've had a crush on him since you were nine years old, even though he's your brother. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)",
 
-        # AS 13498
-        "(I better not risk it. This is the closest we’ve ever gotten and I shouldn’t push my luck.)":
-            "(I better not risk it. This is the closest we’ve ever gotten and I shouldn’t push my luck. A-And she's still your sister! It's just not right!)",
+        # AS script2:3721
+        "(But... I don't want to scare her away. Annie has always been so special to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)":
+            "(But... I don't want to scare her away. Annie has always been so special–more than just a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
 
-        # AS 13510
+        # AS script2:3729
+        "(Baby steps, [mc]. Baby steps.)":
+            "(A-And she's still my sister! It's just not right!)",
+
+        # AS script2:3730
+        "Goodnight, Annie.":
+            "Goodnight, sis.",
+
+        # AS script2:3732
+        "G-Good night, [mc].":
+            "G-Good night, bro.",
+
+        # AS script2:3740
         "Um... Annie...?":
             "Um... sis...?",
 
-        # AS 13533
+        # AS script2:3746
+        "R-Really? W-Well... I guess that’s normal, given the circumstances.":
+            "R-Really? W-Well... I guess that’s normal, given the circumstances.{p}J-just a natural physical reaction.",
+
+        # AS script2:3763
         "I’m sorry, Annie... I can’t help it... you’re driving me insane...":
             "I’m sorry, sis... I can’t help it... you’re driving me insane...",
 
-        # AS 13546
+        # AS script2:3776
         "Oh god, Annie...":
             "Oh god, sis...",
 
-        # AS 13562
+        # AS script2:3792
         "[mc]... Um, I don’t know if I’m ready to go all the way toni-":
-            "Bro... Um, I don’t know if I’m ready to go all the way toni-",
+            "B-bro... Um, I don’t know if I’m ready to go all the way toni-",
 
-        # AS 13567
+        # AS script2:3797
         "I’m sorry. I’m just a little nervous because no one has ever touched me there before, or even seen it, for that matter.":
             "I’m sorry. I’m just a little nervous because no one has ever touched me there before.",
 
-        # AS 13570
+        # AS script2:3800
         "[mc]. I said I’m nervous, but that doesn’t mean I... don’t want to...":
-            "Bro. I said I’m nervous, but that doesn’t mean I... don’t want to...",
+            "I said I’m nervous, bro, but that doesn’t mean I... don’t want to...",
 
-        # AS 13593
+        # AS script2:3823
         "I’ve never been more sure, Annie.":
             "I’ve never been more sure, sis.",
 
-        # AS 13596
+        # AS script2:3826
         "I thought you weren’t interested in me...":
-            "I thought, as your little sister, you weren’t interested in me...",
+            "I thought, as your sister, you'd never be interested in me...",
 
-        # AS 13598
+        # AS script2:3828
+        # BA/N: borrowed from stepsis map
         "Where did you get that idea from?":
-            "That... I-I just, well, you know...",
+            "Oh Annie, you've never been just my sister.",
 
-        # AS 13600
+        # AS script2:3830
         "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our friendship.":
             "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our relationship as brother and sister.",
 
-        # AS 13637
+        # AS script2:3843
+        "*Kissing her neck* And don’t you worry. I’m perfectly fine with going as slow as you want.":
+            "*Kissing her neck* And don’t you worry, sis. I’m perfectly fine with going as slow as you want.",
+
+        # AS script2:3845
+        "Y-Yeah... m-much better. You’re so warm...":
+            "Y-Yeah... m-much better. You’re so warm, bro...",
+
+        # AS script:3854
+        "You’re... so wet...":
+            "Annie... You’re... so wet...",
+
+        # AS script2:3865, also overwrites script2:3905, script4:5819, script6:6414, script6:6556, script8:9293
+        # BA/N: Come back to this
+        "Oh Annie...":
+            "Oh sis...",
+
+        # AS script2:3867
         "(Holy shit, this is really happening! I'm fucking Annie's thighs!)":
             "(Holy shit, this is really happening! I'm fucking my sister's thighs!)",
 
-        # AS 13642
+        # AS script2:3872
         "Jesus, Annie...":
             "Jesus, sis...",
 
-        # AS 13694
+        # AS script2:3905
+        # Overwritten by AS script2:3865, okay
+
+        # AS script2:3924
         "Oh shit, I'm sorry, Annie...":
             "Oh shit, I'm sorry, sis...",
 
-        # AS 13701
+        # AS script2:3931
         "Did I do something wrong, Annie? I’m sorry! I didn’t know it was going to be that much!":
             "Did I do something wrong, sis? I’m sorry! I didn’t know it was going to be that much!",
 
-        # AS 13712
+        # AS script2:3942
         "I only came here t-to sleep and then... next thing I know I’m doing that...":
             "I only came here t-to sleep and then... next thing I know I’m doing that... and with my brother...",
 
-        # AS 13715
+        # AS script2:3945
         "No, no! It's okay! You’re good! I like you, Annie! We can...":
             "No, no! It's okay! You’re good! I like you, sis! We can...",
 
-        # AS 13722
+        # AS script2:3952
         "We skipped like 14 steps! In one night!":
             "We skipped like 14 steps and broke a dozen rules! In one night!",
 
-        # AS 13734
+        # AS script2:3957
+        "What will [mc] think of me after all of this?!":
+            "What will my brother think of me after all of this?!",
+
+        # AS script2:3965
         "I'm gonna... go... think! Good night [mc]!":
             "I'm gonna... go... think! Good night, bro!",
 
-        # AS 13751
+        # AS script2:3979
+        "(Maybe something between us could work after all.)":
+            "(Even if we're siblings, maybe something between us could work after all.)",
+
+        # AS script2:3981
         "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing Annie’s secret kinky side... and I loved every moment of it!)":
             "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing my sister's secret kinky side... and I loved every moment of it!)",
 
-        # AS 14244
+        # AS script2:4474
         "Annie! Do you have a minute? I wanted to talk to you!":
             "Sis! Do you have a minute? I wanted to talk to you!",
 
-        # AS 14864
+        # AS script2:5094
         "Look at that perfectly toned stomach... And to think she's had 2 daughters! Unbelievable.":
             "Look at that perfectly toned stomach... And to think she's had 4 children! Unbelievable.",
 
-        # AS 15134
+        # AS script2:5364
         "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out.)":
-            "(Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be furious if they ever found out. And fucking my son, is that even legal?)",
+            "(Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be {i}furious{/i} if they ever found out. And fucking my son... God, there's so much that could go wrong for everyone...)",
 
-        # AS 15183
+        # AS script2:5413
         "(I bet if I tried to do anything at home, Dalia or Penny would surely notice.)":
             "(I bet if I tried to do anything at home, the girls would surely notice.)",
 
-        # AS 15707
+        # AS script2:5937
         "And on the first day of school, I saw him harassing a close friend of mine.":
-            "And on the first day of school, I saw him harassing my sister.",
+            "And on the first day of school, I saw him harassing my twin sister.",
+
+        # ========== START WIP ==========
+        # BA/N: come back to this. technically with Annie as sister, MC was never completely alone; Not sure how to fit that in while keeping the sentiment of the original.
+
+        # BM script2:6102 (x)
+        #"It probably doesn’t mean much, but I can sort of understand where you’re coming from.":
+        #    "It probably doesn’t mean much, but I can sort of understand where you’re coming from.",
+
+        # BM script2:6103 (x)
+        #"I never met my mother and my father was always absent in my life. He was constantly too occupied with his work.":
+        #    "My father was always absent in my life, always too occupied with his work. When my parents divorced, I had to live with him for the last ten years, if you can even call it \"living with him\".",
+
+        # BM script2:6104 (x)
+        #"I know what it's like to be alone.":
+        #    "I know what it's like to feel alone.",
+
+        # BM script2:6106 (x)
+        #"Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
+        #    "Right, you {i}are{/i} Dalia's brother...{p}Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life...",
+
+        # ========== END WIP ==========
 
 
     # -----------------------------------------
@@ -4839,6 +5053,12 @@ init python:
         "Come here, [mc]! Jump!":
             "Come here, bro! Jump!",
 
+        # AS script4:4803
+        # Overwritten by AS script:2952, okay
+
+        # AS script4:4995
+        # Overwritten by AS script2:2085, okay
+
         # AS 35117
         "Annie, you awake? I can go call the Astrocorp employee if we’re ready to wrap this up.":
             "Sis, you awake? I can go call the Astrocorp employee if we’re ready to wrap this up.",
@@ -4977,7 +5197,7 @@ init python:
             "W-We’ve g-gotta do some practicing b-beforehand, bro...",
 
         # AS script4:6902
-        # Overwritten by script:6179, okay
+        # Overwritten by AS script:6179, okay
 
         # AS 37044
         "Oh Annie... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?":
@@ -5804,7 +6024,7 @@ init python:
         # -----------------------------------------
         # Annie as half-sister, result of Dad cheating while on business trips to the UK. Add on to base map.
         # No last name changes as Nancy and Annie's mom keep their maiden names
-        # Done by Alenissmart
+        # Done by Alenissmart initially, additional edits by BlueArrow
         # Al/N: Sorry but I am too lazy to write an entire new map, so I decided to copy the twin sister map and do edits to make it fit the half sister setting
         # -----------------------------------------
         # HS 0000 = Half Sister map, Line number
@@ -5823,527 +6043,606 @@ init python:
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
 
-        # HS 826
-        "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
-            "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This left Mom to be the only parent taking care of three young kids all while juggling school.",
-
-        # HS 827
+        # HS script:951
         "That’s actually why we ended up moving to the UK; Dad needed to relocate there to keep his position.":
-            "Things went south when Mom discovered that many of the so-called \"work\" related \"trips\", were his other wife and family. This led to a huge quarrel and an ugly divorce, and that's why we ended up moving to the UK.",
+            "Things went south when Mom discovered that many of his so-called \"work trips\", were to be with his second wife and family in the UK. This led to a huge quarrel and an ugly divorce.",
 
-        # HS 828
+        # HS script:952
         "I know, I know, this all sounds pretty gloomy... but don't worry! This is not about to be one long sob story.":
-            "Dad relocated to live with his other family. Apart from that, he also managed to get the custody of me, while Mom stayed with my two older sisters. I know it sounds a bit bleak, but don't worry—this isn't a sob story.",
+            "Dad somehow managed to get custody of me while my two older sisters stayed with Mom. He took me with him when he relocated to live with his other family in the UK. I know it sounds a bit bleak, but don't worry—this isn't a sob story.",
 
-        # HS 832
+        # HS script:956
         "Even after moving, my father continued to work all day. I could never really blame him, though.":
-            "The same can't be said of my dad's second marriage, though. It never really worked out, so they soon divorced once again, leaving my father with only me under his care.",
+            "The same can't be said of my dad's second marriage, though. It never really worked out, so he soon divorced once again, leaving my father with only me under his care.",
 
-        # HS 833
+        # HS script:957
         "He had to work to support us both. Heaven knows where I'd be without him.":
             "Despite his other problems, at least he didn't fail to support us both economically. Heaven knows where I'd be without him.",
 
-        # HS 922
+        # HS script:1046
         "(Annie is a close friend from my childhood.)":
             "(Annie is my half-sister.)",
 
-        # HS 923
+        # HS script:1047
         "(When I moved from Kredon, she was my next-door neighbor and the first person I met, along with Chang.)":
             "(When we moved from Kredon, she was the first person I met, along with Chang.)",
 
-        # HS 924
+        # HS script:1048
         "(We quickly bonded after discovering we both had something in common... the absence of our parents.)":
             "(Living in the same semi-functional family, albeit not for long, naturally made us really close.)",
 
-        # HS 925
+        # HS script:1049
         "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them.)":
             "(It was a chaotic time and we gave each other stability.)",
 
-        # HS 929
-        "(Because of how close we were, people always believed we were dating... but the truth is, we're just friends.)":
-            "(Because of how close we were, people always joked we would make a great couple... but the truth is, we're just siblings.)",
+        # HS script:1051
+        "(After finding a companion within each other, we’ve been inseparable ever since.)":
+            "(Even after our parents divorced, we've been as inseparable as ever.)",
 
-        # HS 930
+        # HS script:1053
+        "(Because of how close we were, people always believed we were dating... but the truth is, we're just friends.)":
+            "(Because of how close we were, people always joked we would've make a great couple... but the truth is, we're just siblings.)",
+
+        # HS script:1054
         "(I mean… she's cute, and we love spending time with each other, but I've never tried to make a move on her.)":
             "(...)",
 
-        # HS 931
+        # HS script:1055
         "(I could never do it.)":
             "(Well you know... I mean if...)",
 
-        # HS 932
+        # HS script:1056
         "(She'd probably freak out if I did.)":
             "(NO. Stop it. She'd probably freak out if I did.)",
 
-        # HS 936
+        # HS script:1059
+        "(It would be... weird for us. Yeah! That's the word. Weird.)":
+            "(It would be... so weird for us. Yeah! She's still my sister after all.)",
+
+        # HS script:1060
         "(It's just not the kind of relationship we have.)":
-            "(Why am I even thinking about that!?)",
+            "(Why am I even thinking about this!?)",
 
-        # HS 958
-        "*Laughs* I'm sure she will.":
-            "*Laughs* I'm sure she will. She is your mother after all.",
-
-        # HS 965
+        # HS script:1089
         "(Come to find out, she actually had 2 rooms available, so Annie will have a place to stay as well!)":
             "(Come to find out, she actually had not only my old room, but also an extra room available, so Annie will have a place to stay as well!)",
 
-        # HS 966
+        # HS script:1090
         "(She’s actually been the one who’s been coordinating with Nancy over the phone, even though they didn’t know each other beforehand.)":
             "(She’s actually been the one who’s been coordinating with Nancy over the phone, and things seem to be well despite the complicated family matter.)",
 
-        # HS 969
+        # HS script:1093
         "Do you think she will like me?":
-            "Do you think she will like me? I mean, considering all those things between them...",
+            "Do you think she will like me? I mean, considering all those things between her and Dad...",
 
-        # HS 971
+        # HS script:1095
         "Nancy? Of course!":
             "Mom? Of course she's going to like you! You don't have to burden yourself with Dad's mistake.",
 
-        # HS 972
+        # HS script:1096
         "Don't worry about it, Annie. I haven't seen her in over 10 years, so it’ll probably feel like I’m meeting her for the first time too!":
-            "Mom was never a petty person, and despite not seeing her in over 10 years, I'm sure she hasn't changed in that aspect.",
+            "She was never a petty person, and despite not seeing her in over 10 years, I'm sure she hasn't changed in that aspect.",
 
-        # HS 988
-        "What's the first thing you're going to do when we get to our new home?":
-            "What's the first thing you're going to do when we get to your old home?",
-
-        # HS 1033
+        # HS script:1157
         "You should go to sleep too, Annie. We have to wake up early tomorrow.":
             "You should go to sleep too, sis. We have to wake up early tomorrow.",
 
-        # HS 1055
+        # HS script:1179
         "You're nothing but a big ball of envy because your best friend can play Eternum and you can't since you didn't save any money.":
             "You're nothing but a big ball of envy because your favorite sister can play Eternum and you can't since you didn't save any money.",
 
-        # HS 1060
+        # HS script:1184
         "B-Best friend?":
             "F-Favorite?",
 
-        # HS 1061
+        # HS script:1185
         "I thought I was your best friend, [mc]!":
             "I thought I was your favorite, [mc]!",
 
-        # HS 1067
+        # HS script:1190
         "I'm not your best friend?":
             "I'm not your favorite?",
 
-        # HS 1068
+        # HS script:1192
         "Um... well, yeah, of course you’re my best friend Annie!":
             "Um... well, yeah, of course you’re my favorite Annie!",
 
-        # HS 1071
+        # HS script:1195
         "You're both my best friends!":
-            "You're both my favorite!",
+            "You're both my favorite people!",
 
-        # HS 1075
+        # HS script:1199
         "Yeah, who's your {i}bestest{/i} friend, me or Chang?":
             "Yeah, who's your {i}favorite{/i}, me or Chang?",
 
-        # HS 1076
+        # HS script:1200
         "T-They're different kinds of friendship!":
             "T-They're different kinds of favorite!",
 
-        # HS 1078
+        # HS script:1201
         "Who is the {b}ONE TRUE{/b} best friend?!":
             "Who is the {b}ONE TRUE{/b} favorite?!",
 
-        # HS 1096
+        # HS script:1220
         "But that doesn't mean you aren’t also my best friend, Annie!":
             "But that doesn't mean you aren’t also my favorite {i}sister{/i}, Annie!",
 
-        # HS 1116
+        # HS script:1240
         "We've been through too much together, Annie.":
             "We've literally lived under the same roof, Annie.",
 
-        # HS 1120
+        # HS script:1244
         "But that doesn't mean you aren’t also my best friend, Chang!":
             "But that doesn't mean you aren’t also my favorite, Chang. You are my best friend!",
 
-        # HS 1130
+        # HS script:1254
         "You're my best... male friend!":
             "You're my favorite... non-family!",
 
-        # HS 1220
+        # HS script:1344
         "I know you're excited Annie, but I'd appreciate it if you could at least carry your hand baggage!":
             "I know you're excited sis, but I'd appreciate it if you could at least carry your hand baggage!",
 
-        # HS 1633
+        # HS script:1757
         "Mission failed, [mc]...":
             "Mission failed, bro...",
 
-        # HS 1651
-        "I've prepared a room for each of you, though I must warn you – don't expect anything fancy. The bedrooms are pretty small.":
-            "I've prepared a room for each of you, though I must warn you – don't expect anything fancy. Remember your old room, [mc]?",
+        # HS script:1775
+        # BA/N: Disabled, BM script:2115 exists
+        # "I've prepared a room for each of you, though I must warn you – don't expect anything fancy. The bedrooms are pretty small.":
+        #     "I've prepared a room for each of you, though I must warn you – don't expect anything fancy. Remember your old room, [mc]?",
 
-        # HS 1843
-        "[mc]! I can't wait to properly meet you!":
-            "Hey bro, can't wait to hear all about what happened to you!",
-
-        # HS 1846
-        "Oh, and you must be Annie! Nice to meet you too!":
-            "Oh, and you must be Annie! Nice to meet you!",
-
-        # HS 2638
+        # HS script:2762
         "Oh yeah, that sounds like Annie. I guess she already told you she also plays Eternum?":
             "Oh yeah, that sounds like sis. I guess she already told you she also plays Eternum?",
 
-        # HS 2674
+        # HS script:2798
         "(Annie was always good at making friends.)":
             "(Sis was always good at making friends.)",
 
-        # HS 2675
+        # HS script:2799
         "(I guess I should let them walk to school on their own, since I don't wanna look like a jealous boyfriend or something.)":
             "(I guess I should let them walk to school on their own, since I don't wanna look like the cliche overprotective brother.)",
 
-        # HS 2786
+        # HS script:2934
+        "The lady said no.":
+            "Her brother. And she said no.",
+
+        # HS script:2910
         "The lady said no, buddy.":
             "Hands off my sister, you jerk.",
 
-        # HS 2828, 34924
+        # HS script:2952, also overwrites script4:4803, okay
         "Are you okay, Annie?":
             "Are you okay, sis?",
 
-        # HS 2872
+        # HS script:2996
         "Will you be alright, Annie?":
             "Will you be alright, sis?",
 
-        # HS 2882
+        # HS script:3006
         "And... thank you again for helping me out back there, [mc].":
             "And... thank you again for helping me out back there, bro.",
 
-        # HS 5076
+        # HS script:5200
         "Tomorrow you'll finally be connected to Eternum, [mc]! After waiting for so many years!":
             "Tomorrow you'll finally be connected to Eternum, bro! After waiting for so many years!",
 
-        # HS 5185
-        "Nah, don't worry Annie, it's my turn today. But thank you!":
-            "Nah, don't worry, sis, it's my turn today. But thank you!",
-
-        # HS 5207
+        # HS script:5331
         "Goodnight [mc]!!":
             "Goodnight, bro!!",
 
-        # HS 5459
+        # HS script:5583
         "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":
             "(I mean... If the girls never found out, then would it really be so bad? It’d be our little secret...{w} Of course it would be! He's my son...)",
 
-        # HS 6387
+        # HS script:6093
+        "Let's go! We're already late!":
+            "Let's go, bro! We're already late!",
+
+        # HS script:6147
+        "Sorry! Did that hurt?!":
+            "Sorry, bro! Did that hurt?!",
+
+        # HS script:6179, also overwrites script:6728, script4:6902, both okay
+        "Annie?!":
+            "Hey, sis?!",
+
+        # HS script:6511
         "(Dammit, Annie didn't tell me about any of this...)":
             "(Dammit, sis didn't tell me about any of this...)",
 
-        # HS 6571
+        # HS script:6606
+        "By the way, your outfit looks awesome!":
+            "By the way, your outfit looks awesome, sis!",
+
+        # HS script:6695
         "No, he's not! He's [mc]! He's tough!":
             "No, he's not! He's my brother! He's tough!",
 
-        # HS 6573
+        # HS script:6697
         "So this is the [mc] you're always talking about?":
-            "So this is your brother you're always talking about?",
+            "So this is the brother you're always talking about?",
 
-        # HS 6686
+        # HS script:6728
+        # Overwritten by HS script:6179, okay
+
+        # HS script:6810
         "Thank god I have you, Annie... I’d probably be lost in a ditch somewhere without you!":
             "Thank god I have you, sis... I’d probably be lost in a ditch somewhere without you!",
 
-        # HS 7052
+        # HS script:7130
+        "(That's a bad idea...)":
+            "(Nope, bad idea. She's my sister!)",
+
+        # HS script:7176
         "(Jeez, I've always tried to not think of Annie in \"that\" way because I don't want to ruin our friendship, but now...)":
-            "(Jeez, I really need to stop this... but...)",
+            "(Jeez, I've always tried to not think of Annie in \"that\" way because I don't want to ruin our relationship, but now...)",
 
-        # HS 7062
+        # HS script:7179
+        "(She's got curves in all the right places...)":
+            "(She's not the skinny kid she used to be... she's got curves in all the right places now...)",
+
+        # HS script:7186
         "(Damn... I guess she’s not the skinny kid she used to be...)":
-            "(Damn... Stop looking at your sister [mc]...)",
+            "(Dammit... Stop looking at your sister, [mc]...)",
 
-        # HS 7853
+        # HS script:7977
         "Oh... Come on Annie, it doesn't matter!":
             "Oh... Come on sis, it doesn't matter!",
 
-        # HS 7978
+        # HS script:8102
         "Erm... Y-You're the best friend ever!":
             "Erm... Y-You're the best brother ever!",
 
-        # HS 8343
+        # HS script:8103
+        "I'm glad you like it, Annie.":
+            "I'm glad you like it, sis.",
+
+        # HS script:8467
         "Thank you so much for playing with me, [mc]. It means a lot.":
             "Thank you so much for playing with me, bro. It means a lot.",
 
-        # HS 8344
+        # HS script:8468
         "The pleasure was all mine, Annie. Eternum is awesome. I’m so grateful I had you by my side.":
             "The pleasure was all mine, sis. Eternum is awesome. I’m so grateful I had you by my side.",
+
+        # HS script:8525 (p)
+        "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I got a little annoyed.":
+            "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I was a little annoyed, mostly because of all the things with Dad... Which I know was silly, since it neither of you were to blame.",
+
+        # AS script:8526 (p)
+        "But hey, I’m glad to say I was wrong. Both of you breathe so much life into this house. It almost feels like you've always lived here.":
+            "But hey, I’m glad we're all still able to get along. Both of you breathe so much life into this house. It almost feels like you've always lived here.",
 
 
     # -----------------------------------------
     # v0.2 script2.rpy Lines 9770-19471
 
-        # HS 9810
+        # HS script2:40
         "I have a feeling this shit is much bigger than we think, Annie.":
             "I have a feeling this shit is much bigger than we think, sis.",
 
-        # HS 9852
+        # HS script2:52
+        "*Whispering* I don't like this, Annie...":
+            "*Whispering* I don't like this, sis...",
+
+        # HS script2:82
         "I don't know, Annie... him having a stroke? I'm not buying it.":
             "I don't know, sis... him having a stroke? I'm not buying it.",
 
-        # HS 9876
+        # HS script2:106
         "*Laughs* Don't mind him...":
             "*Laughs* Don't mind my brother...",
 
-        # HS 9883
+        # ========== START label mod "versiontwo_mod" ==========
+        # edit of lines added by "versiontwo_mod"
+
+        # HS IncestLables:2494
+        "Same to you. You must be Annie, [mc]'s told me about you.":
+            "Same to you. You must be Annie, one of his sisters. [mc]'s told me about you.",
+
+        # HS IncestLables:2496
+        "Yep! I heard [mc] managed to win a neural implant at your cafe!":
+            "Yep! I heard my brother managed to win a neural implant at your cafe!",
+
+        # ========== END label mod "versiontwo_mod" ==========
+
+        # HS script2:113
         "I heard [mc] managed to win a neural implant at your cafe!":
             "I heard my brother managed to win a neural implant at your cafe!",
 
-        # HS 9896
+        # HS script2:126
         "Can I play with you guys, [mc]?!":
             "Can I play with you guys, bro?!",
 
-        # HS 9903
+        # HS script2:133
         "Horror? Okay... maybe it'd be better if you didn't join us, Annie.":
             "Horror? Okay... maybe it'd be better if you didn't join us, sis.",
 
-        # HS 9937
+        # HS script2:167
         "But you're not allowed to complain if you’re scared, Annie!":
             "But you're not allowed to complain if you’re scared, sis!",
 
-        # HS 10784
+        # HS script2:1014
         "Annie should be waiting for us already.":
             "Your sister should be waiting for us already.",
 
-        # HS 10887
+        # HS script2:1117
         "I love your outfit, Annie!":
             "I love your outfit, sis!",
 
-        # HS 11159
+        # HS script2:1389
         "Y-You're scaring me, [mc].":
             "Y-You're scaring me, bro.",
 
-        # HS 11735
+        # HS script2:1965
         "It's okay Annie, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!":
             "It's okay sis, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!",
 
-        # HS 12675
+        # HS script2:2905
         "What about you, Annie?":
             "What about you, sis?",
 
-        # HS 13178
+        # AS script2:3339
+        "(Yeah, nice job impressing [mc] in Eternum, Annie.)":
+            "(Yeah, nice job impressing your brother in Eternum, Annie.)",
+
+        # HS script2:3408
         "Oh, [mc]! I wasn’t sure if you were asleep already!":
             "Oh, hey bro! I wasn’t sure if you were asleep already!",
 
-        # HS 13188
+        # HS script2:3418
         "I told you! You shouldn't have played in Luna's server, Annie! You can't handle that scary stuff! Remember when we played Dead Space?":
             "I told you! You shouldn't have played in Luna's server, sis! You can't handle that scary stuff! Remember when we played Dead Space?",
 
-        # HS 13244
+        # HS script2:3474
         "You can sleep here as many times as you want. You don’t even have to ask, alright?":
             "You can sleep here as many times as you want. You don’t even have to ask, alright? Just like when we were little.",
 
-        # HS 13249
+        # HS script2:3479
         "Anytime, Annie.":
             "Anytime, sis.",
 
-        # HS 13274
+        # HS script2:3504
         "G-Goodnight, [mc].":
             "G-Goodnight, bro.",
 
-        # HS 13276
+        # HS script2:3506
         "Goodnight Annie.":
             "Goodnight sis.",
 
-        # HS 13288
+        # HS script2:3518
         "(Oh yeah... I forgot that Annie came to sleep in my room.)":
             "(Oh yeah... I forgot that sis came to sleep in my room.)",
 
-        # HS 13296
+        # HS script2:3526
         "(She's probably used to hugging a pillow while she sleeps, or something.)":
             "(I remember seeing her hugging a teddy bear at night when we still lived together, so that's probably why she grabbed me.)",
 
-        # HS 13300
+        # HS script2:3530
         "(We're in quite an... intimate position... I don't want her to think I'm trying to take advantage of her while she sleeps.)":
             "(We're in quite an... intimate position... I don't want her to think I'm trying to take advantage of her while she sleeps, especially since I'm her brother for Christ's sake.)",
 
-        # HS 13315
+        # HS script2:3545
         "A-Are you awake, Annie?":
             "A-Are you awake, sis?",
 
-        # HS 13334
+        # HS script2:3564
         "Oh... I didn't know about Baloo.":
-            "Oh him... I didn't know his name is Baloo.",
+            "Oh... I think I remember seeing Baloo before.",
 
-        # HS 13364
+        # HS script2:3594
         "(He probably just sees me as the little girl who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)":
             "(He probably just sees me as his little sister who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)",
 
-        # HS 13365
+        # HS script2:3595
         "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack.)":
-            "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he is not a weirdo like me who has feelings for their sibling.)",
+            "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he's not a weirdo like me who has feelings for their sibling.)",
 
-        # HS 13366
+        # HS script2:3596
         "(I'll always just be Annie, the \"best friend\".)":
             "(I'll always just be Annie, the \"little sister\".)",
 
-        # HS 13371
+        # HS script2:3602
         "(I'm a fucking mess. She needs someone more mature.)":
-            "(I'm a fucking mess. She needs someone more mature... And someone not blood-related... she is not a weirdo like me who has feelings for their sibling.)",
+            "(I'm a fucking mess. She needs someone more mature... And someone not blood-related... she's not a weirdo like me who has feelings for their sibling.)",
 
-        # HS 13372
+        # HS script2:3607
         "(This is why I'll always just be [mc], the \"best friend\"...)":
             "(This is why I'll always just be [mc], the \"big brother\"...)",
 
-        # HS 13373
+        # HS script2:3630
+        "I'm not s-shy...":
+            "I'm not s-shy... It’s just a shirt after all, right...?",
+
+        # HS script2:3631
         "It’s just a shirt after all, right...?":
-            "It’s just a shirt after all, right... you've seen me without it before...?",
+            "I-It’s not like we haven't seen each other naked before...",
 
-        # HS 13403
-        "I mean, yeah, as long as you don't mind...":
-            "I mean, yeah, as long as you don't mind... (Even though the last time I saw you topless was when we were 9 and bathing together...)",
+        # HS script2:3633
+        "(I'm not sure where she’s going with all of this...)":
+            "(Yeah, but... not since we last bathed together when we were nine.)",
 
-        # HS 13412
+        # HS script2:3634
+        "(But I sure as hell want to find out...)":
+            "(I'm not sure where she’s going with all of this... But I sure as hell want to find out...)",
+
+        # HS script2:3642
         "(This doesn't seem like the Annie I’ve known since I was young... Is she trying to prove something?)":
             "(This doesn't seem like the sister I know... Is she trying to prove something?)",
 
-        # HS 13414
+        # HS script2:3644
         "(...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to [mc].) ":
             "(...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to your brother.)",
 
-        # HS 13417
+        # HS script2:3647
         "(Holy shit, I’ve never seen her in such an... intimate way...)":
             "(Holy shit, I never noticed know how much she grew over the past years...)",
 
-        # HS 13422
-        "(This is really Annie... {i}my{/i} Annie.)":
-            "(This is really sis... {i}my{/i} sister.)",
+        # HS script2:3652
+        #"(This is really Annie... {i}my{/i} Annie.)":
+        #    "(This is really sis... {i}my{/i} sister.)",
 
-        # HS 13428
+        # HS script2:3658
         "We're just... friends getting a little more comfortable.":
             "We're just... siblings getting a little more comfortable.",
 
-        # HS 13442
+        # HS script2:3672
         "(My precious Annie...)":
             "(My precious sister...)",
 
-        # HS 13445
+        # HS script2:3675
         "Um, [mc]...? Oh man, I must look weird or someth—":
             "Um, bro...? Oh man, I must look weird or someth—",
 
-        # HS 13447
+        # HS script2:3677
         "Annie... you are so... beautiful...":
             "Sis... you are so... beautiful...",
 
-        # HS 13473
+        # HS script2:3703
         "Your skin feels so soft, Annie. It feels... really nice holding you...":
             "Your skin feels so soft, sis. It feels... really nice holding you...",
 
-        # HS 13481
+        # HS script2:3711
         "(Oh my god, am I the only one feeling all this tension in the air? I want to make a move, but... I don’t want to overstep my bounds...)":
             "(Oh my god, am I the only one feeling all this tension in the air? I kind of want to make a move, but... I don’t want to overstep my bounds... I AM her brother after all)",
 
-        # HS 13488
+        # HS script2:3718
         "(But it’s not just any guy. It’s [mc].)":
             "(But it’s not just any guy. It’s [mc]. My brother!)",
 
-        # HS 13489
+        # HS script2:3719
         "(You've had a crush on him since you were nine years old. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)":
             "(You've had a crush on him since you were nine years old, even though he's your brother. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)",
 
-        # HS 13498
-        "(I better not risk it. This is the closest we’ve ever gotten and I shouldn’t push my luck.)":
-            "(I better not risk it. This is the closest we’ve ever gotten and I shouldn’t push my luck. A-And she's still your sister! It's just not right!)",
+        # HS script2:3721
+        # borrowed from stepsis map
+        "(But... I don't want to scare her away. Annie has always been so special to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)":
+            "(But... I don't want to scare her away. Annie has always been more than a friend, more than a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
 
-        # HS 13510
+        # HS script2:3729
+        "(Baby steps, [mc]. Baby steps.)":
+            "(A-And she's still my sister! It's just not right!)",
+
+        # AS script2:3730
+        "Goodnight, Annie.":
+            "Goodnight, sis.",
+
+        # AS script2:3732
+        "G-Good night, [mc].":
+            "G-Good night, bro.",
+
+        # HS script2:3740
         "Um... Annie...?":
             "Um... Sis...?",
 
-        # HS 13533
+        # HS script2:3763
         "I’m sorry, Annie... I can’t help it... you’re driving me insane...":
             "I’m sorry, sis... I can’t help it... you’re driving me insane...",
 
-        # HS 13546
+        # HS script2:3776
         "Oh god, Annie...":
             "Oh god, sis...",
 
-        # HS 13562
+        # HS script2:3792
         "[mc]... Um, I don’t know if I’m ready to go all the way toni-":
             "Bro... Um, I don’t know if I’m ready to go all the way toni-",
 
-        # HS 13567
+        # HS script2:3797
         "I’m sorry. I’m just a little nervous because no one has ever touched me there before, or even seen it, for that matter.":
             "I’m sorry. I’m just a little nervous because no one has ever touched me there before.",
 
-        # HS 13570
+        # HS script2:3800
         "[mc]. I said I’m nervous, but that doesn’t mean I... don’t want to...":
             "Bro. I said I’m nervous, but that doesn’t mean I... don’t want to...",
 
-        # HS 13593
+        # HS script2:3823
         "I’ve never been more sure, Annie.":
             "I’ve never been more sure, sis.",
 
-        # HS 13596
+        # HS script2:3826
         "I thought you weren’t interested in me...":
             "I thought, as your little sister, you weren’t interested in me...",
 
-        # HS 13598
+        # HS script2:3828
         "Where did you get that idea from?":
-            "That... I-I just well you know...",
+            "Annie, you've never been just my sister.",
 
-        # HS 13600
+        # HS script2:3830
         "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our friendship.":
             "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our relationship as brother and sister.",
 
-        # HS 13637
+        # HS script2:3867
         "(Holy shit, this is really happening! I'm fucking Annie's thighs!)":
             "(Holy shit, this is really happening! I'm fucking my sister's thighs!)",
 
-        # HS 13642
+        # HS script2:3872
         "Jesus, Annie...":
             "Jesus, sis...",
 
-        # HS 13694
+        # HS script2:3924
         "Oh shit, I'm sorry, Annie...":
             "Oh shit, I'm sorry, sis...",
 
-        # HS 13701
+        # HS script2:3931
         "Did I do something wrong, Annie? I’m sorry! I didn’t know it was going to be that much!":
             "Did I do something wrong, sis? I’m sorry! I didn’t know it was going to be that much!",
 
-        # HS 13712
+        # HS script2:3942
         "I only came here t-to sleep and then... next thing I know I’m doing that...":
             "I only came here t-to sleep and then... next thing I know I’m doing that... and with my brother...",
 
-        # HS 13715
+        # HS script2:3945
         "No, no! It's okay! You’re good! I like you, Annie! We can...":
             "No, no! It's okay! You’re good! I like you, sis! We can...",
 
-        # HS 13722
+        # HS script2:3952
         "We skipped like 14 steps! In one night!":
             "We skipped like 14 steps and broke a dozen rules! In one night!",
 
-        # HS 13734
+        # HS script2:3965
         "I'm gonna... go... think! Good night [mc]!":
             "I'm gonna... go... think! Good night bro!",
 
-        # HS 13751
+        # HS script2:3981
         "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing Annie’s secret kinky side... and I loved every moment of it!)":
             "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing my sister's secret kinky side... and I loved every moment of it!)",
 
-        # HS 14244
+        # HS script2:4474
         "Annie! Do you have a minute? I wanted to talk to you!":
             "Sis! Do you have a minute? I wanted to talk to you!",
 
-        # HS 15134
+        # HS script2:5364
         "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out.)":
             "(Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be furious if they ever found out. And fucking my son, is that even legal?)",
 
-        # HS 15183
+        # HS script2:5413
         "(I bet if I tried to do anything at home, Dalia or Penny would surely notice.)":
             "(I bet if I tried to do anything at home, the girls would surely notice.)",
 
-        # HS 15707
+        # HS script2:5937 (x)
         "And on the first day of school, I saw him harassing a close friend of mine.":
             "And on the first day of school, I saw him harassing my sister.",
 
-        # HS 18085 last name override
+        # BA/N: Funny extra line idea for TL mode. not worth a label mod though lol
+            # x "Dalia?"
+            # mc "No. Annie, my half-sister... It's complicated."
+            # x "How many sisters do you have?"
+
+        # HS script2:8306 base map override
+        "Um... Yeah. Why? Do you know her?":
+            "Um... Yeah. Why? Do you know her?",
+
+        # HS script2:8315 last name override
         "I was wondering why Nancy and her shared the same last name on your followers list. Nancy is her mom!":
             "I was wondering why Nancy and her shared the same last name on your followers list. Nancy is her mom!",
 
-        # HS 18088
+        # HS script2:8318
         "Never mind...":
-            "Well, actually she's also my sister, but never mind...",
+            "Oh never mind... Well, actually she's also my sister, but-",
 
-        # HS 18090
+        # HS script2:8320
         "Can I go say hi?":
             "That's even better then, you can introduce me! Can I go say hi?",
 
@@ -6447,6 +6746,9 @@ init python:
         # HS 34742
         "Quick, [mc], make a wish!":
             "Quick, bro, make a wish!",
+
+        # HS script4:4803
+        # Overwritten by HS script:2952, okay
 
         # HS 35035
         "(I mean... of course we're not. We haven't even...)":
@@ -6581,6 +6883,9 @@ init python:
         # HS 35945
         "W-We’ve g-gotta do some practicing b-beforehand, [mc]...":
             "W-We’ve g-gotta do some practicing b-beforehand, bro...",
+
+        # HS script4:6902
+        # Overwritten by HS script:6179, okay
 
         # HS 37044
         "Oh Annie... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?":
