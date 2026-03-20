@@ -1244,7 +1244,7 @@ label mod_call_chat_18:
         with dis
         "{color=[walk_points]}[gr]Chang" if changaskmicaelaout and chacha1:
             $ chacha1 = False
-            call chat(chang_chat2) from _call_chat_19
+            call chat(chang_chat2) from mod_call_chat_19
             if changborrowjoke:
                 $ changmicaela += 1
                 mc "*Snorts* (I swear, if Chang doesn't end up with Micaela I'm gonna be even more heartbroken than him.)" with dis08
@@ -1254,7 +1254,7 @@ label mod_call_chat_18:
             jump menurestaurant_mod
         "{color=[walk_points]}[gr]Alex" if alexpath and chacha2:
             $ chacha2 = False
-            call chat(alex_chat4) from _call_chat_20
+            call chat(alex_chat4) from mod_call_chat_20
             mct "Damn, Alex has really been pushing herself lately."with dis08
             mct "Since William Bardot basically made her an outcast, she’s been juggling studying, working, and keeping up with her swimming lessons."
             mct "And all on minimum wage."
@@ -2729,3 +2729,538 @@ label versiontwo_mod:
     mc "*Sighs* (Anyway, I need to get out of here.)"
     mc "(Let's see if Luna's contact can help me with this whole thing...)"
     jump novafirstencounter
+
+# Used in base map, adds reaction lines from Luna and Mandrake
+label potionslabel_mod:
+    if debtmandrake2:
+        $ debtmandrake2 = False
+        stop music2b fadeout 1.7
+        scene bwp 2 with dis17
+        play music2b hp4 fadein 3
+        mc "Okay, time to climb this damn tower again." with dissolve
+        show bwp 8
+        war3 "Huh, are you going to Potions? If I were you, I wouldn't even bo–" with dis
+        show bwp 9
+        mc "Fuck off, dude! You already screwed us!"
+        show bwp 8
+        war3 "Oh! You guys are back! I didn’t recognize you at first..."
+        war3 "Sorry guys, she offered me money. I gotta make that bread, y’know."
+        show bwp 9
+        l "I understand, don’t worry!"
+        mc "You're too nice, Luna..."
+        show b with dis12
+        play sound doorold
+        scene bwp 10 with dis17
+        pause
+        show bwp 12
+        mand "Ah, finally!" with dis08
+        mand "Do you have my money?"
+        show bwp 11
+        mc "Yes!"
+        show bwp 12
+        mand "Gimme, gimme!"
+        show bwp 11
+        mc "Give us the stamp for the tournament first!"
+        show bwp 32
+        mand "*Gasps* Do you really think I'm not a woman of my word?" with dissolve
+        show bwp 33
+        mc "You're clearly not! You said it yourself!"
+        mand "Hmm..."
+        show bwp 34
+        mand "That's a fair point. Alright, here you go." with dissolve
+        $ stamps += 1
+        play sound stamp
+        if stamps == 1:
+            show seal1 with dis04
+            pause .8
+            hide seal1 with dis04
+        elif stamps == 2:
+            show seal2 with dis04
+            pause .8
+            hide seal2 with dis04
+        elif stamps == 3:
+            show seal3 with dis04
+            pause .8
+            hide seal3 with dis04
+        elif stamps == 4:
+            show seal4 with dis04
+            pause .8
+            hide seal4 with dis04
+        elif stamps == 5:
+            show seal5 with dis04
+            pause .8
+            hide seal5 with dis04
+        elif stamps == 6:
+            show seal6 with dis04
+            pause .8
+            hide seal6 with dis04
+        mand "Now the money!" with dissolve
+        show bwp 35
+        mc "Here." with dis03
+        show screen eternals with dis
+        play sound coins
+        $ money -= 66
+        pause .05
+        $ money -= 67
+        pause .05
+        $ money -= 67
+        pause .05
+        mc "Pleasure doing business with you." with dissolve
+        show bwp 12
+        hide screen eternals
+        mand "Excellent!" with dis08
+        mand "I love when a man will do whatever it takes to win."
+        show bwp 11
+        mc "Sure, sure..."
+        mc "Anyway, we're leaving now. Thank you, Professor."
+        show bwp 12
+        mand "Are you sure you don't want to drink my potion again?"
+        show bwp 28
+        p "Y-Yeah, I'm pretty sure."
+        show bwp 18
+        mand "What about you, Luna?"
+        l "No thanks!"
+        show bwp 12
+        mand "That's too bad..." with dis08
+        mand "Alright, take care and remember to have fun!"
+        jump menuwarthogs
+    if donepotions:
+        scene bwp 1 with dis12
+        mc "(There's no way I'm climbing those 14 floors again without good reason.)" with dissolve
+        jump menuwarthogs
+    stop music2b fadeout 6
+    $ donepotions = True
+    show bwp 1 with Dissolve(2)
+    $ renpy.music.set_volume(0.35, channel='music3')
+    play music3 hp4 fadein 6
+    l "This is the Potions Tower." with dissolve
+    l "I was never very interested in Potions, but it’s always had a reputation for being an easy subject."
+    mc "I guess, in a world where people can summon magical creatures by just uttering a couple of words, this does seem a little dull."
+    show bwp 2 with dis15
+    l "Professor Mandrake teaches her class on the top floor of the tower. Unfortunately for us, there happens to be fourteen floors."with dissolve
+    mc "Jesus, I hope you two are ready to feel the burn! Would you think less of me if I wanted to stretch beforehand, or..."
+    war1 "AAAAAAHH!" with hpunch
+    show bwp 3
+    war2 "Oh my god, oh my god, oh my god!" with dis
+    war1 "Dubs tee eff! You look just like @Miss_penny!"
+    war2 "Because she totes is! Oh my god, please, tell me it's really you!"
+    show bwp 4
+    p "Um, yeah, it’s me alright!" with dissolve
+    show bwp 3
+    war1 "AYEEEEEEEEEEEEEEEEE!!!" with hpunch
+    war2 "I told you the pics weren't photoshopped!"
+    war1 "She looks exactly like her Instagram photos!"
+    war2 "I didn't know you were on the Eternzz! That is like, so rad!"
+    show bwp 4
+    p "Y-Yeah, I just started today, actually." with dissolve
+    show bwp 3
+    war1 "Oh my god, I can't believe I’m standing in your presence! Oh my god, somebody pinch me!" with dissolve
+    war2 "*Takes a big whiff* You smell exactly like I thought you would!"
+    war1 "Can you return the follow on Insta? My @ is EmmilyGrivas!"
+    show bwp 4
+    p "Sure! I'll try to remember." with dissolve
+    show bwp 3
+    war2 "Ohmygodohmygodohmygod, THANK YOU!" with dissolve
+    war1 "Oh em gee, you are like, super super nice. I just want to double tap heart you in real life!"
+    war2 "If only I had my camera on me right now! Josh is never gonna believe I actually met you!"
+    show bwp 4
+    p "I gotta go now girls, but it was really nice meeting you both!" with dissolve
+    show bwp 3
+    war1 "I’m for realz gonna tweet everyone now to tell them you're playing Eternzz!" with dissolve
+    war2 "Thank you for talking to us!"
+    mc ". . ."
+    show bwp 5 with dis15
+    war1 "{size=33}I  {size=31}L{size=29}O{size=27}V{size=25}E  {size=23}Y{size=21}O{size=19}U{size=17} ! {size=15}! {size=13}!"with dissolve
+    mc "Sometimes I forget I'm friends with a celebrity."
+    show bwp 6
+    p "Yeah, you don't know just how lucky you are."
+    p "*Giggles* You even sleep under the same roof as me!"
+    p "We've been hanging out for a while now, and you still haven't asked me for a single autograph! Or to take a selfie together!"
+    p "That makes me very uncomfortable, to be honest. I’m gonna need a little more fanfare from you, [mc]."
+    show bwp 5
+    mc "*Laughs* I'm sorry. I'll start addressing you as my \"Queen\" from now on."
+    show bwp 7
+    p "*Laughs* No, but seriously, that's one of the things I like about you. You just treat me like a human being."
+    p "Because, at the end of the day, that's exactly what I am. Just a normal girl who has her ups and downs like everybody else."
+    show bwp 5
+    if penelopepath:
+        menu:
+            with dis
+            "Yeah, you're not special":
+                mc "Exactly, I’m glad you don’t let it get to your head. When someone thinks they're better than others, things start to go sour." with dissolve
+                show bwp 7
+                p "That's what I'm saying."
+            "You stand out":
+                mc "Well, you can’t really deny it, can you? You’ve got it all. You're pretty, clever, and have a breathtaking body... so of course it's natural to stand out from the rest." with dissolve
+                show bwp 6
+                p "Yeah well... thanks, but I still prefer not to receive any special treatment."
+            "{color=[walk_points]}You're special to me [pink][mt](Penelope +1)":
+                mc "Honestly Penny, you really are special to me, but not because you're famous on Instagram." with dissolve
+                mc "I couldn't care less about your social network pages or how many followers you have... I only care about the person behind it. You became a special person to me just because of who you are."
+                $ penelope_points += 1
+                play sound "beat.ogg"
+                show heartr at topleft with dissolve
+                hide heartr
+                show bwp 6
+                p "Thank you, [mc]." with dissolve
+    else:
+        mc "Will do."
+    show bwp 5
+    mc "Do you receive a lot of harassment on social media?"
+    show bwp 7
+    p "Well, it didn't use to be a big deal, but as my number of followers has grown, so has the number of troublemakers."
+    p "Sometimes I receive a lot of unwanted sexual advances, or messages begging me to start an OnlyFans account."
+    p "You wouldn't believe how much money I've been offered, just for a single nude picture."
+    show bwp 5
+    if penelopepath:
+        mc "I guess only a truly blessed man will be able to see that during this life..."
+        show bwp 6
+        p "I guess so..."
+    else:
+        mc "I can imagine."
+    show bwp 5
+    mc "Well come on then, “normal girl”! Let's climb those 14 floors! No special queen carriage for you!"
+    show bwp 7
+    p "*Laughs* Let's train these glutes!"
+    show bwp 8
+    war3 "Huh, are you going to Potions?" with dis
+    show bwp 9
+    mc "Yes, sir."
+    show bwp 8
+    war3 "Bah, if I were you, I wouldn't even bother."
+    war3 "She has the most stupid challenge in all of Warthogs. It's literally impossible to complete."
+    war3 "And it goes by fast! You’ll be huffin’ and puffin’ on these stairs again before you know it!"
+    war3 "These steps might not look that bad, but believe me, they're exhausting! Especially if you're short-legged like myself."
+    show bwp 9
+    mc "Well, we're already here, so we'll take our chances."
+    show bwp 8
+    war3 "As you wish."
+    war3 "Here’s a freebie tip for you then – it has Syrup of Arnica. That's the only ingredient I got right."
+    show bwp 9
+    mc "Hmm... I'll remember that."
+    show bwp 8
+    war3 "Good luck."
+    show bwp 9
+    mc "Thank you!"
+    show b with dis12
+    play sound doorold
+    scene bwp 10 with dis17
+    pause
+    mc "*Panting* F-Finally. That guy wasn’t lying... those steps really do take a toll on you..." with dis08
+    show bwp 12
+    mand "Welcome to Potions!" with dis
+    show bwp 11
+    mc "T-Thanks!"
+    show bwp 12
+    mand "My name is Dona Mandrake, Master of Potions and Head of the Snake House. We’re known as the home for the most evil and malicious Warthogs students!"
+    show bwp 11
+    mc "Nice to meet you. I’m [mc], and this is Penelope and Luna."
+    mc "Nice tattoos, by the way!"
+    show bwp 12
+    mand "*Giggles* Buttering me up will do you no good!"
+    show bwp 11
+    mc "I wasn't really trying to..."
+    show bwp 12
+    mand "The assumption of Potions being an easy subject ends today!"
+    mand "You're the 33rd team to come here. Do you know how many have passed my challenge?"
+    show bwp 11
+    mc "28?"
+    show bwp 12
+    mand "Zilch. Nada. ZERO, baby!"
+    show bwp 11
+    mc "Okay... Well, maybe we’ll be the ones to change that."
+    show bwp 12
+    mand "Hm, I doubt that. But I admire your confidence!"
+    show bwp 11
+    mc "So what's the challenge?"
+    show bwp 13
+    mand "It’s super simple!" with dis
+    mand "I have prepared the potion on the table before you. You can look at it, smell it, and even taste it."
+    mand "Your only task is to tell me the potion’s three main ingredients."
+    mand "Take all the time you need, but remember, you must get all three of them correct."
+    mand "If you name one ingredient that's not in the potion, you will have failed the challenge."
+    show bwp 14
+    l "Hmm..." with dis12
+    mc "Oof, I don't think Penny and I can help you much here, Luna. Any ideas?"
+    show bwp 15
+    l "The potion is colorless and odorless. It could be anything, really." with dissolve
+    l "I guess our best bet would be to taste it and see its effects. Depending on what happens, I might know the answer."
+    show bwp 18b
+    mand "Fear not, the potion will do you no harm..."
+    show bwp 14
+    mc "Don’t worry, I’ll be the guinea pig and drink it. If it makes me do something dumb, just don’t use it as future blackmail against me, alright?"
+    show bwp 19
+    p "Nah, I'll drink it. You know more about Eternum than me, [mc]. I'm the only one who doesn’t bring much knowledge to the table here."
+    show bwp 18
+    l "Are you sure, Penelope?"
+    show bwp 19
+    p "Of course. Nothing ventured, nothing gained!"
+    show bwp 16 with dis
+    play soundlow  swallow
+    p "*Drinks the potion*" with dissolve
+    show bwp 17
+    p "Aaaaa..." with dis08
+    p "It tastes like... liquor."
+    p "But with a lot of sugar."
+    show bwp 18
+    l "Do you feel any different?"
+    show bwp 20
+    p "Um... No, I don't think so."
+    show bwp 18b
+    mand "You got some balls on ya, girl."
+    mand "Most people would be extremely wary about trying any sort of unknown potion."
+    mand "You should consider visiting the Yggdrasil server. You’d be a good Valkyrie."
+    show bwp 19
+    p "Thanks!"
+    show bwp 18b
+    mand "How many boyfriends do you have?"
+    show bwp 19
+    p "*Giggles* Boyfriends? Like, plural? ...I don't have any."
+    show bwp 18b
+    mand "What? Are you serious?"
+    mand "Ah, I see. So you must be the type to steer away from such commitments and use whomever you must to satisfy your strictly carnal needs. Have a new man every night, then?"
+    show bwp 19
+    p "*Giggles* Jesus, no."
+    p "That's not my style at all."
+    show bwp 18b
+    mand "No way! You have a body made to fuck, baby. Oh, excuse my language... sometimes I forget I am a Professor."
+    mand "What I meant to say was, you have a body that yearns to practice procreation and the hips to bear much fruit! Don’t go wasting it!"
+    mand "Why don't you have a boyfriend?"
+    show bwp 19
+    p "Um... I don't know... *chuckles*"
+    p "Maybe I'm just waiting for my Prince Charming."
+    show bwp 18b
+    mand "Mmm. More traditional in that sense, then. So you {i}would{/i} like to have a boyfriend?"
+    show bwp 19
+    p "To be honest... yeah, I've been thinking about it lately. It'd be nice to have someone to cuddle with at night."
+    show bwp 18b
+    mand "Aww, you're the romantic type too, aren't you?"
+    show bwp 19
+    p "I guess so."
+    show bwp 18b
+    mand "But, level with me here... when you’re in the sack... do you want your Prince Charming to be soft and gentle with you, or to fuck you hard and fast?!"
+    mand "Agh! Damn it! I mean..."
+    mand "Would you prefer your romantic partner to maintain a modest, unassuming tempo when conducting the repetitive motions of intercourse?"
+    mand "Or would you like them to exert their full strength to truly deliver the maximum impact of their heightened sexual arousal?!"
+    show bwp 19
+    p "I definitely want to be fucked hard and fast!"
+    show bwp 18b
+    mand "As I suspected..."
+    show bwp 18
+    l "Uhh..."
+    show bwp 20
+    p "*Clears throat* Anyway, I'm probably talking too much. Let's focus on the challenge."
+    show bwp 18b
+    mand "So... If you're not fuckin – if you aren’t copulating with anyone... you must be resorting to other methods to relieve your sexual urges. Do you pleasure yourself?"
+    show bwp 19
+    p "Well yeah, of course."
+    show bwp 21
+    mc "(Interesting...)" with dis08
+    show bwp 20
+    p "Um... I'm not sure why I said that." with dissolve
+    p "L-Let's change the subject."
+    show bwp 18b
+    mand "When was the last time you touched yourself?"
+    show bwp 19
+    p "This morning, in the bathroom. Right after [mc] used the shower."
+    show bwp 21
+    mc "(VERYYYYYY INTERESTING.)" with dis08
+    p ". . ."
+    show bwp 18
+    l "I think I know what potion you drank..."
+    play sound clothes2
+    show bwp 22
+    mand "That sounds soooo hot!" with dissolve
+    mand "Did you utilize – oh fuck this Professor bullshit..."
+    mand "Did you use your fingers? Maybe use the shower head?"
+    show bwp 23
+    p "Both!" with dis03
+    show bwp 22
+    mand "Did you cum?"with dis03
+    show bwp 23
+    p "No! For some reason, I’ve been having a hard time reaching that finish line lately!"with dis03
+    play soundlow punch
+    play sound whoosh3b
+    show bwp 24
+    p "WHAT IS GOING ON?!" with hpunch
+    show bwp 25
+    mand "Have you tried using toys?" with dis03
+    show bwp 24
+    p "Yes!" with dis03
+    show bwp 25
+    mand "*Giggles* Which ones?" with dis03
+    show bwp 24
+    p "A vibrator! I have it hidden in my room!" with dis03
+    show bwp 25b
+    l "It's Veritaserum!"
+    l "It forces you to truthfully answer any question you’re given!"
+    show bwp 24
+    p "You fucking bitch!" with hpunch
+    p "We're out of here!"
+    show bwp 25
+    mand "Not until you guess ALL the ingredients of the potion." with dis03
+    show bwp 24
+    p "Luna?!" with dis03
+    show bwp 25b
+    l "I d-don't remember them..."
+    show bwp 24
+    p "WHAT?!" with hpunch
+    show bwp 25
+    mand "Have you ever secretly fingered yourself while other people were also in the room?" with dis03
+    show bwp 24
+    p "One time, while Dalia and Mom were just a few feet away from me! The risk of getting caught turned me on so much!" with dis03
+    show bwp 25
+    mand "Is Dalia your sister? Damn that’s hot." with dis03
+    mand "Have you ever made out with a woman?"
+    show bwp 24
+    p "My friend Laura when I was 15!" with dis03
+    show bwp 25
+    mand "Have you been to the Emporium yet?" with dis03
+    if doneemporium:
+        show bwp 24
+        p "Yes!" with dis03
+        show bwp 25
+        mand "Did their items turn you on?" with dis03
+        show bwp 24
+        p "The rope! I liked it when I was tied up with it!" with dis03
+        p "The thought of being fucked while being like that was just... Mmmm..."
+        show bwp 25
+        mand "Naughty!" with dis03
+    else:
+        show bwp 24
+        p "Not yet!" with dis03
+        show bwp 25
+        mand "Ah, too bad..." with dis03
+    mand "Have you gotten a boob job?"
+    show bwp 26
+    p "Of course not!" with dis03
+    show bwp 27
+    mand "Damn, those balloons are real?! I’m so jealous!" with dis03
+    show bwp 25
+    mand "Were you thinking of someone when you fingered yourself this morning?" with dis03
+    show bwp 24
+    p "Yes!" with dis03
+    show bwp 25
+    mand "Who?" with dis03
+    show bwp 24
+    p "I..." with dis03
+    p "A friend!"
+    show bwp 25
+    mand "Ah, trying to avoid answering the question through simple statements instead, huh? Clever girl." with dis03
+    mand "A friend from college?"
+    show bwp 24
+    p "No!" with dis03
+    show bwp 25
+    mand "Have you ever had sex with this guy you were thinking of?" with dis03
+    show bwp 24
+    p "No!" with dis03
+    show bwp 25
+    mand "Was he [mc]?" with dis03
+    show bwp 24
+    if penelopepath:
+        p "Hhgg... YES!" with dis03
+        show bwp 25
+        mand "Holy shit!" with hpunch
+        mc "WH–"
+        $ penelopeveritaserum = True
+        show bwp 25b
+        l "(H-Her brother? [mc]?)" with dis03
+    else:
+        p "GOD NO!" with dis03
+        mc "(That's too bad...)"
+    show bwp 25b
+    p "LUNA!!!" with hpunch
+    l "What?"
+    p "THE INGREDIENTS, PLEASE!!" with hpunch
+    l "Oh yeah, true, um..."
+    l "What was the one that short-legged guy told us about... Syrup of Arnica?"
+    show bwp 12
+    mand "WRONG!" with hpunch
+    mand "Sorry guys, rules are rules. You got one ingredient wrong, and therefore you have failed the challenge."
+    mand "Please leave the tower at once, so another team can attempt to win the stamp."
+    show bwp 11
+    mc "What?! A guy downstairs told us that Syrup of Arnica was one of the correct ingredients!"
+    show bwp 12
+    mand "I know! I hired him to mislead the students. He tells that bullshit to everyone about to enter the tower."
+    show bwp 11
+    mc "What?! You're a fucking scammer!"
+    show bwp 32
+    mand "I'm the Professor here. My classroom, my rules." with dissolve
+    mand "Did you forget which House I am the head of?! I live and breathe all that is evil, baby!"
+    show bwp 28
+    p "This entire challenge was such bullshit!"
+    p "You're the worst."
+    show bwp 29
+    mand "*Giggles* Come on, don't be like that!" with dis03
+    mand "We just got to know each other a little better. Just admit that you enjoyed it!"
+    show bwp 28
+    p "I hated it!" with dis03
+    show bwp 29
+    mand "Don't get mad..." with dis03
+    mand "Friends are supposed to share juicy details between them!" 
+    if penelopepath:
+        mand "And what a juicy secret indeed!"  
+    show bwp 28
+    p "But we're not friends!" with dis03
+    show bwp 29
+    mand "Aww..."with dis03
+    if penelopepath:
+        show bwp 30
+        p "*Looking at you out of the corner of her eye*" with dis
+        show bwp 31
+        p "And FYI, the potion didn't even work properly!" with dis03
+        p "Some of the things it forced me to say weren't even true!"
+        p "Now I’m gonna have to deal with Luna and... [mc]... having false assumptions about me!"
+        show bwp 30
+        mand "I don't know, my potions are over 95\% effective..." with dis03
+        show bwp 18
+        l "Maybe this one happened to fall in the 5\% range..."
+        show bwp 31
+        p "Obviously! T-That must be it."
+        show bwp 30
+        mc "(Hmm...)" with dis03
+    show bwp 33
+    mc "Can you just give us the stamp and we’ll get on with our happy lives?" with dis08
+    show bwp 32
+    mand "Of course not. This is a classroom, not a charity house! BE GONE!"
+    show bwp 33
+    mc "Come on, we're running late already and we need that stamp!"
+    mc "There must be something we can do in exchange for it!"
+    mc "And you just said how evil you are. Cheating is evil! So you should be all about cheating! Look at that, we both win! What do you say?"
+    mand "Hmm..."
+    show bwp 34
+    mand "Well [mc], I like your style." with dis08
+    mand "Fuck it, let's cheat. That'd get Bundledore all upset. I like it."
+    if doneemporium:
+        if penelopepath:
+            mand "Your incestuous BDSM-loving sister said you’ve all been to the Emporium already, right?"
+        else:
+            mand "Your BDSM-loving sister said you’ve all been to the Emporium already, right?"
+        show bwp 31
+        p "That potion didn't work properly!" with hpunch
+        show bwp 35
+        mc "*Chuckles* Yeah, we've been there." with dissolve
+        show bwp 34
+        mand "So you know Wenlin."
+        show bwp 35
+        mc "Yup!"
+        show bwp 34
+        mand "She needed some ingredients to prepare a Polyjuice potion, so I sent them to her, but she hasn’t paid me back yet."
+    else:
+        mand "Have you been in the Emporium?"
+        show bwp 35
+        mc "Not yet, but we were planning to go there."
+        show bwp 34
+        mand "Good. There's a girl named Wenlin that works there."
+        mand "I sent her some ingredients so she could prepare a special potion, but she hasn’t paid me yet."
+    mand "She owes me 200 eternals."
+    mand "Ask her for the money and then bring it back to me. If you do that... I'll give you my stamp."
+    show bwp 35
+    mc "That can certainly be done!"
+    show bwp 12
+    mand "Great! We have a deal. Now go, I have more students to scam." with dis08
+    show bwp 11
+    mc "See you in a bit!"
+    $ debtmandrake1 = True
+    stop music3 fadeout 3
+    jump menuwarthogs
