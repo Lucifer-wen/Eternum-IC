@@ -176,7 +176,7 @@ image chat_nancy_1 = _icmod_build_thumb(
 
 image chat_penelope_1 = _icmod_build_thumb(
     "penelope",
-    "Eternum-IC/chat_thumbnails/chat_penelope_1_icmod.png",
+    "Eternum-IC/chat_thumbnails/chat_penelope_1.png",
     "Penelope",
     "Carter",
 )
