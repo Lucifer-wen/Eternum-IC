@@ -17,6 +17,7 @@ default im_redirect_enabled = True
 default im_label_overrides = {}
 default im_debug_redirect = False
 default persistent.text_offset = 1
+default persistent.motion = 1.0
 # Mod update metadata (Step 1)
 default persistent.im_mod_version = "1.4.3.0"
 default persistent.im_update_info_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/version.json"
@@ -36,7 +37,53 @@ default _im_dev_node_loc = (None, None)
 default _im_post_say_pending = []
 default _im_injection_queued = False
 default _im_executing_injection = False
+default _im_update_checked = False
+default _im_update_prompted = False
+default _im_modlog_path = None
+# State data used by the updater UI.
+default im_update_info = None
 # default persistent.im_cousin_override = None
+
+# -----------------------------------------
+# Auto-install presplash (runs on every launch so fresh installs work too)
+# Presplash is shown before init code, so the new images take effect from
+# the SECOND launch onward – no manual file copying required.
+# -----------------------------------------
+init python:
+    import os as _os
+    import shutil as _shutil
+
+    def _im_install_presplash():
+        try:
+            gamedir = renpy.config.gamedir
+            # Find any mod subdirectory that contains a presplash folder,
+            # regardless of what the mod folder is called.
+            mod_presplash_dir = None
+            try:
+                for entry in _os.listdir(gamedir):
+                    candidate = _os.path.join(gamedir, entry, "presplash")
+                    if _os.path.isdir(candidate):
+                        mod_presplash_dir = candidate
+                        break
+            except Exception:
+                pass
+            if mod_presplash_dir is None:
+                return
+            pairs = [
+                ("presplash_background_IC", "presplash_background"),
+                ("presplash_foreground_IC", "presplash_foreground"),
+            ]
+            for src_base, dst_base in pairs:
+                for ext in (".png", ".jpg"):
+                    src = _os.path.join(mod_presplash_dir, src_base + ext)
+                    if _os.path.exists(src):
+                        dst = _os.path.join(gamedir, dst_base + ext)
+                        _shutil.copy2(src, dst)
+                        break
+        except Exception:
+            pass
+
+    _im_install_presplash()
 
 init python:
     def _im_strip_multimod_tags(text, *, force=False):
@@ -178,6 +225,14 @@ init python:
             store.annie_mom = False
             store.annie_half_sister = False
             store.annie_aunt = False
+            # Immediately discard any queued injections so they don't fire
+            # on the next say statement after mode is switched off.
+            try:
+                if getattr(store, "_im_post_say_pending", None):
+                    del store._im_post_say_pending[:]
+                store._im_injection_queued = False
+            except Exception:
+                pass
         _im_sync_adad_alias()
         try:
             refresh = getattr(store, "icmod_refresh_chat_last_names", None)
@@ -197,24 +252,15 @@ init python:
 init python:
     try:
         import json as _im_json
-        try:
-            import urllib.request as _im_urlreq
-        except Exception:
-            import urllib2 as _im_urlreq
+        import urllib.request as _im_urlreq
         import os as _im_os
         import hashlib as _im_hashlib
     except Exception:
         _im_json = None
         _im_urlreq = None
 
-    if not hasattr(store, "_im_update_checked"):
-        store._im_update_checked = False
-    if not hasattr(store, "_im_update_prompted"):
-        store._im_update_prompted = False
-    if not hasattr(store, "im_update_info"):
-        store.im_update_info = None
-    if not hasattr(store, "_im_modlog_path"):
-        store._im_modlog_path = None
+    # _im_update_checked, _im_update_prompted, _im_modlog_path are all
+    # declared via `default` at the top of the file.
 
     def _im_get_basedir():
         try:
@@ -393,7 +439,7 @@ init python:
         local_ver = getattr(persistent, "im_mod_version", None)
         _im_log("update check: local=%s remote=%s" % (local_ver, remote_ver))
         if _im_parse_version(remote_ver) > _im_parse_version(local_ver):
-            store.im_update_info = {
+            im_update_info = {
                 "version": remote_ver,
                 "url": remote_url,
                 "sha256": remote_hash,
@@ -675,15 +721,14 @@ init python:
         _im_reloading_scripts = True
         try:
             if not hasattr(renpy, "reload_script"):
-                _im_reloading_scripts = False
                 renpy.notify("Script reload not supported on this build.")
                 return
             renpy.reload_script()
         except (renpy.game.UtterRestartException, renpy.game.RestartTopContext):
             # Expected during successful reloads; let Ren'Py handle them.
+            # The default statement resets _im_reloading_scripts after restart.
             raise
         except Exception as e:
-            _im_reloading_scripts = False
             msg = "Script reload failed: %s" % (e or e.__class__.__name__)
             try:
                 renpy.notify(msg)
@@ -693,6 +738,10 @@ init python:
                 _im_log(msg)
             except Exception:
                 pass
+        finally:
+            # Reset in all cases except a successful restart (which re-raises
+            # before reaching here and resets via the default statement).
+            _im_reloading_scripts = False
 
 init python:
     try:
@@ -764,10 +813,10 @@ init python:
 
     def _im_char_call_wrapper(self, what, *args, **kwargs):
         is_injection = getattr(store, "_im_executing_injection", False)
-        # Reset the per-say guard only for real says (not injection sub-says).
-        # Keeps the guard True while injection sub-says run so History/Overlay
-        # cannot re-queue the same injections.
-        if not is_injection:
+        mode_active = _in_any_mode_active()
+        # Reset the per-say guard only for real says (not injection sub-says),
+        # and only when the mod is actually enabled.
+        if not is_injection and mode_active:
             try:
                 store._im_injection_queued = False
             except Exception:
@@ -775,8 +824,8 @@ init python:
         # Run the actual say (user clicks through).
         result = _im_orig_char_call(self, what, *args, **kwargs)
         # Execute injections AFTER this say completes (post-say), not before
-        # the next one. Skip when already inside an injection execution.
-        if not is_injection:
+        # the next one. Skip when already inside an injection or mode is off.
+        if not is_injection and mode_active:
             pending = list(getattr(store, "_im_post_say_pending", []))
             if pending:
                 del store._im_post_say_pending[:]
@@ -785,7 +834,20 @@ init python:
                         _im_execute_injection(_inj)
                     except Exception:
                         pass
+        elif not mode_active:
+            # Discard any stale injections so they don't fire if mode is toggled
+            # back on mid-game.
+            try:
+                if getattr(store, "_im_post_say_pending", None):
+                    del store._im_post_say_pending[:]
+                store._im_injection_queued = False
+            except Exception:
+                pass
         return result
+
+    # Mark the wrapper so the patch block can detect it regardless of object identity
+    # (Ren'Py creates a new function object on every script reload).
+    _im_char_call_wrapper._im_is_wrapper = True
 
     try:
         import renpy.character as _im_char_mod
@@ -798,7 +860,16 @@ init python:
             if not isinstance(_im_patch_cls, type):
                 _im_patch_cls = None
         if _im_patch_cls is not None:
-            _im_orig_char_call = _im_patch_cls.__call__
+            current_call = _im_patch_cls.__call__
+            if getattr(current_call, '_im_is_wrapper', False):
+                # Already wrapped (e.g. after script reload) – restore the true
+                # original from the backup so _im_orig_char_call never points at
+                # a wrapper, then re-apply with the fresh function object.
+                _im_orig_char_call = _im_patch_cls._im_orig_call_backup
+            else:
+                # First init: the current __call__ is the real original.
+                _im_orig_char_call = current_call
+                _im_patch_cls._im_orig_call_backup = _im_orig_char_call
             _im_patch_cls.__call__ = _im_char_call_wrapper
     except Exception:
         pass
@@ -985,7 +1056,7 @@ init python early hide:
     if not hasattr(store, "_im_redirecting"):
         store._im_redirecting = False
     if not hasattr(store, "_im_prev_flags"):
-        store._im_prev_flags = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half', False)), bool(getattr(store, 'annie_aunt', False)))
+        store._im_prev_flags = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half_sister', False)), bool(getattr(store, 'annie_aunt', False)))
 
     def _im_collect_maps():
         def _map(name):
@@ -1060,7 +1131,7 @@ init python early hide:
             pass
 
     def _im_refresh_if_flags_changed():
-        curr = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half', False)), bool(getattr(store, 'annie_aunt', False)))
+        curr = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half_sister', False)), bool(getattr(store, 'annie_aunt', False)))
         store._im_prev_flags = curr
 
     def _im_set_override(src, dst):
@@ -1128,13 +1199,19 @@ init python early hide:
             store._im_redirecting = False
             return
 
+    # Sentinel so _im_ensure_label_callback can detect our wrapper by attribute
+    # instead of object identity (identity breaks on every script reload).
+    _im_label_cb._im_is_label_cb = True
+
     def _im_register_prev_label_cb(cb):
-        if cb and cb is not _im_label_cb and cb not in _im_label_chain:
+        # Skip None, our own wrapper (any generation), and duplicates.
+        if cb and not getattr(cb, '_im_is_label_cb', False) and cb not in _im_label_chain:
             _im_label_chain.append(cb)
 
     def _im_ensure_label_callback():
         curr = getattr(rconfig, "label_callback", None)
-        if curr is not _im_label_cb:
+        # Use sentinel attribute instead of identity so reloads don't grow the chain.
+        if not getattr(curr, '_im_is_label_cb', False):
             _im_register_prev_label_cb(curr)
             rconfig.label_callback = _im_label_cb
 
@@ -1203,15 +1280,28 @@ init python early hide:
     try:
         if getattr(rconfig, "statement_callbacks", None) is None:
             rconfig.statement_callbacks = []
-        rconfig.statement_callbacks.append(_im_stmt_cb)
+        if _im_stmt_cb not in rconfig.statement_callbacks:
+            rconfig.statement_callbacks.append(_im_stmt_cb)
     except Exception:
         pass
 
+    def _im_export_store_api():
+        # Rebind helpers after load so stale save data cannot leave them as None.
+        globals()["im_export_store_api"] = _im_export_store_api
+        globals()["im_set_mode"] = _im_set_mode
+        globals()["im_set_override"] = _im_set_override
+        globals()["im_clear_override"] = _im_clear_override
+        globals()["im_toggle_redirect"] = _im_toggle_redirect
+        globals()["im_apply_label_map"] = _im_apply_map_to_config
+
+    def _im_set_mode(mode):
+        store.im_incest_mode = mode
+        _im_apply_incest_mode()
+        _im_apply_map_to_config()
+        in_apply_text_map()
+
     # export helpers to store API (without leaking renpy into store)
-    store.im_set_override = _im_set_override
-    store.im_clear_override = _im_clear_override
-    store.im_toggle_redirect = _im_toggle_redirect
-    store.im_apply_label_map = _im_apply_map_to_config
+    _im_export_store_api()
 
 # -----------------------------------------
 # Replacement maps (CONTENT OMITTED)
@@ -10405,10 +10495,8 @@ label annie_incest_optin:
     #     "No":
     #         $ im_cousin_override = False
     #         $ persistent.im_cousin_override = False
-    # After flags change, refresh label overrides immediately
-    $ _im_apply_incest_mode()
-    $ im_apply_label_map()
-    $ in_apply_text_map()
+    # After flags change, refresh all incest-mode hooks immediately.
+    $ im_set_mode(im_incest_mode)
     $ _in_incest_prompted = True
     return
 
@@ -10416,6 +10504,7 @@ label annie_incest_optin:
 # Re-apply after loading
 # -----------------------------------------
 label after_load:
+    $ im_export_store_api()
     $ _im_apply_incest_mode()
     $ in_apply_text_map()
     $ _im_update_checked = False
@@ -10701,52 +10790,22 @@ init 1000:
                     style_prefix "radio"
                     label _("Incest Mode")
                     textbutton _("Full Incest"):
-                        action [
-                            SetVariable("im_incest_mode", "incest"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "incest")
                         selected im_incest_mode == "incest"
                     textbutton _("Nancy as Mom"):
-                        action [
-                            SetVariable("im_incest_mode", "mom"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "mom")
                         selected im_incest_mode == "mom"
                     textbutton _("Annie as Sister"):
-                        action [
-                            SetVariable("im_incest_mode", "sister"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "sister")
                         selected im_incest_mode == "sister"
                     textbutton _("Mom+Half-Sister"):
-                        action [
-                            SetVariable("im_incest_mode", "half"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "half")
                         selected im_incest_mode == "half"
                     textbutton _("Aunt+Stepsister"):
-                        action [
-                            SetVariable("im_incest_mode", "aunt"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "aunt")
                         selected im_incest_mode == "aunt"
                     textbutton _("Disabled"):
-                        action [
-                            SetVariable("im_incest_mode", "off"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "off")
                         selected im_incest_mode == "off" or im_incest_mode == None
 
                 # vbox:
@@ -10790,7 +10849,7 @@ init 1000:
             action Return()
             focus_mask True
             image "gui/msp5/return.png"
-            image im.MatrixColor("gui/msp5/return.png", im.matrix.colorize('#f1f1f180', '#f1f1f180')):
+            image Transform("gui/msp5/return.png", matrixcolor=ColorizeMatrix('#f1f1f180', '#f1f1f180')):
                 if return_h == 1:
                     at transform:
                         easein_quint (0.5 * persistent.motion) alpha 1.0 blur 0
