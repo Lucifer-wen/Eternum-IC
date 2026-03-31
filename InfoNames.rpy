@@ -19,7 +19,7 @@ style icmod_info_last_name_shadow is icmod_info_last_name:
 style icmod_info_last_name_glow is icmod_info_last_name_shadow
 
 init python:
-    from renpy.display.layout import LiveComposite, DynamicDisplayable
+    from renpy.display.layout import Composite, DynamicDisplayable
     from renpy.display.transform import Transform
     from renpy.text.text import Text
     import renpy.store as store
@@ -81,7 +81,7 @@ init python:
                 for pos, displayable in _icmod_info_last_name_layers(last, cfg, _st, _at):
                     parts.extend([pos, displayable])
 
-            composite = LiveComposite(
+            composite = Composite(
                 _ICMOD_INFO_IMG_SIZE,
                 *parts
             )
