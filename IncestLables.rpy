@@ -8,7 +8,7 @@
 #     Here -> define `label nancy_yoga_fail_mod:`
 # -----------------------------------------
 
-# Example skeleton (uncomment and adapt):
+# Don't forget to adapt labels for Bonus and Multimods
 
 # Used in annie sister map, replaces a few short lines that would affect other lines and switches a few MC lines to Annie
 label welcome_mod:
@@ -681,7 +681,7 @@ label daliacove_mod:
     mc "(Oh my fucking god, those hips...)"with dissolve
     # ===== new stuff =====
     if nancy03scene:
-            mc "(Those abs... is it bad that I want to lick them? Well, after what happened with Mom...)"
+            mc "(Those abs... is it bad that I want to lick them? Maybe I'm just pent up after happened with Mom...)"
     else:
             mc "(Those abs... is it bad that I want to lick them?)"
     # ===== end new stuff =====
@@ -736,7 +736,7 @@ label daliacove_mod:
     d "{size=15}Fuck it"
     mc "What did you say?"
     show cd 34
-    d "I said okay... let's do it."
+    d "I said fuck it... let's do it."
     # ===== end new stuff =====
     show cd 33
     mc "The Exit Portal inside the cave is the only one around? Have you ever explored the rest of the island?"
@@ -795,10 +795,16 @@ label daliacove_mod:
     show cd 42 with dis15
     d "*Starts to slowly open your fly*"with dis08
     # ===== new stuff =====
-    if nancy03scene:
-            mc "(Oh... fuck yeah! Screw it! No matter if she's my sister, I already did it with my mom, so this can't be any worse.)"
-    else:
-            mc "(Oh... fuck yeah! My sister’s gonna give me a blowjob!)"
+    mc "(Oh... fuck yeah! My sister's gonna give me a blowjob!)"
+    if im_incest_mode=="incest":
+        if anniethigh and nancy03scene:
+            mc "(Screw it! I've already done things with Mom and Annie, so this can't be much worse.)"
+        elif anniethigh and not nancy03scene:
+            mc "(Screw it! I've already got a thighjob from my twin sister so this can't be much worse.)"
+        elif not anniethigh and nancy03scene:
+            mc "(Screw it! I almost had sex with Mom, so this can't be any worse.)"
+    elif nancy03scene:
+        mc "(Screw it! I almost had sex with Mom, so this can't be any worse.)"  
     # ===== end new stuff =====
     play sound zip
     pause .2
@@ -3159,17 +3165,21 @@ label potionslabel_mod:
     show bwp 24
     if penelopepath:
         p "Hhgg... YES!" with dis03
+        # ===== new stuff =====
         show bwp 25
         mand "Holy shit!" with hpunch
         mc "WH–"
         $ penelopeveritaserum = True
         show bwp 25b
+        p "LUNA!!!" with hpunch
         l "(H-Her brother? [mc]?)" with dis03
+        p "{i}LUNA!!!" with hpunch
     else:
         p "GOD NO!" with dis03
         mc "(That's too bad...)"
-    show bwp 25b
-    p "LUNA!!!" with hpunch
+        show bwp 25b
+        p "LUNA!!!" with hpunch
+        # ===== end new stuff =====
     l "What?"
     p "THE INGREDIENTS, PLEASE!!" with hpunch
     l "Oh yeah, true, um..."
@@ -3198,8 +3208,10 @@ label potionslabel_mod:
     show bwp 29
     mand "Don't get mad..." with dis03
     mand "Friends are supposed to share juicy details between them!" 
+    # ===== new stuff =====
     if penelopepath:
-        mand "And what a juicy secret indeed!"  
+        mand "And what a juicy secret indeed!"
+    # ===== new stuff =====
     show bwp 28
     p "But we're not friends!" with dis03
     show bwp 29
@@ -3232,8 +3244,10 @@ label potionslabel_mod:
     mand "Well [mc], I like your style." with dis08
     mand "Fuck it, let's cheat. That'd get Bundledore all upset. I like it."
     if doneemporium:
+        # ===== new stuff =====
         if penelopepath:
             mand "Your incestuous BDSM-loving sister said you’ve all been to the Emporium already, right?"
+        # ===== end new stuff =====
         else:
             mand "Your BDSM-loving sister said you’ve all been to the Emporium already, right?"
         show bwp 31
@@ -3264,3 +3278,22 @@ label potionslabel_mod:
     $ debtmandrake1 = True
     stop music3 fadeout 3
     jump menuwarthogs
+
+'''
+===ideas for label mods, may or may not do===
+
+script3:prizelabel OR script9:poscm3cm4 for base map
+    replace “Those are the rules!” for ONE of these labels
+    prizelabel is 145 lines long, poscm3cm4 is 178 lines long
+    could use poscm3cm4 to add more rewrites
+
+script5 for base map
+    Rewrite the truth or dare game to either work in or work around the incest
+    would be a ridiculous amount of work
+    or cop out and hide the incest like in aunt map lol
+
+script8:yesnovakiss for AS Map
+    replace AS script8:7101 since it interferes with script4:2443 (d)
+    however the label section needed is HUGE
+    May also use it to further rewrite convo with Chang
+'''
