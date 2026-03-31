@@ -37,6 +37,7 @@ default _im_dev_node_loc = (None, None)
 default _im_post_say_pending = []
 default _im_injection_queued = False
 default _im_executing_injection = False
+default _im_in_say_call = False
 default _im_update_checked = False
 default _im_update_prompted = False
 default _im_modlog_path = None
@@ -814,29 +815,41 @@ init python:
     def _im_char_call_wrapper(self, what, *args, **kwargs):
         is_injection = getattr(store, "_im_executing_injection", False)
         mode_active = _in_any_mode_active()
-        # Reset the per-say guard only for real says (not injection sub-says),
-        # and only when the mod is actually enabled.
         if not is_injection and mode_active:
             try:
                 store._im_injection_queued = False
+                del store._im_post_say_pending[:]
+            except Exception:
+                pass
+        # Set the flag that allows replace_text to queue injections.
+        # It is set right before the say runs and cleared right after —
+        # so History/log re-renders (which happen outside __call__) never
+        # see it as True and cannot queue injections spuriously.
+        if not is_injection:
+            try:
+                store._im_in_say_call = True
             except Exception:
                 pass
         # Run the actual say (user clicks through).
         result = _im_orig_char_call(self, what, *args, **kwargs)
-        # Execute injections AFTER this say completes (post-say), not before
-        # the next one. Skip when already inside an injection or mode is off.
+        # Clear the flag immediately after the say finishes.
+        if not is_injection:
+            try:
+                store._im_in_say_call = False
+            except Exception:
+                pass
+        # Execute injections AFTER this say completes (post-say).
         if not is_injection and mode_active:
             pending = list(getattr(store, "_im_post_say_pending", []))
             if pending:
                 del store._im_post_say_pending[:]
+                store._im_injection_queued = False
                 for _inj in pending:
                     try:
                         _im_execute_injection(_inj)
                     except Exception:
                         pass
         elif not mode_active:
-            # Discard any stale injections so they don't fire if mode is toggled
-            # back on mid-game.
             try:
                 if getattr(store, "_im_post_say_pending", None):
                     del store._im_post_say_pending[:]
@@ -10486,11 +10499,15 @@ init python:
                             replaced_once = True
                             break
                 if replaced_once and _im_inj:
-                    # Guard: only queue once per say – the filter runs on
-                    # every render frame, so without the guard injections
-                    # would pile up and execute multiple times.
+                    # Only queue when we are inside a real say __call__.
+                    # replace_text also runs on History/log re-renders; the
+                    # _im_in_say_call flag (set in _im_char_call_wrapper only
+                    # while the say is active) prevents those from queuing.
                     try:
-                        if not getattr(store, "_im_injection_queued", False):
+                        if (
+                            getattr(store, "_im_in_say_call", False)
+                            and not getattr(store, "_im_injection_queued", False)
+                        ):
                             store._im_injection_queued = True
                             store._im_post_say_pending.extend(_im_inj)
                     except Exception:

@@ -34,7 +34,7 @@ style icmod_chat_thumb_text_shadow is icmod_chat_thumb_text:
 init offset = 20
 
 init python:
-    from renpy.display.layout import LiveComposite, DynamicDisplayable
+    from renpy.display.layout import Composite, DynamicDisplayable
     from renpy.display.transform import Transform
     from renpy.text.text import Text
     import renpy.store as store
@@ -120,7 +120,7 @@ init python:
             text_x = max(0, right - int(text_w))
             text_y = (_ICMOD_THUMB_SIZE[1] - int(text_h)) // 2
 
-            composite = LiveComposite(
+            composite = Composite(
                 _ICMOD_THUMB_SIZE,
                 (0, 0), source,
                 (text_x, text_y), text_displayable,
