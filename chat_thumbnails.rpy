@@ -3,7 +3,7 @@
 # Builds the header dynamically so names can change at runtime.
 ################################################################################
 
-define gui.chat_name_font = "mods/chat_thumbnails/ARLRDBD.TTF"
+define gui.chat_name_font = "Eternum-IC/chat_thumbnails/ARLRDBD.TTF"
 
 default icmod_chat_thumb_overrides = {}
 
@@ -24,8 +24,7 @@ style icmod_chat_thumb_text is default:
         #(1, "#000000"),
     ]
     kerning 1
-    textalign 0.0
-    xalign 0.0
+    textalign 1.0
     yalign 0.5
 
 style icmod_chat_thumb_text_shadow is icmod_chat_thumb_text:
@@ -41,9 +40,7 @@ init python:
     import renpy.store as store
 
     _ICMOD_THUMB_SIZE = (1225, 245)
-    _ICMOD_NAME_POS = (520, 95)
-    _ICMOD_TEXT_ANCHOR = (0.0, 0.5)
-    _ICMOD_TEXT_MAX_WIDTH = 760
+    _ICMOD_TEXT_RIGHT = 980      # rechte Grenze des Texts (x kurz vor dem Profilkreis)
     _ICMOD_LAST_NAME_DEFAULTS = {
         "annie": "Winters",
         "dalia": "Carter",
@@ -99,9 +96,8 @@ init python:
         except Exception:
             pass
 
-    def _icmod_build_thumb(name_key, source, first, default_last, text_pos=None, text_anchor=None):
-        pos = text_pos or _ICMOD_NAME_POS
-        anchor = text_anchor or _ICMOD_TEXT_ANCHOR
+    def _icmod_build_thumb(name_key, source, first, default_last, right_x=None, text_pos=None, text_anchor=None):
+        right = right_x if right_x is not None else _ICMOD_TEXT_RIGHT
 
         def _render(_st, _at):
             override = store.icmod_chat_thumb_overrides.get(name_key, None)
@@ -115,17 +111,19 @@ init python:
                 else:
                     label = first
 
-            text_displayable = Text(
-                label.upper(),
-                style="icmod_chat_thumb_text",
-                xmaximum=_ICMOD_TEXT_MAX_WIDTH,
-            )
-            name_text = Transform(text_displayable, anchor=anchor)
+            text_displayable = Text(label, style="icmod_chat_thumb_text")
+
+            # Tatsächliche Textgröße messen, dann rechtsbündig platzieren
+            text_surf = renpy.render(text_displayable, _ICMOD_THUMB_SIZE[0], _ICMOD_THUMB_SIZE[1], _st, _at)
+            text_w, text_h = text_surf.get_size()
+
+            text_x = max(0, right - int(text_w))
+            text_y = (_ICMOD_THUMB_SIZE[1] - int(text_h)) // 2
 
             composite = LiveComposite(
                 _ICMOD_THUMB_SIZE,
                 (0, 0), source,
-                pos, name_text,
+                (text_x, text_y), text_displayable,
             )
             return composite, 0.0
 
@@ -150,28 +148,28 @@ init python:
 
 image chat_annie_1 = _icmod_build_thumb(
     "annie",
-    "mods/chat_thumbnails/chat_annie_1_icmod.png",
+    "Eternum-IC/chat_thumbnails/chat_annie_1_icmod.png",
     "Annie",
     "Winters",
 )
 
 image chat_dalia_1 = _icmod_build_thumb(
     "dalia",
-    "mods/chat_thumbnails/chat_dalia_1_icmod.png",
+    "Eternum-IC/chat_thumbnails/chat_dalia_1_icmod.png",
     "Dalia",
     "Carter",
 )
 
 image chat_dalia_1b = _icmod_build_thumb(
     "dalia",
-    "mods/chat_thumbnails/chat_dalia_1b_icmod.png",
+    "Eternum-IC/chat_thumbnails/chat_dalia_1b_icmod.png",
     "Dalia",
     "Carter",
 )
 
 image chat_nancy_1 = _icmod_build_thumb(
     "nancy",
-    "mods/chat_thumbnails/chat_nancy_1_icmod.png",
+    "Eternum-IC/chat_thumbnails/chat_nancy_1_icmod.png",
     "Nancy",
     "Carter",
 )
