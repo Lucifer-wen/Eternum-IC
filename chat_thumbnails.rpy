@@ -3,6 +3,8 @@
 # Builds the header dynamically so names can change at runtime.
 ################################################################################
 
+define gui.chat_name_font = "mods/chat_thumbnails/ARLRDBD.TTF"
+
 default icmod_chat_thumb_overrides = {}
 
 default icmod_chat_last_names = {
@@ -13,13 +15,13 @@ default icmod_chat_last_names = {
 }
 
 style icmod_chat_thumb_text is default:
-    font gui.text_font
-    size 44
-    bold True
-    color "#fdfdfd"
+    font gui.chat_name_font
+    size 40
+    #bold True
+    color "#000000"
     outlines [
-        (6, "#000000d0"),
-        (3, "#000000"),
+        (2, "#ffffffd0"),
+        #(1, "#000000"),
     ]
     kerning 1
     textalign 0.0
@@ -39,7 +41,7 @@ init python:
     import renpy.store as store
 
     _ICMOD_THUMB_SIZE = (1225, 245)
-    _ICMOD_NAME_POS = (430, 128)
+    _ICMOD_NAME_POS = (520, 95)
     _ICMOD_TEXT_ANCHOR = (0.0, 0.5)
     _ICMOD_TEXT_MAX_WIDTH = 760
     _ICMOD_LAST_NAME_DEFAULTS = {
@@ -80,12 +82,12 @@ init python:
         if mode == "incest":
             for key in all_keys:
                 defaults[key] = mc_last
-        elif mode in ("mom", "half"):
+        elif mode == "mom":
             for key in carter_keys:
                 defaults[key] = mc_last
         elif mode == "sister":
             defaults["annie"] = mc_last
-        elif mode == "aunt":
+        elif mode in ("aunt", "half"):
             pass
         elif mode == "off" or mode is None:
             pass
@@ -148,35 +150,35 @@ init python:
 
 image chat_annie_1 = _icmod_build_thumb(
     "annie",
-    "Eternum-IC/chat_thumbnails/chat_annie_1_icmod.png",
+    "mods/chat_thumbnails/chat_annie_1_icmod.png",
     "Annie",
     "Winters",
 )
 
 image chat_dalia_1 = _icmod_build_thumb(
     "dalia",
-    "Eternum-IC/chat_thumbnails/chat_dalia_1_icmod.png",
+    "mods/chat_thumbnails/chat_dalia_1_icmod.png",
     "Dalia",
     "Carter",
 )
 
 image chat_dalia_1b = _icmod_build_thumb(
     "dalia",
-    "Eternum-IC/chat_thumbnails/chat_dalia_1b_icmod.png",
+    "mods/chat_thumbnails/chat_dalia_1b_icmod.png",
     "Dalia",
     "Carter",
 )
 
 image chat_nancy_1 = _icmod_build_thumb(
     "nancy",
-    "Eternum-IC/chat_thumbnails/chat_nancy_1_icmod.png",
+    "mods/chat_thumbnails/chat_nancy_1_icmod.png",
     "Nancy",
     "Carter",
 )
 
 image chat_penelope_1 = _icmod_build_thumb(
     "penelope",
-    "Eternum-IC/chat_thumbnails/chat_penelope_1_icmod.png",
+    "Eternum-IC/chat_thumbnails/chat_penelope_1.png",
     "Penelope",
     "Carter",
 )

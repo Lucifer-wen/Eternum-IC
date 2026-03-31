@@ -17,6 +17,7 @@ default im_redirect_enabled = True
 default im_label_overrides = {}
 default im_debug_redirect = False
 default persistent.text_offset = 1
+default persistent.motion = 1.0
 # Mod update metadata (Step 1)
 default persistent.im_mod_version = "1.4.3.0"
 default persistent.im_update_info_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/version.json"
@@ -28,7 +29,61 @@ default persistent.im_update_target_version = None
 default persistent.im_update_debug_hotkey = True
 default persistent.im_reload_hotkey_enabled = True
 default _im_reloading_scripts = False
+# Dev tools
+default persistent.im_dev_text_indicator = False
+default _im_dev_text_modified = False
+default persistent.im_dev_node_loc = False
+default _im_dev_node_loc = (None, None)
+default _im_post_say_pending = []
+default _im_injection_queued = False
+default _im_executing_injection = False
+default _im_update_checked = False
+default _im_update_prompted = False
+default _im_modlog_path = None
+# State data used by the updater UI.
+default im_update_info = None
 # default persistent.im_cousin_override = None
+
+# -----------------------------------------
+# Auto-install presplash (runs on every launch so fresh installs work too)
+# Presplash is shown before init code, so the new images take effect from
+# the SECOND launch onward – no manual file copying required.
+# -----------------------------------------
+init python:
+    import os as _os
+    import shutil as _shutil
+
+    def _im_install_presplash():
+        try:
+            gamedir = renpy.config.gamedir
+            # Find any mod subdirectory that contains a presplash folder,
+            # regardless of what the mod folder is called.
+            mod_presplash_dir = None
+            try:
+                for entry in _os.listdir(gamedir):
+                    candidate = _os.path.join(gamedir, entry, "presplash")
+                    if _os.path.isdir(candidate):
+                        mod_presplash_dir = candidate
+                        break
+            except Exception:
+                pass
+            if mod_presplash_dir is None:
+                return
+            pairs = [
+                ("presplash_background_IC", "presplash_background"),
+                ("presplash_foreground_IC", "presplash_foreground"),
+            ]
+            for src_base, dst_base in pairs:
+                for ext in (".png", ".jpg"):
+                    src = _os.path.join(mod_presplash_dir, src_base + ext)
+                    if _os.path.exists(src):
+                        dst = _os.path.join(gamedir, dst_base + ext)
+                        _shutil.copy2(src, dst)
+                        break
+        except Exception:
+            pass
+
+    _im_install_presplash()
 
 init python:
     def _im_strip_multimod_tags(text, *, force=False):
@@ -170,6 +225,14 @@ init python:
             store.annie_mom = False
             store.annie_half_sister = False
             store.annie_aunt = False
+            # Immediately discard any queued injections so they don't fire
+            # on the next say statement after mode is switched off.
+            try:
+                if getattr(store, "_im_post_say_pending", None):
+                    del store._im_post_say_pending[:]
+                store._im_injection_queued = False
+            except Exception:
+                pass
         _im_sync_adad_alias()
         try:
             refresh = getattr(store, "icmod_refresh_chat_last_names", None)
@@ -189,30 +252,92 @@ init python:
 init python:
     try:
         import json as _im_json
-        try:
-            import urllib.request as _im_urlreq
-        except Exception:
-            import urllib2 as _im_urlreq
+        import urllib.request as _im_urlreq
         import os as _im_os
         import hashlib as _im_hashlib
     except Exception:
         _im_json = None
         _im_urlreq = None
 
-    if not hasattr(store, "_im_update_checked"):
-        store._im_update_checked = False
-    if not hasattr(store, "_im_update_prompted"):
-        store._im_update_prompted = False
-    if not hasattr(store, "im_update_info"):
-        store.im_update_info = None
-    if not hasattr(store, "_im_modlog_path"):
-        store._im_modlog_path = None
+    # _im_update_checked, _im_update_prompted, _im_modlog_path are all
+    # declared via `default` at the top of the file.
 
     def _im_get_basedir():
         try:
             return renpy.config.basedir
         except Exception:
             return None
+
+    # -----------------------------------------------------------------
+    # Map-entry helpers: extended format support
+    # -----------------------------------------------------------------
+    def _im_extract_entry(value):
+        # Normalizes all map-value formats to (text, script_spec, injections).
+        # "text"                       -> plain string (unchanged)
+        # ("text", "script:2452")      -> with script-line filter
+        # ("text", 2452)               -> line-number only filter
+        # ["text", 'mc "..."', "show"] -> with post-line injections
+        # ("text", "script:2452", [])  -> filter + injections
+        if isinstance(value, str):
+            return (value, None, [])
+        if isinstance(value, (list, tuple)):
+            items = list(value)
+            if not items or not isinstance(items[0], str):
+                return None
+            text = items[0]
+            script_spec = None
+            injections = []
+            for item in items[1:]:
+                if isinstance(item, bool):
+                    continue
+                if isinstance(item, int):
+                    if script_spec is None:
+                        script_spec = item
+                elif isinstance(item, str):
+                    if script_spec is None and ":" in item:
+                        script_spec = item
+                    else:
+                        injections.append(item)
+                elif isinstance(item, (list, tuple)):
+                    injections.extend(str(x) for x in item if isinstance(x, str))
+            return (text, script_spec, injections)
+        return None
+
+    def _im_get_current_node_loc():
+        """Returns (short_filename_without_ext, linenumber) of the current AST node."""
+        try:
+            node = renpy.game.script.lookup(renpy.game.context().current)
+            line = getattr(node, "linenumber", None)
+            fname = getattr(node, "filename", "") or ""
+            short = _im_os.path.splitext(_im_os.path.basename(fname))[0]
+            return (short, line)
+        except Exception:
+            return (None, None)
+
+    def _im_script_spec_matches(spec):
+        # Returns True if the current AST node matches the script specifier.
+        # None           -> always matches
+        # int            -> compare linenumber only
+        # "script:2452"  -> compare filename short-name + linenumber
+        # "2452"         -> compare linenumber only (string form)
+        if spec is None:
+            return True
+        short, line = _im_get_current_node_loc()
+        if isinstance(spec, int):
+            return line == spec
+        s = str(spec).strip()
+        if ":" in s:
+            parts = s.split(":", 1)
+            file_hint = parts[0].strip()
+            try:
+                target_line = int(parts[1].strip())
+            except ValueError:
+                return False
+            return (short == file_hint) and (line == target_line)
+        try:
+            return line == int(s)
+        except ValueError:
+            return False
 
     def _im_log(msg):
         try:
@@ -314,7 +439,7 @@ init python:
         local_ver = getattr(persistent, "im_mod_version", None)
         _im_log("update check: local=%s remote=%s" % (local_ver, remote_ver))
         if _im_parse_version(remote_ver) > _im_parse_version(local_ver):
-            store.im_update_info = {
+            im_update_info = {
                 "version": remote_ver,
                 "url": remote_url,
                 "sha256": remote_hash,
@@ -349,40 +474,23 @@ init python:
             return
         _im_check_for_update()
 
-    def _im_prepare_mods_dir():
-        try:
-            basedir = _im_get_basedir()
-        except Exception:
-            basedir = None
+    def _im_find_mod_dir():
+        """Return the directory that contains IncestMod.rpy (i.e. game/Eternum-IC/)."""
+        basedir = _im_get_basedir()
         if not basedir:
             _im_log("update apply: no basedir")
             return None
         game_dir = _im_os.path.join(basedir, "game")
-        mods_dir = _im_os.path.join(game_dir, "mods")
-        try:
-            if not _im_os.path.isdir(mods_dir):
-                _im_os.makedirs(mods_dir)
-        except Exception:
-            _im_log("update apply: cannot create mods dir")
-            return None
-        expected = ("IncestMod.rpy", "IncestLables.rpy", "IncestMod.rpyc", "IncestLables.rpyc")
-        found = {name: False for name in expected}
         try:
             for root, _dirs, files in _im_os.walk(game_dir):
-                for name in expected:
-                    if name in files:
-                        found[name] = True
+                if "IncestMod.rpy" in files:
+                    return root
         except Exception:
             _im_log("update apply: walk failed")
-            return None
-        missing = [name for name, ok in found.items() if not ok]
-        if missing:
-            try:
-                renpy.notify("Missing in game tree: " + ", ".join(missing))
-                _im_log("update apply: missing in game tree: %s" % ", ".join(missing))
-            except Exception:
-                pass
-        return mods_dir
+        fallback = _im_os.path.join(game_dir, "Eternum-IC")
+        if _im_os.path.isdir(fallback):
+            return fallback
+        return None
 
     def _im_download_update():
         if _im_urlreq is None:
@@ -394,8 +502,8 @@ init python:
         if not url:
             _im_log("update download: no url")
             return False
-        if _im_prepare_mods_dir() is None:
-            _im_log("update download: mods dir failed")
+        if _im_find_mod_dir() is None:
+            _im_log("update download: mod dir not found")
             return False
         basedir = _im_get_basedir()
         if not basedir:
@@ -479,78 +587,87 @@ init python:
         if not zip_path or not _im_os.path.isfile(zip_path):
             _im_log("update apply: missing zip path")
             return False
-        mods_dir = _im_prepare_mods_dir()
-        if not mods_dir:
-            _im_log("update apply: no mods dir")
+        mod_dir = _im_find_mod_dir()
+        if not mod_dir:
+            _im_log("update apply: mod dir not found")
             return False
-        if not basedir:
-            _im_log("update apply: no basedir")
-            return False
-        game_dir = _im_os.path.join(basedir, "game")
-        expected = ("IncestMod.rpy", "IncestLables.rpy", "IncestMod.rpyc", "IncestLables.rpyc")
         try:
             import zipfile as _im_zipfile
         except Exception:
             _im_log("update apply: no zipfile module")
             return False
-        extracted = []
-        payload = {}
+
+        # Read ZIP; strip common top-level folder prefix if present (e.g. GitHub release ZIPs)
+        payload = {}  # rel_path -> bytes
         try:
-            zf = _im_zipfile.ZipFile(zip_path, "r")
-            names = zf.namelist()
-            for name in ("IncestMod.rpy", "IncestLables.rpy"):
-                for member in names:
-                    if _im_os.path.basename(member) == name:
-                        payload[name] = zf.read(member)
-                        extracted.append(name)
-                        break
-        except Exception:
+            with _im_zipfile.ZipFile(zip_path, "r") as zf:
+                all_names = [n.replace("\\", "/").lstrip("/") for n in zf.namelist() if not n.endswith("/")]
+                # Detect common top-level prefix to strip
+                prefix = ""
+                top_dirs = set()
+                for n in all_names:
+                    parts = n.split("/")
+                    if len(parts) > 1:
+                        top_dirs.add(parts[0])
+                if len(top_dirs) == 1:
+                    prefix = list(top_dirs)[0] + "/"
+                for orig, norm in zip(zf.namelist(), all_names):
+                    if orig.endswith("/"):
+                        continue
+                    rel = norm[len(prefix):] if prefix and norm.startswith(prefix) else norm
+                    if not rel:
+                        continue
+                    ext = rel.rsplit(".", 1)[-1].lower() if "." in rel else ""
+                    if ext in ("rpy", "rpyc", "png", "jpg", "jpeg", "json"):
+                        payload[rel] = zf.read(orig)
+        except Exception as e:
+            _im_log("update apply: zip read error: %r" % e)
             try:
-                renpy.log("update apply failed: zip read/extract error")
+                renpy.log("update apply failed: zip read error")
             except Exception:
                 pass
-            _im_log("update apply: zip read/extract error")
             return False
-        finally:
-            try:
-                zf.close()
-            except Exception:
-                pass
-        missing = [n for n in ("IncestMod.rpy", "IncestLables.rpy") if n not in extracted]
+
+        # Mandatory files must be present in the ZIP
+        mandatory = ("IncestMod.rpy", "IncestLables.rpy")
+        basenames = [_im_os.path.basename(k) for k in payload]
+        missing = [n for n in mandatory if n not in basenames]
         if missing:
+            _im_log("update apply: missing in zip: %s" % ", ".join(missing))
             try:
                 renpy.notify("Update ZIP missing: " + ", ".join(missing))
-                renpy.log("update apply failed: missing in zip: %s" % ", ".join(missing))
             except Exception:
                 pass
-            _im_log("update apply: missing in zip: %s" % ", ".join(missing))
             return False
+
+        # Remove stale .rpyc files for every .rpy being updated (force recompile)
+        for rel in payload:
+            if rel.endswith(".rpy"):
+                rpyc = _im_os.path.join(mod_dir, rel[:-4] + ".rpyc")
+                try:
+                    if _im_os.path.isfile(rpyc):
+                        _im_os.remove(rpyc)
+                except Exception:
+                    pass
+
+        # Write all extracted files into mod_dir, preserving subfolder structure
         try:
-            for root, _dirs, files in _im_os.walk(game_dir):
-                for name in expected:
-                    if name in files:
-                        try:
-                            _im_os.remove(_im_os.path.join(root, name))
-                        except Exception:
-                            pass
-        except Exception:
-            try:
-                renpy.log("update apply failed: could not remove old files")
-            except Exception:
-                pass
-            _im_log("update apply: remove old files failed")
-            return False
-        try:
-            for name, data in payload.items():
-                with open(_im_os.path.join(mods_dir, name), "wb") as f:
+            for rel, data in payload.items():
+                dest = _im_os.path.join(mod_dir, rel.replace("/", _im_os.sep))
+                dest_dir = _im_os.path.dirname(dest)
+                if not _im_os.path.isdir(dest_dir):
+                    _im_os.makedirs(dest_dir)
+                with open(dest, "wb") as f:
                     f.write(data)
-        except Exception:
+        except Exception as e:
+            _im_log("update apply: write failed: %r" % e)
             try:
-                renpy.log("update apply failed: write new files failed")
+                renpy.log("update apply failed: write error")
             except Exception:
                 pass
-            _im_log("update apply: write new files failed")
             return False
+
+        # Cleanup temp files
         try:
             _im_os.remove(zip_path)
         except Exception:
@@ -560,6 +677,7 @@ init python:
                 _im_os.remove(marker_path)
         except Exception:
             pass
+
         target_ver = getattr(persistent, "im_update_target_version", None)
         if target_ver:
             persistent.im_mod_version = target_ver
@@ -569,14 +687,12 @@ init python:
         _im_log("update apply: done version=%s" % (target_ver or "unknown"))
         try:
             _im_reload_scripts()
-            return True
         except Exception:
-            pass
-        try:
-            renpy.notify("Mod update applied: %s. Please reload scripts manually (F10)." % (target_ver or "unknown"))
-        except Exception:
-            pass
-        return False
+            try:
+                renpy.notify("Mod updated to %s – please reload scripts (F10)." % (target_ver or "unknown"))
+            except Exception:
+                pass
+        return True
 
 screen _im_update_autocall():
     if (
@@ -605,15 +721,14 @@ init python:
         _im_reloading_scripts = True
         try:
             if not hasattr(renpy, "reload_script"):
-                _im_reloading_scripts = False
                 renpy.notify("Script reload not supported on this build.")
                 return
             renpy.reload_script()
         except (renpy.game.UtterRestartException, renpy.game.RestartTopContext):
             # Expected during successful reloads; let Ren'Py handle them.
+            # The default statement resets _im_reloading_scripts after restart.
             raise
         except Exception as e:
-            _im_reloading_scripts = False
             msg = "Script reload failed: %s" % (e or e.__class__.__name__)
             try:
                 renpy.notify(msg)
@@ -623,11 +738,139 @@ init python:
                 _im_log(msg)
             except Exception:
                 pass
+        finally:
+            # Reset in all cases except a successful restart (which re-raises
+            # before reaching here and resets via the default statement).
+            _im_reloading_scripts = False
 
 init python:
     try:
         if "_im_update_autocall" not in config.overlay_screens:
             config.overlay_screens.append("_im_update_autocall")
+    except Exception:
+        pass
+
+# -----------------------------------------
+# Post-line injection: parse + execute + say_callback
+# -----------------------------------------
+init python:
+    def _im_parse_injection(s):
+        # Parse an injection string into (kind, *args).
+        # Supported:
+        #   'mc "Text"'    -> ("say", "mc", "Text")
+        #   "show train 6" -> ("show", "train 6")
+        #   "hide train"   -> ("hide", "train")
+        #   "scene bg r"   -> ("scene", "bg r")
+        import re as _imre
+        s = s.strip()
+        kw_lower = s.lower()
+        for kw in ("show ", "hide ", "scene "):
+            if kw_lower.startswith(kw):
+                return (kw.strip(), s[len(kw):].strip())
+        m = _imre.match(r'^(\w+)\s+["\'](.+)["\']$', s, _imre.DOTALL)
+        if m:
+            return ("say", m.group(1), m.group(2))
+        return None
+
+    def _im_execute_injection(s):
+        parsed = _im_parse_injection(s)
+        if not parsed:
+            return
+        kind = parsed[0]
+        try:
+            store._im_executing_injection = True
+        except Exception:
+            pass
+        try:
+            if kind == "say":
+                who_obj = getattr(store, parsed[1], None)
+                try:
+                    renpy.say(who_obj, parsed[2])
+                except Exception:
+                    pass
+            elif kind == "show":
+                try:
+                    renpy.show(parsed[1])
+                except Exception:
+                    pass
+            elif kind == "hide":
+                try:
+                    renpy.hide(parsed[1])
+                except Exception:
+                    pass
+            elif kind == "scene":
+                try:
+                    renpy.scene()
+                    if parsed[1]:
+                        renpy.show(parsed[1])
+                except Exception:
+                    pass
+        finally:
+            try:
+                store._im_executing_injection = False
+            except Exception:
+                pass
+
+    def _im_char_call_wrapper(self, what, *args, **kwargs):
+        is_injection = getattr(store, "_im_executing_injection", False)
+        mode_active = _in_any_mode_active()
+        # Reset the per-say guard only for real says (not injection sub-says),
+        # and only when the mod is actually enabled.
+        if not is_injection and mode_active:
+            try:
+                store._im_injection_queued = False
+            except Exception:
+                pass
+        # Run the actual say (user clicks through).
+        result = _im_orig_char_call(self, what, *args, **kwargs)
+        # Execute injections AFTER this say completes (post-say), not before
+        # the next one. Skip when already inside an injection or mode is off.
+        if not is_injection and mode_active:
+            pending = list(getattr(store, "_im_post_say_pending", []))
+            if pending:
+                del store._im_post_say_pending[:]
+                for _inj in pending:
+                    try:
+                        _im_execute_injection(_inj)
+                    except Exception:
+                        pass
+        elif not mode_active:
+            # Discard any stale injections so they don't fire if mode is toggled
+            # back on mid-game.
+            try:
+                if getattr(store, "_im_post_say_pending", None):
+                    del store._im_post_say_pending[:]
+                store._im_injection_queued = False
+            except Exception:
+                pass
+        return result
+
+    # Mark the wrapper so the patch block can detect it regardless of object identity
+    # (Ren'Py creates a new function object on every script reload).
+    _im_char_call_wrapper._im_is_wrapper = True
+
+    try:
+        import renpy.character as _im_char_mod
+        # Character is a factory function in Ren'Py – ADVCharacter is the
+        # actual class whose __call__ is invoked for every say statement.
+        _im_patch_cls = getattr(_im_char_mod, "ADVCharacter", None)
+        if _im_patch_cls is None or not isinstance(_im_patch_cls, type):
+            # Fallback: if ADVCharacter doesn't exist, try Character as class
+            _im_patch_cls = getattr(_im_char_mod, "Character", None)
+            if not isinstance(_im_patch_cls, type):
+                _im_patch_cls = None
+        if _im_patch_cls is not None:
+            current_call = _im_patch_cls.__call__
+            if getattr(current_call, '_im_is_wrapper', False):
+                # Already wrapped (e.g. after script reload) – restore the true
+                # original from the backup so _im_orig_char_call never points at
+                # a wrapper, then re-apply with the fresh function object.
+                _im_orig_char_call = _im_patch_cls._im_orig_call_backup
+            else:
+                # First init: the current __call__ is the real original.
+                _im_orig_char_call = current_call
+                _im_patch_cls._im_orig_call_backup = _im_orig_char_call
+            _im_patch_cls.__call__ = _im_char_call_wrapper
     except Exception:
         pass
 
@@ -640,11 +883,73 @@ screen _im_reload_scripts_hotkey():
         key "K_F10" action Function(_im_reload_scripts)
 
 init python:
+    def _im_skip_to_mod_interact_cb():
+        # DEV: wenn Ren'Py's Skip aktiv ist und die aktuelle Zeile vom Mod
+        # verändert wurde, Skip stoppen – wie ein natürlicher Skip-Stopper.
+        try:
+            if renpy.config.skipping and getattr(store, "_im_dev_text_modified", False):
+                renpy.config.skipping = None
+        except Exception:
+            pass
+
+    try:
+        if _im_skip_to_mod_interact_cb not in config.interact_callbacks:
+            config.interact_callbacks.append(_im_skip_to_mod_interact_cb)
+    except Exception:
+        pass
+
+screen _im_dev_text_indicator_screen():
+    # DEV: zeigt oben rechts ein Badge wenn die aktuelle Dialogzeile
+    # durch den Mod verändert wurde.
+    zorder 200
+    if persistent.im_dev_text_indicator and _im_dev_text_modified:
+        frame:
+            xalign 1.0
+            yalign 0.0
+            xoffset -12
+            yoffset 12
+            xpadding 10
+            ypadding 6
+            background Frame("#0d1b2ae0", 6, 6)
+            hbox:
+                spacing 7
+                yalign 0.5
+                frame:
+                    xsize 9
+                    ysize 9
+                    yalign 0.5
+                    background "#00d4ff"
+                    xpadding 0
+                    ypadding 0
+                text "IC-Mod" style "default" size 16 color "#00d4ff" bold True yalign 0.5
+
+screen _im_dev_node_loc_screen():
+    # DEV: zeigt oben rechts Datei + Zeilennummer des aktuellen Dialogs
+    # als fertigen Specifier (z.B. "script8:867") zum Copy-Pasten.
+    zorder 200
+    if persistent.im_dev_node_loc:
+        $ _dnl_short, _dnl_line = _im_dev_node_loc
+        if _dnl_line is not None:
+            frame:
+                xalign 1.0
+                yalign 0.0
+                xoffset -12
+                yoffset 50
+                xpadding 10
+                ypadding 6
+                background Frame("#2a0d1be0", 6, 6)
+                text "{}:{}".format(_dnl_short or "?", _dnl_line) style "default" size 14 color "#ffaa44" bold True yalign 0.5
+
+init python:
     try:
         if "_im_update_debug_hotkey" not in config.overlay_screens:
             config.overlay_screens.append("_im_update_debug_hotkey")
         if "_im_reload_scripts_hotkey" not in config.overlay_screens:
             config.overlay_screens.append("_im_reload_scripts_hotkey")
+        if "_im_dev_text_indicator_screen" not in config.overlay_screens:
+            config.overlay_screens.append("_im_dev_text_indicator_screen")
+        if "_im_dev_node_loc_screen" not in config.overlay_screens:
+            config.overlay_screens.append("_im_dev_node_loc_screen")
     except Exception:
         pass
 
@@ -662,6 +967,8 @@ label im_debug_set_version:
 init 5 python:
     try:
         _im_apply_update_if_pending()
+    except (renpy.game.UtterRestartException, renpy.game.RestartTopContext):
+        raise
     except Exception:
         pass
 
@@ -676,7 +983,7 @@ label im_update_prompt:
             if _ok:
                 $ _applied = _im_apply_update_if_pending()
                 if not _applied:
-                    $ renpy.notify("Update applied. Press F10 to reload scripts manually.")
+                    $ renpy.notify("Update failed to apply. Please reinstall manually.")
             else:
                 $ renpy.notify("Update download failed.")
         "No":
@@ -749,7 +1056,7 @@ init python early hide:
     if not hasattr(store, "_im_redirecting"):
         store._im_redirecting = False
     if not hasattr(store, "_im_prev_flags"):
-        store._im_prev_flags = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half', False)), bool(getattr(store, 'annie_aunt', False)))
+        store._im_prev_flags = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half_sister', False)), bool(getattr(store, 'annie_aunt', False)))
 
     def _im_collect_maps():
         def _map(name):
@@ -824,7 +1131,7 @@ init python early hide:
             pass
 
     def _im_refresh_if_flags_changed():
-        curr = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half', False)), bool(getattr(store, 'annie_aunt', False)))
+        curr = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half_sister', False)), bool(getattr(store, 'annie_aunt', False)))
         store._im_prev_flags = curr
 
     def _im_set_override(src, dst):
@@ -892,13 +1199,19 @@ init python early hide:
             store._im_redirecting = False
             return
 
+    # Sentinel so _im_ensure_label_callback can detect our wrapper by attribute
+    # instead of object identity (identity breaks on every script reload).
+    _im_label_cb._im_is_label_cb = True
+
     def _im_register_prev_label_cb(cb):
-        if cb and cb is not _im_label_cb and cb not in _im_label_chain:
+        # Skip None, our own wrapper (any generation), and duplicates.
+        if cb and not getattr(cb, '_im_is_label_cb', False) and cb not in _im_label_chain:
             _im_label_chain.append(cb)
 
     def _im_ensure_label_callback():
         curr = getattr(rconfig, "label_callback", None)
-        if curr is not _im_label_cb:
+        # Use sentinel attribute instead of identity so reloads don't grow the chain.
+        if not getattr(curr, '_im_is_label_cb', False):
             _im_register_prev_label_cb(curr)
             rconfig.label_callback = _im_label_cb
 
@@ -967,15 +1280,28 @@ init python early hide:
     try:
         if getattr(rconfig, "statement_callbacks", None) is None:
             rconfig.statement_callbacks = []
-        rconfig.statement_callbacks.append(_im_stmt_cb)
+        if _im_stmt_cb not in rconfig.statement_callbacks:
+            rconfig.statement_callbacks.append(_im_stmt_cb)
     except Exception:
         pass
 
+    def _im_export_store_api():
+        # Rebind helpers after load so stale save data cannot leave them as None.
+        globals()["im_export_store_api"] = _im_export_store_api
+        globals()["im_set_mode"] = _im_set_mode
+        globals()["im_set_override"] = _im_set_override
+        globals()["im_clear_override"] = _im_clear_override
+        globals()["im_toggle_redirect"] = _im_toggle_redirect
+        globals()["im_apply_label_map"] = _im_apply_map_to_config
+
+    def _im_set_mode(mode):
+        store.im_incest_mode = mode
+        _im_apply_incest_mode()
+        _im_apply_map_to_config()
+        in_apply_text_map()
+
     # export helpers to store API (without leaking renpy into store)
-    store.im_set_override = _im_set_override
-    store.im_clear_override = _im_clear_override
-    store.im_toggle_redirect = _im_toggle_redirect
-    store.im_apply_label_map = _im_apply_map_to_config
+    _im_export_store_api()
 
 # -----------------------------------------
 # Replacement maps (CONTENT OMITTED)
@@ -1013,6 +1339,69 @@ init python:
         # l9/N = l9453394's notes
         # BA/N = BlueArrow's notes
         # -----------------------------------------
+
+
+
+    # =========================================================
+        # LW/N: HOW TO WRITE MAP ENTRIES – all variants
+        # =========================================================
+        #
+        # VARIANT 1 – Simple text replacement (same as always)
+        # Replaces the text everywhere it appears in the game.
+        #
+        #   "Original text":
+        #       "New text",
+        #
+        # ---------------------------------------------------------
+        #
+        # VARIANT 2 – Replace text only at a specific location
+        # Useful when the same line appears at multiple points in
+        # the game and you only want to change one of them.
+        # Get the specifier (e.g. script:867) from the dev overlay
+        # in the top-right corner (enable in Prefs > Dev Tools >
+        # "Script-Zeile anzeigen").
+        #
+        #   With filename + line number:
+        #   "Original text":
+        #       ("New text", "script:867"),
+        #
+        #   Line number only (any file):
+        #   "Original text":
+        #       ("New text", 867),
+        #
+        # ---------------------------------------------------------
+        #
+        # VARIANT 3 – Insert extra lines after the dialogue
+        # After the player clicks through the changed line, the
+        # injected lines run in order, then the game continues
+        # normally as if nothing was added.
+        #
+        # Supported injection types:
+        #   'mc "Some text"'      -> MC says something
+        #   'annie "Some text"'   -> any character variable says something
+        #   "show train 6"        -> display an image/sprite
+        #   "hide train"          -> hide an image/sprite
+        #   "scene bg room"       -> change the background
+        #
+        #   "Original text":
+        #       ("New text", [
+        #           'mc "This is a test"',
+        #           "show train 6"
+        #       ]),
+        #
+        # ---------------------------------------------------------
+        #
+        # VARIANT 4 – Everything combined: replacement + location + extra lines
+        #
+        #   "Original text":
+        #       ("New text", "script:867", [
+        #           'mc "This is a test"',
+        #           "show train 6"
+        #       ]),
+        #
+        # =========================================================
+
+
 
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
@@ -9951,9 +10340,12 @@ init python:
             for old, new in mapping.items():
                 if not old:
                     continue
-
-
-
+                _im_e = _im_extract_entry(new)
+                if _im_e is None:
+                    continue
+                new, _im_spec, _im_inj = _im_e
+                if not _im_script_spec_matches(_im_spec):
+                    continue
 
                 # Build candidate variants allowing either raw placeholders or resolved values
                 candidates = set([old])
@@ -10093,6 +10485,16 @@ init python:
                                 t_norm_multimod = None
                             replaced_once = True
                             break
+                if replaced_once and _im_inj:
+                    # Guard: only queue once per say – the filter runs on
+                    # every render frame, so without the guard injections
+                    # would pile up and execute multiple times.
+                    try:
+                        if not getattr(store, "_im_injection_queued", False):
+                            store._im_injection_queued = True
+                            store._im_post_say_pending.extend(_im_inj)
+                    except Exception:
+                        pass
         except Exception:
             pass
 
@@ -10283,6 +10685,21 @@ init 991 python:
                 transformed = _in_transform_text(sanitized)
             except Exception:
                 transformed = sanitized
+            # Dev: track whether this dialogue line was changed by the mod
+            try:
+                if getattr(persistent, "im_dev_text_indicator", False):
+                    prev = getattr(store, "_im_dev_last_filter_input", None)
+                    if sanitized != prev:
+                        store._im_dev_last_filter_input = sanitized
+                        store._im_dev_text_modified = (transformed != sanitized)
+            except Exception:
+                pass
+            # Dev: capture current AST node location for the specifier overlay
+            try:
+                if getattr(persistent, "im_dev_node_loc", False):
+                    store._im_dev_node_loc = _im_get_current_node_loc()
+            except Exception:
+                pass
             try:
                 # Use Ren'Py's sanitizer but with our allowlist (incl. size).
                 return renpy.filter_text_tags(transformed, allow=allowed)
@@ -10320,10 +10737,8 @@ label annie_incest_optin:
     #     "No":
     #         $ im_cousin_override = False
     #         $ persistent.im_cousin_override = False
-    # After flags change, refresh label overrides immediately
-    $ _im_apply_incest_mode()
-    $ im_apply_label_map()
-    $ in_apply_text_map()
+    # After flags change, refresh all incest-mode hooks immediately.
+    $ im_set_mode(im_incest_mode)
     $ _in_incest_prompted = True
     return
 
@@ -10331,6 +10746,7 @@ label annie_incest_optin:
 # Re-apply after loading
 # -----------------------------------------
 label after_load:
+    $ im_export_store_api()
     $ _im_apply_incest_mode()
     $ in_apply_text_map()
     $ _im_update_checked = False
@@ -10616,52 +11032,22 @@ init 1000:
                     style_prefix "radio"
                     label _("Incest Mode")
                     textbutton _("Full Incest"):
-                        action [
-                            SetVariable("im_incest_mode", "incest"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "incest")
                         selected im_incest_mode == "incest"
                     textbutton _("Nancy as Mom"):
-                        action [
-                            SetVariable("im_incest_mode", "mom"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "mom")
                         selected im_incest_mode == "mom"
                     textbutton _("Annie as Sister"):
-                        action [
-                            SetVariable("im_incest_mode", "sister"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "sister")
                         selected im_incest_mode == "sister"
                     textbutton _("Mom+Half-Sister"):
-                        action [
-                            SetVariable("im_incest_mode", "half"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "half")
                         selected im_incest_mode == "half"
                     textbutton _("Aunt+Stepsister"):
-                        action [
-                            SetVariable("im_incest_mode", "aunt"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "aunt")
                         selected im_incest_mode == "aunt"
                     textbutton _("Disabled"):
-                        action [
-                            SetVariable("im_incest_mode", "off"),
-                            Function(_im_apply_incest_mode),
-                            Function(im_apply_label_map),
-                            Function(in_apply_text_map),
-                        ]
+                        action Function(im_set_mode, "off")
                         selected im_incest_mode == "off" or im_incest_mode == None
 
                 # vbox:
@@ -10682,6 +11068,20 @@ init 1000:
                 #         ]
                 #         selected (not im_cousin_override)
 
+                # ── DEV TOOLS ─────────────────────────────────────────────────────
+                vbox:
+                    style_prefix "check"
+                    label "{color=#888888}Dev Tools{/color}"
+                    textbutton _("Text-Change Indicator"):
+                        action ToggleField(persistent, "im_dev_text_indicator")
+                        selected persistent.im_dev_text_indicator
+                        tooltip _("DEV: Zeigt IC-Mod-Badge (oben rechts) wenn der aktuelle Dialog-Text durch den Mod veraendert wurde.")
+                    textbutton _("Script-Zeile anzeigen"):
+                        action ToggleField(persistent, "im_dev_node_loc")
+                        selected persistent.im_dev_node_loc
+                        tooltip _("DEV: Zeigt oben rechts Datei und Zeilennummer (z.B. script8:867) des aktuellen Dialogs - zum Copy-Pasten als Script-Specifier.")
+                # ──────────────────────────────────────────────────────
+
                 null height (4 * gui.pref_spacing)
 
 
@@ -10691,7 +11091,7 @@ init 1000:
             action Return()
             focus_mask True
             image "gui/msp5/return.png"
-            image im.MatrixColor("gui/msp5/return.png", im.matrix.colorize('#f1f1f180', '#f1f1f180')):
+            image Transform("gui/msp5/return.png", matrixcolor=ColorizeMatrix('#f1f1f180', '#f1f1f180')):
                 if return_h == 1:
                     at transform:
                         easein_quint (0.5 * persistent.motion) alpha 1.0 blur 0
