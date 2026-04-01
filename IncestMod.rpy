@@ -758,19 +758,29 @@ init python:
     def _im_parse_injection(s):
         # Parse an injection string into (kind, *args).
         # Supported:
-        #   'mc "Text"'    -> ("say", "mc", "Text")
-        #   "show train 6" -> ("show", "train 6")
-        #   "hide train"   -> ("hide", "train")
-        #   "scene bg r"   -> ("scene", "bg r")
+        #   'mc "Text"'             -> ("say", "mc", "Text", None)
+        #   'mc "Text" with dis'    -> ("say", "mc", "Text", "dis")
+        #   "show train 6"          -> ("show", "train 6", None)
+        #   "show train 6 with dis" -> ("show", "train 6", "dis")
+        #   "hide train"            -> ("hide", "train", None)
+        #   "scene bg r"            -> ("scene", "bg r", None)
         import re as _imre
         s = s.strip()
+
+        # Strip optional trailing  with <name>
+        trans_name = None
+        m_with = _imre.search(r'\s+with\s+(\w+)\s*$', s, _imre.IGNORECASE)
+        if m_with:
+            trans_name = m_with.group(1)
+            s = s[:m_with.start()].strip()
+
         kw_lower = s.lower()
         for kw in ("show ", "hide ", "scene "):
             if kw_lower.startswith(kw):
-                return (kw.strip(), s[len(kw):].strip())
+                return (kw.strip(), s[len(kw):].strip(), trans_name)
         m = _imre.match(r'^(\w+)\s+["\'](.+)["\']$', s, _imre.DOTALL)
         if m:
-            return ("say", m.group(1), m.group(2))
+            return ("say", m.group(1), m.group(2), trans_name)
         return None
 
     def _im_execute_injection(s):
@@ -778,6 +788,10 @@ init python:
         if not parsed:
             return
         kind = parsed[0]
+        trans_name = parsed[-1]  # last element is always trans_name (may be None)
+        trans_obj = None
+        if trans_name:
+            trans_obj = getattr(store, trans_name, None)
         try:
             store._im_executing_injection = True
         except Exception:
@@ -792,11 +806,15 @@ init python:
             elif kind == "show":
                 try:
                     renpy.show(parsed[1])
+                    if trans_obj is not None:
+                        renpy.with_statement(trans_obj)
                 except Exception:
                     pass
             elif kind == "hide":
                 try:
                     renpy.hide(parsed[1])
+                    if trans_obj is not None:
+                        renpy.with_statement(trans_obj)
                 except Exception:
                     pass
             elif kind == "scene":
@@ -804,6 +822,8 @@ init python:
                     renpy.scene()
                     if parsed[1]:
                         renpy.show(parsed[1])
+                    if trans_obj is not None:
+                        renpy.with_statement(trans_obj)
                 except Exception:
                     pass
         finally:
@@ -1418,7 +1438,7 @@ init python:
 
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
-
+    
         # BM script:948
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
             "My name is [mc] [lastname]. I was born into a family of five in the city of Kredon, a relatively small town on the west coast of the United States.",
