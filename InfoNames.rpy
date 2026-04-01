@@ -8,15 +8,20 @@ init offset = 1
 
 style icmod_info_last_name is default:
     font "Eternum-IC/InfoNames/Anton-Regular.ttf"
-    size 54
-    color "#f0f0f0"
-    outlines [(3, "#00000044", 2, 3)]
+    size 50
+    color "#ffffff"
+    kerning -1.5
+    outlines []
 
 style icmod_info_last_name_shadow is icmod_info_last_name:
     color "#000000"
     outlines []
 
-style icmod_info_last_name_glow is icmod_info_last_name_shadow
+style icmod_info_last_name_glow is icmod_info_last_name_shadow:
+    drop_shadow (24, 24)
+    drop_shadow_color "#00000000"
+
+style icmod_info_last_name_soften is icmod_info_last_name
 
 init python:
     from renpy.display.layout import Composite, DynamicDisplayable
@@ -25,20 +30,27 @@ init python:
     import renpy.store as store
 
     _ICMOD_INFO_IMG_SIZE = (1920, 1080)
-    _ICMOD_INFO_LAST_NAME_BASE_SIZE = 54.0
+    _ICMOD_INFO_LAST_NAME_BASE_SIZE = 50.0
 
-    def _icmod_info_cfg(source_path, default_last, max_width=176):
+    def _icmod_info_cfg(source_path, default_last, max_width=0):
         return {
             "source_path": source_path,
             "default_last": default_last,
             "text_pos": (45, 194),
             "max_width": max_width,
-            "font_size": 54.0,
-            "shadow_offset": (0, 4),
-            "shadow_alpha": 0.80,
-            "glow_offset": (0, 0),
-            "glow_blur": 5.0,
-            "glow_alpha": 0.59,
+            "font_size": 50.0,
+            "main_alpha": 0.97,
+            "main_blur": 0.45,
+            "shadow_offset": (1, 1),
+            "shadow_blur": 1.0,
+            "shadow_alpha": 0.56,
+            "glow_offset": (5, 5),
+            "glow_blur": 6.0,
+            "glow_alpha": 0.48,
+            "soften_blur": 2.8,
+            "soften_alpha": 0.26,
+            "soften_zoom": 1.012,
+            "soften_offset": (-1, -1),
         }
 
     _ICMOD_INFO_NAME_CFG = {
@@ -50,7 +62,7 @@ init python:
 
     def _icmod_info_last_name_layers(last, cfg, _st, _at):
         base_text = Text(last, style="icmod_info_last_name")
-        text_w, _text_h = renpy.render(base_text, _ICMOD_INFO_IMG_SIZE[0], _ICMOD_INFO_IMG_SIZE[1], _st, _at).get_size()
+        text_w, text_h = renpy.render(base_text, _ICMOD_INFO_IMG_SIZE[0], _ICMOD_INFO_IMG_SIZE[1], _st, _at).get_size()
 
         zoom = float(cfg.get("font_size", _ICMOD_INFO_LAST_NAME_BASE_SIZE)) / _ICMOD_INFO_LAST_NAME_BASE_SIZE
         scaled_w = text_w * zoom
@@ -61,11 +73,20 @@ init python:
         x, y = cfg["text_pos"]
         gx, gy = cfg.get("glow_offset", (0, 0))
         sx, sy = cfg.get("shadow_offset", (0, 0))
+        main_blur = cfg.get("main_blur", 0.0)
+        shadow_blur = cfg.get("shadow_blur", 0.0)
+        soften_blur = cfg.get("soften_blur", 0.0)
+        soften_factor = float(cfg.get("soften_zoom", 1.0))
+        soften_zoom = zoom * soften_factor
+        sox, soy = cfg.get("soften_offset", (0, 0))
+        soften_shift_x = ((text_w * zoom) * (soften_factor - 1.0)) / 2.0
+        soften_shift_y = ((text_h * zoom) * (soften_factor - 1.0)) / 2.0
 
         return [
             ((x + gx, y + gy), Transform(Text(last, style="icmod_info_last_name_glow"), zoom=zoom, alpha=cfg.get("glow_alpha", 0.0), blur=cfg.get("glow_blur", 0.0))),
-            ((x + sx, y + sy), Transform(Text(last, style="icmod_info_last_name_shadow"), zoom=zoom, alpha=cfg.get("shadow_alpha", 1.0))),
-            ((x, y), Transform(base_text, zoom=zoom)),
+            ((x + sx, y + sy), Transform(Text(last, style="icmod_info_last_name_shadow"), zoom=zoom, alpha=cfg.get("shadow_alpha", 1.0), blur=shadow_blur)),
+            ((x, y), Transform(base_text, zoom=zoom, alpha=cfg.get("main_alpha", 1.0), blur=main_blur)),
+            ((x + sox - soften_shift_x, y + soy - soften_shift_y), Transform(Text(last, style="icmod_info_last_name_soften"), zoom=soften_zoom, alpha=cfg.get("soften_alpha", 0.0), blur=soften_blur)),
         ]
 
     def _icmod_build_info_name(char_key, cfg):
@@ -73,13 +94,29 @@ init python:
         default_last = cfg["default_last"]
 
         def _render(_st, _at):
-            chat_names = getattr(store, "icmod_chat_last_names", {})
-            last = (chat_names.get(char_key) or default_last or "").strip().upper()
+            # Compute last name dynamically so it updates after the player
+            # enters their name at character creation (avoids stale init cache).
+            _mode = getattr(store, "im_incest_mode", None)
+            _mc_last = _icmod_get_mc_last_name()
+            _carter = ("nancy", "dalia", "penelope")
+            if _mode == "incest":
+                last = _mc_last
+            elif _mode == "mom" and char_key in _carter:
+                last = _mc_last
+            elif _mode == "sister" and char_key == "annie":
+                last = _mc_last
+            else:
+                chat_names = getattr(store, "icmod_chat_last_names", {})
+                last = (chat_names.get(char_key) or default_last or "").strip()
+            last = last.strip().upper()
 
-            parts = [(0, 0), source_path]
+            # Text layers go first (bottom), source_path on top — so the
+            # baked PNG shadow/shading overlaps the dynamic text naturally.
+            parts = []
             if last:
                 for pos, displayable in _icmod_info_last_name_layers(last, cfg, _st, _at):
                     parts.extend([pos, displayable])
+            parts.extend([(0, 0), source_path])
 
             composite = Composite(
                 _ICMOD_INFO_IMG_SIZE,

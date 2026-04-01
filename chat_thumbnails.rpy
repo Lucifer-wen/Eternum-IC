@@ -104,7 +104,20 @@ init python:
             if override:
                 label = override.strip()
             else:
-                last = store.icmod_chat_last_names.get(name_key, default_last) or ""
+                # Compute last name dynamically so it updates after the player
+                # enters their name at character creation (avoids stale init cache).
+                _mode = getattr(store, "im_incest_mode", None)
+                _mc_last = _icmod_get_mc_last_name()
+                _carter = ("nancy", "dalia", "penelope")
+                if _mode == "incest":
+                    last = _mc_last
+                elif _mode == "mom" and name_key in _carter:
+                    last = _mc_last
+                elif _mode == "sister" and name_key == "annie":
+                    last = _mc_last
+                else:
+                    # Use manually-set override if present, otherwise the default
+                    last = store.icmod_chat_last_names.get(name_key, default_last) or ""
                 last = last.strip()
                 if last:
                     label = "{} {}".format(first, last)
