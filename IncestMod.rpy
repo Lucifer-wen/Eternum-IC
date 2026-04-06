@@ -456,17 +456,8 @@ init python:
             _im_log("update check: no update")
 
     def _im_trigger_update_prompt():
-        try:
-            # Ensure no lingering UI widgets before opening a menu in a new context.
-            _stack = getattr(renpy.ui, "stack", None)
-            if _stack:
-                while len(_stack) > 1:
-                    try:
-                        renpy.ui.close()
-                    except Exception:
-                        break
-        except Exception:
-            pass
+        # call_in_new_context manages its own context — no manual stack cleanup needed.
+        # Draining renpy.ui.stack here corrupts the transient layer and crashes pause.
         renpy.call_in_new_context("im_update_prompt")
 
     def _im_start_update_check():
@@ -778,10 +769,68 @@ init python:
         for kw in ("show ", "hide ", "scene "):
             if kw_lower.startswith(kw):
                 return (kw.strip(), s[len(kw):].strip(), trans_name)
+        # Audio: "play channel name [fadein N]", "stop channel [fadeout N]", "queue channel name"
+        for kw in ("play ", "queue "):
+            if kw_lower.startswith(kw):
+                rest = s[len(kw):].strip().split(None, 1)
+                channel    = rest[0] if rest else "music"
+                audio_rest = rest[1].strip() if len(rest) > 1 else None
+                fadein = 0.0
+                audio  = audio_rest
+                if audio_rest:
+                    _mf = _imre.search(r'\s+fadein\s+(\d+(?:\.\d+)?)\s*$', audio_rest, _imre.IGNORECASE)
+                    if _mf:
+                        fadein = float(_mf.group(1))
+                        audio  = audio_rest[:_mf.start()].strip()
+                return (kw.strip(), channel, audio, fadein, trans_name)
+        if kw_lower.startswith("stop "):
+            _parts = s[5:].strip().split()
+            channel = _parts[0] if _parts else "music"
+            fadeout = float(_parts[2]) if len(_parts) >= 3 and _parts[1].lower() == "fadeout" else 0.0
+            return ("stop", channel, fadeout, trans_name)
         m = _imre.match(r'^(\w+)\s+["\'](.+)["\']$', s, _imre.DOTALL)
         if m:
             return ("say", m.group(1), m.group(2), trans_name)
         return None
+
+    def _im_reset_runtime_state(clear_pending=False):
+        try:
+            store._im_in_say_call = False
+        except Exception:
+            pass
+        try:
+            store._im_executing_injection = False
+        except Exception:
+            pass
+        try:
+            if clear_pending and getattr(store, "_im_post_say_pending", None):
+                del store._im_post_say_pending[:]
+            if clear_pending or not getattr(store, "_im_post_say_pending", None):
+                store._im_injection_queued = False
+        except Exception:
+            pass
+
+    def _im_cleanup_ui_stack():
+        try:
+            _ui = renpy.ui
+            _stack = getattr(_ui, "stack", None)
+            if _stack is None:
+                return
+            _at_stack = getattr(_ui, "at_stack", None)
+            _root_ok = (
+                len(_stack) == 1
+                and getattr(_stack[0], "name", None) == "transient"
+                and not _at_stack
+            )
+            if _root_ok:
+                return
+            try:
+                _im_log("injection cleanup: reset ui stack %s" % " | ".join([repr(item) for item in _stack]))
+            except Exception:
+                pass
+            _ui.reset()
+        except Exception:
+            pass
 
     def _im_execute_injection(s):
         parsed = _im_parse_injection(s)
@@ -800,6 +849,9 @@ init python:
             if kind == "say":
                 who_obj = getattr(store, parsed[1], None)
                 try:
+                    renpy.checkpoint(hard=False)
+                    if trans_obj is not None:
+                        renpy.transition(trans_obj)
                     renpy.say(who_obj, parsed[2])
                 except Exception:
                     pass
@@ -807,6 +859,7 @@ init python:
                 try:
                     renpy.show(parsed[1])
                     if trans_obj is not None:
+                        renpy.checkpoint(hard=False)
                         renpy.with_statement(trans_obj)
                 except Exception:
                     pass
@@ -814,6 +867,7 @@ init python:
                 try:
                     renpy.hide(parsed[1])
                     if trans_obj is not None:
+                        renpy.checkpoint(hard=False)
                         renpy.with_statement(trans_obj)
                 except Exception:
                     pass
@@ -823,7 +877,45 @@ init python:
                     if parsed[1]:
                         renpy.show(parsed[1])
                     if trans_obj is not None:
+                        renpy.checkpoint(hard=False)
                         renpy.with_statement(trans_obj)
+                except Exception:
+                    pass
+            elif kind == "play":
+                try:
+                    channel   = parsed[1]
+                    audio_tag = parsed[2]
+                    fadein    = parsed[3] if len(parsed) > 4 else 0.0
+                    # Resolve: store var → audio namespace → raw tag
+                    _audio_ns = getattr(store, "audio", None)
+                    audio_file = (
+                        getattr(store, audio_tag, None) or
+                        (getattr(_audio_ns, audio_tag, None) if _audio_ns else None) or
+                        audio_tag
+                    ) if audio_tag else None
+                    if audio_file:
+                        renpy.music.play(audio_file, channel=channel, fadein=fadein)
+                except Exception:
+                    pass
+            elif kind == "queue":
+                try:
+                    channel   = parsed[1]
+                    audio_tag = parsed[2]
+                    fadein    = parsed[3] if len(parsed) > 4 else 0.0
+                    _audio_ns = getattr(store, "audio", None)
+                    audio_file = (
+                        getattr(store, audio_tag, None) or
+                        (getattr(_audio_ns, audio_tag, None) if _audio_ns else None) or
+                        audio_tag
+                    ) if audio_tag else None
+                    if audio_file:
+                        renpy.music.queue(audio_file, channel=channel, fadein=fadein)
+                except Exception:
+                    pass
+            elif kind == "stop":
+                try:
+                    fadeout = parsed[2] if len(parsed) > 3 else 0.0
+                    renpy.music.stop(channel=parsed[1], fadeout=fadeout)
                 except Exception:
                     pass
         finally:
@@ -850,33 +942,38 @@ init python:
                 store._im_in_say_call = True
             except Exception:
                 pass
-        # Run the actual say (user clicks through).
-        result = _im_orig_char_call(self, what, *args, **kwargs)
-        # Clear the flag immediately after the say finishes.
-        if not is_injection:
+        try:
             try:
-                store._im_in_say_call = False
-            except Exception:
-                pass
-        # Execute injections AFTER this say completes (post-say).
-        if not is_injection and mode_active:
-            pending = list(getattr(store, "_im_post_say_pending", []))
-            if pending:
-                del store._im_post_say_pending[:]
-                store._im_injection_queued = False
-                for _inj in pending:
+                # Run the actual say (user clicks through).
+                result = _im_orig_char_call(self, what, *args, **kwargs)
+            finally:
+                if not is_injection:
                     try:
-                        _im_execute_injection(_inj)
+                        store._im_in_say_call = False
                     except Exception:
                         pass
-        elif not mode_active:
-            try:
-                if getattr(store, "_im_post_say_pending", None):
+
+            if is_injection:
+                return result
+
+            # Execute injections AFTER this say completes (post-say).
+            if mode_active:
+                pending = list(getattr(store, "_im_post_say_pending", []))
+                if pending:
                     del store._im_post_say_pending[:]
-                store._im_injection_queued = False
-            except Exception:
-                pass
-        return result
+                    store._im_injection_queued = False
+                    for _inj in pending:
+                        try:
+                            _im_execute_injection(_inj)
+                        except Exception:
+                            pass
+            else:
+                _im_reset_runtime_state(clear_pending=True)
+            return result
+        finally:
+            if not is_injection:
+                _im_reset_runtime_state(clear_pending=True)
+                _im_cleanup_ui_stack()
 
     # Mark the wrapper so the patch block can detect it regardless of object identity
     # (Ren'Py creates a new function object on every script reload).
@@ -1432,6 +1529,22 @@ init python:
         #           "show train 6"
         #       ]),
         #
+        # SHOWCASE
+        #         "I'm Annie! It's really nice to meet you!": (
+        #     "I'm Annie! Your little sister! It's really nice to meet you!",
+        #     "script:868",
+        #     [
+        #         'a "And I mean that — we haven\'t seen each other in so long!"',
+        #         "show intro 2 with dis",
+        #         'a "But now we\'re finally together again." with dis',
+        #         "show intro 1 with dis",
+        #         'a "Stop doing that!" with hpunch',
+        #         'a "Stop doing that!" with flash',
+        #         'stop music2',
+        #         "play music darksouls fadein 10",
+        #         'a "Stop doing that now!"'
+        #     ]
+        # ),
         # =========================================================
 
 
@@ -1439,6 +1552,22 @@ init python:
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
     
+        "I'm Annie! It's really nice to meet you!": (
+            "I'm Annie! Your little sister! It's really nice to meet you!",
+            "script:868",
+            [
+                'a "And I mean that — we haven\'t seen each other in so long!"',
+                "show intro 2 with dis",
+                'a "But now we\'re finally together again." with dis',
+                "show intro 1 with dis",
+                'a "Stop doing that!" with hpunch',
+                'a "Stop doing that!" with flash',
+                'stop music2',
+                "play music darksouls fadein 10",
+                'a "Stop doing that now!"'
+            ]
+        ),
+
         # BM script:948
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
             "My name is [mc] [lastname]. I was born into a family of five in the city of Kredon, a relatively small town on the west coast of the United States.",
