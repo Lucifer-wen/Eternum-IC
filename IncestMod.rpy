@@ -18,15 +18,6 @@ default im_label_overrides = {}
 default im_debug_redirect = False
 default persistent.text_offset = 1
 default persistent.motion = 1.0
-# Mod update metadata (Step 1)
-default persistent.im_mod_version = "1.4.3.0"
-default persistent.im_update_info_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/version.json"
-default persistent.im_update_zip_url = "https://github.com/Lucifer-wen/Eternum-IC/releases/download/mod/IncestMod.zip"
-default persistent.im_update_pending = False
-default persistent.im_update_enabled = False
-default persistent.im_update_zip_path = None
-default persistent.im_update_target_version = None
-default persistent.im_update_debug_hotkey = True
 default persistent.im_reload_hotkey_enabled = True
 default _im_reloading_scripts = False
 # Dev tools
@@ -38,11 +29,6 @@ default _im_post_say_pending = []
 default _im_injection_queued = False
 default _im_executing_injection = False
 default _im_in_say_call = False
-default _im_update_checked = False
-default _im_update_prompted = False
-default _im_modlog_path = None
-# State data used by the updater UI.
-default im_update_info = None
 # default persistent.im_cousin_override = None
 
 # -----------------------------------------
@@ -247,27 +233,8 @@ init python:
     except Exception:
         pass
 
-# -----------------------------------------
-# Update check (Step 2: check + prompt)
-# -----------------------------------------
 init python:
-    try:
-        import json as _im_json
-        import urllib.request as _im_urlreq
-        import os as _im_os
-        import hashlib as _im_hashlib
-    except Exception:
-        _im_json = None
-        _im_urlreq = None
-
-    # _im_update_checked, _im_update_prompted, _im_modlog_path are all
-    # declared via `default` at the top of the file.
-
-    def _im_get_basedir():
-        try:
-            return renpy.config.basedir
-        except Exception:
-            return None
+    import os as _im_os
 
     # -----------------------------------------------------------------
     # Map-entry helpers: extended format support
@@ -340,359 +307,6 @@ init python:
         except ValueError:
             return False
 
-    def _im_log(msg):
-        try:
-            if store._im_modlog_path is None:
-                basedir = _im_get_basedir()
-                if basedir:
-                    store._im_modlog_path = _im_os.path.join(basedir, "ModLog.txt")
-            with open(store._im_modlog_path, "a") as f:
-                f.write(str(msg) + "\n")
-        except Exception:
-            pass
-
-    def _im_parse_version(v):
-        if not v:
-            return ()
-        parts = str(v).strip().split(".")
-        out = []
-        for p in parts:
-            try:
-                out.append(int(p))
-            except Exception:
-                out.append(0)
-        return tuple(out)
-
-    def _im_fetch_update_info():
-        if _im_urlreq is None or _im_json is None:
-            _im_log("update check: missing urllib/json")
-            return None
-        url = getattr(persistent, "im_update_info_url", None)
-        if not url:
-            _im_log("update check: no info URL")
-            return None
-        try:
-            _im_log("update check: fetch url=%s" % url)
-            resp = _im_urlreq.urlopen(url, timeout=5)
-            data = resp.read()
-            try:
-                text = data.decode("utf-8")
-            except Exception:
-                text = data
-            try:
-                _im_log("update check: body bytes=%d" % (len(data) if data else 0))
-                _im_log("update check: body head: %s" % str(text)[:200])
-            except Exception:
-                pass
-            try:
-                return _im_json.loads(text)
-            except Exception as e:
-                _im_log("update check: json parse failed: %r" % e)
-                _im_log("update check: body head: %s" % str(text)[:200])
-                return None
-        except Exception as e:
-            _im_log("update check: fetch failed: %r" % e)
-            try:
-                import ssl as _im_ssl
-                _im_log("update check: retry without SSL verification")
-                ctx = _im_ssl._create_unverified_context()
-                resp = _im_urlreq.urlopen(url, timeout=5, context=ctx)
-                data = resp.read()
-                try:
-                    text = data.decode("utf-8")
-                except Exception:
-                    text = data
-                try:
-                    _im_log("update check: body bytes (no-verify)=%d" % (len(data) if data else 0))
-                    _im_log("update check: body head (no-verify): %s" % str(text)[:200])
-                except Exception:
-                    pass
-                try:
-                    return _im_json.loads(text)
-                except Exception as e2:
-                    _im_log("update check: json parse failed (no-verify): %r" % e2)
-                    _im_log("update check: body head (no-verify): %s" % str(text)[:200])
-                    return None
-            except Exception as e2:
-                _im_log("update check: fetch failed (no-verify): %r" % e2)
-            return None
-
-    def _im_check_for_update():
-        if store._im_update_checked:
-            _im_log("update check: already checked")
-            return
-        store._im_update_checked = True
-        _im_log("update check: start")
-        info = _im_fetch_update_info()
-        if info is None or not hasattr(info, "get"):
-            try:
-                _im_log("update check: invalid info type=%s repr=%r" % (type(info), info))
-            except Exception:
-                _im_log("update check: invalid info")
-            return
-        try:
-            _im_log("update check: info keys=%s" % ",".join(sorted([str(k) for k in info.keys()])))
-        except Exception:
-            pass
-        remote_ver = info.get("version", None)
-        remote_url = info.get("url", None) or getattr(persistent, "im_update_zip_url", None)
-        remote_hash = info.get("sha256", None)
-        local_ver = getattr(persistent, "im_mod_version", None)
-        _im_log("update check: local=%s remote=%s" % (local_ver, remote_ver))
-        if _im_parse_version(remote_ver) > _im_parse_version(local_ver):
-            im_update_info = {
-                "version": remote_ver,
-                "url": remote_url,
-                "sha256": remote_hash,
-            }
-            if not store._im_update_prompted:
-                store._im_update_prompted = True
-                _im_log("update check: prompt")
-                try:
-                    _im_trigger_update_prompt()
-                except Exception:
-                    pass
-        else:
-            _im_log("update check: no update")
-
-    def _im_trigger_update_prompt():
-        # call_in_new_context manages its own context — no manual stack cleanup needed.
-        # Draining renpy.ui.stack here corrupts the transient layer and crashes pause.
-        renpy.call_in_new_context("im_update_prompt")
-
-    def _im_start_update_check():
-        if not getattr(persistent, "im_update_enabled", False):
-            _im_log("update check: disabled")
-            return
-        _im_check_for_update()
-
-    def _im_find_mod_dir():
-        """Return the directory that contains IncestMod.rpy (i.e. game/Eternum-IC/)."""
-        basedir = _im_get_basedir()
-        if not basedir:
-            _im_log("update apply: no basedir")
-            return None
-        game_dir = _im_os.path.join(basedir, "game")
-        try:
-            for root, _dirs, files in _im_os.walk(game_dir):
-                if "IncestMod.rpy" in files:
-                    return root
-        except Exception:
-            _im_log("update apply: walk failed")
-        fallback = _im_os.path.join(game_dir, "Eternum-IC")
-        if _im_os.path.isdir(fallback):
-            return fallback
-        return None
-
-    def _im_download_update():
-        if _im_urlreq is None:
-            _im_log("update download: missing urllib")
-            return False
-        info = getattr(store, "im_update_info", None) or {}
-        url = info.get("url", None) or getattr(persistent, "im_update_zip_url", None)
-        target_ver = info.get("version", None)
-        if not url:
-            _im_log("update download: no url")
-            return False
-        if _im_find_mod_dir() is None:
-            _im_log("update download: mod dir not found")
-            return False
-        basedir = _im_get_basedir()
-        if not basedir:
-            _im_log("update download: no basedir")
-            return False
-        zip_path = _im_os.path.join(basedir, "IncestMod_update.zip")
-        marker_path = _im_os.path.join(basedir, "ModUpdate.pending")
-        try:
-            _im_log("update download: start %s" % url)
-            resp = _im_urlreq.urlopen(url, timeout=15)
-            with open(zip_path, "wb") as f:
-                while True:
-                    chunk = resp.read(1024 * 64)
-                    if not chunk:
-                        break
-                    f.write(chunk)
-        except Exception as e:
-            _im_log("update download: failed: %r" % e)
-            try:
-                import ssl as _im_ssl
-                _im_log("update download: retry without SSL verification")
-                ctx = _im_ssl._create_unverified_context()
-                resp = _im_urlreq.urlopen(url, timeout=15, context=ctx)
-                with open(zip_path, "wb") as f:
-                    while True:
-                        chunk = resp.read(1024 * 64)
-                        if not chunk:
-                            break
-                        f.write(chunk)
-            except Exception as e2:
-                _im_log("update download: failed (no-verify): %r" % e2)
-                return False
-        expected = info.get("sha256", None)
-        if expected and str(expected).strip() not in ("", "<optional>", "optional"):
-            try:
-                h = _im_hashlib.sha256()
-                with open(zip_path, "rb") as f:
-                    for b in iter(lambda: f.read(1024 * 64), b""):
-                        h.update(b)
-                if h.hexdigest().lower() != str(expected).strip().lower():
-                    try:
-                        _im_os.remove(zip_path)
-                    except Exception:
-                        pass
-                    _im_log("update download: hash mismatch")
-                    return False
-            except Exception:
-                _im_log("update download: hash check failed")
-                return False
-        else:
-            _im_log("update download: hash check skipped")
-        try:
-            with open(marker_path, "w") as f:
-                f.write(str(target_ver or ""))
-        except Exception:
-            _im_log("update download: marker write failed")
-        persistent.im_update_zip_path = zip_path
-        persistent.im_update_pending = True
-        persistent.im_update_target_version = target_ver
-        _im_log("update download: ok")
-        return True
-
-    def _im_apply_update_if_pending():
-        basedir = _im_get_basedir()
-        marker_path = _im_os.path.join(basedir, "ModUpdate.pending") if basedir else None
-        zip_path = getattr(persistent, "im_update_zip_path", None)
-        if (not getattr(persistent, "im_update_pending", False)) and marker_path and _im_os.path.isfile(marker_path):
-            _im_log("update apply: marker found")
-            try:
-                with open(marker_path, "r") as f:
-                    persistent.im_update_target_version = f.read().strip()
-            except Exception:
-                pass
-            if basedir:
-                zip_path = _im_os.path.join(basedir, "IncestMod_update.zip")
-                persistent.im_update_zip_path = zip_path
-            persistent.im_update_pending = True
-        if not getattr(persistent, "im_update_pending", False):
-            _im_log("update apply: no pending flag")
-            return False
-        if not zip_path or not _im_os.path.isfile(zip_path):
-            _im_log("update apply: missing zip path")
-            return False
-        mod_dir = _im_find_mod_dir()
-        if not mod_dir:
-            _im_log("update apply: mod dir not found")
-            return False
-        try:
-            import zipfile as _im_zipfile
-        except Exception:
-            _im_log("update apply: no zipfile module")
-            return False
-
-        # Read ZIP; strip common top-level folder prefix if present (e.g. GitHub release ZIPs)
-        payload = {}  # rel_path -> bytes
-        try:
-            with _im_zipfile.ZipFile(zip_path, "r") as zf:
-                all_names = [n.replace("\\", "/").lstrip("/") for n in zf.namelist() if not n.endswith("/")]
-                # Detect common top-level prefix to strip
-                prefix = ""
-                top_dirs = set()
-                for n in all_names:
-                    parts = n.split("/")
-                    if len(parts) > 1:
-                        top_dirs.add(parts[0])
-                if len(top_dirs) == 1:
-                    prefix = list(top_dirs)[0] + "/"
-                for orig, norm in zip(zf.namelist(), all_names):
-                    if orig.endswith("/"):
-                        continue
-                    rel = norm[len(prefix):] if prefix and norm.startswith(prefix) else norm
-                    if not rel:
-                        continue
-                    ext = rel.rsplit(".", 1)[-1].lower() if "." in rel else ""
-                    if ext in ("rpy", "rpyc", "png", "jpg", "jpeg", "json"):
-                        payload[rel] = zf.read(orig)
-        except Exception as e:
-            _im_log("update apply: zip read error: %r" % e)
-            try:
-                renpy.log("update apply failed: zip read error")
-            except Exception:
-                pass
-            return False
-
-        # Mandatory files must be present in the ZIP
-        mandatory = ("IncestMod.rpy", "IncestLables.rpy")
-        basenames = [_im_os.path.basename(k) for k in payload]
-        missing = [n for n in mandatory if n not in basenames]
-        if missing:
-            _im_log("update apply: missing in zip: %s" % ", ".join(missing))
-            try:
-                renpy.notify("Update ZIP missing: " + ", ".join(missing))
-            except Exception:
-                pass
-            return False
-
-        # Remove stale .rpyc files for every .rpy being updated (force recompile)
-        for rel in payload:
-            if rel.endswith(".rpy"):
-                rpyc = _im_os.path.join(mod_dir, rel[:-4] + ".rpyc")
-                try:
-                    if _im_os.path.isfile(rpyc):
-                        _im_os.remove(rpyc)
-                except Exception:
-                    pass
-
-        # Write all extracted files into mod_dir, preserving subfolder structure
-        try:
-            for rel, data in payload.items():
-                dest = _im_os.path.join(mod_dir, rel.replace("/", _im_os.sep))
-                dest_dir = _im_os.path.dirname(dest)
-                if not _im_os.path.isdir(dest_dir):
-                    _im_os.makedirs(dest_dir)
-                with open(dest, "wb") as f:
-                    f.write(data)
-        except Exception as e:
-            _im_log("update apply: write failed: %r" % e)
-            try:
-                renpy.log("update apply failed: write error")
-            except Exception:
-                pass
-            return False
-
-        # Cleanup temp files
-        try:
-            _im_os.remove(zip_path)
-        except Exception:
-            pass
-        try:
-            if marker_path and _im_os.path.isfile(marker_path):
-                _im_os.remove(marker_path)
-        except Exception:
-            pass
-
-        target_ver = getattr(persistent, "im_update_target_version", None)
-        if target_ver:
-            persistent.im_mod_version = target_ver
-        persistent.im_update_pending = False
-        persistent.im_update_zip_path = None
-        persistent.im_update_target_version = None
-        _im_log("update apply: done version=%s" % (target_ver or "unknown"))
-        try:
-            _im_reload_scripts()
-        except Exception:
-            try:
-                renpy.notify("Mod updated to %s – please reload scripts (F10)." % (target_ver or "unknown"))
-            except Exception:
-                pass
-        return True
-
-screen _im_update_autocall():
-    if (
-        (renpy.get_screen('choice') is None)
-        and (not renpy.context()._main_menu)
-        and (not _im_reloading_scripts)
-    ):
-        timer 0.1 action Function(_im_start_update_check)
 
 init python:
     def _im_reload_scripts():
@@ -734,13 +348,6 @@ init python:
             # Reset in all cases except a successful restart (which re-raises
             # before reaching here and resets via the default statement).
             _im_reloading_scripts = False
-
-init python:
-    try:
-        if "_im_update_autocall" not in config.overlay_screens:
-            config.overlay_screens.append("_im_update_autocall")
-    except Exception:
-        pass
 
 # -----------------------------------------
 # Post-line injection: parse + execute + say_callback
@@ -849,7 +456,7 @@ init python:
             if kind == "say":
                 who_obj = getattr(store, parsed[1], None)
                 try:
-                    renpy.checkpoint(hard=False)
+                    renpy.checkpoint()
                     if trans_obj is not None:
                         renpy.transition(trans_obj)
                     renpy.say(who_obj, parsed[2])
@@ -1004,10 +611,6 @@ init python:
     except Exception:
         pass
 
-screen _im_update_debug_hotkey():
-    if persistent.im_update_debug_hotkey:
-        key "K_F9" action Function(renpy.call_in_new_context, "im_debug_set_version")
-
 screen _im_reload_scripts_hotkey():
     if persistent.im_reload_hotkey_enabled:
         key "K_F10" action Function(_im_reload_scripts)
@@ -1072,8 +675,6 @@ screen _im_dev_node_loc_screen():
 
 init python:
     try:
-        if "_im_update_debug_hotkey" not in config.overlay_screens:
-            config.overlay_screens.append("_im_update_debug_hotkey")
         if "_im_reload_scripts_hotkey" not in config.overlay_screens:
             config.overlay_screens.append("_im_reload_scripts_hotkey")
         if "_im_dev_text_indicator_screen" not in config.overlay_screens:
@@ -1082,43 +683,6 @@ init python:
             config.overlay_screens.append("_im_dev_node_loc_screen")
     except Exception:
         pass
-
-label im_debug_set_version:
-    $ _curr = getattr(persistent, "im_mod_version", "unknown")
-    $ _new = renpy.input("Set mod version:", default=_curr, length=32)
-    $ _new = _new.strip()
-    if _new:
-        $ persistent.im_mod_version = _new
-        $ renpy.save_persistent()
-        $ _im_update_checked = False
-        $ renpy.notify("Mod version set to " + _new)
-    return
-
-init 5 python:
-    try:
-        _im_apply_update_if_pending()
-    except (renpy.game.UtterRestartException, renpy.game.RestartTopContext):
-        raise
-    except Exception:
-        pass
-
-label im_update_prompt:
-    $ _info = getattr(store, "im_update_info", None)
-    $ _ver = _info.get("version", None) if _info else None
-    $ _curr = getattr(persistent, "im_mod_version", None)
-    menu:
-        "Incest Mod update available (current [_curr], latest [_ver]). Download and install now?"
-        "Yes":
-            $ _ok = _im_download_update()
-            if _ok:
-                $ _applied = _im_apply_update_if_pending()
-                if not _applied:
-                    $ renpy.notify("Update failed to apply. Please reinstall manually.")
-            else:
-                $ renpy.notify("Update download failed.")
-        "No":
-            $ persistent.im_update_pending = False
-    return
 
 # -----------------------------------------
 # Label redirect map (edit like the text maps)
@@ -1552,9 +1116,9 @@ init python:
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
     
-        "I'm Annie! It's really nice to meet you!": (
+        "Man... the big city!": (
             "I'm Annie! Your little sister! It's really nice to meet you!",
-            "script:868",
+            "script:954",
             [
                 'a "And I mean that — we haven\'t seen each other in so long!"',
                 "show intro 2 with dis",
@@ -10915,8 +10479,6 @@ label after_load:
     $ im_export_store_api()
     $ _im_apply_incest_mode()
     $ in_apply_text_map()
-    $ _im_update_checked = False
-    $ _im_check_for_update()
     return
 
 # -----------------------------------------
@@ -11179,20 +10741,6 @@ init 1000:
 
                     ## Additional vboxes of type "radio_pref" or "check_pref" can be
                     ## added here, to add additional creator-defined preferences.
-
-                vbox:
-                    style_prefix "radio"
-                    label _("Incest Mod Updates")
-                    textbutton _("Enabled"):
-                        action [
-                            SetField(persistent, "im_update_enabled", True),
-                            SetVariable("_im_update_checked", False),
-                            Function(_im_check_for_update),
-                        ]
-                        selected persistent.im_update_enabled
-                    textbutton _("Disabled"):
-                        action SetField(persistent, "im_update_enabled", False)
-                        selected (not persistent.im_update_enabled)
 
                 vbox:
                     style_prefix "radio"
