@@ -459,7 +459,6 @@ init python:
                     if trans_obj is not None:
                         renpy.transition(trans_obj)
                     renpy.say(who_obj, parsed[2])
-                    renpy.block_rollback()
                 except renpy.game.CONTROL_EXCEPTIONS:
                     raise
                 except Exception:
@@ -571,13 +570,18 @@ init python:
                 if pending:
                     del store._im_post_say_pending[:]
                     store._im_injection_queued = False
-                    for _inj in pending:
-                        try:
-                            _im_execute_injection(_inj)
-                        except renpy.game.CONTROL_EXCEPTIONS:
-                            raise
-                        except Exception:
-                            pass
+                    _prev_rb = renpy.config.rollback_enabled
+                    renpy.config.rollback_enabled = False
+                    try:
+                        for _inj in pending:
+                            try:
+                                _im_execute_injection(_inj)
+                            except renpy.game.CONTROL_EXCEPTIONS:
+                                raise
+                            except Exception:
+                                pass
+                    finally:
+                        renpy.config.rollback_enabled = _prev_rb
             else:
                 _im_reset_runtime_state(clear_pending=True)
             return result
