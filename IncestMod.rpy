@@ -456,10 +456,12 @@ init python:
             if kind == "say":
                 who_obj = getattr(store, parsed[1], None)
                 try:
-                    renpy.checkpoint()
                     if trans_obj is not None:
                         renpy.transition(trans_obj)
                     renpy.say(who_obj, parsed[2])
+                    renpy.block_rollback()
+                except renpy.game.CONTROL_EXCEPTIONS:
+                    raise
                 except Exception:
                     pass
             elif kind == "show":
@@ -572,6 +574,8 @@ init python:
                     for _inj in pending:
                         try:
                             _im_execute_injection(_inj)
+                        except renpy.game.CONTROL_EXCEPTIONS:
+                            raise
                         except Exception:
                             pass
             else:
@@ -580,7 +584,6 @@ init python:
         finally:
             if not is_injection:
                 _im_reset_runtime_state(clear_pending=True)
-                _im_cleanup_ui_stack()
 
     # Mark the wrapper so the patch block can detect it regardless of object identity
     # (Ren'Py creates a new function object on every script reload).
@@ -1052,24 +1055,6 @@ init python early hide:
     #       ]),
     #
     # EXTENDED SHOWCASE
-    #    "I'm Annie! It's really nice to meet you!":
-    #        ("I'm Annie! Your little sister! It's really nice to meet you!",
-    #        "script:868",
-    #        [
-    #            'a "And I mean that — we haven\'t seen each other in so long!"',
-    #            "show intro 2",
-    #            'a "But now we\'re finally together again." with dis',
-    #            "show intro 1",
-    #            'a "Hey, stop that!" with hpunch',
-    #            'a "Or that!" with flash',
-    #            'stop music2',
-    #            "play music darksouls fadein 1",
-    #            'a "Why are we playing this music?!"',
-    #            'stop music',
-    #            'play music2 happy1',
-    #            'a "Okay, back to normal!"'
-    #        ]
-    #    ),
     #
     # =========================================================
 
@@ -1109,6 +1094,25 @@ init python:
 
     # -----------------------------------------
     # v0.1 script.rpy  Lines 1-9769
+
+        "I'm Annie! It's really nice to meet you!":
+            ("I'm Annie! Your little sister! It's really nice to meet you!",
+            "script:868",
+            [
+                'a "And I mean that — we haven\'t seen each other in so long!"',
+                "show intro 2",
+                'a "But now we\'re finally together again." with dis',
+                "show intro 1",
+                'a "Hey, stop that!" with hpunch',
+                'a "Or that!" with flash',
+                'stop music2',
+                "play music darksouls fadein 1",
+                'a "Why are we playing this music?!"',
+                'stop music',
+                'play music2 happy1',
+                'a "Okay, back to normal!"'
+            ]
+        ),
 
         # BM script:948
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
