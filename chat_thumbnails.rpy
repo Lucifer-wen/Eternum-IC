@@ -3,7 +3,7 @@
 # Builds the header dynamically so names can change at runtime.
 ################################################################################
 
-define gui.chat_name_font = "Eternum-IC/chat_thumbnails/ARLRDBD.TTF"
+define gui.chat_name_font = _ICMOD_ROOT + "/chat_thumbnails/ARLRDBD.TTF"
 
 default icmod_chat_thumb_overrides = {}
 
@@ -161,35 +161,35 @@ init python:
 
 image chat_annie_1 = _icmod_build_thumb(
     "annie",
-    "Eternum-IC/chat_thumbnails/chat_annie_1_icmod.png",
+    _ICMOD_ROOT + "/chat_thumbnails/chat_annie_1_icmod.png",
     "Annie",
     "Winters",
 )
 
 image chat_dalia_1 = _icmod_build_thumb(
     "dalia",
-    "Eternum-IC/chat_thumbnails/chat_dalia_1_icmod.png",
+    _ICMOD_ROOT + "/chat_thumbnails/chat_dalia_1_icmod.png",
     "Dalia",
     "Carter",
 )
 
 image chat_dalia_1b = _icmod_build_thumb(
     "dalia",
-    "Eternum-IC/chat_thumbnails/chat_dalia_1b_icmod.png",
+    _ICMOD_ROOT + "/chat_thumbnails/chat_dalia_1b_icmod.png",
     "Dalia",
     "Carter",
 )
 
 image chat_nancy_1 = _icmod_build_thumb(
     "nancy",
-    "Eternum-IC/chat_thumbnails/chat_nancy_1_icmod.png",
+    _ICMOD_ROOT + "/chat_thumbnails/chat_nancy_1_icmod.png",
     "Nancy",
     "Carter",
 )
 
 image chat_penelope_1 = _icmod_build_thumb(
     "penelope",
-    "Eternum-IC/chat_thumbnails/chat_penelope_1.png",
+    _ICMOD_ROOT + "/chat_thumbnails/chat_penelope_1.png",
     "Penelope",
     "Carter",
 )

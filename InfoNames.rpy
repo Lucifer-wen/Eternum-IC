@@ -7,7 +7,7 @@
 init offset = 1
 
 style icmod_info_last_name is default:
-    font "Eternum-IC/InfoNames/Anton-Regular.ttf"
+    font _ICMOD_ROOT + "/InfoNames/Anton-Regular.ttf"
     size 50
     color "#ffffff"
     kerning -1.5
@@ -54,10 +54,10 @@ init python:
         }
 
     _ICMOD_INFO_NAME_CFG = {
-        "annie":    _icmod_info_cfg("Eternum-IC/InfoNames/annie_l.png",    "Winters"),
-        "dalia":    _icmod_info_cfg("Eternum-IC/InfoNames/dalia_l.png",    "Carter"),
-        "nancy":    _icmod_info_cfg("Eternum-IC/InfoNames/nancy_l.png",    "Carter"),
-        "penelope": _icmod_info_cfg("Eternum-IC/InfoNames/penelope_l.png", "Carter"),
+        "annie":    _icmod_info_cfg(_ICMOD_ROOT + "/InfoNames/annie_l.png",    "Winters"),
+        "dalia":    _icmod_info_cfg(_ICMOD_ROOT + "/InfoNames/dalia_l.png",    "Carter"),
+        "nancy":    _icmod_info_cfg(_ICMOD_ROOT + "/InfoNames/nancy_l.png",    "Carter"),
+        "penelope": _icmod_info_cfg(_ICMOD_ROOT + "/InfoNames/penelope_l.png", "Carter"),
     }
 
     def _icmod_info_last_name_layers(last, cfg, _st, _at):
