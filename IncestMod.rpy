@@ -1034,6 +1034,16 @@ init python early hide:
     #   "Original text":
     #       ("New text", 867),
     #
+    #   VARIANT 2b – Multiple location-specific replacements for the same line
+    #   When the same dialogue appears in several places and you want to replace
+    #   more than one of them differently, use a list of tuples. Each entry is
+    #   checked in order; the first one whose location matches is applied.
+    #
+    #   "Original text": [
+    #       ("New text A", "script:867"),
+    #       ("New text B", "script:1234"),
+    #   ],
+    #
     # ---------------------------------------------------------
     #
     # VARIANT 3 – Insert extra lines after the dialogue
@@ -10454,12 +10464,25 @@ init python:
             for old, new in mapping.items():
                 if not old:
                     continue
-                _im_e = _im_extract_entry(new)
-                if _im_e is None:
-                    continue
-                new, _im_spec, _im_inj = _im_e
-                if not _im_script_spec_matches(_im_spec):
-                    continue
+                # VARIANT 2b: list of (text, spec[, injections]) alternatives
+                # Detected when the first element is itself a tuple/list (not a string).
+                if isinstance(new, (list, tuple)) and new and isinstance(new[0], (list, tuple)):
+                    _im_matched = None
+                    for _im_alt in new:
+                        _im_e = _im_extract_entry(_im_alt)
+                        if _im_e is not None and _im_script_spec_matches(_im_e[1]):
+                            _im_matched = _im_e
+                            break
+                    if _im_matched is None:
+                        continue
+                    new, _im_spec, _im_inj = _im_matched
+                else:
+                    _im_e = _im_extract_entry(new)
+                    if _im_e is None:
+                        continue
+                    new, _im_spec, _im_inj = _im_e
+                    if not _im_script_spec_matches(_im_spec):
+                        continue
 
                 # Build candidate variants allowing either raw placeholders or resolved values
                 candidates = set([old])
