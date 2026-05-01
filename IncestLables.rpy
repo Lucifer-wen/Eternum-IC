@@ -1773,7 +1773,7 @@ label mod_call_chat_18:
     show gh 84
     jump rememberdinnersuccess
 
-# used in base map, add exposition lines towards the end
+# REPLACED BY INJECTION LINES used in base map, add exposition lines towards the end
 label poolalex_mod:
     stop music2 fadeout 3
     show b with Dissolve(2.5)
@@ -2382,7 +2382,7 @@ label preeternum_mod:
     mc "Is something wrong?!"
     jump eternum
 
-# Used in all maps, adds extra dialogue I personally wanted to add
+# REPLACED BY INJECTION LINES Used in all maps, adds extra dialogue I personally wanted to add
 label versiontwo_mod:
     show screen afewminuteslater with Dissolve(3)
     pause
@@ -3282,18 +3282,9 @@ label potionslabel_mod:
 '''
 ===ideas for label mods, may or may not do===
 
-script3:prizelabel OR script9:poscm3cm4 for base map
-    replace “Those are the rules!” for ONE of these labels
-    prizelabel is 145 lines long, poscm3cm4 is 178 lines long
-    could use poscm3cm4 to add more rewrites
-
 script5 for base map
     Rewrite the truth or dare game to either work in or work around the incest
     would be a ridiculous amount of work
     or cop out and hide the incest like in aunt map lol
 
-script8:yesnovakiss for AS Map
-    replace AS script8:7101 since it interferes with script4:2443 (d)
-    however the label section needed is HUGE
-    May also use it to further rewrite convo with Chang
 '''
