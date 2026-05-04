@@ -3596,234 +3596,368 @@ init python:
     # -----------------------------------------
     # v0.7 script7.rpy Lines 66774-80425
 
-        # BM 67196
-        "*Snorts* Don't worry, I'm kidding, I'm kidding!":
-            "*Snorts* Don't worry, I'm kidding, I'm kidding! I mean, he {i}is{/i} your brother.",
+        # BM script7:19
+        "I know you've been fooling around with the WRE with your peculiar group of... {i}friends.":
+            "I know you've been fooling around with the WRE with your peculiar group of... {i}friends and family.",
 
-        # BM 67679
+        # BM script7:422 (x)
+        "*Snorts* Don't worry, I'm kidding, I'm kidding!":
+            "*Snorts* Don't worry, I'm kidding, I'm kidding! He {i}is{/i} your brother, after all.",
+
+        # BM script7:727 (n)
+        "About anything.":
+            "About {i}anything{/i}.",
+
+        # BM script7:905
         "Penelope Carter plays Eternum!":
             "Penelope [lastname] plays Eternum!",
 
-        # BM 67805
+        # BM script7:1031 (no)
         "*Hyperventilating* I left my drawing utensils at the Carter house last time I was there!":
             "*Hyperventilating* I left my drawing utensils at the [lastname] house last time I was there!",
 
-        # BM 69705 (menu)
+        # BM script7:2489
+        "You raise your gaze from Penelope's chest to meet her eyes, finding her staring at you in a bemused manner.":
+            "You raise your gaze from your sister's chest to meet her eyes, finding her staring at you in a bemused manner.",
+
+        # BM script7:2931 (menu)
         "She's not my wife":
             "She's my sister",
 
-        # BM 69706
+        # BM script7:2932
         "Uhh... well, she's not my wife, but... alright, let's do it.":
             "Uhh... well, she's actually my sister, but... alright, let's do it.",
 
-        # BM 69710 (menu)
+        # BM script7:2936 (menu)
         # l9/N: Changed to be fully compatible with and without either walkthrough
         # BA/N: Disabled, reverted back to original text upon suggestion
         # "She's not my wife, yet":
         #     "{color=[walk_points]}She's my sister... [penelope_pts]",
 
-        # BM 69711
+        # BM script7:2937
         # BA/N: Disabled, upon suggestion
         # "Well, she's not my wife {i}yet{/i}, but... alright, let's do it.":
         #     "Well, she's my sister and not my wife {i}yet{/i}, but... alright, let's do it.",
 
-        # BM 70960
+        # BM script7:4111 (d)
+        "Nice job, [mc].":
+            "Nice job, bro.",
+
+        # BM script7:4186
         "Come on, Dalia!":
             "Come on, sis!",
 
-        # BM 74638
+        # BM script7:4702 (p)
+        # FIXED no longer interferes with script7:4670 (l)
+        "Be careful.":
+            ("Be careful, little brother.","script7:4702"),
+
+        # ========== START harem thoughts ==========
+
+        # BM script7:7396 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # BM script7:7398 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # BM script7:7400 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # BM script7:7402 {inject}
+        # no change here, leaving for copy-paste purposes
+        #"Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+        #    ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
+        #        'mct "no change"',
+        #    ]),
+
+        # BM script7:7404 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # BM script7:7425 {inject}
+        # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
+        #    but also why would you be playing an incest mod without following at least one incest path right?
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+        # ========== END harem thoughts ==========
+
+        # BM script7:7739
+        "You look incredible, Penny.":
+            "You look incredible, sis.",
+
+        # BM script7:7766
+        "I've come to recognize that horndog expression by now, [mc].":
+            "I've come to recognize that horndog expression by now, little bro.",
+
+        # BM script7:7863
         "(You know that all this teasing with him isn't right.)":
             "(You know that all this teasing with your brother isn't right.)",
 
-        # BM 74736
-        "Oh... you mean if I still have a crush on [mc]?":
-            "Oh... you mean if I still have a crush on my brother?",
+        # BM script7:7963
+        "I mean... of course I like him, but not in that way, you know?":
+            "I mean... of course I like him, he's my little brother, but not in {i}that{/i} way, you know?",
 
-        # BM 74792
+        # BM script7:8017
         "Penelope Carter is my bestie.":
             "Penelope [lastname] is my bestie.",
 
-        # BM 74912
+        # BM script7:8137
         "What are you talking about, he's not my step-anything.":
-            "What are you talking about? He's not my step-brother, he's my biological brother.",
+            "What are you talking about? He's not my step-brother, he's my actual brother.",
 
-        # BM 74914
-        # BA/N: should rework
+        # BM script7:8139
         "Well, I know, but didn't you practically grow up around him?":
-            "Oh really? I didn't know that.",
+            "Wait, really? I thought he only stayed with you for a little while.",
 
-        # BM 74915
-        # BA/N: ditto
+        # BM script7:8140
         "You even mentioned babysitting him when your mom had to work.":
-            "But didn't you mention babysitting him when your mom had to work?",
+            "And didn't you mention babysitting him when your mom had to work?",
 
-        # BM 74917
+        # BM script7:8142
         "That literally only happened once, and... yeah, so what?":
             "Isn't that a normal thing to do as a big sister?",
 
-        # BM 74918
+        # BM script7:8143
         "That was ages ago.":
             "And besides, that was ages ago.",
 
-        # BM 75031
+        # BM script7:8195
+        "(But the trouble it'd cause...)":
+            "(But in the end we’re still siblings. It’d cause so much trouble...)",
+
+        # BM script7:8202
+        "(You can't be fixated on [mc] like some teenage crush, Penny. There's plenty more fish in the sea!)":
+            "(You can’t be fixated on your own younger brother like some teenage crush, Penny. There’s plenty more fish in the sea!)",
+
+        # BM script7:8256
         "(We're just two friends goofing around.)":
             "(We're just two siblings goofing around.)",
 
-        # BM 75113
+        # BM script7:8338
         "{sc=2}PENELOPE{w=.5} P. {w=.5}CARTER.{/sc}":
             "{sc=2}PENELOPE{w=.5} P. {w=.5}[lastname!u].{/sc}",
 
-        # BM 75153
+        # BM script7:8378
         "Ohh... you brought your photographer friend!":
-            "Ohh... you brought your brother!",
+            "Ohh... you brought your brother again!",
 
-        # BM 75229
+        # BM script7:8454
         "I'm [mc] [lastname] – Penelope Carter's representative.":
             "I'm [mc] [lastname] – Penelope [lastname]'s representative.",
 
-        # BM 75511
+        # BM script7:8736
         "P-Penelope Paige Carter.":
             "P-Penelope Paige [lastname].",
 
-        # BM 75615
+        # BM script7:8840
         "Penelope Paige Carter.":
             "Penelope Paige [lastname].",
 
-        # BM 76032
+        # BM script7:9257
         "I'm glad I have a friend who I trust and with whom I can do these kinds of things, [mc].":
-            "I'm glad I have someone who I trust and with whom I can do these kinds of things, bro.",
+            "I'm glad I have someone who I trust and with whom I can do these kinds of things, [mc].",
 
-        # BM 76094
+        # BM script7:9319
         "*Sitting on the car* Are you okay? Your mind seems to be elsewhere, [mc].":
-            "*Sitting on the car* Are you okay? Your mind seems to be elsewhere, bro.",
+            "*Sitting on the car* Are you okay, bro? Your mind seems to be elsewhere.",
 
         # BM script7:9372
         # Overwritten by BM script9:12109, okay?
         # "Oh, Penny..." -> "Oh, sis..."
 
-        # BM 76154
-        "C-Can I be frank with you, [mc]?":
-            "C-Can I be frank with you, bro?",
+        # BM script7:9384 {inject}
+        "I tried to stop... but I couldn't.":
+            ("We're siblings. We can’t be doing these things.","script7:9384",[
+                'p "So I tried to stop... but I couldn’t."'
+            ]),
 
-        # BM 76244
+        # BM script7:9386
+        "That I would stop thinking about you 24/7.":
+            "That I would stop thinking about you like this 24/7... thinking these thoughts about my own little brother.",
+
+        # BM script7:9389
+        "*Biting her lip* F-FUCK, this isn't working, [mc]." :
+            "*Biting her lip* F-FUCK, bro, this isn't working." ,
+
+        # BM script7:9439
+        "And we could go back to being our regular selves.":
+            "And we could go back to being our regular selves. Being regular brother and sister.",
+
+        # BM script7:9469
         "S-Shit... this is crazy, [mc].":
             "S-Shit... this is crazy, bro.",
 
-        # BM 76266
+        # BM script7:9470 {inject}
+        "We're crazy.":
+            ("We're both crazy.","script7:9470",[
+                'mc "*Chuckles* We share the same blood after all..."',
+            ]),
+
+        # BM script7:9491
         "Holy fuck, [mc], that feels...":
             "Holy fuck, bro, that feels...",
 
-        # BM 76272
+        # BM script7:9497
         "Ooh PENNY....":
             "Ooh SIS....",
 
-        # BM 76277
+        # BM script7:9502
         "I'm having sex with her. I'm fucking Penelope Carter.":
             "I'm having sex with her. I'm fucking my big sister.",
 
-        # BM 76280
+        # BM script7:9505
         "*Moaning* Aaaghhh, [mc]...":
             "*Moaning* Aaaghhh, bro...",
 
-        # BM 76282
+        # BM script7:9507
         "*Giggles* Oh y-yeah? You thought about this...? Thought about fucking little old me?":
             "*Giggles* Oh y-yeah? You thought about this...? Thought about fucking your big sister?",
 
-        # BM 76293
+        # BM script7:9518
         "Jesus Christ, that feels good, Penny...":
             "Jesus Christ, that feels good, sis...",
 
-        # BM 76301
+        # BM script7:9526
         "*Groaning* F-Fuck, you're so fucking big, [mc]...":
             "*Groaning* F-Fuck, you're so fucking big, bro...",
 
-        # BM 76307
+        # BM script7:9532
         "Try it for me, baby girl...":
             "Try it for me, sis...",
 
-        # BM 76330
+        # BM script7:9548
+        "O-Oh Penny...":
+            "O-Oh sis...",
+
+        # BM script7:9555
         "You're asking for a lot there, Penny...":
             "You're asking for a lot there, sis...",
 
-        # BM 76343
+        # BM script7:9568
         "O-Oh my god, [mc], you're stretching me out so much...":
             "O-Oh my god, bro, you're stretching me out so much...",
 
-        # BM 76344
+        # BM script7:9569
         "Y-You're taking it like a pro, Penny...":
             "Y-You're taking it like a pro, sis...",
 
-        # BM 76353
+        # BM script7:9578
         "*Panting* F-Fuck, I'm getting tired, [mc]...":
             "*Panting* F-Fuck, I'm getting tired, bro...",
 
-        # BM 76371
+        # BM script7:9596
         "Fuck me hard, [mc]...":
             "Fuck me hard, bro...",
 
-        # BM 76375
+        # BM script7:9600
         "*Panting* I-I'm gonna cum so hard, [mc]...":
             "*Panting* I-I'm gonna cum so hard, bro...",
 
-        # BM 76449
+        # BM script7:9674
         "C’mon... you were talking such a big game earlier, [mc]...":
             "C’mon... you were talking such a big game earlier, brother...",
 
-        # BM 76464
+        # BM script7:9689
         "*Panting* I just can't stop, Penny...":
             "*Panting* I just can't stop, sis...",
 
-        # BM 76469
-        "{sc=2}SWEET LORD, [mc!u]...{/sc}":
-            "{sc=2}SWEET LORD, BROTHER...{/sc}",
+        # BM script7:9694
+        #"{sc=2}SWEET LORD, [mc!u]...{/sc}":
+        #    "{sc=2}SWEET LORD, BROTHER...{/sc}",
 
-        # BM 76548
+        # BM script7:9719
+        "O-Oh my god, Penny...":
+            "O-Oh my god, sis...",
+
+        # BM script7:9757
+        "AAAAAAARGHHH, fuck, PENNY...":
+            "AAAAAAARGHHH, fuck, SIS...",
+
+        # BM script7:9773
         "*Panting* Fuck, [mc]... don't you ever run out of stamina?":
             "*Panting* Fuck, bro... don't you ever run out of stamina?",
 
-        # BM 76601
+        # BM script7:9794
+        "Your tits are the fucking best I've ever seen in my life, Penny, but goddamn, this butt of yours deserves some attention too...":
+            "Your tits are the fucking best I've ever seen in my life, sis, but goddamn, this butt of yours deserves some attention too...",
+
+        # BM script7:9803
+        "*Panting* Oh dear Lord, y-your pussy is so fucking tight, Penny...":
+            "*Panting* Oh dear Lord, y-your pussy is so fucking tight, sis...",
+
+        # BM script7:9826
         "Crush me against this car, [mc]...":
             "Crush me against this car, bro...",
 
-        # BM 76603
+        # BM script7:9828
         "Oh yeah, Penny...":
             "Oh yeah, sis...",
 
-        # BM 76645
+        # BM script7:9870
         "I-I'm at my limit, Penny...":
             "I-I'm at my limit, sis...",
 
-        # BM 76664
-        "*Whispering* S-Shit, Penny, keep it down! We need to leave!":
-            "*Whispering* S-Shit, sis, keep it down! We need to leave!",
+        # BM script7:9889
+        #"*Whispering* S-Shit, Penny, keep it down! We need to leave!":
+        #    "*Whispering* S-Shit, sis, keep it down! We need to leave!",
 
-        # BM 76673
-        "G-G-Ggggghhhh... P-Pennyyy s-stay quieeeeet...":
-            "G-G-Ggggghhhh... S-Siiiiiiissssss s-stay quieeeeet...",
+        # BM script7:9898
+        #"G-G-Ggggghhhh... P-Pennyyy s-stay quieeeeet...":
+        #    "G-G-Ggggghhhh... S-Siiiiiiissssss s-stay quieeeeet...",
 
-        # BM 76766
+        # BM script7:9986
+        "You can feel how Penelope orgasms again at the same time as you finish unloading an insane amount of jizz deep inside her warm vagina.":
+            "You can feel how Penelope orgasms again at the same time as you finish unloading an insane amount of jizz deep inside your sister's warm vagina.",
+
+        # BM script7:9987
         "*Whispering* Oh, Penny...":
             "*Whispering* Oh, sis...",
 
-        # BM 77058 phone chat (penelope_chat4)
+        # BM script7:10027
+        #"*Panting* Oh god, Penny...":
+        #    "*Panting* Oh god, sis...",
+
+        # BM script7:10283 chat:917 and chat:918 (p)->(d)
         "I'm proud of my hot sissy":
             "I'm proud of our hot sissy",
 
-        # BM 77086
+        # BM script7:10311
         "*Turning around* Ah, good morning Na-":
             "*Turning around* Ah, good morning Mo-",
 
-        # BM 77089
+        # BM script7:10314
         "*Gulps* N-Nancy.":
             "*Gulps* M-Mom.",
 
-        # BM 77146
-        "Yeah, we're all {i}really{/i} lucky to have you as our friend.":
-            "Yeah, they're all {i}really{/i} lucky to have you as their friend.",
+        # BM script7:10371
+        #"Yeah, we're all {i}really{/i} lucky to have you as our friend.":
+        #    "Yeah, they're all {i}really{/i} lucky to have you as their friend.",
 
-        # BM 77184
+        # BM script7:10409
         "I can see where Penny inherited her love for teasing me.":
             "I can see where Penny and I got our love for teasing.",
+
+        # BM script7:10483
+        "And join Nancy on The New World server.":
+            "And join my mom on The New World server.",
+
+        # BM script7:10726
+        "Sooo... should we log in now? Nancy must be waiting for us already.":
+            "Sooo... should we log in now? My mom must be waiting for us already.",
 
 
     # -----------------------------------------
@@ -6807,17 +6941,80 @@ init python:
     # -----------------------------------------
     # v0.7 script7.rpy Lines 66774-80425
 
-        # AS 68235
+        # AS script7:1461
         "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, Annie.":
             "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, sis.",
 
-        # AS 68276
+        # AS script7:1468
+        # FIXED no longer interferes with script:7779 (eva)
+        "Thank you, [mc]...":
+            ("Thank you, bro...","script7:1468"),
+
+        # AS script7:1502
         "Are you sure you don't want to join us, Annie?":
             "Are you sure you don't want to join us, sis?",
 
-        # AS 74971
+        # AS script7:1622
+        "Give my best to Penny when you see her too.":
+            "Give my best to big sis when you see her too.",
+
+        # AS script7:1635
+        "Penny? We literally have dinner together every day." :
+            "Big sis? We literally have dinner together every day." ,
+
+        # AS script7:1640
+        "Take care, Annie.":
+            "Take care, sis.",
+
+        # ========== START harem thoughts ==========
+
+        # AS script7:7396 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+        # AS script7:7398 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+        # AS script7:7400 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # AS script7:7402 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # AS script7:7404 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+        # AS script7:7425 {inject}
+        # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
+        #    but also why would you be playing an incest mod without following at least one incest path right?
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+        # ========== END harem thoughts ==========
+
+        # AS script7:8196 (p)
         "(How would we even explain this to Mom or Dalia?)":
-            "(How would we even explain this to Mom, Dalia, or Annie?)",
+            "(How would we even explain this to Mom, or Dalia, or Annie?)",
+
+        # AS script7:9816 (p)
+        "*Panting* I want Mom and Dalia to hear me scream...":
+            "*Panting* I want the whole family to hear me scream...",
 
 
     # -----------------------------------------
@@ -7424,6 +7621,43 @@ init python:
 
     # -----------------------------------------
     # v0.7 script7.rpy Lines 66774-80425
+
+
+        # ========== START harem thoughts ==========
+
+        # OS script7:7396 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # OS script7:7398 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # OS script7:7402 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # OS script7:7404 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # OS script7:7425 {inject}
+        # BA/N: technically this wouldn't work if you're not on Annie's path but don't feel like making a labelmod to add if statement just for this
+        #    but also why would you be playing this Annie sister mod without actually following Annie's path right?
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+        # ========== END harem thoughts ==========
 
 
     # -----------------------------------------
@@ -8687,49 +8921,87 @@ init python:
     # -----------------------------------------
     # v0.7 script7.rpy Lines 66774-80425
 
-        # HS 67679 last name override
+        # HS script7:905 last name override
         "Penelope Carter plays Eternum!":
             "Penelope Carter plays Eternum!",
 
-        # HS 67805 last name override
+        # HS script7:1031 last name override
         "*Hyperventilating* I left my drawing utensils at the Carter house last time I was there!":
             "*Hyperventilating* I left my drawing utensils at the Carter house last time I was there!",
 
-        # HS 68235
+        # HS script7:1461
         "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, Annie.":
             "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, sis.",
 
-        # HS 68276
+        # HS script7:1502
         "Are you sure you don't want to join us, Annie?":
             "Are you sure you don't want to join us, sis?",
 
-        # HS 74792 last name override
+        # ========== START harem thoughts ==========
+
+        # HS script7:7396 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+        # HS script7:7398 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+        # HS script7:7400 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+        # HS script7:7402 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
+                'mct "Well, Annie’s my half-sister so that’d be a bit of a scandal instead. As for the others..."',
+            ]),
+
+        # HS script7:7404 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+        # HS script7:7425 {inject}
+        # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
+        #    but also why would you be playing an incest mod without following at least one incest path right?
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+        # ========== END harem thoughts ==========
+
+        # HS script7:8017 last name override
         "Penelope Carter is my bestie.":
             "Penelope Carter is my bestie.",
 
-        # HS 74971
+        # HS script7:8196 (p)
         "(How would we even explain this to Mom or Dalia?)":
-            "(How would we even explain this to Mom, Dalia, or Annie?)",
+            "(How would we even explain this to Mom or Dalia? Or even Annie?)",
 
-        # HS 75113 last name override
+        # HS script7:8338 last name override
         "{sc=2}PENELOPE{w=.5} P. {w=.5}CARTER.{/sc}":
             "{sc=2}PENELOPE{w=.5} P. {w=.5}CARTER.{/sc}",
 
-        # HS 75229 last name override
+        # HS script7:8454 last name override
         "I'm [mc] [lastname] – Penelope Carter's representative.":
             "I'm [mc] [lastname] – Penelope Carter's representative.",
 
-        # HS 75511 last name override
+        # HS script7:8736 last name override
         "P-Penelope Paige Carter.":
             "P-Penelope Paige Carter.",
 
-        # HS 75615 last name override
+        # HS script7:8840 last name override
         "Penelope Paige Carter.":
             "Penelope Paige Carter.",
-
-        # HS 76277 last name override
-        "I'm having sex with her. I’m fucking Penelope Carter.":
-            "I'm having sex with her. I’m fucking Penelope Carter.",
 
 
     # -----------------------------------------
