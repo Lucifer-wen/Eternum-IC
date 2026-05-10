@@ -1393,7 +1393,7 @@ label mod_call_chat_18:
     show gh 39
     kid "No chance, I have no money! My mom got it for me."
     show gh 39b
-    mc "Oh... well, I didn't buy mine either. Mom did."
+    mc "Oh... well, I didn't buy mine either. My mom did."
     mc "She got it for my birthday."
     mc "I just told her where to buy it."
     show gh 39
@@ -3293,5 +3293,9 @@ script7:friday07 for all maps
     added the lines in main code regardless
         if using the incest mod you should be on at least one incest route right???
     Leaving it at that until someone raises a complaint lol
+
+script8:ga_novanancy for base map
+    redo script8:5803 so it "babe" can be changed to mom without affecting Nova option
+    Section is 716 lines long though, not worth it for one line
 
 '''

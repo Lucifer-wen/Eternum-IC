@@ -1649,7 +1649,7 @@ init python:
 
         # BM script:8660
         "Please, Dalia! Please!":
-            "Please, Dal! Please!",
+            "Please, Daly! Please!",
 
         # BM script:8731 (d), overwrites other lines
         # FIXED no longer interferes with script2:4200 (n) and script4:3325 (d)
@@ -1721,7 +1721,7 @@ init python:
 
         # BM script2:4281
         "Dalia? Are you up?":
-            "Sis? Are you up?",
+            "Daly? Are you up?",
 
         # BM script2:4314
         "I gotta say, those were some damn good pancakes. Thank you, [mc].":
@@ -1822,7 +1822,7 @@ init python:
             "Right, you {i}are{/i} Dalia's brother...{p}Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life...",
 
         # BM script2:7046 (p)
-        # FIXED no longer interferes with script5:2321
+        # FIXED no longer interferes with script5:2321 (l)
         "Good morning, [mc]!":
             ("Good morning, little brother!","script2:7046"),
 
@@ -2522,7 +2522,7 @@ init python:
 
         # BM script4:2931
         "Let's go Dalia! Kick his ass!":
-            "Let's go Dal! Kick his ass!",
+            "Let's go Daly! Kick his ass!",
 
         # BM script4:2988
         "[mc]! I won!":
@@ -2603,7 +2603,7 @@ init python:
 
         # BM script4:3716 IncestLables:821
         "You made me so fucking horny, Dalia. Do you see how hard you made me?":
-            "You made me so fucking horny, sis. Do you see how hard you made me?",
+            "You made me so fucking horny, Daly. Do you see how hard you made me?",
 
         # BM script4:3747 IncestLables:852
         "You're in denial today, Dalia...":
@@ -2619,11 +2619,11 @@ init python:
 
         # BM script4:3775 IncestLables:880
         "(Oh my god, Dalia's sucking my cock...)":
-            "(Oh my god, my sister is sucking my cock...)",
+            "(Oh my god, my sister’s really sucking my cock...)",
 
         # BM script4:3840 IncestLables:945
         "You're basically drooling, Dalia... You like my cock that much?":
-            "You're basically drooling, Dalia... You like your brother's cock that much?",
+            "You're basically drooling, Daly... You like your brother's cock that much?",
 
         # BM script4:3844 IncestLables:949
         "If you wanna stop, just give me a sign, babe...":
@@ -3370,6 +3370,10 @@ init python:
         "*Snorts* Of course you’d say that! I'm afraid I'll have to shower alone today, my insatiable stud.":
             "*Snorts* Of course you'd say that! I'm afraid I'll have to shower alone today, my insatiable son.",
 
+        # BM script6:6770 (a)
+        "Don't be nasty!":
+            "Don't be nasty! That's your mother!",
+
         # BM script6:7806 (d)
         "Wow, I love your hair. You look absolutely stunning.":
             "Wow, I love your hair, sis. You look absolutely stunning.",
@@ -3409,7 +3413,7 @@ init python:
 
         # BM script6:9775
         "Dalia? Did you fall asleep back there?":
-            "Dal? Did you fall asleep back there?",
+            "Daly? Did you fall asleep back there?",
 
         # BM script6:9895
         "Did you see that, Dalia?":
@@ -3430,11 +3434,11 @@ init python:
         "*Laughs* I didn't say that. Don't get your hopes up.":
             "*Laughs* What makes you think I'd fuck my brother more than once?",
 
-        # BM script6:10103 and script6:10130
+        # BM script6:10103 and BM script6:10130
         "No way I'm wasting a chance to marry you.":
             "If this is the only time I can marry you, I'm taking it.",
 
-        # BM script6:10104 and script6:10131
+        # BM script6:10104 and BM script6:10131
         "And don't worry, unlike Jerry's, our marriage also implies lots of sex.":
             "And don't worry, unlike Jerry's, our marriage is completely open to sex.",
 
@@ -3558,7 +3562,7 @@ init python:
 
         # BM script6:11018
         "Oh Lord, Dalia...":
-            "Oh Lord, Dal...",
+            "Oh Lord, Daly...",
 
         # BM script6:11047
         "*Giggles* You're a terrible liar, [mc].":
@@ -3963,245 +3967,381 @@ init python:
     # -----------------------------------------
     # v0.8 script8.rpy Lines 80426-97360
 
+        # BM script8:662
+        "I was trying to focus on Nancy's house, but I still appeared on the same exact spot where I left. Maybe I need more practice?":
+            "I was trying to focus on my house, but I still appeared on the same exact spot where I left. Maybe I need more practice?",
+
+        # BM script8:794
+        "Turns out... I decided to pick up a couple of pizzas for Nancy and me.":
+            "Turns out... I decided to pick up a couple of pizzas for my mom and me.",
+
         # BM script8:2058
         "NANCY!":
             "MOM!",
+
+        # ========== START Stanley Parable ==========
+        # Some of these lines have voiceovers that we can't change
+        # just have to deal with it 
+        # voiceover lines marked with {VO}
+
+        # BM script8:3103 {VO}
+        #   nvm, this one isn't necessary
+        #"{cps=15}Ten long years had passed since he and his friends gathered the ten Gems of Doom... yet, the sense of powerlessness that had overtaken him since then still lingered.":
+        #    "{cps=15}Ten long years had passed since he, his friends, and his family gathered the ten Gems of Doom... yet, the sense of powerlessness that had overtaken him since then still lingered.",
 
         # BM script8:3455 (p)
         # Overwritten by BM script:2452 (d), okay
         # "Hey [mc]!" -> "Hey bro!"
 
-        # BM 83884
+        # BM script8:3458
         "{i}Listen, I was just calling to see if you've heard anything about my mom. I haven't heard from her in a few months.":
             "{i}Listen, I was just calling to see if you've heard anything about Mom. I haven't heard from her in a few months.",
 
-        # BM 83886
+        # BM script8:3460
         "What...? There's no power in this world strong enough to stop Nancy from talking to her daughters.":
-            "What...? There's no power in this world strong enough to stop Nancy from talking to her kids.",
+            "What...? There's no power in this world strong enough to stop Mom from talking to her kids.",
 
-        # BM 83896
+        # BM script8:3470
         "Was that Penelope Carter?!":
-            "Was that Penelope [lastname]?!",
+            "Was that your sister, Penelope [lastname]?!",
 
-        # BM 84213
+        # BM script8:3787
         "The one and only... PENELOPE CARTER!":
             "The one and only... PENELOPE [lastname!u]!",
 
-        # BM 84337
+        # BM script8:3911
         "Dalia?! Is that you?!":
-            "Sis?! Is that you?!",
+            "Daly?! Is that you?!",
 
-        # BM 84407
+        # BM script8:3981 {VO}
         "{cps=16}However...{cps=1.5} {cps=16}the call from Dalia Carter sparked a glimmer of hope within him, so he decided to head to the coffee area and wait for her.{cps=1} {cps=16}This...{cps=1.4} {cps=16}was his chance.":
             "{cps=16}However...{cps=1.5} {cps=16}the call from Dalia [lastname] sparked a glimmer of hope within him, so he decided to head to the coffee area and wait for her.{cps=1} {cps=16}This...{cps=1.4} {cps=16}was his chance.",
 
-        # BM 84513
+        # BM script8:4058 (d)
+        "Remember when we were foolin' around in Kredon...?":
+            "Remember when we were foolin’ around in Kredon? Doin’ things no brother and s-sister should be doin’...?",
+
+        # BM script8:4071 (d)
+        "Fuck me, [mc]...":
+            "Fuck me, brother...",
+
+        # BM script8:4087 {VO}
         "{cps=17}Our hero was unable to resist the sight of his old friend's ample bosom and alluring figure.{cps=0.6} {cps=16}Overwhelmed by desire, he accepted her offer and surrendered himself to her embrace.":
             "{cps=17}Our hero was unable to resist the sight of his sister's ample bosom and alluring figure.{cps=0.6} {cps=16}Overwhelmed by desire, he accepted her offer and surrendered himself to her embrace.",
 
-        # BM 85311
-        "And how about you, Nancy? Have you ever caught Dalia or Penny... you know, giving in to their impulses?":
-            "And how about you, Nancy? Have you ever caught Dalia or Penny... you know, giving in to their impulses? Oh, and the one time you burst into MY room doesn't count, I was just getting dressed.",
+        # ========== END Stanley Parable ==========
 
-        # BM 85442
+        # BM script8:4719
+        "Ah, a very smart choice, [mc]... always making the most of every situation. I expected no less!":
+            "Ah, a very smart choice, my boy... always making the most of every situation. I expected no less from my son!",
+        
+        # BM script8:4885 {inject}
+        "And how about you, Nancy? Have you ever caught Dalia or Penny... you know, giving in to their impulses?":
+            ("And how about you, Mom? Have you ever caught Dalia or Penny... you know, giving in to their impulses? ","script8:4885",[
+                'mc "Oh, and the one time you burst into MY room doesn’t count, I was just getting dressed!"'
+            ]),
+
+        # BM script8:5016
         "And honestly, I had some reservations at first, but now I don't regret it one bit.":
             "And honestly, I had a lot of reservations at first, but now I don't regret it one bit.",
 
-        # BM 85444
+        # BM script8:5018
         "N-Nancy...?":
             "M-Mom...?",
         
-        # BM 85451
+        # BM script8:5025
         "WHEN?":
-            "AREN'T YOU HIS MOM?!",
+            "{sc=4}B-{w=0.2}but... {w=0.8}{size=50}AREN'T YOU {w=0.5}{i}HIS MOM?!{/i}{/sc}",
 
-        # BM 85453
+        # BM script8:5027
         "A few weeks ago.":
-            "Indeed. It happened a few weeks ago.",
+            "Indeed. It was something we both wanted.",
 
-        # BM 85457
+        # BM script8:5031
         "Holy shit, I-I really didn't expect that.":
-            "Holy shit, that-that's insane. I-I really didn't expect that.",
+            "Holy shit, that-that's {i}insane{/i}. I-I really didn't expect that.",
 
-        # BM 85984
+        # BM script8:5033
+        "*Giggles* Don't worry, I won't get in your way.":
+            "*Giggles* Does it bother you? And don't worry, I won't get in your way.",
+
+        # BM script8:5211
+        "I think I should keep my distance from Nancy, [mc].":
+            "I think I should keep my distance from your mother, [mc].",
+
+        # BM script8:5527
+        "*Pulling Nancy towards you* Hmph...":
+            "*Pulling your mother towards you* Hmph...",
+
+        # BM script8:5558
         "How are you still tight after giving birth to two children...?":
             "How are you still tight after giving birth to three children...?",
+
+        # BM script8:5692
+        "My balls are about to explode, but... I still think we can give Nancy one last ride.":
+            "My balls are about to explode, but... I still think we can give my mom one last ride.",
+
+        # BM script8:5695
+        "Come here, Nan...":
+            "Come here, Mom...",
+
+        # BM script8:5709
+        "This is completely surreal. I'm fucking two stunning red-haired goddesses at the same time.":
+            "This is completely surreal. I'm fucking two stunning red-haired goddesses at the same time. And one of them's my mother!",
+
+        # BM script8:5803
+        # exact line used for both Nancy and Nova so can't change without labelmod
+        #"*Cumming* Y-Yeeah, take it all, babe...":
+        #    "*Cumming* Y-Yeeah, take it all, Mom...",
 
         # BM script8:6983
         # BA/N: leaving this here for the future when we learn what exactly Luna's vision was
         # "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)":
         #     "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)",
 
-        # BM 86121
-        "Come here, Nan...":
-            "Come here, Mom...",
+        # BM script8:8077
+        "Oh... well, I didn't buy mine either. Nancy did.":
+            "Oh... well, I didn't buy mine either. My mom did.",
 
-        # BM 88504
+        # BM script8:8078
         "My... nanny. She got it for my birthday.":
             "She got it for my birthday.",
 
-        # BM 90558
+        # BM script8:10132
         "Where'd you find yourself a man like that?":
-            "Why didn't I get to know your bro until this late?",
+            "I need to find myself a man like that.",
 
-        # BM 92680
+        # BM script8:10141 {inject}
+        "*Chuckles* Seems reasonable to me.":
+            ("*Chuckles* Seems reasonable to me.","script8:10141",[
+                'd "Do you... want to try asking him out?"',
+                'mil "Nah, I prefer dating people I don’t know from work."',
+                'mil "And it feels like he’s got someone on his mind lately."'
+            ]),
+
+        # BM script8:10167
+        "Hey, Dalia, I'm done over here!":
+            "Hey, Dal, I'm done over here!",
+
+        # BM script8:10356, also script8:10397, script8:10420
+        "It's just some silly gift for... a very special girl." :
+            "It's just some silly gift for... my very special sister.",
+
+        # BM script8:10353
+        "Thank you so much, [mc]. You're the best.":
+            "Thank you so much, bro. You're the best.",
+
+        # BM script8:10393
+        # FIXED no longer interferes with script8:10416 (d) and script9:19240 (l)
+        "Thank you so much, [mc].":
+            ("Thank you so much, bro.","script8:10393"),
+
+        # BM script8:10609 (x)
+        "You know Nancy's offer still stands, right?":
+            "You know my mom's offer still stands, right?",
+
+        # BM script8:11966
+        "Your abs are looking good, Dalia.":
+            "Your abs are looking good, Daly.",
+
+        # BM script8:12123
+        "I... usually just eat whatever Nancy cooks.":
+            "I... usually just eat whatever my mom cooks.",
+
+        # BM script8:12254
         "*Giggles* You get carried away too easily, [mc].":
             "*Giggles* You get carried away too easily, bro.",
 
-        # BM 92687
+        # BM script8:12261
         "In the end I’m gonna start thinking you’re actually into me, Dalia...":
             "In the end I’m gonna start thinking you’re actually into me, sis...",
 
-        # BM 92734
+        # BM script8:12308
         # BA/N: Added bc relation was never mentioned around Jerry, if I missed it than need to redo this line
         "That's... a little embarrassing.":
             "That's... a little embarrassing. Shit, does Jerry know we're related?",
 
-        # BM 92789
+        # BM script8:12363
         "Damn... that took a sad turn all of a sudden.":
-            "Doesn't seem like he knows we're related at least, but damn... that took a sad turn all of a sudden.",
+            "It doesn't seem like he’s figured out that Dalia and I are related at least, but damn... that took a sad turn all of a sudden.",
 
-        # BM 93284
+        # BM script8:12858
         "My dad left before I was even born, you fucking idiot.":
             "My dad left when I was a kid, you fucking idiot.",
 
-        # BM 93863
+        # BM script8:13437
         "You think Nancy wants to play the role of some sort of intermediary? Because she wants it too?":
-            "You think your... {i}mom{/i} wants to play the role of some sort of intermediary? Because she wants it too?",
+            "You think this... {i}Mom{/i} wants to play the role of some sort of intermediary? Because she wants it too?",
 
-        # BM 95332
+        # BM script8:13458
+        "But anyway, thank you for listening, I guess.":
+            "But anyway, thank you for listening, I guess. And please keep this conversation private!",
+
+        # BM script8:14697
+        "Hey, hey... what's wrong, Dal? Are you okay?":
+            "Hey, hey... what's wrong, sis? Are you okay?",
+
+        # BM script8:14906
         "Thank you for... humoring me with my ramblings, [mc].":
             "Thank you for... humoring me with my ramblings, bro.",
 
-        # BM 95336
+        # BM script8:14910
         "I also love spending time with you, Dalia.":
             "I also love spending time with you, sis.",
 
-        # BM 95339
-        "Do you like me, [mc]?":
-            "Do you like me, bro?",
+        # BM script8:14913
+        #"Do you like me, [mc]?":
+        #    "Do you like me, bro?",
 
-        # BM 95397
+        # BM script8:14926
+        "Are you okay, Dalia...?":
+            "Are you okay, Dal...?",
+
+        # BM script8:14956
+        "I mean, like me like... “ah, yeah, she's hot. I like her... butt”?":
+            "I mean, like me like... “of course, she's my sister”?",
+
+        # BM script8:14957
+        "Or like me, like...":
+            "Or like me, like... “ah, yeah, she's hot–”",
+
+        # BM script8:14971
         "You mean... love me... like a good friend? Or like a sister?":
             "You mean... love me... as your sister?",
 
-        # BM 95433
+        # BM script8:15007
         "Yeah, you're smoking hot, but no, I didn't come looking for you because of your “butt”.":
             "Yeah, you're smoking hot, but no, I didn't come looking for you because of your “butt”. It doesn't matter that you're my sister.",
 
-        # BM 95563
+        # BM script8:15137
         "I know you love it, Dalia, you can't fool me...":
             "I know you love it, sis, you can't fool me...",
 
-        # BM 95564
+        # BM script8:15138
         "Me? You've been watching too much porn, [mc].":
             "Me? You've been watching too much porn, bro.",
 
-        # BM 95575
+        # BM script8:15149
         "How is a cute little kiss not enough? You're getting so greedy, [mc]...":
             "How is a cute little kiss not enough? You're getting so greedy, brother...",
 
-        # BMscript8:15179
+        # BM script8:15179
         # Overwritten by BM script6:10667, okay
         # "Oh, Dalia..." -> "Oh, Dal..."
 
-        # BM 95671
+        # BM script8:15193
+        "Fuck yes, babe...":
+            "Fuck yes, sis...",
+
+        # BM script8:15236
+        #"O-Oohhh baby, yeah...":
+        #    "O-Oohhh sis, yeah...",
+
+        # BM script8:15245
         "Aghh... you're the best, Dalia...":
             "Aghh... you're the best, sis...",
 
-        # BM 95740
+        # BM script8:15314
         "*Panting* O-OOH D-D-DALIA, HANG IN RIGHT THERE...":
-            "*Panting* O-OOH S-S-SIS, HANG IN RIGHT THERE...",
+            "*Panting* O-OOH D-D-DALY, HANG IN RIGHT THERE...",
 
-        # BM 95783
+        # BM script8:15357
         "You're a horny dog, [mc]. Don't you ever run out of fuel?":
             "You're a horny dog, bro. Don't you ever run out of fuel?",
 
-        # BM 95800
+        # BM script8:15374
         "You're underestimating the amount of “energy” you just unloaded a minute ago, [mc].":
             "You're underestimating the amount of “energy” you just unloaded a minute ago, brother.",
 
-        # BM 95861
-        "*Whispers* Do you want to {i}fuck{/i} me, [mc]...?":
-            "*Whispers* Do you want to {i}fuck{/i} your sister, brother...?",
+        # BM script8:15410
+        "As you expected, just the sight of Dalia baring herself before you and the thoughts of what you'd do to her make you hard again in an instant.":
+            "As you expected, just the sight of your sister baring herself before you and the thoughts of what you'd do to her make you hard again in an instant.",
 
-        # BM 95862
+        # BM script8:15435
+        "*Whispers* Do you want to {i}fuck{/i} me, [mc]...?":
+            "*Whispers* Do you want to {i}fuck{/i} me, [mc]...? Do you want to fuck your sister...?",
+
+        # BM script8:15436
         "My god, Dalia, I do...":
             "My god, sis, I do...",
 
-        # BM 95893
+        # BM script8:15467
         "OH, BABE, YES...":
-            "OH, SIS, YES...",
+            "OH, DALIA, YES...",
 
-        # BM 95932
+        # BM script8:15506
         "O-Oh Dalia, I've been waiting for this forever...":
             "O-Oh sis, I've been waiting for this forever...",
 
-        # BM 95947
+        # BM script8:15521
         "Agghhh... oh [mc]...":
             "Agghhh... oh bro...",
 
-        # BM 95951
+        # BM script8:15525
         "You have no idea how good your pussy is making me feel right now, Dalia...":
             "You have no idea how good your pussy is making me feel right now, sis...",
 
-        # BM 95953
+        # BM script8:15527
         "*Moans* AAAAAhhh... [mc]...":
             "*Moans* AAAAAhhh... bro...",
 
-        # BM 95977
-        "[mc], I'm gonna cum...":
-            "Brother, I'm gonna cum...",
+        # BM script8:15551
+        #"[mc], I'm gonna cum...":
+        #    "Brother, I'm gonna cum...",
 
-        # BM 95981
+        # BM script8:15555
         "[mc], I'm cumming...":
             "Bro, I'm cumming...",
 
-        # BM 95984
+        # BM script8:15558
         "You d-don't have to hold back, Dalia.":
             "You d-don't have to hold back, sis.",
 
-        # BM 96016
+        # BM script8:15590
         "*Panting* I-I want you to make me cum again, [mc]...":
             "*Panting* I-I want you to make me cum again, bro...",
 
-        # BM 96030
+        # BM script8:15604
         "*Moans* I-I want you to be the only one t-to ever have me, [mc]...":
             "*Moans* I-I want you to be the only one t-to ever have me, bro...",
 
-        # BM 96089
+        # BM script8:15663
         "O-Ohh, fuck, Dalia...":
             "O-Ohh, fuck, sis...",
 
-        # BM 96097
+        # BM script8:15671
         "*Panting* That the childhood friend I used to p-play with would end up ramming her p-perfect, huge ass down on my cock...":
             "*Panting* That my sister would end up ramming her p-perfect, huge ass down on my cock...",
 
-        # BM 96099
+        # BM script8:15673
         "*Giggling breathlessly* That the idiot who m-moved back in with us w-would...":
             "*Giggling breathlessly* That my idiot brother who m-moved back in with us w-would...",
 
-        # BM 96101
+        # BM script8:15675
         "Oh fuck, I'm cumming again, [mc]...":
             "Oh fuck, I'm cumming again, bro...",
 
-        # BM 96120
+        # BM script8:15694
         "Fuck, we can't stop now, Dal...":
             "Fuck, we can't stop now, sis...",
 
-        # BM 96137
+        # BM script8:15711
         "*Panting* Oh sweet L-Lord, [mc]...":
             "*Panting* Oh sweet L-Lord, bro...",
 
-        # BM 96191
+        # BM script8:15765
         "F-F-FUCK ME, [mc]...":
             "F-F-FUCK ME, BRO...",
 
-        # BM 96194
-        "*Panting* Y-Your pussy's pure fucking magic, Dalia...":
-            "*Panting* Y-Your pussy's pure fucking magic, sis...",
+        # BM script8:15767
+        "*Panting* Oh, babe...":
+            "*Panting* Oh, sis...",
 
-        # BM 96260
+        # BM script8:15768
+        "*Panting* Y-Your pussy's pure fucking magic, Dalia...":
+            "*Panting* Y-Your pussy's pure fucking magic, Dal...",
+
+        # BM script8:15834
         "You sound exhausted, Dalia.":
             "You sound exhausted, sis.",
 
@@ -4209,13 +4349,25 @@ init python:
         "Well, I don't know, then I just thank my mom for making me the way I am.":
             "Well, I don't know, then I just thank Mom for making me the way I am.",
 
-        # BM 96729
+        # BM script8:16065 {inject}
+        "T-That was awkward.":
+            ("T-That was awkward.","script8:16065",[
+                "show gd 146",
+                'd "Does... Does Jerry remember we’re siblings?" with dis',
+                "show gd 145",
+                'mc "When I talked to him earlier, it didn’t seem like he knew."',
+                'mc "We should proably be more careful around him though. I’ll order him not talk about this to anyone."',
+                "show gd 152",
+                'd "O-Okay. So we should be safe for now." with dis06',
+            ]),
+
+        # BM script8:16303
         "(Hmm, yeah.)":
             "(Imagine her face if I tell her it was with my brother.)",
 
-        # BM 96732
+        # BM script8:16306
         "(Or maybe Sissy too...?)":
-            "(Sissy would freak out if she knew...)",
+            "(Sissy would freak out if she found out...)",
 
 
     # -----------------------------------------
@@ -5600,7 +5752,7 @@ init python:
         #"Yep! I heard [mc] managed to win a neural implant at your cafe!":
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
-        # AS script2:112 {inject} (disabled until rollback issue is fixed)
+        # AS script2:112 {inject}
         "It's so nice to meet you, Luna!":
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
@@ -5922,10 +6074,15 @@ init python:
         "You’re... so wet...":
             "Annie... You’re... so wet...",
 
-        # AS script2:3865, also overwrites script2:3905, script4:5819, script6:6414, script6:6556, script8:9293
-        # BA/N: Come back to this
-        "Oh Annie...":
-            "Oh sis...",
+        # AS script2:3865, also overwrites script4:5819, script6:6414, script6:6556, script8:9636
+        # excludes script2:3905, script8:9293
+        "Oh Annie...":[
+            ("Oh sis...","script2:3865"),
+            ("Oh sis...","script4:5819"),
+            ("Oh sis...","script6:6414"),
+            ("Oh sis...","script6:6556"),
+            ("Oh sis...","script8:9636"),
+        ],
 
         # AS script2:3867
         "(Holy shit, this is really happening! I'm fucking Annie's thighs!)":
@@ -5934,10 +6091,6 @@ init python:
         # AS script2:3872
         "Jesus, Annie...":
             "Jesus, sis...",
-
-        # AS script2:3905
-        # Overwritten by AS script2:3865, okay
-        # "Oh Annie..." -> "Oh sis..."
 
         # AS script2:3924
         "Oh shit, I'm sorry, Annie...":
@@ -6213,6 +6366,10 @@ init python:
         "*Chuckles* I think you're getting too excited about this, Annie. You need to relax. You'll enjoy it more if you take it less seriously!":
             "*Chuckles* I think you're getting too excited about this, sis. You need to relax. You'll enjoy it more if you take it less seriously!",
 
+        # AS script4:4347
+        "Chillin’ like a villain on penicillin, bro!":
+            "Chillin’ like a villain on penicillin, yo!",
+
         # AS script4:4349
         "Gonna play some Eternum with ma' homie...":
             "Gonna play some Eternum with ma' bro...",
@@ -6251,7 +6408,7 @@ init python:
 
         # AS script4:4926
         "*Chuckles* A likely story, Ms. Winters... I'll believe you, for now...":
-            "*Chuckles* A likely story, Ms. [lastname]... I'll believe you, for now...",
+            "*Chuckles* A likely story, dear sister... I'll believe you, for now...",
 
         # AS script4:4977
         "Come here, [mc]! Jump!":
@@ -6747,7 +6904,7 @@ init python:
 
         # AS script6:6066
         "I can’t imagine how that must’ve felt after traveling all that way.":
-            "I know that must've really hurt to hear since we reunited with them.",
+            "That must've really hurt to hear now that we’ve reunited with them.",
             #"I know a part of us is always hoping to get a bit more from him.",
 
         # AS script6:6087 (menu)
@@ -6917,6 +7074,10 @@ init python:
         "Why would she? We weren't doing anything wrong.":
             "She loves us too much to do anything like that.",
 
+        # AS script6:6770 base map override
+        "Don't be nasty!":
+            "Don't be nasty!",
+
         # AS script6:6787
         "Good night, Annie.":
             "Good night, sis.",
@@ -7020,23 +7181,23 @@ init python:
     # -----------------------------------------
     # v0.8 script8.rpy Lines 80426-97360
 
-        # AS 84648
+        # AS script8:4222
         "Come on, [mc], I need you to catch on quickly! We're running out of time.":
             "Come on, bro, I need you to catch on quickly! We're running out of time.",
 
-        # AS 84704
+        # AS script8:4278
         "There's no time to hesitate, [mc]!":
             "There's no time to hesitate, bro!",
 
-        # AS 85984
+        # AS script8:5558 (n)
         "How are you still tight after giving birth to two children...?":
             "How are you still tight after giving birth to four children...?",
 
-        # AS 86947
+        # AS script8:6521 (n)
         "If you ever hurt Nova, Annie, Luna, or Alex... I'll be seriously mad at you, young man.":
             "If you ever hurt Nova, Luna, or Alex... I'll be seriously mad at you, young man.",
 
-        # AS 86949
+        # AS script8:6523 (n)
         "Oh, and if you EVER hurt Penny or Dalia...":
             "Oh, and if you EVER hurt Penny, Dalia, or Annie...",
 
@@ -7057,19 +7218,39 @@ init python:
         "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend for so many years.":
             "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend your entire life.",
 
-        # AS script8:7098 {inject}?
-        "Hey, don’t sweat it. I already told you, it gives you a mysterious, sexy vibe.":
-            "Hey, don’t sweat it. I already told you, it gives you a mysterious, sexy vibe.{p}And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.",
+        # AS script8:7098
+        # Original non-inject version for safekeeping
+        #"Hey, don’t sweat it. I already told you, it gives you a mysterious, sexy vibe.":
+        #    "Hey, don’t sweat it. I already told you, it gives you a mysterious, sexy vibe.{p}And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.",
 
-        # AS script8:7099 {inject}?
+        # AS script8:7099
+        # Original non-inject version for safekeeping
+        #"And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":
+        #    "Which is still strange to think about since you’re twins, but... You two mean a lot to me, and I know how much you mean to each other.{p}So, I just want to tell you again that I’ll always support you two.",
+
+        # AS script8:7099 {inject}
         "And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":
-            "Which is still strange to think about since you're twins, but... You two mean a lot to me, and I know how much you mean to each other.{p}So, I just want to tell you again that I’ll always support you two.",
+            ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7099",[
+                "show gf 35",
+                'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
+                'c "Honestly, I probably could’ve seen it coming. I know how first-hand just much you two mean to each other."',
+                "show gf 36",
+                'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
+            ]),
 
         # AS script8:7101
         # FIXED no longer interferes with script4:2443 (d). original backup line saved just in case
         "*Chuckles* If you say so...":
             ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7101"),
             #"*Chuckles* Thanks, bro. I appreciate it.",
+
+        # AS script8:7205
+        "[mc], over here!":
+            "Bro, over here!",
+
+        # AS script8:7209
+        "Ah, hey there!":
+            "Ah, hey there, sis!",
 
         # AS script8:7398
         "Annie Winters and Luna Hernandez travel to the super scary Red Herring server and complete–":
@@ -7078,6 +7259,14 @@ init python:
         # AS script8:7532
         "I'll show them to Nancy later so I can–":
             "I'll show them to Mom later so I can–",
+
+        # AS script8:7569
+        "A-Annie...?":
+            "Uh sis...?",
+
+        # AS script8:7622
+        "*Turning around* Um... Annie...":
+            "*Turning around* Um... sis...",
 
         # AS script8:7696
         "No one ever thought you were useless, Annie. But after this? D-Damn, even less so.":
@@ -7187,7 +7376,7 @@ init python:
 
         # AS script8:8172
         "He's a businessman. He's doing business calls now.":
-            "He's calling different people to help Dad with the papers and stuff.",
+            "He's calling a bunch of people to help Dad with the papers and stuff.",
 
         # AS script8:8174
         "We were gonna see the pandas at the zoo, but... he got a call. So I guess we’re not going anymore.":
@@ -7269,6 +7458,10 @@ init python:
         "They said there weren’t many kids around here, but it seems like it’s full of weird ones.":
             "We made a friend already... and Annie's starting to smile again...",
 
+        # AS script8:8384
+        "Sure thing! It's one Penelope recommended me.":
+            "Sure thing! It's one Penny recommended me.",
+
         # AS script8:8399
         "Actually, just before you got here, I was reminiscing about the day I met you and Chang.":
             "Actually, just before you got here, I was reminiscing about the day we arrived in Europe and met Chang.",
@@ -7321,21 +7514,35 @@ init python:
         "Alright, tell me about the first birthday we celebrated together, a couple of years after that.":
             "Alright, tell me what happened on our tenth birthday.",
 
-        # AS script8:8455
+        # AS script8:8455 {inject}
         "We couldn’t celebrate your birthday because you were sick, so we decided to do a joint birthday celebration three weeks later at Chang’s parents' restaurant.":
-            "Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.{p}So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant.",
+            ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8455",[
+                'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
+            ]),
 
         # AS script8:8497
         "D-Darn it, [mc].":
             "D-Darn it, bro.",
 
-        # AS script8:8613
+        # AS script8:8569
+        "After all these years, I think I can read you pretty well.":
+            "We've been together our whole lives, I think I can read you pretty well.",
+
+        # AS script8:8617
         "Your answer could shape how the rest of tonight goes and... maybe even your relationship with Annie.":
             "Your answer could shape how the rest of tonight goes and... maybe even your relationship with your sister.",
+
+        # AS script8:8769
+        #"*Standing up* Are you alright, Annie?":
+        #    "*Standing up* Are you alright, sis?",
 
         # AS script8:8791
         "Nancy, Penny, Dalia, Luna, Alex, Nova...":
             "Luna, Alex, Nova, even Mom, Penny, and Dalia...",
+
+        # AS script8:8839
+        #"I’m sorry, Annie. I swear I didn't–":
+        #    "I’m sorry, sis. I swear I didn't–",
 
         # AS script8:8845
         "I'm so impressed, Annie.":
@@ -7345,37 +7552,57 @@ init python:
         "Dalia, Penny, Nancy, Luna, Nova, Alex...":
             "Dalia, Penny, Mom, Luna, Nova, Alex...",
 
-        # AS 89510
+        # AS script8:9084
         "Annie Winters.":
             "Annie [lastname].",
 
-        # AS 89581
+        # AS script8:9155
         "The way you’re tracing your finger on my chest is kind of turning me on more than it should, Annie...":
             "The way you’re tracing your finger on my chest is kind of turning me on more than it should, sis...",
 
-        # AS 89626
+        # AS script8:9200
         "After so many years thinking I’d never be more than friends with Annie... it's finally happening.":
             "After so many years thinking we’d never be more than siblings... it's finally happening.",
 
-        # AS 89651
+        # AS script8:9225
         "Phew... you sure know how to drive me crazy, Annie.":
             "Phew... you sure know how to drive me crazy, sis.",
 
-        # AS 89739
+        # AS script8:9275
+        "You climb on top of Annie, trailing passionate kisses along her neck as she moans softly in appreciation.":
+            "You climb on top of your sister, trailing passionate kisses along her neck as she moans softly in appreciation.",
+
+        # AS script8:9292
+        "You take a moment to contemplate Annie's plump, virgin pussy lips.":
+            "You take a moment to contemplate your sister's plump, virgin pussy lips.",
+
+        # AS script8:9313
         "*Moans* Ohh mmmm-y-yes, [mc]...":
             "*Moans* Ohh mmmm-y-yes, bro...",
 
-        # AS 89808
+        # AS script8:9382 and AS script8:9494
         "*Tracing Annie's figure* Oh, babe...":
             "*Tracing Annie's figure* Oh, sis...",
 
-        # AS 89941
+        # AS script8:9451
+        "*Sobbing* Maybe we're just not compatible.":
+            "*Sobbing* Maybe... maybe this is sign that it was wrong for us to be together after all.",
+
+        # AS script8:9515
         "*Panting* Ohh, [mc]...":
             "*Panting* Ohh, bro...",
 
-        # AS 89966
-        "Oh, trust me, you've seen nothing yet, my love...":
-            "Oh, trust me, you've seen nothing yet, sis...",
+        # AS script8:9530
+        "You’ve got me all kinds of messed up with how great you look, Annie...":
+            "You’ve got me all kinds of messed up with how great you look, sis...",
+
+        # AS script8:9540
+        #"Oh, trust me, you've seen nothing yet, my love...":
+        #    "Oh, trust me, you've seen nothing yet, sis...",
+
+        # AS script8:9543
+        "I-I can't handle this unbearable teasing anymore, Annie...":
+            "I-I can't handle this unbearable teasing anymore, sis...",
 
         # AS script8:9559
         # Fixed no longer interferes with other lines (x) (no) (l)
@@ -7386,15 +7613,53 @@ init python:
             ("Oh sis...","script8:9559"), #annie
         ],
 
-        # AS 90370
+        # AS script8:9583 {inject}
+        "*Moans* I can feel it...":
+            ("*Moans* I can feel it...","script8:9583",[
+                'a "*Giggles* We’re finally connected..."'
+            ]),
+
+        # AS script8:9591
+        "You're doing great, babe...":
+            "You're doing great, sis...",
+
+        # AS script8:9614
+        "Oh babe, y-you feel so good...":
+            "Oh Annie, y-you feel so good...",
+
+        # AS script8:9636
+        # Overwritten by AS script2:3865, okay
+        # "Oh Annie..." -> "Oh sis..."
+
+        # AS script8:9639
+        "*Panting* I-I'm cumming, [mc]...":
+            "*Panting* I-I'm cumming, bro...",
+
+        # AS script8:9696
+        "Not really, but that's not an exact science. You know that.":
+            "Not really, but that's not an exact science. Plus we’re siblings, so we especially can’t be taking risks.",
+
+        # AS script8:9944
         "My perfect, beautiful, innocent little Miss Winters...":
             "My perfect, beautiful, innocent little twin sister...",
+
+        # AS script8:9964
+        "*Panting* F-Fuck, me too, babe...":
+            "*Panting* F-Fuck, me too, sis...",
+
+        # AS script8:9974
+        #"*Panting* I WANT... YOUR... S-S-SEED INSIDE OF ME...":
+        #    "*Panting* I WANT... MY BROTHER'S... S-S-SEED INSIDE OF ME...",
+
+        # AS script8:9999
+        "T-That was... almost a religious experience, Annie.":
+            "T-That was... almost a religious experience, sis.",
 
         # AS script8:10057
         "You came over and helped me study, even though you missed a football game with some other kids from school because of it.":
             "You stayed home and helped me study, even though you missed a football game with some other kids from school because of it.",
 
-        # AS 90495
+        # AS script8:10069
         "B-But I've liked you since the day I met you!":
             "B-But I've always liked you!",
 
@@ -8002,7 +8267,7 @@ init python:
         #"Yep! I heard [mc] managed to win a neural implant at your cafe!":
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
-        # HS script2:112 {inject} (disabled until rollback issue is fixed)
+        # HS script2:112 {inject}
         "It's so nice to meet you, Luna!":
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
@@ -8905,10 +9170,6 @@ init python:
         "Why would she? We weren't doing anything wrong.":
             "She's just not that type of person.",
 
-        # HS script6:6770
-        "Don't be nasty!":
-            "Don't be nasty! That's your mother!",
-
         # HS script6:6787
         "Good night, Annie.":
             "Good night, sis.",
@@ -9036,9 +9297,17 @@ init python:
         # "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)":
         #     "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)",
 
-        # HS 88122
+        # HS script8:7569
+        "A-Annie...?":
+            "Uh sis...?",
+
+        # HS script8:7696
         "No one ever thought you were useless, Annie. But after this? D-Damn, even less so.":
             "No one ever thought you were useless, sis. But after this? D-Damn, even less so.",
+
+        # HS script8:7713
+        "Bye, bye, [mc]!":
+            "Bye, bye, bro!",
 
         # does not use label mod
 
@@ -9141,43 +9410,57 @@ init python:
         "I'm so impressed, Annie.":
             "I'm so impressed, sis.",
 
-        # HS 89581
+        # HS script8:9155
         "The way you’re tracing your finger on my chest is kind of turning me on more than it should, Annie...":
             "The way you’re tracing your finger on my chest is kind of turning me on more than it should, sis...",
 
-        # HS 89626
+        # HS script8:9200
         "After so many years thinking I’d never be more than friends with Annie... it's finally happening.":
             "After so many years thinking we’d never be more than siblings... it's finally happening.",
 
-        # HS 89651
+        # HS script8:9225
         "Phew... you sure know how to drive me crazy, Annie.":
             "Phew... you sure know how to drive me crazy, sis.",
 
-        # HS 89739
+        # HS script8:9313
         "*Moans* Ohh mmmm-y-yes, [mc]...":
             "*Moans* Ohh mmmm-y-yes, bro...",
 
-        # HS 89808
+        # HS script8:9382 and HS script8:9494
         "*Tracing Annie's figure* Oh, babe...":
             "*Tracing Annie's figure* Oh, sis...",
 
-        # HS 89941
+        # HS script8:9451
+        "*Sobbing* Maybe we're just not compatible.":
+            "*Sobbing* Maybe... maybe this is sign that it was wrong for us to be together after all.",
+
+        # HS script8:9515
         "*Panting* Ohh, [mc]...":
             "*Panting* Ohh, bro...",
 
-        # HS 89966
+        # HS script8:9540
         "Oh, trust me, you've seen nothing yet, my love...":
             "Oh, trust me, you've seen nothing yet, sis...",
 
-        # HS 90495
+        # HS script8:9583 {inject}
+        "*Moans* I can feel it...":
+            ("*Moans* I can feel it...","script8:9583",[
+                'a "*Giggles* My brother’s finally inside of me..."'
+            ]),
+
+        # HS script8:9639
+        "*Panting* I-I'm cumming, [mc]...":
+            "*Panting* I-I'm cumming, bro...",
+
+        # HS script8:10069
         "B-But I've liked you since the day I met you!":
             "B-But I've liked you since the first day!",
 
-        # HS 93863
+        # HS script8:13437
         "You think Nancy wants to play the role of some sort of intermediary? Because she wants it too?":
             "\"Mom\" huh? Kinky. So, you think \"Mom\" wants to play the role of some sort of intermediary? Because she wants it too?",
 
-        # HS 93865
+        # HS script8:13439
         "Exactly! That's what she implied.":
             "It's not... never mind. But yes, that's exactly what she implied.",
 
