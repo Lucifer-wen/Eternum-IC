@@ -1103,24 +1103,28 @@ init python:
         #     until he gets an official birthdate that screws us over lmao
         # -----------------------------------------
         # Character notes
-        # Penny called "sis", "Penny", sometimes "big sis". She uses "bro", "lttle bro/brother", but more sparingly
+        # Code auto changes Nancy->Mom for MC lines
+        # Penny called "sis", "Penny", sometimes "big sis". She uses "bro", "little bro/brother", but more sparingly
         # Dalia mix of "sis" and "Dal/Daly"
-        # -----------------------------------------
-        # BM 0000 = Base Map, Line Number
-        # Line numbers based on compiled script from v0.9.0, subject to change in future updates
-        #     (which already happened in v0.9.4 fml, need to redo)
         # -----------------------------------------
         # BM script:0000 = Base Map, RPY file:Line Number
         #     Numbers based on v0.9.5, subject to change in future updates
-        #     slowly adapting line numbers to this format
-        # Tags based who the line is about contextually, not always the speaker.
+        # Tags based on who the line is about contextually, not always the speaker.
         # Selectively applied for clarification
         # (menu) = Choice menu line
+        # (mc) = MC line
         # (n) = Nancy line
         # (p) = Penelope line
         # (d) = Dalia line
+        # (a) = Annie line
         # (x) = Alex line
         # (l) = Luna line
+        # (no) = Nova line
+        # (ca) = Calypso line
+        # -----------------------------------------
+        # Code tags
+        # {specific} = use of Variant 2 to target specific lines
+        # {inject} = use of Variant 3 to inject new lines      
         # -----------------------------------------
         # LW/N = Lucifer_W's notes
         # l9/N = l9453394's notes
@@ -1128,8 +1132,7 @@ init python:
         # -----------------------------------------
 
     # -----------------------------------------
-    # v0.1 script.rpy  Lines 1-9769
-
+    # v0.1 script.rpy
 
         # BM script:948
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
@@ -1404,8 +1407,8 @@ init python:
         "(They're letting me and Annie stay in their house after all. This is the least I can do to show my gratitude.)":
             "(They're letting me and Annie stay here for a year after all. This is the least I can do to show my gratitude.)",
 
-        # BM script:3369 (p)
-        # BA/N: come back to this, maybe tone down the horny?
+        # BM script:3369 (p) WIP
+        # BA/N: maybe tone down the horny?
         #"{i}You did this?! You're sooo amazing! Do you want to celebrate by taking a hot, steamy bath with me?":
         #    "{i}You did this?! You're sooo amazing! Do you want to celebrate by test",
 
@@ -1576,8 +1579,8 @@ init python:
             "(It was also kinda exhilarating, though... and the taboo just made it... {i}so much{/i} more exciting... I haven’t felt like that in so long...)",
 
         # ========== START label mod "poolalex_mod" ==========
-        # line numbers for both files
-        # REPLACED BY INJECTION, leaving code just in case
+            # line numbers for both files
+        # REPLACED BY INJECTION, old code left just in case
 
         # BM script:5647 IncestLables:1816, also overwrites script6:1516 and script6:9319, both okay
         "Hey Dalia!":
@@ -1596,10 +1599,11 @@ init python:
             "You said you were Dalia's brother?",
 
         # BM script:6047 IncestLables:2221
+        # Original non-inject version, used with labelmod
         #"Yeah, we've known each other since we were little.":
         #    "Yeah, we were separated as kids when our parents divorced.",
 
-        # label mod lines explaining explaining mc and Dalia's close age here
+        # label mod lines explaining MC and Dalia's close age here
 
         # BM script:6047 {inject} (replaces labelmod)
         "Yeah, we've known each other since we were little.":
@@ -1651,8 +1655,8 @@ init python:
         "Please, Dalia! Please!":
             "Please, Daly! Please!",
 
-        # BM script:8731 (d), overwrites other lines
-        # FIXED no longer interferes with script2:4200 (n) and script4:3325 (d)
+        # BM script:8731 (d) {specific}, also overwrites other lines
+        # Excludes script2:4200 (n) and script4:3325 (d)
         "Dalia!":[
             ("Dal!","script:8731"),
             ("Dal!","script:9368"),
@@ -1690,14 +1694,14 @@ init python:
 
 
     # -----------------------------------------
-    # v0.2 script2.rpy Lines 9770-19471
+    # v0.2 script2.rpy
 
         # ========== START label mod "versiontwo_mod" ==========
             # BA/N: added label mod to add two dialogue lines I felt should've been in the intro between Luna and Annie in the first place.
             # Will also be used in other incest options too.
-            # REPLACED BY INJECTION, structure left just in case
+        # REPLACED BY INJECTION, old code left just in case
 
-        # BM script2:112 {inject}
+        # BM script2:112 {inject} (replaces labelmod)
         "It's so nice to meet you, Luna!":
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
@@ -1711,7 +1715,7 @@ init python:
 
         # ========== END label mod "versiontwo_mod" ==========
 
-        # BM script2:4013
+        # BM script2:4013 (n)
         "*Knocks* [mc]? Are you up?":
             "*Knocks* Honey? Are you up?",
 
@@ -1817,12 +1821,14 @@ init python:
         "I never met my mother and my father was always absent in my life. He was constantly too occupied with his work.":
             "My father was always absent in my life, always too occupied with his work. When my parents divorced, I had to live with him for the last ten years, if you can even call it \"living with him\".",
 
-        # BM script2:6106 (x) {inject}?
+        # BM script2:6106 (x) {inject}
         "Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
-            "Right, you {i}are{/i} Dalia's brother...{p}Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life...",
+            ("Oh right, you {i}are{/i} Dalia's brother...","script2:6106",[
+                'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
+            ]),
 
-        # BM script2:7046 (p)
-        # FIXED no longer interferes with script5:2321 (l)
+        # BM script2:7046 (p) {specific}
+        # Excludes script5:2321 (l)
         "Good morning, [mc]!":
             ("Good morning, little brother!","script2:7046"),
 
@@ -1848,7 +1854,7 @@ init python:
 
         # BM script2:7334
         "(Wake up [mc], we're talking about Penelope here. Still not gonna happen.)":
-            "(Wake up [mc], we're talking about your big sister here. Not gonna happen.)",
+            "(Wake up [mc], we're talking about your big sister here. Never gonna happen.)",
 
         # BM script2:7404
         "But that's why I'm glad to have you here, [mc].":
@@ -1947,7 +1953,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.3 script3.rpy Lines 19472-30120
+    # v0.3 script3.rpy
 
         # BM script3:2808 (d)
         "Especially the youngest daughter. She's extremely naive and easily manipulated.":
@@ -2056,7 +2062,7 @@ init python:
         "Um... I'm afraid I must cancel the interview. I couldn't find anyone to watch my daughter tonight, so...":
             "Um... I'm afraid I must cancel the interview. I couldn't find anyone to watch my kids tonight, so...",
 
-        # Following 3 lines rewritten since mc should've watched Frozen before with his family
+        # Following 3 lines rewritten since MC should've watched Frozen before with his family
 
         # BM script3:5098 (d)
         "And then there's Olaf!":
@@ -2064,7 +2070,7 @@ init python:
 
         # BM script3:5099 (d)
         "He was just a normal snowman, but one day Elsa gave him life with her magic and now he can talk!":
-            "I'll be Olaf and Sven, and you be Anna and Kristof.",
+            "I'll be Olaf and Sven, and you be Anna and Kristoff.",
 
         # BM script3:5100 (d)
         "He's super fun!":
@@ -2106,8 +2112,8 @@ init python:
         "We're just friends. I've only seen her half-naked once... during a photoshoot.":
             "She's my sister. I've only seen her half-naked dur– I-I meant a long time ago. Y-yeah.",
 
-        # BM script3:5972 (p)
-        # FIXED no longer interferes with script5:6310 (no), script7:10365 (no)
+        # BM script3:5972 (p) {specific}
+        # Excludes script5:6310 (no), script7:10365 (no)
         "We're just friends.":
             ("She's my sister.","script3:5972"),
 
@@ -2120,7 +2126,7 @@ init python:
             "So tell me... don't you wanna see a bit more? If I had a \"sister\" who looked like this, even I’d be dying to find out what’s underneath all those clothes...",
 
         # ========== START label mod "potionslabel_mod" ==========
-        # line numbers for both files 
+            # line numbers for both files 
 
         # BM script3:6291 IncestLables:2880
         "Sometimes I forget I'm friends with a celebrity.":
@@ -2362,7 +2368,7 @@ init python:
 
         # BM script3:9806
         "Well, there goes my plan to determine whether you’d be a good candidate or not.":
-            "If only you weren't their brother. I woudld've enjoyed testing you to see if you could be a good candidate for them...",
+            "If only you weren't their brother. I would've enjoyed testing you to see if you could be a good candidate for them...",
 
         # BM script3:9808
         "*Chuckles* A plan? I thought you just enjoyed spending time with me.":
@@ -2434,15 +2440,16 @@ init python:
 
         # BM script3:10004
         "You took care of me countless times...":
-            "You always taken care of me...",
+            "You’ve always taken care of me...",
 
         # BM script3:10100
         "I'll fulfill them all...":
             "*Chuckles* Like having sex with your son?",
 
-        # BM script3:10103
+        # BM script3:10103 {specific}
+        # Excludes script:6153 (a), script9:18643 (mc), script9:20400 (l)
         "And now...":
-            "*Giggles* Yes, and now...",
+            ("*Giggles* Yes, and now...","script3:10103"),
 
         # BM script3:10106
         "This time though... I want you to lie back and let your babysitter do all the work...":
@@ -2482,9 +2489,9 @@ init python:
 
 
     # -----------------------------------------
-    # v0.4 script4.rpy Lines 30121-39683
+    # v0.4 script4.rpy
 
-        # BM script4:2228
+        # BM script4:2228 (n)
         "I guess that I'm just too persuasive.":
             "Looks like it's a siblings-only privilege today!",
 
@@ -2532,7 +2539,7 @@ init python:
         "Congrats, Dalia.":
             "Congrats, sis.",
 
-        # BA/N: come back to this. next three could use work, or these people are just insanely accepting lol
+        # BA/N: WIP. next three could use work, or these people are just insanely accepting lol
 
         # BM script4:3031
         "I didn't know you were dating!":
@@ -2571,7 +2578,7 @@ init python:
             "I'm the lame one? Go tell that to that crybaby sister of yours.",
 
         # ========== START label mod "daliacove_mod" ==========
-        # line numbers for both files 
+            # line numbers for both files 
 
         # BM script4:3526 IncestLables:601
         "Thank you [mc].":
@@ -2692,7 +2699,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.5 script5.rpy Lines 39684-55297
+    # v0.5 script5.rpy
 
         # BM script5:290 (x)
         "He and his friends are always in some kind of trouble. Which is exhausting, but also... entertaining. In a way.":
@@ -2723,9 +2730,12 @@ init python:
         "I want you to fuck me, [mc]. Hard. And filthy.":
             "I want you to fuck me, son. Hard. And filthy.",
 
-        # BM script5:1124
+        # BM script5:1124 {inject}
         "What have I done to deserve this? What god have I pissed off?!":
-            "What have I done to deserve this? What god have I pissed off?!){p}(...probably the one against incest, actually. Would make sense.",
+            ("What have I done to deserve this? What god have I pissed off?!","script5:1124",[
+                'mct ". . ."',
+                'mct "Probably one against incest, actually. Which might be a lot of them."'
+            ]),
 
         # BM script5:1244
         "I already told Penelope and Nova that I'd be going with them to a costume party at the University tomorrow night, so...":
@@ -2873,14 +2883,14 @@ init python:
         #    "{i}Something{/i} tells me they don’t like each other much... This must one of the “disagreements” Penelope told me about. I’d better not get in the middle of this.",
 
         # ========== START Truth or Dare Game ==========
-        # BA/N: Entire game needs a LOT more work imo but I dont have any good ideas
-        # either the other players are just super tolerant of the incest vibes between Penny and MC
-        # or take the easy option and "skip" incest like the aunt map did at AU script5:5217
-        #     activate BM script5:5220 if skipping 
+            # BA/N: Entire game needs a LOT more work imo but I dont have any good ideas
+            # either the other players are just super tolerant of the incest vibes between Penny and MC
+            # or take the easy option and "skip" incest like the aunt map did at AU script5:5217
+                # activate BM script5:5220 if skipping 
 
         # BM script5:8455
         "I guess that's why Penelope likes you.":
-            "Peneleope, did you know he was hung like this?",
+            "Penelope, did you know he was hung like this?",
 
         # BM script5:8457
         "S-Shut up, Regina. I haven't even seen it yet.":
@@ -2906,8 +2916,8 @@ init python:
         "*Grabbing her by the waist* I love this dress, Penny.":
             "*Grabbing her by the waist and whispering* I love this dress, sis.",
 
-        # BM script5:8500
-        # FIXED no longer interferes with script:8623 and script3:6475
+        # BM script5:8500 {specific}
+        # Excludes script:8623 and script3:6475
         "(Interesting...)":
             ("(And he's her brother? Interesting...)","script5:8500"),
 
@@ -2947,7 +2957,7 @@ init python:
 
         # BM script5:8849
         "I'm not gonna get naked in front of everyone, [mc].":
-            "I'm not gonna get naked in front of everyone, bro.",
+            "Bro, I'm not gonna get naked in front of everyone.",
 
         # BM script5:8870
         # BA/N: tried toning down the incest implications here
@@ -2978,7 +2988,7 @@ init python:
         
         # BM script5:9306
         "Oh, damn, that sounds exciting! That guy sounds like a real Prince Charming!":
-            "Oh, damn, that sounds exciting! That brother sounds like a real Prince Charming!",
+            "Oh, damn, that sounds exciting! That brother of yours sounds like a real Prince Charming!",
 
         # BM script5:9309
         "Fuck that dude you were waiting for, whoever he was.":
@@ -3022,6 +3032,7 @@ init python:
             "I'd forgotten how perfect they were, sis.",
 
         # BM script5:9681
+        # BA/N: disabled, Penny and MC are roleplaying here
         #"Do you forgive me for acting naughty? For being such a tease? For flaunting myself all around you?":
         #    "Do you forgive me for acting naughty? For being such a tease? For flaunting myself all around my own brother?",
 
@@ -3053,7 +3064,7 @@ init python:
         # BA/N: could fix (bottom line) but kinda like it lol
         "Damn, [mc]...":
             "Damn, bro...",
-            #"Damn, bro...","script5:9751"),
+            #("Damn, bro...","script5:9751"), #{specific}
 
         # BM script5:9763
         "Yet here I am, seeing them up close and personal.":
@@ -3348,7 +3359,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.6 script6.rpy Lines 52298-66773
+    # v0.6 script6.rpy
 
         # BM script6:1516
         # Overwritten by BM script:5647, okay
@@ -3378,8 +3389,8 @@ init python:
         "Wow, I love your hair. You look absolutely stunning.":
             "Wow, I love your hair, sis. You look absolutely stunning.",
 
-        # BM script6:8135 (d)
-        # FIXED no longer interferes with script3:4717 (p)
+        # BM script6:8135 (d) {specific}
+        # Excludes script3:4717 (p)
         "Thanks [mc]!":
             ("Thanks bro!","script6:8135"),
 
@@ -3424,7 +3435,7 @@ init python:
             "*Pushing you inside* Goddammit bro, shut up and get the fuck in!",
 
         # ========== START Fuck Marry Kill ==========
-        # BA/N: want to change these lines but idk if my replacements really work.
+            # BA/N: want to change these lines but idk if my replacements really work.
 
         # BM script6:10076
         "Oh... so I'd be your lover. Nice...":
@@ -3434,11 +3445,11 @@ init python:
         "*Laughs* I didn't say that. Don't get your hopes up.":
             "*Laughs* What makes you think I'd fuck my brother more than once?",
 
-        # BM script6:10103 and BM script6:10130
+        # BM script6:10103, also overwrites script6:10130
         "No way I'm wasting a chance to marry you.":
             "If this is the only time I can marry you, I'm taking it.",
 
-        # BM script6:10104 and BM script6:10131
+        # BM script6:10104, also overwrites script6:10131
         "And don't worry, unlike Jerry's, our marriage also implies lots of sex.":
             "And don't worry, unlike Jerry's, our marriage is completely open to sex.",
 
@@ -3504,8 +3515,8 @@ init python:
         "I swear this booty of yours should be worshipped, Dal.":
             "I swear this booty of yours should be worshipped, sis.",
 
-        # BM script6:10790
-        # Fixed no longer interferes with other lines (x) (no) (l)
+        # BM script6:10790 {specific}
+        # Excludes 7 other lines (x)(no)(l)(a)
         "Oh babe...":[
             ("Oh sis...","script6:10790"),
             ("Oh sis...","script6:10811"),
@@ -3515,8 +3526,8 @@ init python:
         #"God, Dalia...":
         #    "God, Dal...",
 
-        # BM script6:10805 (d)
-        # FIXED no longer interferes with script6:6438 (a), script6:13016 (x)
+        # BM script6:10805 (d) {specific}
+        # Excludes script6:6438 (a), script6:13016 (x)
         "Not...":
             ("B-But we're siblings...","script6:10805"),
 
@@ -3572,8 +3583,8 @@ init python:
         "Take it all, babe...":
             "Take it all, sis...",
 
-        # BM script6:11396
-        # FIXED no longer interferes with script6:12044 (x)
+        # BM script6:11396 {specific}
+        # Excludes script6:12044 (x)
         "See you later, [mc].":
             ("See you later, bro.","script6:11396"),
 
@@ -3589,8 +3600,8 @@ init python:
         "H-Hey Dalia!":
             "H-Hey Dal!",
 
-        # BM script6:14300 (d), also overwrites script9:14153 (d), okay
-        # FIXED no longer interferes with script:5378 (n)
+        # BM script6:14300 (d) {specific}, also overwrites script9:14153 (d), okay
+        # Excludes script:5378 (n)
         "Thank you, [mc]!":[
             ("Thanks, bro!","script6:14300"),
             ("Thanks, bro!","script9:14153"),
@@ -3598,13 +3609,13 @@ init python:
 
 
     # -----------------------------------------
-    # v0.7 script7.rpy Lines 66774-80425
+    # v0.7 script7.rpy
 
         # BM script7:19
         "I know you've been fooling around with the WRE with your peculiar group of... {i}friends.":
-            "I know you've been fooling around with the WRE with your peculiar group of... {i}friends and family.",
+            "I know you've been fooling around with the WRE with your peculiar group of... {i}friends{/i} and {i}family{/i}.",
 
-        # BM script7:422 (x)
+        # BM script7:422 (d)
         "*Snorts* Don't worry, I'm kidding, I'm kidding!":
             "*Snorts* Don't worry, I'm kidding, I'm kidding! He {i}is{/i} your brother, after all.",
 
@@ -3651,8 +3662,8 @@ init python:
         "Come on, Dalia!":
             "Come on, sis!",
 
-        # BM script7:4702 (p)
-        # FIXED no longer interferes with script7:4670 (l)
+        # BM script7:4702 (p) {specific}
+        # Excludes script7:4670 (l)
         "Be careful.":
             ("Be careful, little brother.","script7:4702"),
 
@@ -3916,10 +3927,12 @@ init python:
             "I-I'm at my limit, sis...",
 
         # BM script7:9889
+        # BA/N: Disabled for seriousness
         #"*Whispering* S-Shit, Penny, keep it down! We need to leave!":
         #    "*Whispering* S-Shit, sis, keep it down! We need to leave!",
 
         # BM script7:9898
+        # BA/N: Disabled for seriousness
         #"G-G-Ggggghhhh... P-Pennyyy s-stay quieeeeet...":
         #    "G-G-Ggggghhhh... S-Siiiiiiissssss s-stay quieeeeet...",
 
@@ -3965,7 +3978,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.8 script8.rpy Lines 80426-97360
+    # v0.8 script8.rpy
 
         # BM script8:662
         "I was trying to focus on Nancy's house, but I still appeared on the same exact spot where I left. Maybe I need more practice?":
@@ -3980,9 +3993,9 @@ init python:
             "MOM!",
 
         # ========== START Stanley Parable ==========
-        # Some of these lines have voiceovers that we can't change
-        # just have to deal with it 
-        # voiceover lines marked with {VO}
+            # Some of these lines have voiceovers that we can't change
+            # just have to deal with it 
+            # voiceover lines marked with {VO}
 
         # BM script8:3103 {VO}
         #   nvm, this one isn't necessary
@@ -4051,11 +4064,11 @@ init python:
         
         # BM script8:5025
         "WHEN?":
-            "{sc=4}B-{w=0.2}but... {w=0.8}{size=50}AREN'T YOU {w=0.5}{i}HIS MOM?!{/i}{/sc}",
+            "{sc=4}B-{w=0.2}but... {w=0.8}{size=50}AREN'T YOU {w=0.5}{i}HIS {b}MOM?!{/sc}",
 
         # BM script8:5027
         "A few weeks ago.":
-            "Indeed. It was something we both wanted.",
+            "Indeed. It was something we both desired.",
 
         # BM script8:5031
         "Holy shit, I-I really didn't expect that.":
@@ -4094,7 +4107,7 @@ init python:
         #"*Cumming* Y-Yeeah, take it all, babe...":
         #    "*Cumming* Y-Yeeah, take it all, Mom...",
 
-        # BM script8:6983
+        # BM script8:6983 (l)
         # BA/N: leaving this here for the future when we learn what exactly Luna's vision was
         # "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)":
         #     "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)",
@@ -4123,7 +4136,7 @@ init python:
         "Hey, Dalia, I'm done over here!":
             "Hey, Dal, I'm done over here!",
 
-        # BM script8:10356, also script8:10397, script8:10420
+        # BM script8:10356, also overwrites script8:10397, script8:10420
         "It's just some silly gift for... a very special girl." :
             "It's just some silly gift for... my very special sister.",
 
@@ -4131,8 +4144,8 @@ init python:
         "Thank you so much, [mc]. You're the best.":
             "Thank you so much, bro. You're the best.",
 
-        # BM script8:10393
-        # FIXED no longer interferes with script8:10416 (d) and script9:19240 (l)
+        # BM script8:10393 {specific}
+        # Excludes script8:10416 (d) and script9:19240 (l)
         "Thank you so much, [mc].":
             ("Thank you so much, bro.","script8:10393"),
 
@@ -4190,6 +4203,7 @@ init python:
             "I also love spending time with you, sis.",
 
         # BM script8:14913
+        # BA/N: Disabled for seriousness
         #"Do you like me, [mc]?":
         #    "Do you like me, bro?",
 
@@ -4356,7 +4370,7 @@ init python:
                 'd "Does... Does Jerry remember we’re siblings?" with dis',
                 "show gd 145",
                 'mc "When I talked to him earlier, it didn’t seem like he knew."',
-                'mc "We should proably be more careful around him though. I’ll order him not talk about this to anyone."',
+                'mc "We should probably be more careful around him though. I’ll order him not talk about this to anyone."',
                 "show gd 152",
                 'd "O-Okay. So we should be safe for now." with dis06',
             ]),
@@ -4373,121 +4387,101 @@ init python:
     # -----------------------------------------
     # v0.9 script9.rpy Lines
 
-        # BM script9:267
+        # BM script9:267 (p)
         "OH! Is it...":
             "Hmmm, how many other boys do you know...",
 
-        # BM script9:268
+        # BM script9:268 (p)
         "*Giggles* Is it [mc]...?":
             "*Giggles* Can't be [mc]...",
 
-        # BM script9:270
+        # BM script9:270 (d)
         "I-I don't...":
             "What!? Of-f course not... I-I mean...{w} {size=*0.75}he's my–{/size}{w} {size=*0.6}he's our...{/size}",
 
-        # BM script9:287
+        # BM script9:287 (p)
         "YOU'RE IN LOVE WITH [mc!u]?!":
             "YOU'RE IN LOVE WITH OUR BROTHER?!",
 
-        # BM script9:296
+        # BM script9:296 (p)
         "I literally asked you a couple of weeks ago and you said “you’d rather live off salads for a year”!":
             "He's our little brother! Our actual, {i}blood-related brother!{/i}",
 
-        # BM script9:298
+        # BM script9:298 (d)
         "Oh... well, yeah...":
             "You think I'm not aware of that?",
 
-        # BA/N: next 4 lines still feel a bit clunky imo
-
-        # BM script9:299
+        # BM script9:299 (d)
         "A-About that...":
-            "It's just, ever since [mc] came back, everything's been so...",
+            "It's just, ever since [mc] came back, everything's been so... different.",
 
-        # BM script9:300
+        # BM script9:300 (d)
         "I was... confused.":
-            " Different. Better even. And... confusing.",
+            "Better really. Every time I'm with him, I'm just so happy and... confused.",
 
-        # BM script9:302
-        "Confused??":
-            "Confusing??",
-
-        # BM script9:304
+        # BM script9:304 (d)
         "Yes, confused.":
-            "What else am I supposed to think? I know this is wrong!",
+            "Of course I’m confused! I know it’s wrong to feel this way!",
 
-        # BM script9:311
+        # BM script9:311 (p)
         "What?! Hah! Me?! Pfft!":
             "What?! Hah! Me?! With our {i}brother?{/i} Pfft!",
 
-        # BM script9:314
-        # "You've been hovering around him like a fly lately!":
-        #     "text",
-
-        # BM script9:316
+        # BM script9:316 (p)
         "W-We've all been hovering around him lately.":
             "N-Not any more than the other girls do... I'm just doting on him as a big sister!",
 
-        # BM script9:319
+        # BM script9:319 (d)
         "But certain blondes have been a little more... hover-y, I think.":
             "You've been quite clingy for a \"big sister\"...",
 
-        # BM script9:323
-        # "Wait, hold your horses, how did you turn this around on me?":
-        #    "text",
-
-        # BM script9:324
-        # "Why are you acting like a jealous girlfriend all of a sudden?!":
-        #     "text",
-
-        # BM script9:383
+        # BM script9:383 (d)
         "You just can't let me have anything, can you?!":
             "You just can't let me have anything, can you?! Not even my own brother!",
 
-        # BM script9:388
+        # BM script9:388 (d)
         "But I didn't fucking know??!":
-            "And you had the nerve to chastise {i}me{/i} about incest?!",
+            "And you had the nerve to judge {i}me{/i} for liking my brother?!",
+            #"And you had the nerve to judge {i}me{/i} about incest?!",
 
-        # BM script9:390
+        # BM script9:390 (p)
         "Oh, but I was supposed to know about you two??":
-            "What, was I supposed to pretend this is all normal? You know it's not!",
+            "What, was I supposed to pretend that {i}incest{/i} is all normal?",
+            #"What, was I supposed to pretend this {i}incest{/i} is all normal? You know it's not!",
 
-        # BM script9:392
-        #"You're so damn... selfish!":
-        #    "text",
+        # BM script9:392 (d)
+        "You're so damn... selfish!":
+            "You're such a... selfish hypocrite!",
 
-        # BM script9:436
+        # BM script9:436 (p)
         "*Grumbling to herself* My goddamn sister?!":
             "*Grumbling to herself* His other goddamn sister, too?!",
 
-        # BM script9:439
+        # BM script9:439 (d)
         "*Grumbling to herself* Why didn't she tell me?!":
             "*Grumbling to herself* I thought we trusted each other more than this... Like... I get this is a huge taboo...",
 
-        # BM script9:440
+        # BM script9:440 (d)
         "*Grumbling to herself* Like... I get it, we're all living crazy fucking lives, I know we've all got a million things going on and enough shit to worry about.":
             "*Grumbling to herself* And on top of that, we're all living crazy enough lives, I know we've all got a million things going on and enough shit to worry about.",
 
-        # BM script9:441
-        # "*Grumbling to herself* I get that realizing everything we thought was real could crumble is hard to digest... but still...":
-        #    "text",
-
-        # BM script9:446
+        # BM script9:446 (d)
         "I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING MY FUCKING BOYFRIEND!":
             "I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING MY FUCKING BROTHER!",
 
-        # BM script9:448
+        # BM script9:448 (p)
         "Oh, so he's {i}your{/i} boyfriend now.":
             "As if I'm the {i}only{/i} one here screwing her brother.",
 
-        # BM script9:449
+        # BM script9:449 (p)
         "You do realize you could've told me too, right?":
             "Something {i}you{/i} could've told me too, right?",
 
-        # BM script9:450
+        # BM script9:450 (d)
         "Or is that not your fault either?!":
-            "Or was that a special secret only for you to keep?!",
+            "Or are you the only one allowed to keep such a secret?!",
 
-        # BM script9:488
+        # BM script9:488 (p)
         "Let's make him choose!":
             "Let's make him choose which {i}sister{/i} he wants!",
 
@@ -4501,7 +4495,7 @@ init python:
         # "{sc=3}[mc!u]!!!{/sc}":
         #     "{sc=3}BRO!!!{/sc}",
 
-        # BM script9:2339
+        # BM script9:2339 (d)
         "Last thing [mc] would want is for you to get hurt looking for him.":
             "Last thing your brother would want is for you to get hurt looking for him.",
 
@@ -4509,11 +4503,15 @@ init python:
         "His only family is a drunk skunk of a father living an ocean away.":
             "His only other family is a drunk skunk of a father living an ocean away.",
 
-        # BA/N: I added next three lines during  Hyril'ar but idk if I want to keep them lel
+        # BM script9:3123 (d)
+        "First, her sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].":
+            "First, the other sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].",
 
-        # BM script9:3842
+        # BA/N: I added next three lines during Hyril'ar but idk if I want to keep them lel
+
+        # BM script9:3842 (ca)
         "[mc], however, appears to possess a magnetic pull, both physical and, I daresay, emotional, that draws multiple females to him alone.":
-            "[mc], however, appears to possess a magnetic pull, both physical and, I daresay, emotional, that draws multiple females to him alone. Not even his own blood is exempt.",
+            "[mc], however, appears to possess a magnetic pull, both physical and, I daresay, emotional, that draws multiple females to him alone. Even his own blood is caught in its grasp.",
 
         # BM script9:3844
         "Astounding...":
@@ -4543,13 +4541,13 @@ init python:
         "Christmas never felt special to me.":
             "We never celebrated it in the UK, so Christmas stopped feeling special.",
 
-        # BM script9:10876
-        "You've been hiding so many secrets from me, missy.":
-            "You've been hiding so many secrets from me, sissy.",
-
         # BM script9:10498
         "*Starts reading* {i}Dear Ms. Carter, thank you for booking my humble property for this year’s Christmas Eve.":
             "*Starts reading* {i}Dear Ms. [lastname], thank you for booking my humble property for this year’s Christmas Eve.",
+
+        # BM script9:10876
+        "You've been hiding so many secrets from me, missy.":
+            "You've been hiding so many secrets from me, sissy.",
 
         # BM script9:10877
         "I don't remember you being one when I still lived in Kredon.":
@@ -4567,13 +4565,14 @@ init python:
         "But I fucking swear to you, Penelope — I love you.":
             "But I fucking swear to you, Penelope — I love you. And I mean not as a sister... as a woman!",
 
-        # BM script9:11563
+        # BM script9:11563 (n)
         "I suspected.":
-            "I suspected she knew something was going on. Hard for anything to escape her notice in this house.",
+            "It’s hard for anything to escape her notice in this house, so I suspected she knew something was going on. But thanks for confirming it. ",
 
-        # BM script9:11564
+        # BM script9:11564 (n)
         "But thanks for confirming it.":
-            "Which begs the question of what exactly she thinks of all this...{p}But thanks for confirming it.",
+            "I can’t believe she actually talked with you about this... {i}stuff{/i} happening between us, her own kids... What exactly is she thinking?",
+            #"Which begs the question of what exactly she thinks of all this going on between her kids...",
 
         # BM script9:11613
         "I mean, it’s 2034. This probably isn’t the freakiest thing you’ll see on the street nowadays.":
@@ -4590,6 +4589,10 @@ init python:
         # BM script9:11756
         "Time to put all those thousands of hours playing RPGs to good use and impress your girl.":
             "Time to put all those thousands of hours playing RPGs to good use and impress your big sis.",
+
+        # BM script9:11776
+        "*Snorts* Looks like you should’ve invested another thousand hours in Skyrim, [mc].":
+            "*Snorts* Looks like you should’ve invested another thousand hours in Skyrim, little brother.",
 
         # BM script9:11946
         "Mmm, I don't know, Penny...":
@@ -4609,7 +4612,7 @@ init python:
 
         # BM script9:12089
         "You should learn to savor the moment, [mc]...":
-            "You should learn to savor the moment, bro...",
+            "You should learn to savor the moment, lil bro...",
 
         # BM script9:12109, also overwrites script7:9372, script9:12363, both okay
         "Oh, Penny...":
@@ -4617,7 +4620,7 @@ init python:
 
         # BM script9:12117
         "*Giggles* You’re not secretly recording me, right? Taking advantage of little old blind Penny...?":
-            "*Giggles* You’re not secretly recording me, right? Taking advantage of your big blind sister...?",
+            "*Giggles* You’re not secretly recording me, right? Taking advantage of your blind big sister...?",
 
         # BM script9:12143
         "Take it all, Penny...":
@@ -4633,11 +4636,11 @@ init python:
 
         # BM script9:12215
         "Please... [mc]...":
-            "Please... bro...",
+            "Please... brother...",
 
         # BM script9:12218 (menu)
         "Make her call you something different":
-            "Make her call you something different (use \"Other\" for bro)",
+            "Make her call you something different (Use \"Other\" for \"little brother\"/\"bro\")",
 
         # BM script9:12232 (menu)
         "No nickname":
@@ -4654,6 +4657,11 @@ init python:
         # BM script9:12303
         "I've said it before, and I'll say it again, Penny — your ass is criminally underrated...":
             "I've said it before, and I'll say it again, sis — your ass is criminally underrated...",
+
+        # BM script9:12303
+        "Such a bad girl...":
+            "Wanting to get fucked by my little brother...",
+            #"Wanting my little brother to fuck me...",
 
         # BM script9:12341
         "You're choking my cock, Penny...":
@@ -4675,10 +4683,6 @@ init python:
         "Have anal sex with Penny":
             "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
 
-        # BA/N: NO LONGER NEEDED temp fix for multi-mod tags not being stripped
-        #"Have anal sex with Penny [gr][mt](Anal)":
-        #    "{color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)",
-
         # BM script9:12535
         "I’ll remember it next time, Penny... word for word.":
             "I’ll remember it next time, sis... word for word.",
@@ -4693,7 +4697,7 @@ init python:
 
         # BM script9:12638
         "Ohhh Penny... you’re gonna make me lose my f-fucking mind...":
-            "Ohhh sis... you’re gonna make me lose my f-fucking mind...",
+            "Ohhh sister... you’re gonna make me lose my f-fucking mind...",
 
         # BM script9:12706
         "My god, Penny...":
@@ -4703,7 +4707,7 @@ init python:
         "I’ve never had a Christmas dinner like this before, Nan.":
             "I’ve never had a Christmas dinner like this before, Mom.",
 
-        # BM script9:12988
+        # BM script9:12988 (d)
         "I swear on my life, they're delicious.":
             "I swear on my life, sis, they're delicious.",
 
@@ -4727,7 +4731,7 @@ init python:
         # Alex line overwritten by BM script5:9751 (p), tbh still works okay as a casual "bro" (she'll join the family eventually lol)
         # "Damn, [mc]..." -> "Damn, bro..."
 
-        # BM script9:13216
+        # BM script9:13216 (p)
         "I didn't know you had a poet inside you, [mc]!":
             "I didn't know you had a poet inside you, little brother!",
 
@@ -4747,7 +4751,7 @@ init python:
         "Well, Dalia’s January, I’m March... so that makes [mc] the baby of the group.":
             "Well, [mc]'s the baby of your family, and I'm March... so he goes first.",
 
-        # BM script9:13632
+        # BM script9:13632 (p)
         "Thank you for your very... scientific, articulate observation, [mc].":
             "Thank you for your very... scientific, articulate observation, brother.",
 
@@ -4759,17 +4763,17 @@ init python:
         # Overwritten by BM script6:14300 (d), okay
         # ""Thank you, [mc]!" -> "Thanks, bro!"
 
-        # BM script9:14226
+        # BM script9:14226 (d)
         "Yeah, you'd sure like that.":
             "Seriously? We're mostly family here.",
 
-        # BM script9:14241
+        # BM script9:14241 (p)
         "Half of the people here have already seen me naked a hundred times, and the rest... well, we’re just having fun. Who cares?":
             "Like you said, it's just family here, plus Alex... and well, we’re just having fun. Who cares?",
 
         # BM script9:14294
         "Like you said, the card didn't mention anything else. Anyone saying otherwise would just be greedy.":
-            "Like you said, the card didn't mention anything else. No need to go that far in front of just family.",
+            "Like you said, the card didn't mention anything else. We can keep it “family-friendly.”",
 
         # BM script9:14421
         "Not to mention Nancy wouldn’t put herself in that position with her daughters here.":
@@ -4787,8 +4791,8 @@ init python:
         "Hey, hold on! We still have to vote!":
             "Hey, hold on! We still have to vote! Those are the rules!",
 
-        # BM script9:14590
-        # FIXED no longer interferes with script3:7862
+        # BM script9:14590 {specific}
+        # Excludes script3:7862
         "Those are the rules!":
             ("As the only guy here, I might be taking those points!","script9:14590"),
 
@@ -4808,9 +4812,17 @@ init python:
         "Well... I’d never ever dare to suggest anything that could get pearl-clutching credit card companies offended, so I'll say Alex, and...":
             "Well... As much as I’d like to avoid anything that could get pearl-clutching credit card companies offended, my options here are limited, so I'll say Alex, and...",
 
-        # BM script9:15202
+        # BM script9:14668 (d)
+        "Let's go, [mc]! Time to put on a show!":
+            "Let's go, bro! Time to put on a show!",
+
+        # BM script9:14956 (n)
+        "Well, thank you, [mc].":
+            "Well, thank you, dear.",
+
+        # BM script9:15202 (p)
         "You... YOU HAVE TOO–?!":
-            "You... YOU HAVE TOO–?! BUT HE'S– he's your–",
+            "You... YOU HAVE TOO–?! {w=0.7}BUT HE'S– {w=0.5}he's your–",
 
         # BM script9:15211
         "I feel like... she probably suspects, but it's a different case with you than it is with me.":
@@ -4822,17 +4834,41 @@ init python:
 
         # BM script9:15222
         "This went from zero to nuclear real quick.":
-            "This went from zero to nuclear real quick. Your brother...",
+            "This went from zero to nuclear real quick. With your own brother...",
 
-        # BM script9:15236
+        # BM script9:15236 (n) {inject}
         "Why didn't you finish your drink, Mom...?":
-            "M-Mom, I can explain–{w} Wait...{p}Why didn't you finish your drink, Mom...?",
+            ("M-Mom, I can explai–","script9:15236",[
+                'p "Wait..."',
+                'p "Why... Why didn’t you finish your drink, Mom...?"'
+            ]),
 
-        # BM script9:15241
+        # BM script9:15241 (n)
         "NO. FUCKING. WAY.":
             "NO. FUCKING. WAY. YOU TOO?!",
 
-        # BM script9:15835
+        # BM script9:15247
+        "This family is WILD!":
+            "This family is {b}{i}WILD!",
+
+        # BM script9:15280 (p)
+        "No. No, no... no. Not really.":
+            "No. No, no... no. Of course not.",
+
+        # BM script9:15556
+        "But seriously, I'm off to bed! Goodnight, [mc].":
+            "But seriously, I'm off to bed! Goodnight, bro.",
+
+        # BM script9:15559, also overwrites script9:15650
+        "Goodnight, Dalia.":
+            "Goodnight, sis.",
+
+        # BM script9:15647 {specific}
+        # Excludes script:2127 (n)
+        "Goodnight, [mc].":
+            ("Goodnight, bro.","script9:15647"),
+
+        # BM script9:15835 (d)
         "I-I mean... it’s a little weird with [mc] here too, but... whatever." :
             "I-I mean... it’s a little weird with my brother here too, but... whatever." ,
 
@@ -4862,18 +4898,23 @@ init python:
 
         # BM script9:16051
         "*Touching herself* AAaah... t-this is so fucking hot, Dal...":
-            "*Touching herself* AAaah... t-this is so fucking hot, Dal...{p}Watching you jerk off your brother...",
+            "*Touching herself* AAaah... watching you j-jerk off your brother is so fucking hot, Dal......",
+
+        # BM script9:16060 {specific}
+        # Excludes 1411 other lines
+        ". . .":
+            ("*Whispers sharply* Hey! Alex is right there!","script9:16060"),
 
         # BM script9:16061
         "...Thanks.":
-            "*Whispers* Hey! Alex is right there!{w} ...But, thanks.",
+            "*Whispering* ...But, thanks.",
 
         # BM script9:16088
         "You're dreaming.":
-            "Hey! I'm your sister! And even if I weren't, I'm-",
+            "HEY! I'm your sister! And even if I weren't, I'm-",
 
         # BM script9:16089
-        # interferes with script5:6463
+        # interferes with script5:6463. works better this way ngl
         # "I'm not...":
         #     "And even if I weren't, I'm not...",
 
@@ -4895,13 +4936,13 @@ init python:
         "Are Dalia's tits big enough for you?":
             "Are your sister's tits big enough for you?",
 
-        # BM script9:16269
-        "Let yourself go and look at the man you love losing control because of you and your beautiful body.":
-            "Let yourself go and look at your beloved brother losing control because of you and your beautiful body.",
-
         # BM script9:16247
         "O-Ohh Dalia, that feels so fucking good...":
             "O-Ohh sis, that feels so fucking good...",
+
+        # BM script9:16269
+        "Let yourself go and look at the man you love losing control because of you and your beautiful body.":
+            "Let yourself go and look at your beloved brother losing control because of you and your beautiful body.",
 
         # BM script9:16277
         "Tell me, [mc]... do you wanna fuck Dalia...?":
@@ -4933,7 +4974,7 @@ init python:
 
         # BM script9:16410
         "*Groaning* Oh D-Dalia...":
-            "*Groaning* Oh s-sis...",
+            "*Groaning* Oh D-Daly...",
 
         # BM script9:16425
         "*Giggles* Your mouth is asking to slow down, but those eyes rolling back are screaming “fuck me harder, [mc]”...":
@@ -4959,9 +5000,12 @@ init python:
         "I should warn you, though... I'm not as easy as Dalia.":
             "I should warn you, though... I'm not as easy as your sister.",
 
-        # BM script9:16597
+        # BM script9:16597 {inject}
         "*Choked laugh* Y-You're one t-to talk...":
-            "*Choked laugh* Y-You're one t-to talk...{p}I-If he's your daddy, am I your a-auntie...?",
+            ("*Choked laugh* Y-You're one t-to talk, girl... ","script9:16597",[
+                'd "I-If he’s your daddy, am I your a-auntie...?"',
+                'x "*Breathless giggle* Is t-that what you want, Auntie D-Dal?"'
+            ]),
 
         # BM script9:16693
         "*Grinning* You'll be fine, Dal...":
@@ -4970,6 +5014,10 @@ init python:
         # BM script9:16708
         "T-That's because [mc] broke me! A-And all because of you!":
             "T-That's because my brother broke me! A-And all because of you!",
+
+        # BM script9:16722
+        "How does it feel, huh? Going around making every girl with daddy issues fall for you. Must be one hell of a power trip.":
+            "How does it feel, huh? Going around making every girl with daddy issues fall for you. Even your own {i}sister{/i}. Must be one hell of a power trip.",
 
         # BM script9:16833
         "It’s insane to think about, but... this woman right here is really the reason all of this is even working somehow.":
@@ -4995,6 +5043,9 @@ init python:
         "I get to be with the guy I love and still have my sister’s love!":
             "I get to be with my beloved brother and still have my sister’s love!",
 
+        # BM script9:20898
+        "Yeah, yeah — your nose isn't lying, Dalia. I brought crepes for everyone!":
+            "Yeah, yeah — your nose isn't lying, Daly. I brought crepes for everyone!",
     }
 
     # cousin_map = {
@@ -5015,22 +5066,24 @@ init python:
         # revert to names when being more serious
         # Annie and Penny call each other lil/big sis, Dalia is just sis
         # -----------------------------------------
-        # AS 0000 = Annie Sister map, Line number
-        # Line numbers based on compiled script from v0.9.0, subject to change in future updates
-        #     (which already happened in v0.9.4 fml, need to redo)
-        # -----------------------------------------
         # AS script:0000 = Annie Sister map, RPY file:Line Number
         #     Numbers based on v0.9.5, subject to change in future updates
-        #     slowly adapting line numbers to this format
         # Tags based who the line is about contextually, not always the speaker.
         # Selectively applied for clarification
         # (menu) = Choice menu line
-        # (a) = Annie line
+        # (mc) = MC line
         # (n) = Nancy line
         # (p) = Penelope line
         # (d) = Dalia line
+        # (a) = Annie line
         # (x) = Alex line
         # (l) = Luna line
+        # (no) = Nova line
+        # (ca) = Calypso line
+        # -----------------------------------------
+        # Code tags
+        # {specific} = use of Variant 2 to target specific lines
+        # {inject} = use of Variant 3 to inject new lines      
         # -----------------------------------------
         # LW/N = Lucifer_W's notes
         # l9/N = l9453394's notes
@@ -5038,9 +5091,9 @@ init python:
         # -----------------------------------------
 
     # -----------------------------------------
-    # v0.1 script.rpy  Lines 1-9769
+    # v0.1 script.rpy
 
-        # BA/N: Want to mention "Grandparents" at some point in the intro, otherwise their appearence comes out of no where later on. 
+        # BA/N: Want to mention "Grandparents" at some point in the intro, otherwise their appearance comes out of no where later on. 
         # not sure where tho
         # LW/N: Sounds like a good Idea maybe with a new lable or adding to the intro lable.
         # BA/N: Added in the train scene
@@ -5093,11 +5146,13 @@ init python:
 
         # AS script:1054
         "(I mean… she's cute, and we love spending time with each other, but I've never tried to make a move on her.)":
-            "(...)",
+            "(. . .)",
 
-        # AS script:1055
+        # AS script:1055 {inject}
         "(I could never do it.)":
-            "(Well... she is cute... and we love spending time with each other...){p}(I mean, if–){nw=1}",
+            ("(Well... she is cute... and we love spending time with each other...)","script:1055",[
+                'mc "(I mean, if–){nw=0.8}"'
+            ]),
 
         # AS script:1056
         "(She'd probably freak out if I did.)":
@@ -5232,8 +5287,8 @@ init python:
         "Is that right?!":
             "I missed you so much!",
 
-        # AS script:1764 (a)
-        # FIXED no longer interferes with other lines
+        # AS script:1764 (a) {specific}
+        # Excludes other lines
         "Y-Yeah.":
             ("Y-Yeah, me too.","script:1764"),
 
@@ -5324,7 +5379,7 @@ init python:
             "Alright then! Let's go to the car! Dalia and Penelope are dying to see you two again!",
 
         # ========== START label mod "welcome_mod" ==========
-        # line numbers for both files 
+            # line numbers for both files 
 
         # AS script:1843 IncestLables:24
         "(Each day I would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove me home once it got late.)":
@@ -5451,7 +5506,7 @@ init python:
 
         # AS script:2116 IncestLables:297
         "Ah, I remember that room! It was the one with a lot of natural light.":
-            "I think so. Second floor, last one on the right, right? The one with a lot of natural light.{p}(Hey, that rhymed!)",
+            "I think so. Second floor, last one on the right, right? The one with a lot of natural light.{w} (Hey, that rhymed!)",
 
         # AS script:2119 IncestLables:300
         "Well, since [mc] seems to remember where everything is already... Do you want a tour of the house, Annie?":
@@ -5554,6 +5609,9 @@ init python:
                 'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
 
+        # base map label mod lines explaining MC, Annie, and Dalia's close age here
+            # REPLACED BY INJECTION, below
+
         # AS script:6047 {inject} (replaces labelmod)
         "Yeah, we've known each other since we were little.":
             ("Yeah, we were separated as kids when our parents divorced.","script:6047",[
@@ -5575,14 +5633,14 @@ init python:
         # ========== START label mod "preeternum_mod" backup ==========
             # Full replacement label with some line/image rearrangements
             # Rewrote because since they lived together in the UK, MC should already know some basics from how often Annie plays
-            # Below is orginal draft/backup if mod does not trigger.
+            # Below is original draft/backup if mod does not trigger.
 
         # AS script:6093
         "Let's go! We're already late!":
             "Let's go, bro! We're already late!",
 
         # AS script:6094
-        # interferes with script:7111 (a), the source of all my problems
+        # interferes with script:7111 (a), the cause of switching to label mod but now that Variant 2 exists dont feel like changing it anymore lol
         #"*Laughs* What are you wearing?":
         #    "*Laughs* Already got your Eternum E-Suit on, huh?",
 
@@ -5592,7 +5650,7 @@ init python:
 
         # AS script:6099
         "But seriously, what are you wearing?":
-            "You always play in your room, so I forgot about the E-suit.{p}Oh crap, I don't have one yet!",
+            "You always play in your room, so I forgot about the E-sui—Oh crap, I don't have one yet!",
 
         # AS script:6101
         "Eternum's official E-Suit, of course!":
@@ -5722,7 +5780,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.2 script2.rpy Lines 9770-19471
+    # v0.2 script2.rpy
 
         # AS script2:40
         "I have a feeling this shit is much bigger than we think, Annie.":
@@ -5741,8 +5799,8 @@ init python:
             "*Laughs* Don't mind my brother...",
 
         # ========== START label mod "versiontwo_mod" ==========
-        # edit of lines added by "versiontwo_mod"
-        # REPLACED BY INJECTION, leaving code just in case
+            # edit of lines added by "versiontwo_mod"
+        # REPLACED BY INJECTION, old code left just in case
 
         # AS IncestLables:2500
         #"Same to you. You must be Annie, [mc]'s told me about you.":
@@ -5752,7 +5810,7 @@ init python:
         #"Yep! I heard [mc] managed to win a neural implant at your cafe!":
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
-        # AS script2:112 {inject}
+        # AS script2:112 {inject} (replaces labelmod)
         "It's so nice to meet you, Luna!":
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
@@ -6074,8 +6132,8 @@ init python:
         "You’re... so wet...":
             "Annie... You’re... so wet...",
 
-        # AS script2:3865, also overwrites script4:5819, script6:6414, script6:6556, script8:9636
-        # excludes script2:3905, script8:9293
+        # AS script2:3865 {specific}, also overwrites script4:5819, script6:6414, script6:6556, script8:9636
+        # Excludes script2:3905, script8:9293
         "Oh Annie...":[
             ("Oh sis...","script2:3865"),
             ("Oh sis...","script4:5819"),
@@ -6151,7 +6209,7 @@ init python:
             "And on the first day of school, I saw him harassing my twin sister.",
 
         # ========== START WIP ==========
-        # BA/N: come back to this. technically with Annie as sister, MC was never completely alone; Not sure how to fit that in while keeping the sentiment of the original.
+            # BA/N: technically with Annie as sister, MC was never completely alone; Not sure how to fit that in while keeping the sentiment of the original.
 
         # BM script2:6102 (x)
         #"It probably doesn’t mean much, but I can sort of understand where you’re coming from.":
@@ -6165,15 +6223,17 @@ init python:
         #"I know what it's like to be alone.":
         #    "I know what it's like to feel alone.",
 
-        # BM script2:6106 (x)
+        # BM script2:6106 (x) {inject}
         #"Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
-        #    "Right, you {i}are{/i} Dalia's brother...{p}Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life...",
+        #    ("Oh right, you {i}are{/i} Dalia's brother...","script2:6106",[
+        #        'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
+        #    ]),
 
         # ========== END WIP ==========
 
 
     # -----------------------------------------
-    # v0.3 script3.rpy Lines 19472-30120
+    # v0.3 script3.rpy
 
         # AS script3:2877 (d)
         "And with Annie and you too? Now that’s what I call a party!":
@@ -6356,7 +6416,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.4 script4.rpy Lines 30121-39683
+    # v0.4 script4.rpy
 
         # AS script4:4286
         "(I'm going on a date with [mc]!)":
@@ -6480,7 +6540,7 @@ init python:
         "But... I also feel like we're not meant to be more than that. Things would get awkward if we tried to get together, and our friendship is too important to risk, for me at least.":
             "But... I also feel like we're not meant to be more than that. Things would get {i}so{/i} complicated if we tried to get together, and our relationship is too important to risk, for me at least.",
 
-        # BA/N: next 7 lines borrowed and modified from stepsis map, which rewote them to be a bit more emotional which I agree with, but tried to keep more of the original lines in it than the stepsis map did.
+        # BA/N: next 7 lines borrowed and modified from stepsis map, which rewrote them to be a bit more emotional which I agree with, but tried to keep more of the original lines in it than the stepsis map did.
 
         # AS script4:5316
         "I just like spending time with you!":
@@ -6689,7 +6749,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.5 script5.rpy Lines 39684-55297
+    # v0.5 script5.rpy
 
         # AS script5:809
         # BA/N: tried reworking "best friends" bit, idk if it works
@@ -6743,7 +6803,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.6 script6.rpy Lines 52298-66773
+    # v0.6 script6.rpy
 
         # AS script6:229 (d)
         "Truth is, you do look really good, Annie!":
@@ -6800,7 +6860,7 @@ init python:
             "A bit striking because I {i}never{/i} saw you naked before.",
 
         # ========== START Murder Mystery ==========
-        # adding this just to note that this section is organized by script line, and does not really reflect the order the events actually play out in game
+            # adding this just to note that this section is organized by script line, and does not really reflect the order the events actually play out in game
 
         # AS script6:3524
         "What? Annie?":
@@ -6838,8 +6898,8 @@ init python:
         "Can you focus and stop being a pig?!":
             "Can you focus and stop being a pervert?!",
 
-        # AS script6:5739
-        # FIXED no longer interferes with script:3745 (d), script3:734 (no)
+        # AS script6:5739 {specific}
+        # Excludes script:3745 (d), script3:734 (no)
         "[mc]!!":
             ("Bro!!","script6:5739"),
 
@@ -6866,7 +6926,7 @@ init python:
                 'a "*Laughs* True, I don’t think we’ve been apart for this long before."',
                 'a "Sorry to make you go alone, but I knew I wouldn’t be ready to go back so soon."',
                 "show eaa 10",
-                'mc "Nah, you were right about that. Though was kind of interesting to be comepletely on my own for once."',
+                'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
             ]),
 
         # AS script6:6031 {inject}
@@ -6939,13 +6999,13 @@ init python:
         "*Laughs* Don't be so dramatic.":
             "*Laughs* Don't be so dramatic, sis.",
 
-        # AS script6:6215
-        # FIXED no longer interferes with script:8614 (n)
+        # AS script6:6215 {specific}
+        # Excludes script:8614 (n)
         "Good night, [mc]!":
             ("Good night, bro!","script6:6215"),
 
-        # AS script6:6218
-        # FIXED no longer interferes with script6:5866 (no) and script6:3453 (a)
+        # AS script6:6218 {specific}
+        # Excludes script6:5866 (no) and script6:3453 (a)
         "Good night, Annie!":
             ("Good night, sis!","script6:6218"),
 
@@ -7100,14 +7160,14 @@ init python:
 
 
     # -----------------------------------------
-    # v0.7 script7.rpy Lines 66774-80425
+    # v0.7 script7.rpy
 
         # AS script7:1461
         "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, Annie.":
             "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, sis.",
 
-        # AS script7:1468
-        # FIXED no longer interferes with script:7779 (eva)
+        # AS script7:1468 {specific}
+        # Excludes script:7779 (eva)
         "Thank you, [mc]...":
             ("Thank you, bro...","script7:1468"),
 
@@ -7179,7 +7239,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.8 script8.rpy Lines 80426-97360
+    # v0.8 script8.rpy
 
         # AS script8:4222
         "Come on, [mc], I need you to catch on quickly! We're running out of time.":
@@ -7209,7 +7269,7 @@ init python:
         "(She's definitely going on a date with [mc].)":
             "(She's definitely going on a date with [mc]. Her own twin brother!)",
 
-        # AS script8:6983
+        # AS script8:6983 (l)
         # BA/N: leaving this here for the future when we learn what exactly Luna's vision was
         # "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)":
         #     "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)",
@@ -7238,8 +7298,8 @@ init python:
                 'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
             ]),
 
-        # AS script8:7101
-        # FIXED no longer interferes with script4:2443 (d). original backup line saved just in case
+        # AS script8:7101 {specific}
+        # Excludes script4:2443 (d). original backup line saved just in case
         "*Chuckles* If you say so...":
             ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7101"),
             #"*Chuckles* Thanks, bro. I appreciate it.",
@@ -7345,8 +7405,8 @@ init python:
         "Hi Annie. I'm [mc].":
             "This is Chang, Annie.",
 
-        # AS script8:8159
-        # FIXED no longer interferes with script5:1198 (l)
+        # AS script8:8159 {specific}
+        # Excludes script5:1198 (l)
         "Hi [mc].":
             ("Hi Chang.","script8:8159"),
 
@@ -7488,10 +7548,6 @@ init python:
         "To see the pandas at the zoo":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
-        # BA/N: NO LONGER NEEDED temp fix for multi-mod tags not being stripped
-        #"To see the pandas at the zoo [annie_pts]":
-        #    "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
-
         # AS script8:8425
         "To see the pandas at the zoo.":
             "For Dad to finish the registration.",
@@ -7580,7 +7636,7 @@ init python:
         "*Moans* Ohh mmmm-y-yes, [mc]...":
             "*Moans* Ohh mmmm-y-yes, bro...",
 
-        # AS script8:9382 and AS script8:9494
+        # AS script8:9382, also overwrites script8:9494
         "*Tracing Annie's figure* Oh, babe...":
             "*Tracing Annie's figure* Oh, sis...",
 
@@ -7604,8 +7660,8 @@ init python:
         "I-I can't handle this unbearable teasing anymore, Annie...":
             "I-I can't handle this unbearable teasing anymore, sis...",
 
-        # AS script8:9559
-        # Fixed no longer interferes with other lines (x) (no) (l)
+        # AS script8:9559 {specific}
+        # Excludes other lines (x) (no) (l)
         # with necessary overrides to keep dalia lines
         "Oh babe...":[
             ("Oh sis...","script6:10790"), #dalia
@@ -7613,11 +7669,11 @@ init python:
             ("Oh sis...","script8:9559"), #annie
         ],
 
-        # AS script8:9583 {inject}
-        "*Moans* I can feel it...":
-            ("*Moans* I can feel it...","script8:9583",[
-                'a "*Giggles* We’re finally connected..."'
-            ]),
+        # AS script8:9583 {inject} WIP
+        #"*Moans* I can feel it...":
+        #    ("*Moans* I can feel it...","script8:9583",[
+        #        'a "*Giggles* We’re finally connected..."'
+        #    ]),
 
         # AS script8:9591
         "You're doing great, babe...":
@@ -7667,19 +7723,19 @@ init python:
     # -----------------------------------------
     # v0.9 script9.rpy
 
-        # AS script9:167
+        # AS script9:167 (p)
         "Is there anything better than spending time with my favorite sister?":
             "Is there anything better than spending time with one of my precious little sisters?",
 
-        # AS script9:433
+        # AS script9:432 (p)
         "*Grumbling to herself* I had a feeling something was going on between him and Nova. Or Annie. Or even Luna, for that matter!":
             "*Grumbling to herself* I had a feeling something was going on between him and Nova. Or Alex. Or even Luna, for that matter!",
 
-        # AS script9:527
+        # AS script9:527 (n)
         "*Yawns* Agh, what's with all this noise so early in the morning, girls? You're gonna wake up Annie.":
             "*Yawns* Agh, what's with all this noise so early in the morning, girls? You're gonna wake up your sister.",
 
-        # AS script9:553
+        # AS script9:553 (p)
         # BA/N: Ugh Can't think of a rewrite that works well. 
         "Luckily, I don't have any more sisters he can be with at the moment.":
             "Maybe having more secret adventures with his {i}other{/i} sister, too.",
@@ -7700,7 +7756,7 @@ init python:
         "His only family is a drunk skunk of a father living an ocean away.":
             "Our father is a drunk skunk of a man living an ocean away.",
 
-        # AS script9:3123
+        # AS script9:3123 (d)
         "First, her sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].":
             "First, your other sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].",
 
@@ -7713,9 +7769,15 @@ init python:
             "I don't know how to live without him, Nova.",
 
         # AS script9:9919
-        # BA/N: too clunky
+        # Original non-inject version
+        #"Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":
+        #    "Annie flew back to the UK a few days ago. Our grandparents invited us over for Christmas for the first time since we were kids.{p}Annie accepted their invite, but I already saw them when I went back recently so I'm staying here. She’s gonna be back before New Year’s Eve.",
+
+        # AS script9:9919 {inject}
         "Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":
-            " Annie flew back to the UK a few days ago. Our grandparents invited us over for Christmas for the first time ever, probably missed us too much.{p}Annie took them up on the offer, but I already went back recently so I'm staying here. She’s gonna be back before New Year’s Eve.",
+            ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9919",[
+                'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
+            ]),
 
         # AS script9:9941
         "Nova's doing the family thing too.":
@@ -7772,7 +7834,7 @@ init python:
         # -----------------------------------------
 
     # -----------------------------------------
-    # v0.1 script.rpy  Lines     1-9769
+    # v0.1 script.rpy
 
         # OS 833
         "He had to work to support us both. Heaven knows where I'd be without him.":
@@ -7800,7 +7862,7 @@ init python:
 
         # OS 930
         "(I mean… she's cute, and we love spending time with each other, but I've never tried to make a move on her.)":
-            "(...)",
+            "(. . .)",
 
         # OS 931
         "(I could never do it.)":
@@ -7856,15 +7918,15 @@ init python:
 
 
     # -----------------------------------------
-    # v0.2 script2.rpy Lines  9770-19471
+    # v0.2 script2.rpy Lines
 
 
     # -----------------------------------------
-    # v0.3 script3.rpy Lines 19472-30120
+    # v0.3 script3.rpy Lines
 
 
     # -----------------------------------------
-    # v0.4 script4.rpy Lines 30121-39683
+    # v0.4 script4.rpy Lines
 
         # OS script4:8176 (misc)
         # BA/N: borrowed from aunt map, random but funny change
@@ -7873,7 +7935,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.5 script5.rpy Lines 39684-55297
+    # v0.5 script5.rpy
 
         # OS script5:809
         "The scholarship that was granted to [mc] and his best friends is the best thing that has happened to me in a very long time.":
@@ -7881,11 +7943,11 @@ init python:
 
 
     # -----------------------------------------
-    # v0.6 script6.rpy Lines 52298-66773
+    # v0.6 script6.rpy
 
 
     # -----------------------------------------
-    # v0.7 script7.rpy Lines 66774-80425
+    # v0.7 script7.rpy
 
 
         # ========== START harem thoughts ==========
@@ -7926,11 +7988,11 @@ init python:
 
 
     # -----------------------------------------
-    # v0.8 script8.rpy Lines 80426-97360
+    # v0.8 script8.rpy
 
 
     # -----------------------------------------
-    # v0.9 script9.rpy Lines 97361-118348
+    # v0.9 script9.rpy
 
 
     }
@@ -7943,13 +8005,25 @@ init python:
         # Done by Alenissmart initially, additional edits by BlueArrow
         # Al/N: Sorry but I am too lazy to write an entire new map, so I decided to copy the twin sister map and do edits to make it fit the half sister setting
         # -----------------------------------------
-        # HS 0000 = Half Sister map, Line number
-        # Line numbers based on compiled script from v0.9.0, subject to change in future updates
-        #    (which already happened in v0.9.4 fml, too lazy to redo all the numbers)
-        # -----------------------------------------
         # HS script:0000 = Half Sister map, RPY file:Line Number
         #     Numbers based on v0.9.5, subject to change in future updates
-        #     slowly adapting line numbers to this format
+        # Tags based who the line is about contextually, not always the speaker.
+        # Selectively applied for clarification
+        # (menu) = Choice menu line
+        # (mc) = MC line
+        # (n) = Nancy line
+        # (p) = Penelope line
+        # (d) = Dalia line
+        # (a) = Annie line
+        # (x) = Alex line
+        # (l) = Luna line
+        # (no) = Nova line
+        # (ca) = Calypso line
+        # -----------------------------------------
+        # Code tags
+        # {specific} = use of Variant 2 to target specific lines
+        # {inject} = use of Variant 3 to inject new lines      
+        # -----------------------------------------
         # LW/N = Lucifer_W's notes
         # Al/N = Alenissmart's notes
         # l9/N = l9453394's notes
@@ -7957,7 +8031,7 @@ init python:
         # -----------------------------------------
 
     # -----------------------------------------
-    # v0.1 script.rpy  Lines 1-9769
+    # v0.1 script.rpy
 
         # HS script:951
         "That’s actually why we ended up moving to the UK; Dad needed to relocate there to keep his position.":
@@ -8001,7 +8075,7 @@ init python:
 
         # HS script:1054
         "(I mean… she's cute, and we love spending time with each other, but I've never tried to make a move on her.)":
-            "(...)",
+            "(. . .)",
 
         # HS script:1055
         "(I could never do it.)":
@@ -8237,7 +8311,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.2 script2.rpy Lines 9770-19471
+    # v0.2 script2.rpy
 
         # HS script2:40
         "I have a feeling this shit is much bigger than we think, Annie.":
@@ -8256,8 +8330,8 @@ init python:
             "*Laughs* Don't mind my brother...",
 
         # ========== START label mod "versiontwo_mod" ==========
-        # edit of lines added by "versiontwo_mod"
-        # REPLACED BY INJECTION, leaving code just in case
+            # edit of lines added by "versiontwo_mod"
+        # REPLACED BY INJECTION, old code left just in case
 
         # HS IncestLables:2500
         #"Same to you. You must be Annie, [mc]'s told me about you.":
@@ -8267,7 +8341,7 @@ init python:
         #"Yep! I heard [mc] managed to win a neural implant at your cafe!":
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
-        # HS script2:112 {inject}
+        # HS script2:112 {inject} (replaces labelmod)
         "It's so nice to meet you, Luna!":
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
@@ -8592,7 +8666,7 @@ init python:
             "That's even better then, you can introduce me! Can I go say hi?",
 
     # -----------------------------------------
-    # v0.3 script3.rpy Lines 19472-30120
+    # v0.3 script3.rpy
 
         # HS script3:3362
         "Good morning, Annie!":
@@ -8692,7 +8766,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.4 script4.rpy Lines 30121-39683
+    # v0.4 script4.rpy
 
         # HS script4:2930 last name override
         "And on my right, weighing in at 125 lbs... Dalia Carter!":
@@ -8780,7 +8854,7 @@ init python:
         "But... I also feel like we're not meant to be more than that. Things would get awkward if we tried to get together, and our friendship is too important to risk, for me at least.":
             "But... I also feel like we're not meant to be more than that. Things would get awkward if we tried to get together, and our relationship is too important to risk, for me at least.",
 
-        # BA/N: next 7 lines borrowed and modified from stepsis map, which rewote them to be a bit more emotional which I agree with, but tried to keep more of the original lines in it than the stepsis map did.
+        # BA/N: next 7 lines borrowed and modified from stepsis map, which rewrote them to be a bit more emotional which I agree with, but tried to keep more of the original lines in it than the stepsis map did.
 
         # HS script4:5316
         "I just like spending time with you!":
@@ -8947,7 +9021,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.5 script5.rpy Lines 39684-55297
+    # v0.5 script5.rpy
 
         # HS script5:629 last name override
         "Oh, that is very likely, actually, Ms. Carter. It would be poetic and, at the same time, easy to make it look like an accident.":
@@ -9024,7 +9098,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.6 script6.rpy Lines 52298-66773
+    # v0.6 script6.rpy
 
         # HS script6:1678
         "How was your father?":
@@ -9047,7 +9121,7 @@ init python:
             "A bit striking because I {i}never{/i} saw you naked before.",
 
         # ========== START Murder Mystery ==========
-        # adding this just to note that this section is organized by script line, and does not really reflect the order the events actually play out in game
+            # adding this just to note that this section is organized by script line, and does not really reflect the order the events actually play out in game
 
         # HS script6:3536
         "Elementary, my dear [mc].":
@@ -9180,7 +9254,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.7 script7.rpy Lines 66774-80425
+    # v0.7 script7.rpy
 
         # HS script7:905 last name override
         "Penelope Carter plays Eternum!":
@@ -9266,7 +9340,7 @@ init python:
 
 
     # -----------------------------------------
-    # v0.8 script8.rpy Lines 80426-97360
+    # v0.8 script8.rpy
 
         # HS script8:3470 last name override
         "Was that Penelope Carter?!":
@@ -9292,7 +9366,7 @@ init python:
         "(She's definitely going on a date with [mc].)":
             "(She's definitely going on a date with [mc]. Her own brother!)",
 
-        # HS script8:6983
+        # HS script8:6983 (l)
         # BA/N: leaving this here for the future when we learn what exactly Luna's vision was
         # "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)":
         #     "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)",
@@ -9378,10 +9452,6 @@ init python:
         "To see the pandas at the zoo":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
-        # BA/N: NO LONGER NEEDED temp fix for multi-mod tags not being stripped
-        #"To see the pandas at the zoo [annie_pts]":
-        #    "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
-
         # HS script8:8425
         "To see the pandas at the zoo.":
             "For Dad to finish the registration so Uncle could take us to to our new home.",
@@ -9442,11 +9512,13 @@ init python:
         "Oh, trust me, you've seen nothing yet, my love...":
             "Oh, trust me, you've seen nothing yet, sis...",
 
-        # HS script8:9583 {inject}
+        # HS script8:9582
+        "*Moans* Oh good grief, it's IN...":
+            "*Moans* Oh good grief, it's IN... I can feel it...",
+
+        # HS script8:9583
         "*Moans* I can feel it...":
-            ("*Moans* I can feel it...","script8:9583",[
-                'a "*Giggles* My brother’s finally inside of me..."'
-            ]),
+            "*Moans* My brother’s finally inside of me...",
 
         # HS script8:9639
         "*Panting* I-I'm cumming, [mc]...":
@@ -9466,7 +9538,11 @@ init python:
 
 
     # -----------------------------------------
-    # v0.9 script9.rpy Lines 97361-118348
+    # v0.9 script9.rpy
+
+        # HS script9:432 (p)
+        "*Grumbling to herself* I had a feeling something was going on between him and Nova. Or Annie. Or even Luna, for that matter!":
+            "*Grumbling to herself* I had a feeling something was going on between him and Nova. Or Alex. Or even Luna, for that matter!",
 
         # HS script9:553
         # BA/N: Ugh Can't think of a rewrite that works well. 
@@ -9892,8 +9968,8 @@ init python:
         "So tell me... don't you wanna see a bit more? If I had a \"friend\" who looked like this, I’d be dying to find out what’s underneath all those clothes...":
             "So tell me... don't you wanna see a bit more? If I had a cousin who looked like this, I’d be secretly dying to find out what’s underneath all those clothes...",
         
-        # AU script3:6005 (p)
-        # FIXED no longer interferes with script:1493
+        # AU script3:6005 (p) {specific}
+        # Excludes script:1493 (chang)
         "She's perfect...":
             ("She's... my cousin is... perfect...","script3:6005"),
         
@@ -10643,7 +10719,7 @@ init python:
         "The lady said no.":
             "Hands off my little sister. The lady said no.",
         
-        # ST script:2952 and script4:4803
+        # ST script:2952, also overwrites script4:4803
         "Are you okay, Annie?":
             "Are you okay, sis?",
         
