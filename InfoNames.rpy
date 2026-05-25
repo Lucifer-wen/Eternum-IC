@@ -92,6 +92,7 @@ init python:
     def _icmod_build_info_name(char_key, cfg):
         source_path = cfg["source_path"]
         default_last = cfg["default_last"]
+        _cache = {}
 
         def _render(_st, _at):
             # Compute last name dynamically so it updates after the player
@@ -110,6 +111,10 @@ init python:
                 last = (chat_names.get(char_key) or default_last or "").strip()
             last = last.strip().upper()
 
+            # Only rebuild when the displayed name actually changes.
+            if _cache.get("key") == last and _cache.get("composite") is not None:
+                return _cache["composite"], None
+
             # Text layers go first (bottom), source_path on top — so the
             # baked PNG shadow/shading overlaps the dynamic text naturally.
             parts = []
@@ -122,7 +127,9 @@ init python:
                 _ICMOD_INFO_IMG_SIZE,
                 *parts
             )
-            return composite, 0.0
+            _cache["key"] = last
+            _cache["composite"] = composite
+            return composite, None
 
         return DynamicDisplayable(_render)
 

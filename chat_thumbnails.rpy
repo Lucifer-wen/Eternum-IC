@@ -98,6 +98,7 @@ init python:
 
     def _icmod_build_thumb(name_key, source, first, default_last, right_x=None, text_pos=None, text_anchor=None):
         right = right_x if right_x is not None else _ICMOD_TEXT_RIGHT
+        _cache = {}
 
         def _render(_st, _at):
             override = store.icmod_chat_thumb_overrides.get(name_key, None)
@@ -124,6 +125,10 @@ init python:
                 else:
                     label = first
 
+            # Only rebuild the composite when the label actually changes.
+            if _cache.get("label") == label and _cache.get("composite") is not None:
+                return _cache["composite"], None
+
             text_displayable = Text(label, style="icmod_chat_thumb_text")
 
             # Tatsächliche Textgröße messen, dann rechtsbündig platzieren
@@ -138,7 +143,9 @@ init python:
                 (0, 0), source,
                 (text_x, text_y), text_displayable,
             )
-            return composite, 0.0
+            _cache["label"] = label
+            _cache["composite"] = composite
+            return composite, None
 
         return DynamicDisplayable(_render)
 
