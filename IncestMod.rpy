@@ -29,6 +29,7 @@ default _im_post_say_pending = []
 default _im_injection_queued = False
 default _im_executing_injection = False
 default _im_in_say_call = False
+default _im_active_say_text = None
 # default persistent.im_cousin_override = None
 
 # -----------------------------------------
@@ -406,6 +407,10 @@ init python:
         except Exception:
             pass
         try:
+            store._im_active_say_text = None
+        except Exception:
+            pass
+        try:
             store._im_executing_injection = False
         except Exception:
             pass
@@ -547,6 +552,7 @@ init python:
         # see it as True and cannot queue injections spuriously.
         if not is_injection:
             try:
+                store._im_active_say_text = _im_get_current_say_raw_text() or what
                 store._im_in_say_call = True
             except Exception:
                 pass
@@ -1614,21 +1620,21 @@ init python:
 
         # BM script:5583 (n) {inject}
         "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":[
-            ("(I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5583",[
+            ("(OGinj I mean... if Dalia and Penelope never found out, then would it really be so bad...?)","script:5583",[
                 "show ale 31",
-                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+                'n "(OGinj What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
 
             # Bonus Mod
-            ("(I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5649",[
+            ("(BMod I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5649",[
                 "show ale 31",
-                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+                'n "(BMod What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
 
             # Multi Mod
-            ("(I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5584",[
+            ("(MMod I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5584",[
                 "show ale 31",
-                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+                'n "(MMod What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
         ],
 
@@ -14805,6 +14811,43 @@ init python:
             return value
         return _in_strip_tag_re.sub("", value)
 
+    def _im_get_current_say_raw_text():
+        ast_mod = _in_ast_module
+        if ast_mod is None:
+            return None
+        try:
+            ctx = renpy.game.context()
+            node_id = getattr(ctx, "current", None)
+            if not node_id:
+                return None
+            node = renpy.game.script.lookup(node_id)
+        except Exception:
+            return None
+        SayCls = getattr(ast_mod, "Say", None)
+        if SayCls is None or not isinstance(node, SayCls):
+            return None
+        raw_what = getattr(node, "what", None)
+        if isinstance(raw_what, str):
+            return raw_what
+        return None
+
+    def _im_matches_active_say_text(text):
+        active = getattr(store, "_im_active_say_text", None)
+        if not isinstance(text, str) or not isinstance(active, str):
+            return False
+        try:
+            active_cmp = _im_strip_bonusmod_tags(_im_strip_multimod_tags(active, force=True))
+            text_cmp = _im_strip_bonusmod_tags(_im_strip_multimod_tags(text, force=True))
+        except Exception:
+            active_cmp = active
+            text_cmp = text
+        if _in_normalize_equiv_text(active_cmp) == _in_normalize_equiv_text(text_cmp):
+            return True
+        return (
+            _in_normalize_equiv_text(_in_strip_tags(active_cmp))
+            == _in_normalize_equiv_text(_in_strip_tags(text_cmp))
+        )
+
     # cache last speaker for "extend"
     try:
         _last_say_who
@@ -15187,17 +15230,17 @@ init python:
                             replaced_once = True
                             break
                 if replaced_once and _im_inj:
-                    # Only queue when we are inside a real say __call__.
-                    # replace_text also runs on History/log re-renders; the
-                    # _im_in_say_call flag (set in _im_char_call_wrapper only
-                    # while the say is active) prevents those from queuing.
+                    # Ren'Py can filter the same say line multiple times before
+                    # settling on the final AST node. Keep the latest matching
+                    # injection so an early stale node location cannot win.
                     try:
                         if (
                             getattr(store, "_im_in_say_call", False)
-                            and not getattr(store, "_im_injection_queued", False)
+                            and _im_matches_active_say_text(s)
                         ):
-                            store._im_injection_queued = True
+                            del store._im_post_say_pending[:]
                             store._im_post_say_pending.extend(_im_inj)
+                            store._im_injection_queued = True
                     except Exception:
                         pass
         except Exception:
