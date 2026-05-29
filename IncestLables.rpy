@@ -3282,20 +3282,25 @@ label potionslabel_mod:
 '''
 ===ideas for label mods, may or may not do===
 
-script5:collegepartypenny1 for base map
+script:touch for all maps, 416 lines
+    replace injection lines since for some reason it's bugging out for the multimod
+    would change/add total 3-ish lines, is it worth it??
+
+script5:collegepartypenny1 for base map, 940 lines
     Rewrite the truth or dare game to either work in or work around the incest
     would be a ridiculous amount of work
     or cop out and hide the incest like in aunt map lol
 
-script7:friday07 for all maps
+script7:friday07 for all maps, 184 lines
     add some if statements for additional harem thoughts if in incest routes.
     might be too much work for ultimately one line per route
     added the lines in main code regardless
         if using the incest mod you should be on at least one incest route right???
     Leaving it at that until someone raises a complaint lol
+    Might need to do this since injections are bugging out here too
 
-script8:ga_novanancy for base map
+script8:ga_novanancy for base map, 716 lines 
     redo script8:5803 so it "babe" can be changed to mom without affecting Nova option
-    Section is 716 lines long though, not worth it for one line
+    Section is long though, not worth it for one line
 
 '''
