@@ -29,7 +29,6 @@ default _im_post_say_pending = []
 default _im_injection_queued = False
 default _im_executing_injection = False
 default _im_in_say_call = False
-default _im_active_say_text = None
 # default persistent.im_cousin_override = None
 
 # -----------------------------------------
@@ -66,7 +65,20 @@ init python:
                     src = _os.path.join(mod_presplash_dir, src_base + ext)
                     if _os.path.exists(src):
                         dst = _os.path.join(gamedir, dst_base + ext)
-                        _shutil.copy2(src, dst)
+                        try:
+                            if _os.path.exists(dst):
+                                src_stat = _os.stat(src)
+                                dst_stat = _os.stat(dst)
+                                if (
+                                    src_stat.st_size == dst_stat.st_size
+                                    and int(src_stat.st_mtime) == int(dst_stat.st_mtime)
+                                ):
+                                    break
+                            _shutil.copy2(src, dst)
+                        except Exception:
+                            # Best effort only. Presplash is cosmetic and should
+                            # never slow or block startup if filesystem access fails.
+                            pass
                         break
         except Exception:
             pass
@@ -74,6 +86,10 @@ init python:
     _im_install_presplash()
 
 init python:
+    # Cache results of renpy.loadable() checks — these never change after game start.
+    _im_multimod_present = None
+    _im_bonusmod_present = None
+
     def _im_strip_multimod_tags(text, *, force=False):
         """
         Remove unsupported multi-mod tags (e.g. [gr]) when
@@ -81,13 +97,19 @@ init python:
         isn't defined in the current environment. Set force=True to strip
         tags unconditionally (useful when matching dialogue variants).
         """
+        global _im_multimod_present
         try:
-            if (not force) and renpy.loadable("mod_additions/mod_options.rpy"):
-                return text
+            if not force:
+                if _im_multimod_present is None:
+                    try:
+                        _im_multimod_present = renpy.loadable("mod_additions/mod_options.rpy")
+                    except Exception:
+                        _im_multimod_present = False
+                if _im_multimod_present:
+                    return text
         except Exception:
             pass
         try:
-            import re
             t = text
             t = re.sub(r'\[red\]\(Insist\)', '(Insist)', t)
             t = re.sub(r'\(attack afterward\)', '', t)
@@ -97,11 +119,14 @@ init python:
             return text
 
     def _im_define_multimod_tags():
+        global _im_multimod_present
         try:
-            if renpy.loadable("mod_additions/mod_options.rpy"):
+            present = renpy.loadable("mod_additions/mod_options.rpy")
+            _im_multimod_present = present
+            if present:
                 return
         except Exception:
-            pass
+            _im_multimod_present = False
         for _tag in ("gr", "mm", "red", "blue", "green", "pink", "mt", "nova_pts", "nancy_pts", "dalia_pts", "annie_pts", "alex_pts", "penelope_pts", "luna_pts", "calypso_pts"):
             if not hasattr(store, _tag):
                 setattr(store, _tag, "")
@@ -114,13 +139,18 @@ init python:
         Bonus Mod is not installed. Prevents NameError crashes if the tag
         isn't defined in the current environment.
         """
+        global _im_bonusmod_present
         try:
-            if renpy.loadable("achievements/achievements.rpy"):
+            if _im_bonusmod_present is None:
+                try:
+                    _im_bonusmod_present = renpy.loadable("achievements/achievements.rpy")
+                except Exception:
+                    _im_bonusmod_present = False
+            if _im_bonusmod_present:
                 return text
         except Exception:
             pass
         try:
-            import re
             t = text
             t = re.sub(r'\{color=\[(?:walk_points|walk_path|walk_points_chat|walk_path_chat|computer_color|birthday_color|reception_color|read_this_color|leave_color|stand_up_color|right_elevator_color|left_elevator_color)\]\}', '', t)
             return t.strip()
@@ -128,11 +158,14 @@ init python:
             return text
 
     def _im_define_bonusmod_tags():
+        global _im_bonusmod_present
         try:
-            if renpy.loadable("achievements/achievements.rpy"):
+            present = renpy.loadable("achievements/achievements.rpy")
+            _im_bonusmod_present = present
+            if present:
                 return
         except Exception:
-            pass
+            _im_bonusmod_present = False
         for _tag in ("walk_points", "walk_path", "computer_color", "birthday_color", "reception_color", "read_this_color", "leave_color", "stand_up_color", "right_elevator_color", "left_elevator_color"):
             if not hasattr(store, _tag):
                 setattr(store, _tag, "CCCCCC")
@@ -354,6 +387,8 @@ init python:
 # Post-line injection: parse + execute + say_callback
 # -----------------------------------------
 init python:
+    import re as _imre  # module-level import; avoids repeated import overhead per injection call
+
     def _im_parse_injection(s):
         # Parse an injection string into (kind, *args).
         # Supported:
@@ -363,7 +398,6 @@ init python:
         #   "show train 6 with dis" -> ("show", "train 6", "dis")
         #   "hide train"            -> ("hide", "train", None)
         #   "scene bg r"            -> ("scene", "bg r", None)
-        import re as _imre
         s = s.strip()
 
         # Strip optional trailing  with <name>
@@ -404,10 +438,6 @@ init python:
     def _im_reset_runtime_state(clear_pending=False):
         try:
             store._im_in_say_call = False
-        except Exception:
-            pass
-        try:
-            store._im_active_say_text = None
         except Exception:
             pass
         try:
@@ -552,7 +582,6 @@ init python:
         # see it as True and cannot queue injections spuriously.
         if not is_injection:
             try:
-                store._im_active_say_text = _im_get_current_say_raw_text() or what
                 store._im_in_say_call = True
             except Exception:
                 pass
@@ -638,9 +667,14 @@ init python:
         except Exception:
             pass
 
+    _im_skip_to_mod_interact_cb._im_is_skip_to_mod_interact_cb = True
+
     try:
-        if _im_skip_to_mod_interact_cb not in config.interact_callbacks:
-            config.interact_callbacks.append(_im_skip_to_mod_interact_cb)
+        config.interact_callbacks[:] = [
+            cb for cb in config.interact_callbacks
+            if not getattr(cb, '_im_is_skip_to_mod_interact_cb', False)
+        ]
+        config.interact_callbacks.append(_im_skip_to_mod_interact_cb)
     except Exception:
         pass
 
@@ -756,12 +790,17 @@ init python:
 # - Catches labels on entry, not upfront
 # - Uses explicit map (`im_label_map`) or runtime overrides
 # -----------------------------------------
-init python early hide:
+init python early:
     from renpy import exports as rpy
     from renpy import config as rconfig
     import store
 
-    _im_label_chain = []
+    try:
+        _im_label_chain
+    except NameError:
+        _im_label_chain = []
+    if not isinstance(_im_label_chain, list):
+        _im_label_chain = []
 
     if not hasattr(store, "_im_redirecting"):
         store._im_redirecting = False
@@ -848,14 +887,16 @@ init python early hide:
         return True
 
     def _im_set_override(src, dst):
-        # set runtime override; callback will honor it immediately on next entry
+        # Set runtime override and refresh the cached config map immediately.
         store.im_label_overrides[src] = dst
+        _im_apply_map_to_config()
 
     def _im_clear_override(src=None):
         if src is None:
             store.im_label_overrides.clear()
         else:
             store.im_label_overrides.pop(src, None)
+        _im_apply_map_to_config()
 
     def _im_toggle_redirect(on=None):
         if on is None:
@@ -864,17 +905,22 @@ init python early hide:
             store.im_redirect_enabled = bool(on)
 
     def _im_get_override(target):
-        # Build current effective map and resolve
-        effective, _ = _im_collect_maps()
-        ov = effective.get(target, None)
+        # Use the cached config map. Rebuilding all label maps here is expensive
+        # because this function can run on every label entry/fall-through.
+        try:
+            overrides = getattr(rconfig, "label_overrides", None)
+            ov = overrides.get(target, None) if overrides else None
+        except Exception:
+            ov = None
         if ov and rpy.has_label(ov):
             return ov
         return None
 
     def _im_label_cb(label, *a, **kw):
-        # Keep mapping in sync with mode switches
+        # Keep mapping in sync with mode switches.
         try:
-            _im_refresh_if_flags_changed()
+            if _im_refresh_if_flags_changed():
+                _im_apply_map_to_config()
         except Exception:
             pass
         for cb in list(_im_label_chain):
@@ -922,13 +968,36 @@ init python early hide:
             _im_label_chain.append(cb)
 
     def _im_ensure_label_callback():
-        curr = getattr(rconfig, "label_callback", None)
-        # Use sentinel attribute instead of identity so reloads don't grow the chain.
-        if not getattr(curr, '_im_is_label_cb', False):
-            _im_register_prev_label_cb(curr)
-            rconfig.label_callback = _im_label_cb
+        # Ren'Py 8.x uses config.label_callbacks (a list). Some older builds
+        # and mods used config.label_callback (singular). Support both while
+        # avoiding duplicate callback execution after script reloads.
+        try:
+            callbacks = getattr(rconfig, "label_callbacks", None)
+            if callbacks is not None:
+                existing = list(callbacks)
+                for cb in existing:
+                    _im_register_prev_label_cb(cb)
+                # Replace old callbacks/wrappers with a single wrapper. The
+                # wrapper calls the previous callbacks exactly once, then can
+                # redirect safely.
+                if isinstance(callbacks, list):
+                    callbacks[:] = [_im_label_cb]
+                else:
+                    rconfig.label_callbacks = [_im_label_cb]
+        except Exception:
+            pass
+
+        try:
+            curr = getattr(rconfig, "label_callback", None)
+            # Use sentinel attribute instead of identity so reloads don't grow the chain.
+            if not getattr(curr, '_im_is_label_cb', False):
+                _im_register_prev_label_cb(curr)
+                rconfig.label_callback = _im_label_cb
+        except Exception:
+            pass
 
     _im_ensure_label_callback()
+    _im_apply_map_to_config()
 
     # Ensure fall-through labels (no explicit jump) are still intercepted.
     try:
@@ -981,20 +1050,59 @@ init python early hide:
 
         _im_ast.Label.execute = _im_label_execute_with_redirect
 
-    # Keep overrides in sync before each statement executes
+    try:
+        _im_stmt_cb_counter
+    except NameError:
+        _im_stmt_cb_counter = 0
+
+    # Keep overrides in sync before each statement executes, but avoid doing
+    # callback-list maintenance on every statement.
     def _im_stmt_cb(loc):
+        global _im_stmt_cb_counter
         try:
-            if _im_refresh_if_flags_changed():
+            changed = _im_refresh_if_flags_changed()
+            if changed:
                 _im_apply_map_to_config()
-            _im_ensure_label_callback()
+                _im_ensure_label_callback()
+                _im_stmt_cb_counter = 0
+                return
+
+            # Guard against another mod/script reload replacing label callbacks,
+            # but check only occasionally instead of every statement.
+            _im_stmt_cb_counter += 1
+            if _im_stmt_cb_counter < 200:
+                return
+            _im_stmt_cb_counter = 0
+
+            need_refresh = False
+            callbacks = getattr(rconfig, "label_callbacks", None)
+            if callbacks is not None:
+                try:
+                    need_refresh = not (
+                        len(callbacks) == 1
+                        and getattr(callbacks[0], '_im_is_label_cb', False)
+                    )
+                except Exception:
+                    need_refresh = True
+            else:
+                curr = getattr(rconfig, "label_callback", None)
+                need_refresh = not getattr(curr, '_im_is_label_cb', False)
+
+            if need_refresh:
+                _im_ensure_label_callback()
         except Exception:
             pass
+
+    _im_stmt_cb._im_is_stmt_cb = True
 
     try:
         if getattr(rconfig, "statement_callbacks", None) is None:
             rconfig.statement_callbacks = []
-        if _im_stmt_cb not in rconfig.statement_callbacks:
-            rconfig.statement_callbacks.append(_im_stmt_cb)
+        rconfig.statement_callbacks[:] = [
+            cb for cb in rconfig.statement_callbacks
+            if not getattr(cb, '_im_is_stmt_cb', False)
+        ]
+        rconfig.statement_callbacks.append(_im_stmt_cb)
     except Exception:
         pass
 
@@ -1008,9 +1116,12 @@ init python early hide:
         globals()["im_apply_label_map"] = _im_apply_map_to_config
 
     def _im_set_mode(mode):
+        global _in_replace_index_key, _in_replace_index_cache
         store.im_incest_mode = mode
         _im_apply_incest_mode()
         _im_apply_map_to_config()
+        _in_replace_index_key = None
+        _in_replace_index_cache = None
         in_apply_text_map()
 
     # export helpers to store API (without leaking renpy into store)
@@ -14997,6 +15108,142 @@ init python:
             or getattr(renpy.store, 'annie_aunt', False)
         )
 
+    # Pre-compiled Nancy substitution patterns — declared before _in_transform_text
+    # so they are available when the function runs.
+    _in_nancy_possessive_re = re.compile(r"\bNancy['']s\b")
+    _in_nancy_re = re.compile(r"\bNancy\b")
+
+    # Pre-normalized skip-list strings for the Nancy swap — computed once,
+    # not on every MC say line.
+    _in_nancy_skip1 = _in_normalize_equiv_text("No, I came with Nancy, my mother.")
+    _in_nancy_skip2 = _in_normalize_equiv_text("(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)")
+
+    # Static allow-list for say/menu filtering. Building this set once avoids
+    # allocating it on every dialogue/menu line.
+    _in_allowed_say_tags = frozenset((
+        'b', 'i', 'u', 's',
+        'color', 'alpha', 'font', 'cps',
+        'k', 'w', 'nw', 'p', 'br', 'rt', 'rb',
+        'a',
+        'size',
+    ))
+
+    # Active replacement index. The old implementation scanned the entire
+    # active replacement map for every say/menu string. This index turns the
+    # common path into a handful of dictionary lookups.
+    _in_replace_index_key = None
+    _in_replace_index_cache = None
+
+    def _in_add_replace_index_entry(bucket, key, entry):
+        if key is None:
+            return
+        bucket.setdefault(key, []).append(entry)
+
+    def _in_expand_candidate_placeholders(old, mc_display, lastname_display):
+        candidates = set([old])
+        if "[mc]" in old and mc_display != "[mc]":
+            candidates.add(old.replace("[mc]", mc_display))
+        if "[lastname]" in old and lastname_display != "[lastname]":
+            for base in list(candidates):
+                candidates.add(base.replace("[lastname]", lastname_display))
+        return candidates
+
+    def _in_get_replace_index(mapping, mc_display, lastname_display):
+        global _in_replace_index_key, _in_replace_index_cache
+        try:
+            flags_key = _build_replace_map_flags
+        except Exception:
+            flags_key = None
+        key = (flags_key, len(mapping), mc_display, lastname_display)
+        if key == _in_replace_index_key and _in_replace_index_cache is not None:
+            return _in_replace_index_cache
+
+        exact = {}
+        norm = {}
+        stripped = {}
+        multimod = {}
+        order = 0
+        for old, new in mapping.items():
+            if not old:
+                order += 1
+                continue
+
+            if isinstance(new, (list, tuple)) and new and isinstance(new[0], (list, tuple)):
+                alternatives = new
+            else:
+                alternatives = (new,)
+
+            for alt_index, alt in enumerate(alternatives):
+                extracted = _im_extract_entry(alt)
+                if extracted is None:
+                    continue
+                rep, spec, inj = extracted
+                entry = (order, alt_index, old, rep, spec, tuple(inj or ()))
+                for cand in _in_expand_candidate_placeholders(old, mc_display, lastname_display):
+                    if not cand:
+                        continue
+                    _in_add_replace_index_entry(exact, cand, entry)
+                    try:
+                        _in_add_replace_index_entry(norm, _in_normalize_equiv_text(cand), entry)
+                    except Exception:
+                        pass
+                    try:
+                        _in_add_replace_index_entry(stripped, _in_normalize_equiv_text(_in_strip_tags(cand)), entry)
+                    except Exception:
+                        pass
+                    try:
+                        _in_add_replace_index_entry(multimod, _in_normalize_equiv_text(_im_strip_multimod_tags(cand, force=True)), entry)
+                    except Exception:
+                        pass
+            order += 1
+
+        _in_replace_index_key = key
+        _in_replace_index_cache = (exact, norm, stripped, multimod)
+        return _in_replace_index_cache
+
+    def _in_find_indexed_replacement(t, t_norm, t_norm_stripped, t_norm_multimod, mc_display, lastname_display, min_order=0):
+        mapping = _build_replace_map()
+        if not mapping:
+            return None
+        exact, norm, stripped, multimod = _in_get_replace_index(mapping, mc_display, lastname_display)
+
+        found = []
+        seen = set()
+
+        def _collect(entries):
+            if not entries:
+                return
+            for entry in entries:
+                ident = (entry[0], entry[1])
+                if ident in seen:
+                    continue
+                seen.add(ident)
+                found.append(entry)
+
+        _collect(exact.get(t))
+        if t_norm is not None:
+            _collect(norm.get(t_norm))
+        if t_norm_stripped is not None:
+            _collect(stripped.get(t_norm_stripped))
+        if t_norm_multimod is not None:
+            _collect(multimod.get(t_norm_multimod))
+
+        if not found:
+            return None
+        found.sort(key=lambda entry: (entry[0], entry[1]))
+
+        for order, alt_index, old, rep, spec, inj in found:
+            if order < min_order:
+                continue
+            if not _im_script_spec_matches(spec):
+                continue
+            if "[mc]" in rep:
+                rep = rep.replace("[mc]", mc_display)
+            if "[lastname]" in rep:
+                rep = rep.replace("[lastname]", lastname_display)
+            return (rep, list(inj), order + 1)
+        return None
+
     def _in_transform_text(s: str) -> str:
         global _in_adad_sync_flags, _in_display_cache, _in_display_cache_keys
         t = s
@@ -15065,206 +15312,68 @@ init python:
             mc_display = _in_display_cache["mc"]
             lastname_display = _in_display_cache["lastname"]
 
-        # 3) apply mapping first (before Nancy->Mom)
+        # 3) apply mapping first (before Nancy->Mom). Use the cached
+        # replacement index so this does not scan every map entry per line.
         try:
-            mapping = _build_replace_map()
-            for old, new in mapping.items():
-                if not old:
-                    continue
-                # VARIANT 2b: list of (text, spec[, injections]) alternatives
-                # Detected when the first element is itself a tuple/list (not a string).
-                if isinstance(new, (list, tuple)) and new and isinstance(new[0], (list, tuple)):
-                    _im_matched = None
-                    for _im_alt in new:
-                        _im_e = _im_extract_entry(_im_alt)
-                        if _im_e is not None and _im_script_spec_matches(_im_e[1]):
-                            _im_matched = _im_e
-                            break
-                    if _im_matched is None:
-                        continue
-                    new, _im_spec, _im_inj = _im_matched
-                else:
-                    _im_e = _im_extract_entry(new)
-                    if _im_e is None:
-                        continue
-                    new, _im_spec, _im_inj = _im_e
-                    if not _im_script_spec_matches(_im_spec):
-                        continue
+            _im_next_order = 0
+            # The old code could cascade into later map entries after a match.
+            # Keep that behavior, but cap the loop to avoid accidental cycles.
+            for _im_replace_pass in range(8):
+                _im_repl = _in_find_indexed_replacement(
+                    t,
+                    t_norm,
+                    t_norm_stripped,
+                    t_norm_multimod,
+                    mc_display,
+                    lastname_display,
+                    _im_next_order,
+                )
+                if _im_repl is None:
+                    break
+                t, _im_inj, _im_next_order = _im_repl
+                t_norm = _in_normalize_equiv_text(t)
+                t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                try:
+                    t_norm_multimod = _in_normalize_equiv_text(
+                        _im_strip_multimod_tags(t, force=True)
+                    )
+                except Exception:
+                    t_norm_multimod = None
 
-                # Build candidate variants allowing either raw placeholders or resolved values
-                candidates = set([old])
-                if "[mc]" in old and mc_display != "[mc]":
-                    candidates.add(old.replace("[mc]", mc_display))
-                # Expand for [lastname] on top of current candidates
-                if "[lastname]" in old and lastname_display != "[lastname]":
-                    for base in list(candidates):
-                        candidates.add(base.replace("[lastname]", lastname_display))
-
-                replaced_once = False
-                for cand in candidates:
-                    if not cand:
-                        continue
-
-                    cand_match = (t == cand)
-                    if (not cand_match) and (t_norm is not None):
-                        cand_match = (_in_normalize_equiv_text(cand) == t_norm)
-                    if cand_match:
-                        rep = new
-                        if "[mc]" in rep:
-                            rep = rep.replace("[mc]", mc_display)
-                        if "[lastname]" in rep:
-                            rep = rep.replace("[lastname]", lastname_display)
-                        t = rep
-                        t_norm = _in_normalize_equiv_text(t)
-                        t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                        try:
-                            t_norm_multimod = _in_normalize_equiv_text(
-                                _im_strip_multimod_tags(t, force=True)
-                            )
-                        except Exception:
-                            t_norm_multimod = None
-                        replaced_once = True
-                        break
-
-                # regex fallback allowing either [mc] or resolved name
-                if (not replaced_once) and ("[mc]" in old) and (mc_display != "[mc]"):
-                    try:
-                        pattern = "^" + re.escape(old).replace(
-                            re.escape("[mc]"),
-                            r"(?:\[mc\]|%s)" % re.escape(mc_display)
-                        ) + "$"
-                        rep = new.replace("[mc]", mc_display)
-                        if "[lastname]" in rep:
-                            rep = rep.replace("[lastname]", lastname_display)
-                        if re.fullmatch(pattern, t):
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                    except Exception:
-                        pass
-                # regex fallback for [lastname]
-                if (not replaced_once) and ("[lastname]" in old) and (lastname_display != "[lastname]"):
-                    try:
-                        pattern = "^" + re.escape(old).replace(
-                            re.escape("[lastname]"),
-                            r"(?:\[lastname\]|%s)" % re.escape(lastname_display)
-                        ) + "$"
-                        rep = new
-                        if "[mc]" in rep:
-                            rep = rep.replace("[mc]", mc_display)
-                        rep = rep.replace("[lastname]", lastname_display)
-                        if re.fullmatch(pattern, t):
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                    except Exception:
-                        pass
-                # final fallback: compare strings with tags stripped (handles cases
-                # where Ren'Py injects extra formatting tags before our replacer)
-                if (not replaced_once) and (t_norm_stripped is not None):
-                    for cand2 in candidates:
-                        if not cand2:
-                            continue
-                        try:
-                            cand_stripped = _in_normalize_equiv_text(_in_strip_tags(cand2))
-                        except Exception:
-                            continue
-                        if cand_stripped == t_norm_stripped:
-                            rep = new
-                            if "[mc]" in rep:
-                                rep = rep.replace("[mc]", mc_display)
-                            if "[lastname]" in rep:
-                                rep = rep.replace("[lastname]", lastname_display)
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                            break
-                # compare strings with Multi-Mod tags stripped so replacements still
-                # match when point markers like [annie_pts] are present.
-                if (not replaced_once) and (t_norm_multimod is not None):
-                    for cand2 in candidates:
-                        if not cand2:
-                            continue
-                        try:
-                            cand_mm = _in_normalize_equiv_text(
-                                _im_strip_multimod_tags(cand2, force=True)
-                            )
-                        except Exception:
-                            continue
-                        if cand_mm == t_norm_multimod:
-                            rep = new
-                            if "[mc]" in rep:
-                                rep = rep.replace("[mc]", mc_display)
-                            if "[lastname]" in rep:
-                                rep = rep.replace("[lastname]", lastname_display)
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                            break
-                if replaced_once and _im_inj:
-                    # Ren'Py can filter the same say line multiple times before
-                    # settling on the final AST node. Keep the latest matching
-                    # injection so an early stale node location cannot win.
+                if _im_inj:
+                    # Only queue when we are inside a real say __call__.
+                    # replace_text also runs on History/log re-renders; the
+                    # _im_in_say_call flag (set in _im_char_call_wrapper only
+                    # while the say is active) prevents those from queuing.
                     try:
                         if (
                             getattr(store, "_im_in_say_call", False)
-                            and _im_matches_active_say_text(s)
+                            and not getattr(store, "_im_injection_queued", False)
                         ):
-                            del store._im_post_say_pending[:]
-                            store._im_post_say_pending.extend(_im_inj)
                             store._im_injection_queued = True
+                            store._im_post_say_pending.extend(_im_inj)
                     except Exception:
                         pass
         except Exception:
             pass
 
-        # 4) speaker-aware "Nancy" -> "Mom" only for MC lines
-        #    Some lines intentionally keep "Nancy" for clarity.
+        # 4) speaker-aware "Nancy" -> "Mom" only for MC lines.
+        #    Avoid the AST/speaker lookup unless the active text can actually match.
         try:
-            skip_nancy_swap = False
-            try:
-                if t_norm == _in_normalize_equiv_text("No, I came with Nancy, my mother."):
-                    skip_nancy_swap = True
-                if t_norm == _in_normalize_equiv_text("(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)"):
-                    skip_nancy_swap = True
-            except Exception:
-                pass
-            who_obj, who_name = _in_current_speaker()
-            if (
-                _is_mc_like(who_obj, who_name)
-                and not skip_nancy_swap
-                and getattr(renpy.store, 'annie_mom', False)
-            ):
-                t = re.sub(r"\bNancy['’]s\b", "Mom's", t)  # possessive first
-                t = re.sub(r"\bNancy\b", "Mom", t)
+            if getattr(renpy.store, 'annie_mom', False) and "Nancy" in t:
+                skip_nancy_swap = False
+                try:
+                    if t_norm == _in_nancy_skip1:
+                        skip_nancy_swap = True
+                    elif t_norm == _in_nancy_skip2:
+                        skip_nancy_swap = True
+                except Exception:
+                    pass
+                if not skip_nancy_swap:
+                    who_obj, who_name = _in_current_speaker()
+                    if _is_mc_like(who_obj, who_name):
+                        t = _in_nancy_possessive_re.sub("Mom's", t)  # possessive first
+                        t = _in_nancy_re.sub("Mom", t)
         except Exception:
             pass
         t = _im_strip_multimod_tags(t)
@@ -15417,13 +15526,7 @@ init 991 python:
             Some builds escape unapproved tags via a filter. This wrapper
             guarantees that the 'size' tag remains active.
             """
-            allowed = {
-                'b', 'i', 'u', 's',
-                'color', 'alpha', 'font', 'cps',
-                'k', 'w', 'nw', 'p', 'br', 'rt', 'rb',
-                'a',
-                'size',  # crucial for this mod
-            }
+            allowed = _in_allowed_say_tags
             try:
                 sanitized = _im_strip_multimod_tags(text)
                 sanitized = _im_strip_bonusmod_tags(sanitized)
