@@ -10,7 +10,7 @@
 
 # Don't forget to adapt labels for Bonus and Multimods
 
-# Used in annie sister map, replaces a few short lines that would affect other lines and switches a few MC lines to Annie
+# Used in full incest and only sister maps, replaces a few short lines that would affect other lines and switches a few MC lines to Annie
 label welcome_mod:
     play sound carstop fadein 2
     stop musicb fadeout 5
@@ -1129,7 +1129,7 @@ label daliacove_mod:
     $ daliablowjob = True
     jump nightmare04
 
-# Used in annie sister map, replaces meeting Annie flashback
+# Used in full incest and only sister maps, replaces meeting Annie flashback
 # BA/N: modified to trigger more reliably, seems to work?  revert if it breaks anything else
     # has two call spots (mod_call_chat_18 and menurestaurant_mod) for the sake of redundancy
 label mod_call_chat_18:
@@ -2269,7 +2269,7 @@ label poolalex_mod:
     mc "(IT’S ETERNUM TIME!)" with hpunch
     jump preeternum
 
-# Used in annie sister map, wholesale replacement due to interfering lines
+# Used in full incest and only sister maps, wholesale replacement due to interfering lines
 label preeternum_mod:
     stop music2 fadeout 5
     play sound2 keys
@@ -3284,6 +3284,7 @@ label potionslabel_mod:
 
 script:touch for all maps, 416 lines
     replace injection lines since for some reason it's bugging out for the multimod
+        Issue seems to be fixed, leaving note in case it happens again
     would change/add total 3-ish lines, is it worth it??
 
 script5:collegepartypenny1 for base map, 940 lines
@@ -3298,6 +3299,7 @@ script7:friday07 for all maps, 184 lines
         if using the incest mod you should be on at least one incest route right???
     Leaving it at that until someone raises a complaint lol
     Might need to do this since injections are bugging out here too
+        * Issue seems to be fixed, leaving note in case it happens again
 
 script8:ga_novanancy for base map, 716 lines 
     redo script8:5803 so it "babe" can be changed to mom without affecting Nova option
