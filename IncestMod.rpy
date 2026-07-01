@@ -1010,7 +1010,12 @@ init python early:
     if _im_ast and not hasattr(_im_ast.Label, "_im_prev_execute"):
         _im_ast.Label._im_prev_execute = _im_ast.Label.execute
 
-        def _im_label_execute_with_redirect(self):
+        def _im_label_execute_with_redirect(self, _im_ast=_im_ast, _im_game=_im_game):
+            # _im_ast/_im_game are bound as defaults at definition time so this
+            # permanently-patched method keeps working even if game-script
+            # globals are momentarily cleared (e.g. Ren'Py calling
+            # renpy.exports.load_module("_errorhandling") early on reload,
+            # before this mod's init python block has re-run).
             if getattr(store, "_im_redirecting", False):
                 return _im_ast.Label._im_prev_execute(self)
             if not getattr(store, "im_redirect_enabled", True):
@@ -13802,7 +13807,7 @@ init python:
         
         # AU script5:5289 (p)
         "I've never been attracted to guys younger than me, but I don't know... he's really cute!":
-            "*Whispering* Honestly, the fact that we're related makes it {i}{b}so{/b}{/i} much more exciting!",
+            "*Whispering* Honestly, the fact that we're related makes it {i}{b}so {/b}{/i}much more exciting!",
         
         # AU script5:5302 (p)
         "But he might not be into me like that so... keep it secret!":
@@ -14071,13 +14076,23 @@ init python:
         
     # -----------------------------------------
     # v0.6 script6.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script6:
-        
-        
+
+        # AU script6:1577 (d)
+        "My god, did Dalia's ass get even bigger while I was in the UK? Or... rounder?":
+            "My god, did my cousin's ass get even bigger while I was in the UK? Or... rounder?",
+
+        # AU script6:1818 (n)
+        "*Snorts* Of course you’d say that! I'm afraid I'll have to shower alone today, my insatiable stud.":
+            "*Snorts* Of course you’d say that! I'm afraid I'll have to shower alone today, my insatiable nephew.",
+
+        # AU script6:7806 (n)(p)
+        "Nancy and Penelope definitely have some competition in that department...":
+            "Nancy and Penelope definitely have some competition in that department... not that I should be sizing up my own aunt and cousin like that.",
+
+
     # -----------------------------------------
     # v0.7 script7.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
+
         # AU script7:
         
         # ========== START harem thoughts ==========
@@ -14188,20 +14203,161 @@ init python:
         ],
 
         # ========== END harem thoughts ==========
-        
-        
+
+        # AU script7:8254 (p)
+        "(How would we even explain this to Mom or Dalia?)":
+            "(How would we even explain this to Mom or Dalia? “Hey, guess who I hooked up with — my own cousin”?)",
+
+        # AU script7:8260 (p)
+        "(You can't be fixated on [mc] like some teenage crush, Penny. There's plenty more fish in the sea!)":
+            "(You can't be fixated on your own cousin like some teenage crush, Penny. There's plenty more fish in the sea that aren't blood-related!)",
+
+        # ========== START Regina's car photoshoot / first time ==========
+
+        # AU script7:9319 (p)
+        "I'm glad I have a friend who I trust and with whom I can do these kinds of things, [mc].":
+            "I'm glad I have a cousin who I trust and with whom I can do these kinds of things, [mc].",
+
+        # AU script7:9389 (p)
+        "I'd never let another man see you in your most glorious form.":
+            "I'd never let another man see you in your most glorious form. Then again, I'm not exactly “another man”, am I?",
+
+        # AU script7:9424 (p)
+        "We're just humans after all. We have a history together, and this is quite an... explicit session.":
+            "We're just humans after all. We're cousins, sure, but we have a history together, and this is quite an... explicit session.",
+
+        # AU script7:9517 (p)
+        "Let's cross this line... just once.":
+            "Let's cross this line... the one line we probably shouldn't... just once.",
+
+        # AU script7:9518 (p)
+        "And after this... the game will be over. It will be... our secret.":
+            "And after this... the game will be over. It will be... our own little family secret.",
+
+        # AU script7:9566 (p)
+        "I'm having sex with her. I’m fucking Penelope Carter.":
+            "I'm having sex with her. I’m fucking my own cousin, Penelope Carter.",
+
+        # AU script7:9567 (p)
+        "I'm living out the fantasy of what her 180,000 followers can only dream of.":
+            "I'm living out the fantasy of what her 180,000 followers can only dream of. Not that any of them know she's my cousin.",
+
+        # AU script7:9571 (p)
+        "*Giggles* Oh y-yeah? You thought about this...? Thought about fucking little old me?":
+            "*Giggles* Oh y-yeah? You thought about this...? Thought about fucking your own cousin?",
+
+        # AU script7:9591 (p)
+        "You can feel Penelope's tight cavity slowly adjust to your size. Each of her movements feels extra sensitive on your dick.":
+            "You can feel your cousin's tight cavity slowly adjust to your size. Each of her movements feels extra sensitive on your dick.",
+
+        # AU script7:9640 (p)
+        "Penny’s jiggling, voluptuous body fills your every sense, as each individual bounce and thrust causes your body to radiate with a divine pleasure.":
+            "Your cousin’s jiggling, voluptuous body fills your every sense, as each individual bounce and thrust causes your body to radiate with a divine pleasure.",
+
+        # AU script7:9663 (p)
+        "You keep hammering Penelope's pussy, your ears drowning in her small, constant whimpers of pleasure.":
+            "You keep hammering your cousin's pussy, your ears drowning in her small, constant whimpers of pleasure.",
+
+        # AU script7:9695 (p)
+        "Penelope orgasms, soaking your cock in vaginal fluids and contracting all of her muscles at once.":
+            "Your cousin orgasms, soaking your cock in vaginal fluids and contracting all of her muscles at once.",
+
+        # AU script7:9710 (p)
+        "Man, I can't believe I just fucked Penny.":
+            "Man, I can't believe I just fucked my own cousin.",
+
+        # AU script7:9739 (p)
+        "Split me in half...":
+            "Split me in half, cuz...",
+
+        # ========== END Regina's car photoshoot / first time ==========
+
+
     # -----------------------------------------
     # v0.8 script8.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
+
+        # ========== START Dalia first time (fireplace scene) ==========
+        # l9/N: kept light on purpose, same as the rest of Dalia's path — she and MC barely acknowledge it out loud
+
+        # AU script8:15623 (d)
+        "Sh-Should we really do it?":
+            "Sh-Should we really do it? I mean... we're cousins, [mc]...",
+
+        # AU script8:15840 (d)
+        "*Panting* That the childhood friend I used to p-play with would end up ramming her p-perfect, huge ass down on my cock...":
+            "*Panting* That the cousin I used to play with as a kid would end up ramming her p-perfect, huge ass down on my cock...",
+
+        # AU script8:16044 (d)
+        "We... connected. As if we had been lovers for years.":
+            "We... connected. I guess it makes sense, though. We've basically been family for years — just, well... in a very different way now.",
+
+        # ========== END Dalia first time (fireplace scene) ==========
+
         # AU script8:
         
         
     # -----------------------------------------
     # v0.9 script9.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
+
+        # AU script9:452 (d)
+        "I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING MY FUCKING BOYFRIEND!":
+            "I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING OUR OWN FUCKING COUSIN!",
+
+        # AU script9:454 (p)
+        "Oh, so he's {i}your{/i} boyfriend now.":
+            "Oh, so now he's suddenly {i}your{/i} cousin more than mine?",
+
+        # ========== START blindfold cabin scene ==========
+
+        # AU script9:11899 (p)
+        "*Snorts* You're such a pervert, [mc]. You ever think about anything besides sex?":
+            "*Snorts* You're such a pervert, cuz. You ever think about anything besides sex?",
+
+        # AU script9:11996 (p)
+        "You press your lips against Penelope's neck, trailing soft kisses over her skin as your hands slide over her curves.":
+            "You press your lips against your cousin's neck, trailing soft kisses over her skin as your hands slide over her curves.",
+
+        # AU script9:12085 (p)
+        "You instinctively take Penelope's nipple into your mouth. She arches her back with a soft moan, starting to stroke you with deliberate, slow pumps.":
+            "You instinctively take your cousin's nipple into your mouth. She arches her back with a soft moan, starting to stroke you with deliberate, slow pumps.",
+
+        # AU script9:12099 (p)
+        "I just want to devour every single inch of you... down to the very last freckle...":
+            "I just want to devour every single inch of my own cousin... down to the very last freckle...",
+
+        # AU script9:12202 (p)
+        "*Giggles* You’re not secretly recording me, right? Taking advantage of little old blind Penny...?":
+            "*Giggles* You’re not secretly recording me, right? Taking advantage of your own little blind cousin...?",
+
+        # AU script9:12220 (p)
+        "Penelope's mouth finally closes around your cock.":
+            "Your cousin's mouth finally closes around your cock.",
+
+        # AU script9:12425 (p)
+        "You sink your cock into Penelope — slick, warm, and indescribably tight.":
+            "You sink your cock into your cousin — slick, warm, and indescribably tight.",
+
+        # AU script9:12432 (p)
+        "F-Fuck, I love you Penny...":
+            "F-Fuck, I love you Penny... and I don't care that you're my cousin...",
+
+        # AU script9:12468 (p)
+        "You lift Penelope's leg up in the air, and slam back into her with brutal force, the thrumming sounds of your bodies colliding and liquids sloshing radiating through the room.":
+            "You lift your cousin's leg up in the air, and slam back into her with brutal force, the thrumming sounds of your bodies colliding and liquids sloshing radiating through the room.",
+
+        # AU script9:12553 (p)(d)
+        "Have you ever... fucked Dalia's ass?":
+            "Have you ever... fucked our cousin Dalia's ass?",
+
+        # AU script9:12589 (p)
+        "I wanna be your first.":
+            "I wanna be your first, cuz.",
+
+        # ========== END blindfold cabin scene ==========
+
         # AU script9:
-        
-        
+
+
     # -----------------------------------------
     # Annie Stepsister Map
         # -----------------------------------------
@@ -14213,7 +14369,12 @@ init python:
         # -----------------------------------------
         # Annie stepsister character notes
         # 
-        # - Annie: Only add references to not being blood-related during lines where they waver on sibling boundaries. Note: Never use "stepsibling" in their dialogue, especially when it gets emotional. Their relationship is 100% brother and sister, even if they're not biologically related. The "step-" doesn't matter to them in terms of boundaries. They should only call each other "big bro" and "little sis" in intimate lines as a little "younger sister" kick, and they usually just refer to each other by name. This path is the most emotionally incestuous, since they have a much more intimate relationship than anyone else.
+        # - Annie: Only add references to not being blood-related during lines where they waver on sibling boundaries. 
+        #       - Note: Never use "stepsibling" in their dialogue, especially when it gets emotional. 
+        #       - Their relationship is 100% brother and sister, even if they're not biologically related. 
+        #       - The "step-" doesn't matter to them in terms of boundaries. 
+        #       - They should only call each other "big bro" and "little sis" in intimate lines as a little "younger sister" kick, and they usually just refer to each other by name. 
+        #t      - his path is the most emotionally incestuous, since they have a much more intimate relationship than anyone else.
         # -----------------------------------------
         # ST = Annie stepsister lines in annie_aunt_map
         # script:0000 = file name:line number
@@ -14822,30 +14983,66 @@ init python:
         
     # -----------------------------------------
     # v0.6 script6.rpy Annie stepsister lines
-        
-        # ST script6:
-        
-        
+
+        # ========== START movie night handjob/blowjob scene ==========
+
+        # ST script6:6512
+        "Annie's body language screams of ecstasy as you continue attacking her swollen clit.":
+            "Your little sister's body language screams of ecstasy as you continue attacking her swollen clit.",
+
+        # ST script6:6521
+        "But I have to resist the urge, for now. I know Annie better than herself, and I know she’s really close but not quite ready to go all the way.":
+            "But I have to resist the urge, for now. I know my little sister better than she knows herself, and I know she’s really close but not quite ready to go all the way.",
+
+        # ST script6:6697
+        "The sweet, innocent, little girl I've known for years...":
+            "The sweet, innocent, little sister I've known for years...",
+
+        # ========== END movie night handjob/blowjob scene ==========
+
     # -----------------------------------------
     # v0.7 script7.rpy Annie stepsister lines
-        
+
         # ST script7:
-        
+
         # ========== START harem thoughts ==========
             # included in aunt map section for convenience since it's part of the same map
         # ========== END harem thoughts ==========
-        
+
     # -----------------------------------------
     # v0.8 script8.rpy Annie stepsister lines
-        
-        # ST script8:
-        
-        
+
+        # ST script8:7201
+        "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend for so many years.":
+            "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with your own sister, after all these years.",
+
+        # ST script8:8166
+        "You said it yourself. It's just a meal with Annie, like it's been a hundred times over the past 10 years.":
+            "You said it yourself. It's just a meal with your sister, like it's been a hundred times over the past 10 years.",
+
+        # ========== START romantic dinner / first time ==========
+
+        # ST script8:9331
+        "After so many years thinking I’d never be more than friends with Annie... it's finally happening.":
+            "After so many years thinking I’d never be more than her brother... it's finally happening.",
+
+        # ST script8:9702
+        "You slowly start pushing yourself into Annie's petite body.":
+            "You slowly start pushing yourself into your sister's petite body.",
+
+        # ST script8:9720
+        "I'm finally taking Annie's virginity...":
+            "I'm finally taking my own sister's virginity...",
+
+        # ========== END romantic dinner / first time ==========
+
     # -----------------------------------------
     # v0.9 script9.rpy Annie stepsister lines
-        
-        # ST script9:
-        
+
+        # ST script9:3025
+        "Our friend disappeared.":
+            "My brother disappeared.",
+
     }
 
     _build_replace_map_cache = {}
