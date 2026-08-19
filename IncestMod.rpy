@@ -65,7 +65,20 @@ init python:
                     src = _os.path.join(mod_presplash_dir, src_base + ext)
                     if _os.path.exists(src):
                         dst = _os.path.join(gamedir, dst_base + ext)
-                        _shutil.copy2(src, dst)
+                        try:
+                            if _os.path.exists(dst):
+                                src_stat = _os.stat(src)
+                                dst_stat = _os.stat(dst)
+                                if (
+                                    src_stat.st_size == dst_stat.st_size
+                                    and int(src_stat.st_mtime) == int(dst_stat.st_mtime)
+                                ):
+                                    break
+                            _shutil.copy2(src, dst)
+                        except Exception:
+                            # Best effort only. Presplash is cosmetic and should
+                            # never slow or block startup if filesystem access fails.
+                            pass
                         break
         except Exception:
             pass
@@ -73,6 +86,10 @@ init python:
     _im_install_presplash()
 
 init python:
+    # Cache results of renpy.loadable() checks — these never change after game start.
+    _im_multimod_present = None
+    _im_bonusmod_present = None
+
     def _im_strip_multimod_tags(text, *, force=False):
         """
         Remove unsupported multi-mod tags (e.g. [gr]) when
@@ -80,13 +97,19 @@ init python:
         isn't defined in the current environment. Set force=True to strip
         tags unconditionally (useful when matching dialogue variants).
         """
+        global _im_multimod_present
         try:
-            if (not force) and renpy.loadable("mod_additions/mod_options.rpy"):
-                return text
+            if not force:
+                if _im_multimod_present is None:
+                    try:
+                        _im_multimod_present = renpy.loadable("mod_additions/mod_options.rpy")
+                    except Exception:
+                        _im_multimod_present = False
+                if _im_multimod_present:
+                    return text
         except Exception:
             pass
         try:
-            import re
             t = text
             t = re.sub(r'\[red\]\(Insist\)', '(Insist)', t)
             t = re.sub(r'\(attack afterward\)', '', t)
@@ -96,11 +119,14 @@ init python:
             return text
 
     def _im_define_multimod_tags():
+        global _im_multimod_present
         try:
-            if renpy.loadable("mod_additions/mod_options.rpy"):
+            present = renpy.loadable("mod_additions/mod_options.rpy")
+            _im_multimod_present = present
+            if present:
                 return
         except Exception:
-            pass
+            _im_multimod_present = False
         for _tag in ("gr", "mm", "red", "blue", "green", "pink", "mt", "nova_pts", "nancy_pts", "dalia_pts", "annie_pts", "alex_pts", "penelope_pts", "luna_pts", "calypso_pts"):
             if not hasattr(store, _tag):
                 setattr(store, _tag, "")
@@ -113,13 +139,18 @@ init python:
         Bonus Mod is not installed. Prevents NameError crashes if the tag
         isn't defined in the current environment.
         """
+        global _im_bonusmod_present
         try:
-            if renpy.loadable("achievements/achievements.rpy"):
+            if _im_bonusmod_present is None:
+                try:
+                    _im_bonusmod_present = renpy.loadable("achievements/achievements.rpy")
+                except Exception:
+                    _im_bonusmod_present = False
+            if _im_bonusmod_present:
                 return text
         except Exception:
             pass
         try:
-            import re
             t = text
             t = re.sub(r'\{color=\[(?:walk_points|walk_path|walk_points_chat|walk_path_chat|computer_color|birthday_color|reception_color|read_this_color|leave_color|stand_up_color|right_elevator_color|left_elevator_color)\]\}', '', t)
             return t.strip()
@@ -127,11 +158,14 @@ init python:
             return text
 
     def _im_define_bonusmod_tags():
+        global _im_bonusmod_present
         try:
-            if renpy.loadable("achievements/achievements.rpy"):
+            present = renpy.loadable("achievements/achievements.rpy")
+            _im_bonusmod_present = present
+            if present:
                 return
         except Exception:
-            pass
+            _im_bonusmod_present = False
         for _tag in ("walk_points", "walk_path", "computer_color", "birthday_color", "reception_color", "read_this_color", "leave_color", "stand_up_color", "right_elevator_color", "left_elevator_color"):
             if not hasattr(store, _tag):
                 setattr(store, _tag, "CCCCCC")
@@ -353,6 +387,8 @@ init python:
 # Post-line injection: parse + execute + say_callback
 # -----------------------------------------
 init python:
+    import re as _imre  # module-level import; avoids repeated import overhead per injection call
+
     def _im_parse_injection(s):
         # Parse an injection string into (kind, *args).
         # Supported:
@@ -362,7 +398,6 @@ init python:
         #   "show train 6 with dis" -> ("show", "train 6", "dis")
         #   "hide train"            -> ("hide", "train", None)
         #   "scene bg r"            -> ("scene", "bg r", None)
-        import re as _imre
         s = s.strip()
 
         # Strip optional trailing  with <name>
@@ -632,9 +667,14 @@ init python:
         except Exception:
             pass
 
+    _im_skip_to_mod_interact_cb._im_is_skip_to_mod_interact_cb = True
+
     try:
-        if _im_skip_to_mod_interact_cb not in config.interact_callbacks:
-            config.interact_callbacks.append(_im_skip_to_mod_interact_cb)
+        config.interact_callbacks[:] = [
+            cb for cb in config.interact_callbacks
+            if not getattr(cb, '_im_is_skip_to_mod_interact_cb', False)
+        ]
+        config.interact_callbacks.append(_im_skip_to_mod_interact_cb)
     except Exception:
         pass
 
@@ -724,7 +764,10 @@ init python:
         "menurestaurant": "menurestaurant_mod",
     }
     im_label_map_only_sister = {
-        # Beispiel: "some_label": "some_label_sister_mod",
+        "welcome": "welcome_mod",
+        "preeternum": "preeternum_mod",
+        "_call_chat_18": "mod_call_chat_18",
+        "menurestaurant": "menurestaurant_mod",
     }
     # - Half-Sister: nur wenn `annie_half_sister` True
     im_label_map_half = {
@@ -747,12 +790,17 @@ init python:
 # - Catches labels on entry, not upfront
 # - Uses explicit map (`im_label_map`) or runtime overrides
 # -----------------------------------------
-init python early hide:
+init python early:
     from renpy import exports as rpy
     from renpy import config as rconfig
     import store
 
-    _im_label_chain = []
+    try:
+        _im_label_chain
+    except NameError:
+        _im_label_chain = []
+    if not isinstance(_im_label_chain, list):
+        _im_label_chain = []
 
     if not hasattr(store, "_im_redirecting"):
         store._im_redirecting = False
@@ -839,14 +887,16 @@ init python early hide:
         return True
 
     def _im_set_override(src, dst):
-        # set runtime override; callback will honor it immediately on next entry
+        # Set runtime override and refresh the cached config map immediately.
         store.im_label_overrides[src] = dst
+        _im_apply_map_to_config()
 
     def _im_clear_override(src=None):
         if src is None:
             store.im_label_overrides.clear()
         else:
             store.im_label_overrides.pop(src, None)
+        _im_apply_map_to_config()
 
     def _im_toggle_redirect(on=None):
         if on is None:
@@ -855,17 +905,22 @@ init python early hide:
             store.im_redirect_enabled = bool(on)
 
     def _im_get_override(target):
-        # Build current effective map and resolve
-        effective, _ = _im_collect_maps()
-        ov = effective.get(target, None)
+        # Use the cached config map. Rebuilding all label maps here is expensive
+        # because this function can run on every label entry/fall-through.
+        try:
+            overrides = getattr(rconfig, "label_overrides", None)
+            ov = overrides.get(target, None) if overrides else None
+        except Exception:
+            ov = None
         if ov and rpy.has_label(ov):
             return ov
         return None
 
     def _im_label_cb(label, *a, **kw):
-        # Keep mapping in sync with mode switches
+        # Keep mapping in sync with mode switches.
         try:
-            _im_refresh_if_flags_changed()
+            if _im_refresh_if_flags_changed():
+                _im_apply_map_to_config()
         except Exception:
             pass
         for cb in list(_im_label_chain):
@@ -913,13 +968,36 @@ init python early hide:
             _im_label_chain.append(cb)
 
     def _im_ensure_label_callback():
-        curr = getattr(rconfig, "label_callback", None)
-        # Use sentinel attribute instead of identity so reloads don't grow the chain.
-        if not getattr(curr, '_im_is_label_cb', False):
-            _im_register_prev_label_cb(curr)
-            rconfig.label_callback = _im_label_cb
+        # Ren'Py 8.x uses config.label_callbacks (a list). Some older builds
+        # and mods used config.label_callback (singular). Support both while
+        # avoiding duplicate callback execution after script reloads.
+        try:
+            callbacks = getattr(rconfig, "label_callbacks", None)
+            if callbacks is not None:
+                existing = list(callbacks)
+                for cb in existing:
+                    _im_register_prev_label_cb(cb)
+                # Replace old callbacks/wrappers with a single wrapper. The
+                # wrapper calls the previous callbacks exactly once, then can
+                # redirect safely.
+                if isinstance(callbacks, list):
+                    callbacks[:] = [_im_label_cb]
+                else:
+                    rconfig.label_callbacks = [_im_label_cb]
+        except Exception:
+            pass
+
+        try:
+            curr = getattr(rconfig, "label_callback", None)
+            # Use sentinel attribute instead of identity so reloads don't grow the chain.
+            if not getattr(curr, '_im_is_label_cb', False):
+                _im_register_prev_label_cb(curr)
+                rconfig.label_callback = _im_label_cb
+        except Exception:
+            pass
 
     _im_ensure_label_callback()
+    _im_apply_map_to_config()
 
     # Ensure fall-through labels (no explicit jump) are still intercepted.
     try:
@@ -932,7 +1010,12 @@ init python early hide:
     if _im_ast and not hasattr(_im_ast.Label, "_im_prev_execute"):
         _im_ast.Label._im_prev_execute = _im_ast.Label.execute
 
-        def _im_label_execute_with_redirect(self):
+        def _im_label_execute_with_redirect(self, _im_ast=_im_ast, _im_game=_im_game):
+            # _im_ast/_im_game are bound as defaults at definition time so this
+            # permanently-patched method keeps working even if game-script
+            # globals are momentarily cleared (e.g. Ren'Py calling
+            # renpy.exports.load_module("_errorhandling") early on reload,
+            # before this mod's init python block has re-run).
             if getattr(store, "_im_redirecting", False):
                 return _im_ast.Label._im_prev_execute(self)
             if not getattr(store, "im_redirect_enabled", True):
@@ -972,20 +1055,59 @@ init python early hide:
 
         _im_ast.Label.execute = _im_label_execute_with_redirect
 
-    # Keep overrides in sync before each statement executes
+    try:
+        _im_stmt_cb_counter
+    except NameError:
+        _im_stmt_cb_counter = 0
+
+    # Keep overrides in sync before each statement executes, but avoid doing
+    # callback-list maintenance on every statement.
     def _im_stmt_cb(loc):
+        global _im_stmt_cb_counter
         try:
-            if _im_refresh_if_flags_changed():
+            changed = _im_refresh_if_flags_changed()
+            if changed:
                 _im_apply_map_to_config()
-            _im_ensure_label_callback()
+                _im_ensure_label_callback()
+                _im_stmt_cb_counter = 0
+                return
+
+            # Guard against another mod/script reload replacing label callbacks,
+            # but check only occasionally instead of every statement.
+            _im_stmt_cb_counter += 1
+            if _im_stmt_cb_counter < 200:
+                return
+            _im_stmt_cb_counter = 0
+
+            need_refresh = False
+            callbacks = getattr(rconfig, "label_callbacks", None)
+            if callbacks is not None:
+                try:
+                    need_refresh = not (
+                        len(callbacks) == 1
+                        and getattr(callbacks[0], '_im_is_label_cb', False)
+                    )
+                except Exception:
+                    need_refresh = True
+            else:
+                curr = getattr(rconfig, "label_callback", None)
+                need_refresh = not getattr(curr, '_im_is_label_cb', False)
+
+            if need_refresh:
+                _im_ensure_label_callback()
         except Exception:
             pass
+
+    _im_stmt_cb._im_is_stmt_cb = True
 
     try:
         if getattr(rconfig, "statement_callbacks", None) is None:
             rconfig.statement_callbacks = []
-        if _im_stmt_cb not in rconfig.statement_callbacks:
-            rconfig.statement_callbacks.append(_im_stmt_cb)
+        rconfig.statement_callbacks[:] = [
+            cb for cb in rconfig.statement_callbacks
+            if not getattr(cb, '_im_is_stmt_cb', False)
+        ]
+        rconfig.statement_callbacks.append(_im_stmt_cb)
     except Exception:
         pass
 
@@ -999,9 +1121,12 @@ init python early hide:
         globals()["im_apply_label_map"] = _im_apply_map_to_config
 
     def _im_set_mode(mode):
+        global _in_replace_index_key, _in_replace_index_cache
         store.im_incest_mode = mode
         _im_apply_incest_mode()
         _im_apply_map_to_config()
+        _in_replace_index_key = None
+        _in_replace_index_cache = None
         in_apply_text_map()
 
     # export helpers to store API (without leaking renpy into store)
@@ -1094,6 +1219,45 @@ init python early hide:
         #     ]
         # ),
     #
+    # ---------------------------------------------------------
+    #
+    # COMPATIBILITY WITH BONUS AND MULTI MODS
+    # Bonus Features Mod and Multi-Mod have different line numbers
+    # In order to maintain compatibility with these mods,
+    # USE VARIANT 2B which as it turns out can handle both specific
+    # and injected lines. Format as follows:
+    #
+    # Variant 2 - specific lines
+    #   "Original text":[
+    #       ("New text A", "script:867"),
+    #       ("New text B", "script:1234"),
+    #
+    #       # Bonus Mod
+    #       ("New text A", "script:987"),
+    #       ("New text B", "script:2345"),
+    #
+    #       # Multi Mod
+    #       ("New text A", "script:546"),
+    #       ("New text B", "script:5432"),
+    #   ],
+    #
+    # Variant 3 - injected lines
+    #   "Original text":[
+    #       ("New text", "script:123", [
+    #           'mc "injected lines"
+    #       ]),
+    #
+    #       # Bonus Mod
+    #       ("New text", "script:234", [
+    #           'mc "injected lines"
+    #       ]),
+    #
+    #       # Multi Mod
+    #       ("New text", "script:345", [
+    #           'mc "injected lines"
+    #       ]),
+    #   ],
+    # 
     # =========================================================
 
 init python:
@@ -1134,22 +1298,22 @@ init python:
         # BA/N = BlueArrow's notes
         # -----------------------------------------
 
-        # -----------------------------------------
-        # v0.1 script.rpy
+    # -----------------------------------------
+    # v0.1 script.rpy
 
         # BM script:948
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
             "My name is [mc] [lastname]. I was born into a family of five in the city of Kredon, a relatively small town on the west coast of the United States.",
 
-        # BM script:949
+        # BM script:950
         "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
             "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This basically left my mom as the only parent taking care of three young kids while still juggling school.",
 
-        # BM script:950
+        # BM script:951
         "That’s actually why we ended up moving to the UK; Dad needed to relocate there to keep his position.":
             "This led to constant tension between my parents, which reached a boiling point when Dad needed to relocate to the UK to keep his position. Unable to resolve their differences, they divorced.",
 
-        # BM script:951
+        # BM script:952
         "I know, I know, this all sounds pretty gloomy... but don't worry! This is not about to be one long sob story.":
             "He got custody of me, taking me with him to the UK while she stayed behind with my two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.",
 
@@ -1237,7 +1401,7 @@ init python:
 
         # BM script:1842
         "(Nancy used to pick me up after school and we'd come here.)":
-            "(Those blissful, carefree days of my childhood–especially once school was done!)",
+            "(Those blissful, carefree days of my childhood – especially once school was done!)",
 
         # BM script:1843
         "(Each day I would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove me home once it got late.)":
@@ -1570,12 +1734,25 @@ init python:
         "(Oh Jesus, one man comes into my house and suddenly I turn into a nymphomaniac. What the hell is wrong with me?)":
             "(Oh Jesus, one man comes into my house and suddenly I turn into a nymphomaniac. What the hell is wrong with me? I'm his mother!)",
 
-        # BM script:5583 {inject}
-        "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":
+        # BM script:5583 (n) {inject}
+        "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":[
             ("(I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5583",[
                 "show ale 31",
                 'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
+
+            # Bonus Mod
+            ("(I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5649",[
+                "show ale 31",
+                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+            ]),
+
+            # Multi Mod
+            ("(I mean... If Dalia and Penelope never found out, then would it really be so bad...?)","script:5584",[
+                "show ale 31",
+                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+            ]),
+        ],
 
         # BM script:5606
         "(It was also kinda exhilarating, though... I haven’t felt excitement like that in so long...)":
@@ -1609,7 +1786,7 @@ init python:
         # label mod lines explaining MC and Dalia's close age here
 
         # BM script:6047 {inject} (replaces labelmod)
-        "Yeah, we've known each other since we were little.":
+        "Yeah, we've known each other since we were little.":[
             ("Yeah, we were separated as kids when our parents divorced.","script:6047",[
                 "show ale 74",
                 'x "Now that I think about, Dalia did mention having a brother before." with dis',
@@ -1619,6 +1796,29 @@ init python:
                 "show ale 78",
                 'x "So you’re almost like twins, huh?" with dis'
             ]),
+
+            # Bonus Mod
+            ("Yeah, we were separated as kids when our parents divorced.","script:6115",[
+                "show ale 74",
+                'x "Now that I think about, Dalia did mention having a brother before." with dis',
+                'x "You’re younger aren’t you? How are you in the same class as us?"',
+                "show ale 75",
+                'mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."',
+                "show ale 78",
+                'x "So you’re almost like twins, huh?" with dis'
+            ]),
+
+            # Multi Mod
+            ("Yeah, we were separated as kids when our parents divorced.","script:6048",[
+                "show ale 74",
+                'x "Now that I think about, Dalia did mention having a brother before." with dis',
+                'x "You’re younger aren’t you? How are you in the same class as us?"',
+                "show ale 75",
+                'mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."',
+                "show ale 78",
+                'x "So you’re almost like twins, huh?" with dis'
+            ]),
+        ],
 
         # BM script:6049 use with inject
         "Probably the only two people in this class that are actually worth talking to.":
@@ -1665,6 +1865,18 @@ init python:
             ("Dal!","script:9368"),
             ("Dal!","script:9395"),
             ("Dal!","script4:3124"),
+
+            # Bonus Mod
+            ("Dal!","script:8820"),
+            ("Dal!","script:9461"),
+            ("Dal!","script:9488"),
+            ("Dal!","script4:3143"),
+
+            # Multi Mod
+            ("Dal!","script:8734"),
+            ("Dal!","script:9372"),
+            ("Dal!","script:9399"),
+            ("Dal!","script4:3147"),
         ],
 
         # BM script:9069
@@ -1696,8 +1908,8 @@ init python:
             "Thanks sis, it means a lot coming from you.",
 
 
-        # -----------------------------------------
-        # v0.2 script2.rpy
+    # -----------------------------------------
+    # v0.2 script2.rpy
 
         # ========== START label mod "versiontwo_mod" ==========
             # BA/N: added label mod to add two dialogue lines I felt should've been in the intro between Luna and Annie in the first place.
@@ -1705,12 +1917,19 @@ init python:
         # REPLACED BY INJECTION, old code left just in case
 
         # BM script2:112 {inject} (replaces labelmod)
-        "It's so nice to meet you, Luna!":
+        "It's so nice to meet you, Luna!":[
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
                 'l "Same to you. You must be Annie, [mc]’s told me about you."',
                 "scene aaa 14"
             ]),
+
+            # Bonus Mod
+            # script2:112, same as original
+
+            # Multi Mod
+            # script2:112, same as original
+        ],
 
         # BM script2:113 use with inject
         "I heard [mc] managed to win a neural implant at your cafe!":
@@ -1825,15 +2044,33 @@ init python:
             "My father was always absent in my life, always too occupied with his work. When my parents divorced, I had to live with him for the last ten years, if you can even call it \"living with him\".",
 
         # BM script2:6106 (x) {inject}
-        "Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
+        "Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":[
             ("Oh right, you {i}are{/i} Dalia's brother...","script2:6106",[
                 'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
             ]),
 
+            # Bonus Mod
+            ("Oh right, you {i}are{/i} Dalia's brother...","script2:6170",[
+                'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
+            ]),
+
+            # Multi Mod
+            ("Oh right, you {i}are{/i} Dalia's brother...","script2:6122",[
+                'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
+            ]),
+        ],
+
         # BM script2:7046 (p) {specific}
         # Excludes script5:2321 (l)
-        "Good morning, [mc]!":
+        "Good morning, [mc]!":[
             ("Good morning, little brother!","script2:7046"),
+
+            # Bonus Mod
+            ("Good morning, little brother!","script2:7120"),
+
+            # Multi Mod
+            ("Good morning, little brother!","script2:7062"),
+        ],
 
         # BM script2:7088
         "Is that a hint of jealousy, I'm sensing?":
@@ -1900,10 +2137,21 @@ init python:
             "(Don’t think about your sister's huge, perfect tits.)",
 
         # BM script2:8107 {inject}
-        "(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see her breasts in who knows how long... and...)":
+        "(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see her breasts in who knows how long... and...)":[
             ("(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see your sister's breasts in who knows how long...)","script2:8107",[
                 'mc "(Shit... Why does it feel so good knowing this?)"'
             ]),
+
+            # Bonus Mod
+            ("(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see your sister's breasts in who knows how long...)","script2:8189",[
+                'mc "(Shit... Why does it feel so good knowing this?)"'
+            ]),
+
+            # Multi Mod
+            ("(Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see your sister's breasts in who knows how long...)","script2:8123",[
+                'mc "(Shit... Why does it feel so good knowing this?)"'
+            ]),
+        ],
 
         # BM script2:8115
         "Oh, come on, [mc]!":
@@ -1955,8 +2203,8 @@ init python:
             "Have fun playing, bro.",
 
 
-        # -----------------------------------------
-        # v0.3 script3.rpy
+    # -----------------------------------------
+    # v0.3 script3.rpy
 
         # BM script3:2808 (d)
         "Especially the youngest daughter. She's extremely naive and easily manipulated.":
@@ -2117,8 +2365,15 @@ init python:
 
         # BM script3:5972 (p) {specific}
         # Excludes script5:6310 (no), script7:10365 (no)
-        "We're just friends.":
+        "We're just friends.":[
             ("She's my sister.","script3:5972"),
+
+            # Bonus Mod
+            ("She's my sister.","script3:6016"),
+
+            # Multi Mod
+            ("She's my sister.","script3:5983"),
+        ],
 
         # BM script3:5987
         "*Giggles* I guess I misread the looks she gave you...":
@@ -2451,8 +2706,15 @@ init python:
 
         # BM script3:10103 {specific}
         # Excludes script:6153 (a), script9:18643 (mc), script9:20400 (l)
-        "And now...":
+        "And now...":[
             ("*Giggles* Yes, and now...","script3:10103"),
+
+            # Bonus Mod
+            ("*Giggles* Yes, and now...","script3:10177"),
+
+            # Multi Mod
+            ("*Giggles* Yes, and now...","script3:10123"),
+        ],
 
         # BM script3:10106
         "This time though... I want you to lie back and let your babysitter do all the work...":
@@ -2491,8 +2753,8 @@ init python:
             "Hah! I don't think you know us as well as you believe. After all, you've only been living with us again for a short while. We've changed in the years you were gone. And the others, you only met them a few weeks ago!",
 
 
-        # -----------------------------------------
-        # v0.4 script4.rpy
+    # -----------------------------------------
+    # v0.4 script4.rpy
 
         # BM script4:2228 (n)
         "I guess that I'm just too persuasive.":
@@ -2701,8 +2963,8 @@ init python:
             "Actually, he was caught with HIS OWN sister in HIS office!",
 
 
-        # -----------------------------------------
-        # v0.5 script5.rpy
+    # -----------------------------------------
+    # v0.5 script5.rpy
 
         # BM script5:290 (x)
         "He and his friends are always in some kind of trouble. Which is exhausting, but also... entertaining. In a way.":
@@ -2734,11 +2996,21 @@ init python:
             "I want you to fuck me, son. Hard. And filthy.",
 
         # BM script5:1124 {inject}
-        "What have I done to deserve this? What god have I pissed off?!":
+        "What have I done to deserve this? What god have I pissed off?!":[
             ("What have I done to deserve this? What god have I pissed off?!","script5:1124",[
                 'mct ". . ."',
                 'mct "Probably one against incest, actually. Which might be a lot of them."'
             ]),
+
+            # Bonus Mod
+            ("What have I done to deserve this? What god have I pissed off?!","script5:1143",[
+                'mct ". . ."',
+                'mct "Probably one against incest, actually. Which might be a lot of them."'
+            ]),
+
+            # Multi Mod
+            # script5:1124, same as orginal
+        ],
 
         # BM script5:1244
         "I already told Penelope and Nova that I'd be going with them to a costume party at the University tomorrow night, so...":
@@ -2794,7 +3066,7 @@ init python:
 
         # BM script5:5220 {inject}?
         # BA/N: incorporating incest skip idea from aunt map. May not use
-        #"*Laughs* Fair enough.":
+        #"*Laughs* Fair enough.":[
         #    ("*Laughs* Fair enough.","script5:5220",[
         #        "show df 57 with dis06",
         #        'p "Hey, [mc]... before we go in, don’t let anyone you’re related to me, okay?"',
@@ -2804,6 +3076,11 @@ init python:
         #        "show df 57",
         #        'p "*Chuckles* Sure, I will!"',
         #    ]),
+        #
+        #    # Bonus Mod script5:5268
+        #
+        #    # Multi Mod script5:5228
+        #],
 
         # BM script5:5291
         "U-Uh... a-are you sure?":
@@ -2921,8 +3198,15 @@ init python:
 
         # BM script5:8500 {specific}
         # Excludes script:8623 and script3:6475
-        "(Interesting...)":
+        "(Interesting...)":[
             ("(And he's her brother? Interesting...)","script5:8500"),
+
+            # Bonus Mod
+            ("(And he's her brother? Interesting...)","script5:8568"),
+
+            # Multi Mod
+            ("(And he's her brother? Interesting...)","script5:8511"),
+        ],
 
         # BM script5:8596
         "*Chuckles* I swear if you don't say my name, I'm gonna grab my things and go home.":
@@ -3350,7 +3634,7 @@ init python:
 
         # BM script5:12484
         "I have two girls, Dalia and Penelope.":
-            "I have two girls and one son, Dalia, Penelope, and [mc].",
+            "I have two girls and one son, Dalia, Penelope, and [mc] here.",
 
         # BM script5:12485
         "The younger one will start college next fall, and the older one will graduate in a couple of years.":
@@ -3361,8 +3645,8 @@ init python:
             "I... Whatever you do, you need to hang onto your kids for as long as you can.",
 
 
-        # -----------------------------------------
-        # v0.6 script6.rpy
+    # -----------------------------------------
+    # v0.6 script6.rpy
 
         # BM script6:1516
         # Overwritten by BM script:5647, okay
@@ -3394,8 +3678,15 @@ init python:
 
         # BM script6:8135 (d) {specific}
         # Excludes script3:4717 (p)
-        "Thanks [mc]!":
+        "Thanks [mc]!":[
             ("Thanks bro!","script6:8135"),
+
+            # Bonus Mod
+            ("Thanks bro!","script6:8196"),
+
+            # Multi Mod
+            ("Thanks bro!","script6:8163"),
+        ],
 
         # BM script6:9319
         # Overwritten by BM script:5647, okay
@@ -3518,11 +3809,19 @@ init python:
         "I swear this booty of yours should be worshipped, Dal.":
             "I swear this booty of yours should be worshipped, sis.",
 
-        # BM script6:10790 {specific}
+        # BM script6:10790 (d) {specific}
         # Excludes 7 other lines (x)(no)(l)(a)
         "Oh babe...":[
             ("Oh sis...","script6:10790"),
             ("Oh sis...","script6:10811"),
+
+            # Bonus Mod
+            ("Oh sis...","script6:10867"),
+            ("Oh sis...","script6:10888"),
+
+            # Multi Mod
+            ("Oh sis...","script6:10821"),
+            ("Oh sis...","script6:10842"),
         ],
 
         # BM script6:10797
@@ -3531,8 +3830,15 @@ init python:
 
         # BM script6:10805 (d) {specific}
         # Excludes script6:6438 (a), script6:13016 (x)
-        "Not...":
+        "Not...":[
             ("B-But we're siblings...","script6:10805"),
+
+            # Bonus Mod
+            ("B-But we're siblings...","script6:10882"),
+
+            # Multi Mod
+            ("B-But we're siblings...","script6:10836"),
+        ],
 
         # BM script6:10806
         "N-Not now. Not here...":
@@ -3588,8 +3894,15 @@ init python:
 
         # BM script6:11396 {specific}
         # Excludes script6:12044 (x)
-        "See you later, [mc].":
+        "See you later, [mc].":[
             ("See you later, bro.","script6:11396"),
+
+            # Bonus Mod
+            ("See you later, bro.","script6:11493"),
+
+            # Multi Mod
+            ("See you later, bro.","script6:11427"),
+        ],
 
         # BM script6:11398
         "Goodbye, Dalia.":
@@ -3608,11 +3921,19 @@ init python:
         "Thank you, [mc]!":[
             ("Thanks, bro!","script6:14300"),
             ("Thanks, bro!","script9:14153"),
+
+            # Bonus Mod
+            ("Thanks, bro!","script6:14425"),
+            ("Thanks, bro!","script9:14292"),
+
+            # Multi Mod
+            ("Thanks, bro!","script6:14331"),
+            ("Thanks, bro!","script9:14167"),
         ],
 
 
-        # -----------------------------------------
-        # v0.7 script7.rpy
+    # -----------------------------------------
+    # v0.7 script7.rpy
 
         # BM script7:19
         "I know you've been fooling around with the WRE with your peculiar group of... {i}friends.":
@@ -3667,49 +3988,116 @@ init python:
 
         # BM script7:4702 (p) {specific}
         # Excludes script7:4670 (l)
-        "Be careful.":
+        "Be careful.":[
             ("Be careful, little brother.","script7:4702"),
+
+            # Bonus Mod
+            ("Be careful, little brother.","script7:4732"),
+
+            # Multi Mod
+            ("Be careful, little brother.","script7:4718"),
+        ],
 
         # ========== START harem thoughts ==========
 
         # BM script7:7396 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
                 'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7452",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7454",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # BM script7:7398 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
                 'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7454",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7456",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # BM script7:7400 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
                 'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7456",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # BM script7:7402 {inject}
         # no change here, leaving for copy-paste purposes
-        #"Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+        #"Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":[
         #    ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
         #        'mct "no change"',
         #    ]),
+        #
+        #    # Bonus Mod script7:7458
+        #
+        #    # Multi Mod script7:7460
+        #],
 
         # BM script7:7404 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
                 'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7462",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # BM script7:7425 {inject}
         # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
         #    but also why would you be playing an incest mod without following at least one incest path right?
-        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":[
             ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
                 'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
             ]),
+
+            # Bonus Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7481",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+            # Multi Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7483",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+        ],
 
         # ========== END harem thoughts ==========
 
@@ -3798,10 +4186,21 @@ init python:
         # "Oh, Penny..." -> "Oh, sis..."
 
         # BM script7:9384 {inject}
-        "I tried to stop... but I couldn't.":
+        "I tried to stop... but I couldn't.":[
             ("We're siblings. We can’t be doing these things.","script7:9384",[
                 'p "So I tried to stop... but I couldn’t."'
             ]),
+
+            # Bonus Mod
+            ("We're siblings. We can’t be doing these things.","script7:9448",[
+                'p "So I tried to stop... but I couldn’t."'
+            ]),
+
+            # Multi Mod
+            ("We're siblings. We can’t be doing these things.","script7:9442",[
+                'p "So I tried to stop... but I couldn’t."'
+            ]),
+        ],
 
         # BM script7:9386
         "That I would stop thinking about you 24/7.":
@@ -3820,10 +4219,21 @@ init python:
             "S-Shit... this is crazy, bro.",
 
         # BM script7:9470 {inject}
-        "We're crazy.":
+        "We're crazy.":[
             ("We're both crazy.","script7:9470",[
                 'mc "*Chuckles* We share the same blood after all..."',
             ]),
+
+            # Bonus Mod
+            ("We're both crazy.","script7:9534",[
+                'mc "*Chuckles* We share the same blood after all..."',
+            ]),
+
+            # Multi Mod
+            ("We're both crazy.","script7:9528",[
+                'mc "*Chuckles* We share the same blood after all..."',
+            ]),
+        ],
 
         # BM script7:9491
         "Holy fuck, [mc], that feels...":
@@ -3980,8 +4390,8 @@ init python:
             "Sooo... should we log in now? My mom must be waiting for us already.",
 
 
-        # -----------------------------------------
-        # v0.8 script8.rpy
+    # -----------------------------------------
+    # v0.8 script8.rpy
 
         # BM script8:662
         "I was trying to focus on Nancy's house, but I still appeared on the same exact spot where I left. Maybe I need more practice?":
@@ -4052,10 +4462,21 @@ init python:
             "Ah, a very smart choice, my boy... always making the most of every situation. I expected no less from my son!",
         
         # BM script8:4885 {inject}
-        "And how about you, Nancy? Have you ever caught Dalia or Penny... you know, giving in to their impulses?":
+        "And how about you, Nancy? Have you ever caught Dalia or Penny... you know, giving in to their impulses?":[
             ("And how about you, Mom? Have you ever caught Dalia or Penny... you know, giving in to their impulses? ","script8:4885",[
                 'mc "Oh, and the one time you burst into MY room doesn’t count, I was just getting dressed!"'
             ]),
+
+            # Bonus Mod
+            ("And how about you, Mom? Have you ever caught Dalia or Penny... you know, giving in to their impulses? ","script8:4967",[
+                'mc "Oh, and the one time you burst into MY room doesn’t count, I was just getting dressed!"'
+            ]),
+
+            # Multi Mod
+            ("And how about you, Mom? Have you ever caught Dalia or Penny... you know, giving in to their impulses? ","script8:4913",[
+                'mc "Oh, and the one time you burst into MY room doesn’t count, I was just getting dressed!"'
+            ]),
+        ],
 
         # BM script8:5016
         "And honestly, I had some reservations at first, but now I don't regret it one bit.":
@@ -4128,12 +4549,27 @@ init python:
             "I need to find myself a man like that.",
 
         # BM script8:10141 {inject}
-        "*Chuckles* Seems reasonable to me.":
+        "*Chuckles* Seems reasonable to me.":[
             ("*Chuckles* Seems reasonable to me.","script8:10141",[
                 'd "Do you... want to try asking him out?"',
                 'mil "Nah, I prefer dating people I don’t know from work."',
                 'mil "And it feels like he’s got someone on his mind lately."'
             ]),
+
+            # Bonus Mod
+            ("*Chuckles* Seems reasonable to me.","script8:10282",[
+                'd "Do you... want to try asking him out?"',
+                'mil "Nah, I prefer dating people I don’t know from work."',
+                'mil "And it feels like he’s got someone on his mind lately."'
+            ]),
+
+            # Multi Mod
+            ("*Chuckles* Seems reasonable to me.","script8:10170",[
+                'd "Do you... want to try asking him out?"',
+                'mil "Nah, I prefer dating people I don’t know from work."',
+                'mil "And it feels like he’s got someone on his mind lately."'
+            ]),
+        ],
 
         # BM script8:10167
         "Hey, Dalia, I'm done over here!":
@@ -4149,8 +4585,15 @@ init python:
 
         # BM script8:10393 {specific}
         # Excludes script8:10416 (d) and script9:19240 (l)
-        "Thank you so much, [mc].":
+        "Thank you so much, [mc].":[
             ("Thank you so much, bro.","script8:10393"),
+
+            # Bonus Mod
+            ("Thank you so much, bro.","script8:10534"),
+
+            # Multi Mod
+            ("Thank you so much, bro.","script8:10422"),
+        ],
 
         # BM script8:10609 (x)
         "You know Nancy's offer still stands, right?":
@@ -4367,16 +4810,39 @@ init python:
             "Well, I don't know, then I just thank Mom for making me the way I am.",
 
         # BM script8:16065 {inject}
-        "T-That was awkward.":
+        "T-That was awkward.":[
             ("T-That was awkward.","script8:16065",[
                 "show gd 146",
                 'd "Does... Does Jerry remember we’re siblings?" with dis',
                 "show gd 145",
                 'mc "When I talked to him earlier, it didn’t seem like he knew."',
-                'mc "We should probably be more careful around him though. I’ll order him not talk about this to anyone."',
+                'mc "We should probably be more careful around him though. I’ll order him to keep this a secret."',
                 "show gd 152",
                 'd "O-Okay. So we should be safe for now." with dis06',
             ]),
+
+            # Bonus Mod
+            ("T-That was awkward.","script8:16242",[
+                "show gd 146",
+                'd "Does... Does Jerry remember we’re siblings?" with dis',
+                "show gd 145",
+                'mc "When I talked to him earlier, it didn’t seem like he knew."',
+                'mc "We should probably be more careful around him though. I’ll order him to keep this a secret."',
+                "show gd 152",
+                'd "O-Okay. So we should be safe for now." with dis06',
+            ]),
+
+            # Multi Mod
+            ("T-That was awkward.","script8:16098",[
+                "show gd 146",
+                'd "Does... Does Jerry remember we’re siblings?" with dis',
+                "show gd 145",
+                'mc "When I talked to him earlier, it didn’t seem like he knew."',
+                'mc "We should probably be more careful around him though. I’ll order him to keep this a secret."',
+                "show gd 152",
+                'd "O-Okay. So we should be safe for now." with dis06',
+            ]),
+        ],
 
         # BM script8:16303
         "(Hmm, yeah.)":
@@ -4387,8 +4853,8 @@ init python:
             "(Sissy would freak out if she found out...)",
 
 
-        # -----------------------------------------
-        # v0.9 script9.rpy Lines
+    # -----------------------------------------
+    # v0.9 script9.rpy Lines
 
         # BM script9:267 (p)
         "OH! Is it...":
@@ -4796,8 +5262,15 @@ init python:
 
         # BM script9:14590 {specific}
         # Excludes script3:7862
-        "Those are the rules!":
+        "Those are the rules!":[
             ("As the only guy here, I might be taking those points!","script9:14590"),
+
+            # Bonus Mod
+            ("As the only guy here, I might be taking those points!","script9:14731"),
+
+            # Multi Mod
+            ("As the only guy here, I might be taking those points!","script9:14604"),
+        ],
 
         # BM script9:14594
         "F-Fine, fine... let's give [mc] his ego boost.":
@@ -4840,11 +5313,24 @@ init python:
             "This went from zero to nuclear real quick. With your own brother...",
 
         # BM script9:15236 (n) {inject}
-        "Why didn't you finish your drink, Mom...?":
+        "Why didn't you finish your drink, Mom...?":[
             ("M-Mom, I can explai–","script9:15236",[
                 'p "Wait..."',
                 'p "Why... Why didn’t you finish your drink, Mom...?"'
             ]),
+
+            # Bonus Mod
+            ("M-Mom, I can explai–","script9:15379",[
+                'p "Wait..."',
+                'p "Why... Why didn’t you finish your drink, Mom...?"'
+            ]),
+
+            # Multi Mod
+            ("M-Mom, I can explai–","script9:15250",[
+                'p "Wait..."',
+                'p "Why... Why didn’t you finish your drink, Mom...?"'
+            ]),
+        ],
 
         # BM script9:15241 (n)
         "NO. FUCKING. WAY.":
@@ -4866,10 +5352,17 @@ init python:
         "Goodnight, Dalia.":
             "Goodnight, sis.",
 
-        # BM script9:15647 {specific}
+        # BM script9:15647 (d) {specific}
         # Excludes script:2127 (n)
-        "Goodnight, [mc].":
+        "Goodnight, [mc].":[
             ("Goodnight, bro.","script9:15647"),
+
+            # Bonus Mod
+            ("Goodnight, bro.","script9:15798"),
+
+            # Multi Mod
+            ("Goodnight, bro.","script9:15661"),
+        ],
 
         # BM script9:15835 (d)
         "I-I mean... it’s a little weird with [mc] here too, but... whatever." :
@@ -4905,8 +5398,15 @@ init python:
 
         # BM script9:16060 {specific}
         # Excludes 1411 other lines
-        ". . .":
+        ". . .":[
             ("*Whispers sharply* Hey! Alex is right there!","script9:16060"),
+
+            # Bonus Mod
+            ("*Whispers sharply* Hey! Alex is right there!","script9:16217"),
+
+            # Multi Mod
+            ("*Whispers sharply* Hey! Alex is right there!","script9:16074"),
+        ],
 
         # BM script9:16061
         "...Thanks.":
@@ -5004,11 +5504,24 @@ init python:
             "I should warn you, though... I'm not as easy as your sister.",
 
         # BM script9:16597 {inject}
-        "*Choked laugh* Y-You're one t-to talk...":
+        "*Choked laugh* Y-You're one t-to talk...":[
             ("*Choked laugh* Y-You're one t-to talk, girl... ","script9:16597",[
                 'd "I-If he’s your daddy, am I your a-auntie...?"',
                 'x "*Breathless giggle* Is t-that what you want, Auntie D-Dal?"'
             ]),
+
+            # Bonus Mod
+            ("*Choked laugh* Y-You're one t-to talk, girl... ","script9:16762",[
+                'd "I-If he’s your daddy, am I your a-auntie...?"',
+                'x "*Breathless giggle* Is t-that what you want, Auntie D-Dal?"'
+            ]),
+
+            # Multi Mod
+            ("*Choked laugh* Y-You're one t-to talk, girl... ","script9:16611",[
+                'd "I-If he’s your daddy, am I your a-auntie...?"',
+                'x "*Breathless giggle* Is t-that what you want, Auntie D-Dal?"'
+            ]),
+        ],
 
         # BM script9:16693
         "*Grinning* You'll be fine, Dal...":
@@ -5061,7 +5574,7 @@ init python:
         # Annie has same last name as MC
         # Annie’s father and mother mentions converted to paternal grandparents
         #     MC's grandparents canonically exist in UK (script6:1392)
-        # half sis map based on this, if edits are made here check if they can be applied there too.
+        # half sis map and only sis map based on this, if edits are made here check if they can be applied there too.
         # -----------------------------------------
         # Character Notes
         # Annie has been playing for 3 years (script:8183)
@@ -5093,8 +5606,8 @@ init python:
         # BA/N = BlueArrow's notes
         # -----------------------------------------
 
-        # -----------------------------------------
-        # v0.1 script.rpy
+    # -----------------------------------------
+    # v0.1 script.rpy
 
         # BA/N: Want to mention "Grandparents" at some point in the intro, otherwise their appearance comes out of no where later on. 
         # not sure where tho
@@ -5105,15 +5618,15 @@ init python:
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
             "My name is [mc] [lastname]. I was born into a family of six in the city of Kredon, a relatively small town on the west coast of the United States.",
 
-        # AS script:949
+        # AS script:950
         "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
             "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This basically left my mom as the only parent taking care of four young kids while still juggling school.",
 
-        # AS script:951
+        # AS script:952
         "I know, I know, this all sounds pretty gloomy... but don't worry! This is not about to be one long sob story.":
             "He got custody of me and my twin sister, taking us with him to the UK while my mom stayed behind with our two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.",
 
-        # AS script:956
+        # AS script:957
         "He had to work to support us both. Heaven knows where I'd be without him.":
             "He had to work to support the three of us. Heaven knows where we'd be without him.",
 
@@ -5152,10 +5665,19 @@ init python:
             "(. . .)",
 
         # AS script:1055 {inject}
-        "(I could never do it.)":
+        "(I could never do it.)":[
             ("(Well... she is cute... and we love spending time with each other...)","script:1055",[
                 'mc "(I mean, if–){nw=0.8}"'
             ]),
+
+            # Bonus Mod
+            ("(Well... she is cute... and we love spending time with each other...)","script:1092",[
+                'mc "(I mean, if–){nw=0.8}"'
+            ]),
+
+            # Multi Mod
+            # script:1055, same as original
+        ],
 
         # AS script:1056
         "(She'd probably freak out if I did.)":
@@ -5264,7 +5786,7 @@ init python:
 
         # AS script:1347
         "It's just that I'm excited to discover the town where you grew up!":
-            "It's just that I'm excited to be home again!",
+            "It's just that I'm excited to be in our hometown again!",
 
         # AS script:1348
         "Well, I left this place when I was 8, so I don’t really remember anything.":
@@ -5292,8 +5814,15 @@ init python:
 
         # AS script:1764 (a) {specific}
         # Excludes other lines
-        "Y-Yeah.":
+        "Y-Yeah.":[
             ("Y-Yeah, me too.","script:1764"),
+
+            # Bonus Mod
+            ("Y-Yeah, me too.","script:1807"),
+
+            # Multi Mod
+            ("Y-Yeah, me too.","script:1765"),
+        ],
 
         # AS script:1765
         "You're even cuter than I imagined! Your voice matches your appearance so much!":
@@ -5329,11 +5858,11 @@ init python:
 
         # AS script:1781
         "Okay! Thank you, Nancy!":
-            "If the rooms didn't shrink since last time, it'll be alright.",
+            "If our rooms didn't shrink since last time, it'll be alright.",
 
         # AS script:1783
         "Have you ever been to the USA before, Annie?":
-            "Do you remember your time in the USA, Annie?",
+            "*Laughs* Well, you two are also much bigger now. Do you remember your time in the USA, Annie?",
 
         # AS script:1785
         "Never! But I’ve always wanted to visit. [mc] has always spoken very well of his time in Kredon.":
@@ -5349,7 +5878,7 @@ init python:
 
         # BA/N: flow of the next 2 lines still could use improvement
 
-        # AS script:1763
+        # AS script:1793
         "Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came along and offered me the babysitting gig.":
             "After you left, I was able to finish my thesis.",
 
@@ -5367,7 +5896,7 @@ init python:
 
         # AS script:1800
         "*Laughs* I remember she was always stealing my games!":
-            "*chuckles* That's good to hear!",
+            "*Chuckles* That's good to hear!",
 
         # AS script:1802
         "But then, after my daughters grew up, I was able to start a better job within a local company.":
@@ -5605,18 +6134,31 @@ init python:
         "(Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all these girls around me...)":
             "(Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all the girls in your family...)",
 
-        # AS script:5583 {inject}
-        "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":
+        # AS script:5583 (n) {inject}
+        "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":[
             ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5583",[
                 "show ale 31",
                 'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
 
+            # Bonus Mod
+            ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5649",[
+                "show ale 31",
+                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+            ]),
+
+            # Multi Mod
+            ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5584",[
+                "show ale 31",
+                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+            ]),
+        ],
+
         # base map label mod lines explaining MC, Annie, and Dalia's close age here
             # REPLACED BY INJECTION, below
 
         # AS script:6047 {inject} (replaces labelmod)
-        "Yeah, we've known each other since we were little.":
+        "Yeah, we've known each other since we were little.":[
             ("Yeah, we were separated as kids when our parents divorced.","script:6047",[
                 "show ale 74",
                 'x "Now that I think about, Dalia did mention having younger siblings before." with dis',
@@ -5629,9 +6171,36 @@ init python:
                 'x "Oh, wow. That’s quite the family." with dis'
             ]),
 
+            # Bonus Mod
+            ("Yeah, we were separated as kids when our parents divorced.","script:6115",[
+                "show ale 74",
+                'x "Now that I think about, Dalia did mention having younger siblings before." with dis',
+                'x "How are you in the same class as us?"',
+                "show ale 75",
+                'mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."',
+                'mc "The other younger sibling is my twin sister, so she’s also in our grade."',
+                'mc "She’s in a different class though."',
+                "show ale 78",
+                'x "Oh, wow. That’s quite the family." with dis'
+            ]),
+
+            # Multi Mod
+            ("Yeah, we were separated as kids when our parents divorced.","script:6048",[
+                "show ale 74",
+                'x "Now that I think about, Dalia did mention having younger siblings before." with dis',
+                'x "How are you in the same class as us?"',
+                "show ale 75",
+                'mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."',
+                'mc "The other younger sibling is my twin sister, so she’s also in our grade."',
+                'mc "She’s in a different class though."',
+                "show ale 78",
+                'x "Oh, wow. That’s quite the family." with dis'
+            ]),
+        ],
+
         # AS script:6049 use with inject
         "Probably the only two people in this class that are actually worth talking to.":
-            "Well, you and Dalia probably the only people in this class that are actually worth talking to.",
+            "Well, you and Dalia are probably the only people in this class that are actually worth talking to.",
 
         # ========== START label mod "preeternum_mod" backup ==========
             # Full replacement label with some line/image rearrangements
@@ -5725,7 +6294,7 @@ init python:
         "(That's a bad idea...)":
             "(Nope, bad idea. She's my sister!)",
 
-        # AS script:7142, script:7172
+        # AS script:7142, also overwrites script:7172
         "*Laughs* Don't get lost or get yourself into much trouble, alright?":
             "*Laughs* Don't get lost or get yourself into much trouble, alright bro?",
 
@@ -5745,7 +6314,7 @@ init python:
         "Oh... Come on Annie, it doesn't matter!":
             "Oh... Come on sis, it doesn't matter!",
 
-        # AS script:8016, script:8040
+        # AS script:8016, also overwrites script:8040
         "*Laughs* You always know how to make me laugh.":
             "*Laughs* You always know how to make me laugh, bro.",
 
@@ -5782,8 +6351,8 @@ init python:
             "But hey, I’m glad to say I was wrong. Both of you breathe so much life into this house. It almost feels like you never left.",
 
 
-        # -----------------------------------------
-        # v0.2 script2.rpy
+    # -----------------------------------------
+    # v0.2 script2.rpy
 
         # AS script2:40
         "I have a feeling this shit is much bigger than we think, Annie.":
@@ -5814,12 +6383,19 @@ init python:
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
         # AS script2:112 {inject} (replaces labelmod)
-        "It's so nice to meet you, Luna!":
+        "It's so nice to meet you, Luna!":[
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
                 'l "Same to you. You must be Annie, his twin sister. [mc]’s told me about you."',
                 "scene aaa 14"
             ]),
+
+            # Bonus Mod
+            # script2:112, same as original
+
+            # Multi Mod
+            # script2:112, same as original
+        ],
 
         # AS script2:113 used with inject
         "I heard [mc] managed to win a neural implant at your cafe!":
@@ -5885,7 +6461,7 @@ init python:
 
         # AS script2:3331
         "(He must think I'm a useless, scared kid...)":
-            "(He must think I'm still a kid-a useless, scared kid...)",
+            "(He must think I'm still a kid – a useless, scared kid...)",
 
         # AS script2:3339
         "(Yeah, nice job impressing [mc] in Eternum, Annie.)":
@@ -6062,7 +6638,7 @@ init python:
 
         # AS script2:3721
         "(But... I don't want to scare her away. Annie has always been so special to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)":
-            "(But... I don't want to scare her away. Annie has always been so special–more than just a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
+            "(But... I don't want to scare her away. Annie has always been so special – more than just a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
 
         # AS script2:3729
         "(Baby steps, [mc]. Baby steps.)":
@@ -6081,10 +6657,21 @@ init python:
             "Um... sis...?",
 
         # AS script2:3746 {inject}
-        "R-Really? W-Well... I guess that’s normal, given the circumstances.":
+        "R-Really? W-Well... I guess that’s normal, given the circumstances.":[
             ("R-Really? W-Well... I guess that’s normal, given the circumstances.","script2:3746",[
                 'a "It’s j-just a totally natural physical reaction."'
                 ]),
+
+            # Bonus Mod
+            ("R-Really? W-Well... I guess that’s normal, given the circumstances.","script2:3795",[
+                'a "It’s j-just a totally natural physical reaction."'
+                ]),
+
+            # Multi Mod
+            ("R-Really? W-Well... I guess that’s normal, given the circumstances.","script2:3757",[
+                'a "It’s j-just a totally natural physical reaction."'
+                ]),
+        ],
 
         # AS script2:3763
         "I’m sorry, Annie... I can’t help it... you’re driving me insane...":
@@ -6143,6 +6730,20 @@ init python:
             ("Oh sis...","script6:6414"),
             ("Oh sis...","script6:6556"),
             ("Oh sis...","script8:9636"),
+
+            # Bonus Mod
+            ("Oh sis...","script2:3914"),
+            ("Oh sis...","script4:5880"),
+            ("Oh sis...","script6:6454"),
+            ("Oh sis...","script6:6596"),
+            ("Oh sis...","script8:9767"),
+
+            # Multi Mod
+            ("Oh sis...","script2:3880"),
+            ("Oh sis...","script4:5852"),
+            ("Oh sis...","script6:6442"),
+            ("Oh sis...","script6:6584"),
+            ("Oh sis...","script8:9665"),
         ],
 
         # AS script2:3867
@@ -6227,16 +6828,21 @@ init python:
         #    "I know what it's like to feel alone.",
 
         # BM script2:6106 (x) {inject}
-        #"Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
+        #"Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":[
         #    ("Oh right, you {i}are{/i} Dalia's brother...","script2:6106",[
         #        'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
         #    ]),
 
+            # Bonus Mod script2:6170
+
+            # Multi Mod script2:6122
+        #],
+
         # ========== END WIP ==========
 
 
-        # -----------------------------------------
-        # v0.3 script3.rpy
+    # -----------------------------------------
+    # v0.3 script3.rpy
 
         # AS script3:2877 (d)
         "And with Annie and you too? Now that’s what I call a party!":
@@ -6418,8 +7024,8 @@ init python:
             "What about... Dalia, Penelope, and Annie?",
 
 
-        # -----------------------------------------
-        # v0.4 script4.rpy
+    # -----------------------------------------
+    # v0.4 script4.rpy
 
         # AS script4:4286
         "(I'm going on a date with [mc]!)":
@@ -6751,8 +7357,8 @@ init python:
             "Thank you, sweetie! You've grown into such a good girl!",
 
 
-        # -----------------------------------------
-        # v0.5 script5.rpy
+    # -----------------------------------------
+    # v0.5 script5.rpy
 
         # AS script5:809
         # BA/N: tried reworking "best friends" bit, idk if it works
@@ -6796,17 +7402,17 @@ init python:
         # "I like where this is going...":
         #     "I like where this is going... and I am too horny to care that she is my sister... as if I had cared with Mom, Dalia, or Annie...",
 
-        # AS script5:10045
+        # AS script5:10045 (p)
         "*Snorts* You're such a dork. You’re lucky I think you’re cute.":
-            "*Snorts* You're such a dork. I think you have enough twins in your life already.",
+            "*Snorts* You’re such a dork, my cute little brother. I think you have enough twins in your life already.",
 
-        # AS script5:12484
+        # AS script5:12484 (n)
         "I have two girls, Dalia and Penelope.":
-            "I have three girls and one son, Dalia, Penelope, Annie, and [mc].",
+            "I have three girls and one son, Dalia, Penelope, Annie, and [mc] here.",
 
 
-        # -----------------------------------------
-        # v0.6 script6.rpy
+    # -----------------------------------------
+    # v0.6 script6.rpy
 
         # AS script6:229 (d)
         "Truth is, you do look really good, Annie!":
@@ -6826,13 +7432,25 @@ init python:
 
         # AS script6:1674 {inject}
         # working in why annie didn't go too, elaborated later on
-        "I thought I'd be way more homesick.":
+        "I thought I'd be way more homesick.":[
             ("I thought I'd be way more homesick.","script6:1674",[
                 'show ep 41',
                 'a "I told you you booked it too soon!" with dis',
                 'show ep 40',
                 'mc "Yeah, I might’ve rushed a bit since the ticket was cheap."'
             ]),
+
+            # Bonus Mod
+            ("I thought I'd be way more homesick.","script6:1684",[
+                'show ep 41',
+                'a "I told you you booked it too soon!" with dis',
+                'show ep 40',
+                'mc "Yeah, I might’ve rushed a bit since the ticket was cheap."'
+            ]),
+
+            # Multi Mod
+            # script6:1674, same as original
+        ],
 
         # AS script6:1678
         "How was your father?":
@@ -6901,10 +7519,17 @@ init python:
         "Can you focus and stop being a pig?!":
             "Can you focus and stop being a pervert?!",
 
-        # AS script6:5739 {specific}
+        # AS script6:5739 (a) {specific}
         # Excludes script:3745 (d), script3:734 (no)
-        "[mc]!!":
+        "[mc]!!":[
             ("Bro!!","script6:5739"),
+
+            # Bonus Mod
+            ("Bro!!","script6:5775"),
+
+            # Multi Mod
+            ("Bro!!","script6:5767"),
+        ],
 
         # ========== END Murder Mystery ==========
 
@@ -6922,7 +7547,7 @@ init python:
 
         # AS script6:6026 {inject}
         # adding why Annie didn't go with you
-        "*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.":
+        "*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.":[
             ("*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.","script6:6026",[
                 'mc "They were also really surprised that you didn’t come with me."',
                 "show eaa 11",
@@ -6932,14 +7557,52 @@ init python:
                 'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
             ]),
 
+            # Bonus Mod
+            ("*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.","script6:6064",[
+                'mc "They were also really surprised that you didn’t come with me."',
+                "show eaa 11",
+                'a "*Laughs* True, I don’t think we’ve been apart for this long before."',
+                'a "Sorry to make you go alone, but I knew I wouldn’t be ready to go back so soon."',
+                "show eaa 10",
+                'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
+            ]),
+
+            # Multi Mod
+            ("*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.","script6:6054",[
+                'mc "They were also really surprised that you didn’t come with me."',
+                "show eaa 11",
+                'a "*Laughs* True, I don’t think we’ve been apart for this long before."',
+                'a "Sorry to make you go alone, but I knew I wouldn’t be ready to go back so soon."',
+                "show eaa 10",
+                'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
+            ]),
+        ],
+
         # AS script6:6031 {inject}
-        "I don't care if I find discounted plane tickets again, I have no reason to go back there.":
+        "I don't care if I find discounted plane tickets again, I have no reason to go back there.":[
             ("I don't care if I find discounted plane tickets again, I have no reason to go back there.","script6:6031",[
                 "show eaa 11",
                 'a "Ouch. I’m telling Grandpa and Grandma that next time they call."',
                 "show eaa 10",
                 'mc "*Laughs* Okay, maybe two reasons."'
             ]),
+
+            # Bonus Mod
+            ("I don't care if I find discounted plane tickets again, I have no reason to go back there.","script6:6069",[
+                "show eaa 11",
+                'a "Ouch. I’m telling Grandpa and Grandma that next time they call."',
+                "show eaa 10",
+                'mc "*Laughs* Okay, maybe two reasons."'
+            ]),
+
+            # Multi Mod
+            ("I don't care if I find discounted plane tickets again, I have no reason to go back there.","script6:6059",[
+                "show eaa 11",
+                'a "Ouch. I’m telling Grandpa and Grandma that next time they call."',
+                "show eaa 10",
+                'mc "*Laughs* Okay, maybe two reasons."'
+            ]),
+        ],
 
         # AS script6:6033
         "And how was your dad?":
@@ -6951,11 +7614,7 @@ init python:
 
         # AS script6:6050
         "Tell Na-":
-            "Tell An-",
-
-        # AS script6:6052
-        "*Burps* Tell Nancy, Talia, and Persephone I said hi.":
-            "*Burps* Tell Annie, Nancy, Talia, and Persephone I said hi.",
+            "Tell Annie and Na-",
 
         # AS script6:6063
         "So... yeah, you know how my father is.":
@@ -7004,19 +7663,34 @@ init python:
 
         # AS script6:6215 {specific}
         # Excludes script:8614 (n)
-        "Good night, [mc]!":
+        "Good night, [mc]!":[
             ("Good night, bro!","script6:6215"),
 
+            # Bonus Mod
+            ("Good night, bro!","script6:6253"),
+
+            # Multi Mod
+            ("Good night, bro!","script6:6243"),
+        ],
+
         # AS script6:6218 {specific}
-        # Excludes script6:5866 (no) and script6:3453 (a)
-        "Good night, Annie!":
+        # Excludes script6:5866 (no) and script6:3453 (mc)
+        "Good night, Annie!":[
             ("Good night, sis!","script6:6218"),
+
+            # Bonus Mod
+            ("Good night, sis!","script6:6256"),
+
+            # Multi Mod
+            ("Good night, sis!","script6:6246"),
+        ],
 
         # AS script6:6256
         "Y-You know what I mean!":
             "N-No, I just– y-you know what I mean!",
 
         # AS script6:6278
+        # Disabled for impact
         #"You need to be more direct, Annie.":
         #    "You need to be more direct, sis.",
 
@@ -7162,8 +7836,8 @@ init python:
         # ========== END Fuck Marry Kill ==========
 
 
-        # -----------------------------------------
-        # v0.7 script7.rpy
+    # -----------------------------------------
+    # v0.7 script7.rpy
 
         # AS script7:1461
         "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, Annie.":
@@ -7171,8 +7845,15 @@ init python:
 
         # AS script7:1468 {specific}
         # Excludes script:7779 (eva)
-        "Thank you, [mc]...":
+        "Thank you, [mc]...":[
             ("Thank you, bro...","script7:1468"),
+
+            # Bonus Mod
+            ("Thank you, bro...","script7:1480"),
+
+            # Multi Mod
+            # script7:1468, same as original
+        ],
 
         # AS script7:1502
         "Are you sure you don't want to join us, Annie?":
@@ -7193,42 +7874,108 @@ init python:
         # ========== START harem thoughts ==========
 
         # AS script7:7396 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
                 'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7452",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7454",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
         # AS script7:7398 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
                 'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7454",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7456",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
         # AS script7:7400 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
                 'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7456",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # AS script7:7402 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
                 'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # AS script7:7404 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
                 'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7462",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
         # AS script7:7425 {inject}
         # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
         #    but also why would you be playing an incest mod without following at least one incest path right?
-        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":[
             ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
                 'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
             ]),
+
+            # Bonus Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7481",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+            # Multi Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7483",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+        ],
 
         # ========== END harem thoughts ==========
 
@@ -7241,8 +7988,8 @@ init python:
             "*Panting* I want the whole family to hear me scream...",
 
 
-        # -----------------------------------------
-        # v0.8 script8.rpy
+    # -----------------------------------------
+    # v0.8 script8.rpy
 
         # AS script8:4222
         "Come on, [mc], I need you to catch on quickly! We're running out of time.":
@@ -7292,7 +8039,7 @@ init python:
         #    "Which is still strange to think about since you’re twins, but... You two mean a lot to me, and I know how much you mean to each other.{p}So, I just want to tell you again that I’ll always support you two.",
 
         # AS script8:7099 {inject}
-        "And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":
+        "And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":[
             ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7099",[
                 "show gf 35",
                 'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
@@ -7301,11 +8048,37 @@ init python:
                 'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
             ]),
 
+            # Bonus Mod
+            ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7208",[
+                "show gf 35",
+                'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
+                'c "Honestly, I probably could’ve seen it coming. I know how first-hand just much you two mean to each other."',
+                "show gf 36",
+                'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
+            ]),
+
+            # Multi Mod
+            ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7127",[
+                "show gf 35",
+                'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
+                'c "Honestly, I probably could’ve seen it coming. I know how first-hand just much you two mean to each other."',
+                "show gf 36",
+                'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
+            ]),
+        ],
+
         # AS script8:7101 {specific}
         # Excludes script4:2443 (d). original backup line saved just in case
-        "*Chuckles* If you say so...":
+        "*Chuckles* If you say so...":[
             ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7101"),
             #"*Chuckles* Thanks, bro. I appreciate it.",
+
+            # Bonus Mod
+            ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7210"),
+
+            # Multi Mod
+            ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7129"),
+        ],
 
         # AS script8:7205
         "[mc], over here!":
@@ -7410,8 +8183,15 @@ init python:
 
         # AS script8:8159 {specific}
         # Excludes script5:1198 (l)
-        "Hi [mc].":
+        "Hi [mc].":[
             ("Hi Chang.","script8:8159"),
+
+            # Bonus Mod
+            ("Hi Chang.","script8:8278"),
+
+            # Multi Mod
+            ("Hi Chang.","script8:8187"),
+        ],
 
         # AS script8:8160
         "D-Did you...":
@@ -7574,10 +8354,21 @@ init python:
             "Alright, tell me what happened on our tenth birthday.",
 
         # AS script8:8455 {inject}
-        "We couldn’t celebrate your birthday because you were sick, so we decided to do a joint birthday celebration three weeks later at Chang’s parents' restaurant.":
+        "We couldn’t celebrate your birthday because you were sick, so we decided to do a joint birthday celebration three weeks later at Chang’s parents' restaurant.":[
             ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8455",[
                 'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
             ]),
+
+            # Bonus Mod
+            ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8580",[
+                'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
+            ]),
+
+            # Multi Mod
+            ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8483",[
+                'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
+            ]),
+        ],
 
         # AS script8:8497
         "D-Darn it, [mc].":
@@ -7664,19 +8455,30 @@ init python:
             "I-I can't handle this unbearable teasing anymore, sis...",
 
         # AS script8:9559 {specific}
-        # Excludes other lines (x) (no) (l)
+        # Excludes other lines (x)(no)(l)
         # with necessary overrides to keep dalia lines
         "Oh babe...":[
             ("Oh sis...","script6:10790"), #dalia
             ("Oh sis...","script6:10811"), #dalia
             ("Oh sis...","script8:9559"), #annie
+
+            # Bonus Mod
+            ("Oh sis...","script6:10867"), #dalia
+            ("Oh sis...","script6:10888"), #dalia
+            ("Oh sis...","script8:9690"), #annie
+
+            # Multi Mod
+            ("Oh sis...","script6:10821"), #dalia
+            ("Oh sis...","script6:10842"), #dalia
+            ("Oh sis...","script8:9588"), #annie
         ],
 
         # AS script8:9583 {inject} WIP
-        #"*Moans* I can feel it...":
+        #"*Moans* I can feel it...":[
         #    ("*Moans* I can feel it...","script8:9583",[
         #        'a "*Giggles* We’re finally connected..."'
         #    ]),
+        #],
 
         # AS script8:9591
         "You're doing great, babe...":
@@ -7723,8 +8525,8 @@ init python:
             "B-But I've always liked you!",
 
 
-        # -----------------------------------------
-        # v0.9 script9.rpy
+    # -----------------------------------------
+    # v0.9 script9.rpy
 
         # AS script9:167 (p)
         "Is there anything better than spending time with my favorite sister?":
@@ -7777,10 +8579,21 @@ init python:
         #    "Annie flew back to the UK a few days ago. Our grandparents invited us over for Christmas for the first time since we were kids.{p}Annie accepted their invite, but I already saw them when I went back recently so I'm staying here. She’s gonna be back before New Year’s Eve.",
 
         # AS script9:9919 {inject}
-        "Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":
+        "Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":[
             ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9919",[
                 'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
             ]),
+
+            # Bonus Mod
+            ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9983",[
+                'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
+            ]),
+
+            # Multi Mod
+            ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9927",[
+                'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
+            ]),
+        ],
 
         # AS script9:9941
         "Nova's doing the family thing too.":
@@ -7821,16 +8634,36 @@ init python:
 
     annie_only_sister_map = {
         # -----------------------------------------
-        # Annie is MC’s sister (still twin?), no incest with Nancy, Penny, Dalia.
-        # still incomplete
+        # Annie is MC’s twin sister, no incest with Nancy, Penny, Dalia.
+        # Annie has same last name as MC
+        # Annie’s father and mother mentions converted to paternal grandparents
+        #     MC's grandparents canonically exist in UK (script6:1392)
+        # Original map, reworked from full incest map
         # -----------------------------------------
-        # OS 0000 = Only Sister map, Line number
-        # Line numbers based on compiled script from v0.9.0, subject to change in future updates
-        #    (which already happened in v0.9.4 fml, too lazy to redo all the numbers)
+        # Character Notes
+        # Annie has been playing for 3 years (script:8183)
+        # MC and Annie are close, using bro/sis often
+        # revert to names when being more serious
         # -----------------------------------------
         # OS script:0000 = Only Sister map, RPY file:Line Number
         #     Numbers based on v0.9.5, subject to change in future updates
-        #     slowly adapting line numbers to this format
+        # Tags based who the line is about contextually, not always the speaker.
+        # Selectively applied for clarification
+        # (menu) = Choice menu line
+        # (mc) = MC line
+        # (n) = Nancy line
+        # (p) = Penelope line
+        # (d) = Dalia line
+        # (a) = Annie line
+        # (x) = Alex line
+        # (l) = Luna line
+        # (no) = Nova line
+        # (ca) = Calypso line
+        # -----------------------------------------
+        # Code tags
+        # {specific} = use of Variant 2 to target specific lines
+        # {inject} = use of Variant 3 to inject new lines      
+        # -----------------------------------------
         # LW/N = Lucifer_W's notes
         # l9/N = l9453394's notes
         # BA/N = BlueArrow's notes
@@ -7841,17 +8674,13 @@ init python:
 
         # OS script:948
         "My name is [mc] [lastname]. I was born in the city of Kredon, a relatively small town on the west coast of the United States.":
-            "My name is [mc] [lastname]. I was born into a family of six in the city of Kredon, a relatively small town on the west coast of the United States.",
+            "My name is [mc] [lastname]. I was born as a twin in the city of Kredon, a relatively small town on the west coast of the United States.",
 
-        # OS script:949
+        # OS script:950
         "My mother left shortly after I was born and my dad was never around much because he was always so focused on his job.":
-            "My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This basically left my mom as the only parent taking care of four young kids while still juggling school.",
+            "My mother left shortly after my twin and I were born and my dad was never around much because he was always so focused on his job.",
 
-        # OS script:951
-        "I know, I know, this all sounds pretty gloomy... but don't worry! This is not about to be one long sob story.":
-            "He got custody of me and my twin sister, taking us with him to the UK while my mom stayed behind with our two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.",
-
-        # OS script:956
+        # OS script:957
         "He had to work to support us both. Heaven knows where I'd be without him.":
             "He had to work to support the three of us. Heaven knows where we'd be without him.",
 
@@ -7859,15 +8688,13 @@ init python:
         "(Annie is a close friend from my childhood.)":
             "(Annie is my younger twin sister.)",
 
-        # BA/N: reworked next few lines to flesh out UK backstory and mention grandparents. Still a bit clunky ngl
-
         # OS script:1047
         "(When I moved from Kredon, she was my next-door neighbor and the first person I met, along with Chang.)":
-            "(When we moved from Kredon, all we had were each other until we met Chang. He helped fill the gap of our missing family, but obviously couldn't be around us all the time.)",
-
+            "(When we moved from Kredon, all we had were each other until we met Chang.)",
+        
         # OS script:1048
         "(We quickly bonded after discovering we both had something in common... the absence of our parents.)":
-            "(We did have our grandparents on our dad's side living in the UK. They loved to pamper us when they could, but rarely were able to visit.)",
+            "(We found out our grandparents also lived in the UK. They loved to pamper us when they could, but rarely were able to visit.)",
 
         # OS script:1049
         "(Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them.)":
@@ -7875,7 +8702,7 @@ init python:
 
         # OS script:1050
         "(We were both lost... and lonely.)":
-            "(In those chaotic and lonely times, we gave each other stability.)",
+            "(We gave each other stability in those lonely times.)",
 
         # OS script:1051
         "(After finding a companion within each other, we’ve been inseparable ever since.)":
@@ -7890,10 +8717,19 @@ init python:
             "(. . .)",
 
         # OS script:1055 {inject}
-        "(I could never do it.)":
+        "(I could never do it.)":[
             ("(Well... she is cute... and we love spending time with each other...)","script:1055",[
                 'mc "(I mean, if–){nw=0.8}"'
             ]),
+
+            # Bonus Mod
+            ("(Well... she is cute... and we love spending time with each other...)","script:1092",[
+                'mc "(I mean, if–){nw=0.8}"'
+            ]),
+
+            # Multi Mod
+            # script:1055, same as original
+        ],
 
         # OS script:1056
         "(She'd probably freak out if I did.)":
@@ -7901,52 +8737,31 @@ init python:
 
         # OS script:1059
         "(It would be... weird for us. Yeah! That's the word. Weird.)":
-            "(It would be... wrong. Very wrong! We're twin siblings after all.)",
+            "(It would be... wrong. Very wrong! We're twins after all.)",
 
         # OS script:1060
         "(It's just not the kind of relationship we have.)":
             "(Why am I even thinking about this!?)",
 
-        # OS script:1076
-        "I was saying that I spoke with Nancy.":
-            "I was saying that I spoke with Mom.",
-
         # OS script:1080
         "I can't wait to see her. I hope she recognizes me.":
             "I can't wait to see her. I hope she recognizes us.",
 
-        # OS script:1082
-        "*Laughs* I'm sure she will.":
-            "*Laughs* I'm sure she will. She is our mother after all.",
-
         # OS script:1085
-        # bypass added in skip_nancy_swap, edit down there if this line is changed
         "(Nancy used to be my babysitter in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)":
-            "(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)",
+            "(Nancy used to be our babysitter in Kredon. Since our father was always working, I can recall more memories with her than with our dad.)",
 
         # OS script:1086
-        # LW/N: FIXED: Handle both versions
         "(I used to spend the entire afternoon playing with Nancy and her daughter Dalia, but then we had to move and ended up losing touch.)":
-            "(The two of us used to spend entire afternoons playing with Mom and our older sister Dalia, but then we had to move and ended up losing touch.)",
-
-        "(I used to spend the entire afternoon playing with Mom and her daughter Dalia, but then we had to move and ended up losing touch.)":
-            "(The two of us used to spend entire afternoons playing with Mom and our older sister Dalia, but then we had to move and ended up losing touch.)",
-
-        # OS script:1088
-        # Handle both versions
-        "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Nancy and Dalia again.)":
-            "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see Mom, Dalia, and our oldest sister Penelope again.)",
-
-        "(Living with them will be much cheaper than renting a student residence, and it’ll surely be nice to see Mom and Dalia again.)":
-            "(Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see Mom, Dalia, and our oldest sister Penelope again.)",
+            "(We used to spend the entire afternoon playing with Nancy and her daughter Dalia, but then we had to move and ended up losing touch.)",
 
         # OS script:1089
         "(Come to find out, she actually had 2 rooms available, so Annie will have a place to stay as well!)":
-            "(Come to find out, she actually had our old rooms available!)",
+            "(Come to find out, she actually had 2 rooms available, so Annie and I could stay together!)",
 
         # OS script:1090
         "(She’s actually been the one who’s been coordinating with Nancy over the phone, even though they didn’t know each other beforehand.)":
-            "(Annie’s actually been the one who’s been coordinating with Mom over the phone, I didn't have to do anything.)",
+            "(Annie’s actually been the one who’s been coordinating with Nancy over the phone, I didn't have to do anything.)",
 
         # OS script:1093
         "Do you think she will like me?":
@@ -7958,7 +8773,7 @@ init python:
 
         # OS script:1096
         "Don't worry about it, Annie. I haven't seen her in over 10 years, so it’ll probably feel like I’m meeting her for the first time too!":
-            "And anyways, it's not like it's a stranger we're meeting, it's our family.",
+            "And anyways, it's not like it's a stranger we're meeting, it's our old babysitter.",
 
         # OS script:1157
         "You should go to sleep too, Annie. We have to wake up early tomorrow.":
@@ -7998,7 +8813,7 @@ init python:
 
         # OS script:1347
         "It's just that I'm excited to discover the town where you grew up!":
-            "It's just that I'm excited to be home again!",
+            "It's just that I'm excited to be in our hometown again!",
 
         # OS script:1348
         "Well, I left this place when I was 8, so I don’t really remember anything.":
@@ -8014,16 +8829,11 @@ init python:
 
         # OS script:1762
         "You must be Annie!":
-            "Annie! My precious little girl!",
+            "Annie! Come here and let me see that adorable face!",
 
         # OS script:1763 (n)
         "Is that right?!":
-            "I missed you so much!",
-
-        # OS script:1764 (a) {specific}
-        # Excludes other lines
-        "Y-Yeah.":
-            ("Y-Yeah, me too.","script:1764"),
+            "It's been so long!",
 
         # OS script:1765
         "You're even cuter than I imagined! Your voice matches your appearance so much!":
@@ -8035,11 +8845,11 @@ init python:
 
         # OS script:1767
         "It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’ve been becoming good friends already! Isn't that right, Annie?":
-            "God, you can't imagine how much I missed you little twins!",
+            "It's so good to see the two of you after all these years.",
 
         # OS script:1769 (a)
         "Definitely! I’d say we’ve been hitting it off pretty well!":
-            "We missed you too, Nancy...",
+            "Same here, Nancy!",
 
         # OS script:1770 (a)
         "It's so nice to finally meet you!":
@@ -8051,15 +8861,15 @@ init python:
 
         # OS script:1779
         "I hope so! And please, just call me Nancy!":
-            "I hope so!",
+            "I sure hope so!",
 
         # OS script:1781
         "Okay! Thank you, Nancy!":
-            "If youre rooms didn't shrink since last time, it'll be alright.",
+            "I remember your rooms being pretty spacious when we stayed over.",
 
         # OS script:1783
         "Have you ever been to the USA before, Annie?":
-            "Do you remember your time in the USA, Annie?",
+            "*Laughs* You two were also much smaller back then. Do you remember your time in the USA, Annie?",
 
         # OS script:1785
         "Never! But I’ve always wanted to visit. [mc] has always spoken very well of his time in Kredon.":
@@ -8071,37 +8881,27 @@ init python:
 
         # OS script:1790
         "Yeah, since my Dad was constantly working, I've always said you were like a parent to me.":
-            "Of course! How could we forget those times?",
+            "Yeah, since our Dad was constantly working, we've always said you were like a parent to us.",
 
-        # BA/N: flow of the next 2 lines still could use improvement
-
-        # OS script:1763
+        # OS script:1793
         "Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came along and offered me the babysitting gig.":
-            "After you left, I was able to finish my thesis.",
+            "Back then I was still finishing my thesis. Thanks to your father offering me the babysitting gig, I had the flexibility to take care of my daughters at the same time.",
 
         # OS script:1794
         "It was not only well-paid, but also allowed me the flexibility to take care of my daughters at the same time. And for me, being a single mother, that was essential.":
-            "Thanks to that, I work in laboratory now. It pays pretty well.",
+            "Since you left, I've started working in laboratory. It pays pretty well.",
 
         # OS script:1796
         "You have 2 daughters, right?":
-            "That's great! So how are youre daughters doing?",
+            "That's great! So how are your daughters doing?",
 
         # OS script:1798
         "Yes, Dalia and Penelope. Penny was a little older when I was [mc]'s nanny, so she used to play on her own, but Dalia got very close to him!":
-            "They're doing well, they've grown up wonderfully like you.",
-
-        # OS script:1800
-        "*Laughs* I remember she was always stealing my games!":
-            "*chuckles* That's good to hear!",
+            "They're both doing well! Penelope's in college and Dalia will going to school with you. I remember the the two of you and Dalia were very close as children.",
 
         # OS script:1802
         "But then, after my daughters grew up, I was able to start a better job within a local company.":
             "Yes... in the beginning I worked a lower-paying job but now that those two are older, I was able to start a better job within a local company.",
-
-        # OS script:1807
-        "Ahh, aren't you cute!":
-            "Ahh, thank you, honey!",
 
         # OS script:1821
         "Alright then! Let's go to the car! Dalia and Penelope are dying to see you again!":
@@ -8110,13 +8910,17 @@ init python:
         # ========== START label mod "welcome_mod" ==========
             # line numbers for both files 
 
+        # OS script:1842 IncestLables:23
+        "(Nancy used to pick me up after school and we'd come here.)":
+            "(Nancy used to pick us up after school and we'd come here.)",
+
         # OS script:1843 IncestLables:24
         "(Each day I would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove me home once it got late.)":
-            "(My afternoons were spent playing with her, Dalia, and Annie. We had dinner every night at eight, and then Nancy drove us home once it got late.)",
+            "(Each day we would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove us home once it got late.)",
 
         # OS script:1845 IncestLables:26
         "(She would always call me on my birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)":
-            "(She would always call us on our birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)",
+            "(Nancy would always call us on our birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)",
 
         # OS script:1858 (a)
         # replaced by IncestLables:39
@@ -8131,23 +8935,15 @@ init python:
 
         # OS script:1861 IncestLables:42
         "*Laughs* No, I wish. Houses in Kredon are not that expensive.":
-            "*Laughs* That's nice, it always felt empty without you two.",
+            "*Laughs* Thank you, sweetie.",
 
         # OS script:1862 IncestLables:43
         "It's beautiful! I'm used to living in a flat, so this looks like a palace to me!":
-            "We're used to living in a flat now, so this'll be like living in a palace again! ",
+            "We're used to living in a flat, so this'll be like living in a palace! ",
 
         # OS script:1863 IncestLables:44
         "My husband and I bought it when I was pregnant with Dalia.":
-            "Yes, it is a good home.",
-
-        # OS script:1864 IncestLables:45
-        "Although he left before she was born, so I was left paying the mortgage all by myself...":
-            "It's served us well the past years.",
-
-        # OS script:1865 IncestLables:46
-        "*Clears throat* But that's a story for another day!":
-            "*Clears throat* Let's not get sentimental...",
+            "Yes, it is a good home. My husband and I bought it when I was pregnant with Dalia.",
 
         # OS script:1868 IncestLables:49
         "You first, [mc]!":
@@ -8157,11 +8953,11 @@ init python:
         "That's cool! I love rainy days!":
             "Oh, I remember now, too! Guess that's why I've always loved rainy days!",
 
-        # AS 1764 script:1888 IncestLables:69
+        # OS 1764 script:1888 IncestLables:69
         "Did you paint that?!":
             "Do you still paint?",
 
-        # AS 1765 script:1889 IncestLables:70
+        # OS 1765 script:1889 IncestLables:70
         "Yeah, I used to paint in my free time, but I haven't done anything in years.":
             "No, I haven't done anything in years.",
 
@@ -8169,7 +8965,12 @@ init python:
         # replaced by IncestLables:71
 
         # OS script:1894
-        # replaced by IncestLables:75
+        "*Laughs* And Penelope the preteen that was too \"cool\" to play with Dalia and me?":
+            "*Laughs* And Penelope the preteen that was too \"cool\" to play with us younger kids?",
+
+        # OS IncestLables:75 labelmod override
+        "*Laughs* And Penelope the preteen that was too \"cool\" to play with her younger siblings?":
+            "*Laughs* And Penelope the preteen that was too \"cool\" to play with us younger kids?",
 
         # OS script:1916 IncestLables:97
         "I wasn't expecting you to be so excited to meet [mc] again!":
@@ -8182,16 +8983,9 @@ init python:
         "Oh, y-yeah, so excited! Hi [mc]!":
             "Oh, y-yeah, so excited! Hi Annie!",
 
-        # OS script:1936
-        # replaced by IncestLables:117
-
-        # OS script:1963 IncestLables:144
-        "They're gonna live with us for a whole year. You know that, right?":
-            "We haven't seen them in ten years, you know!",
-
-        # OS script:1967 IncestLables:148
-        "[mc]! I can't wait to properly meet you!":
-            "Hey [mc], I can't wait to hear all about what happened to you and Annie!",
+        # OS IncestLables:117 labelmod override
+        "So good to see you, sisters!":
+            "So good to see you!",
 
         # OS script:1970 IncestLables:151
         "Oh, and you must be Annie! Nice to meet you too!":
@@ -8199,7 +8993,7 @@ init python:
 
         # OS script:1972 IncestLables:153
         "Welcome to the family!":
-            "Welcome back, you two!",
+            "Welcome to the family, you two!",
 
         # OS script:1983 IncestLables:164
         "Of course he doesn't mind!":
@@ -8207,7 +9001,7 @@ init python:
 
         # OS script:2078 IncestLables:259
         "Annie, you must have gotten the wrong impression of my daughters...":
-            "Still, I was hoping for a warmer reunion after so much time apart...",
+            "Still, I was hoping for us to have a warmer reunion...",
 
         # OS script:2080 IncestLables:261
         "Not at all! They both seem really nice!":
@@ -8219,7 +9013,7 @@ init python:
 
         # OS script:2083 IncestLables:264
         "You're so nice, Annie. Is there anything I can do for you?":
-            "That's nice of you to say, honey. Is there anything I can do for you?",
+            "That's nice of you to say, sweetie. Is there anything I can do for you?",
 
         # OS script:2119 IncestLables:300
         "Well, since [mc] seems to remember where everything is already... Do you want a tour of the house, Annie?":
@@ -8233,11 +9027,11 @@ init python:
 
         # OS script:2407
         "Annie, Penelope, and Dalia have been up for a while!":
-            "Your sisters have been up for a while!",
+            "Your sister, Penelope, and Dalia have been up for a while!",
 
         # OS script:2436
         "(Although, I think I'll wait a couple of weeks. I don't want [mc] and Annie to think I'm a promiscuous woman or anything...)":
-            "(Although, I think I'll wait a couple of weeks. I don't want [mc] and Annie to think I've become a promiscuous woman or anything...)",
+            "(Although, I think I'll wait a couple of weeks. I don't want the twins to think I've become a promiscuous woman or anything...)",
 
         # OS script:2760
         "That's what I said, but she told us she wanted to take a tour of the neighborhood.":
@@ -8245,7 +9039,7 @@ init python:
 
         # OS script:2762
         "Oh yeah, that sounds like Annie. I guess she already told you she also plays Eternum?":
-            "Oh yeah, that sounds like sis. I guess she already told you she also plays Eternum?",
+            "Oh yeah, that sounds like my sister. I guess she already told you she also plays Eternum?",
 
         # OS script:2798
         "(Annie was always good at making friends.)":
@@ -8289,59 +9083,19 @@ init python:
 
         # OS script:5178
         "I don't know, it felt pretty special to me. I never had a nice, home-cooked meal when I was living with my dad.":
-            "I don't know, it felt pretty special to me. Annie and I never really had a nice, home-cooked meal while we were living with Dad.",
+            "I don't know, it felt pretty special to me. Annie and I never really had a nice, home-cooked meal while we were living with our dad.",
 
         # OS script:5200
         "Tomorrow you'll finally be connected to Eternum, [mc]! After waiting for so many years!":
             "Tomorrow you'll finally be connected to Eternum, bro! After waiting for so many years!",
 
-        # OS script:5207
-        "We’re only missing Nancy and Penelope, then our group would be complete!":
-            "We’re only missing Mom and Penelope, then our whole family would be complete!",
-
-        # OS script:5209 (p)
-        "*Laughs* I wouldn't count on it, Annie, sorry.":
-            "*Laughs* I wouldn't count on it, lil sis, sorry.",
-
-        # OS script:5308 (p)
-        "Nah, don't worry Annie, it's my turn today. But thank you!":
-            "Nah, don't worry, lil sis, it's my turn today. But thank you!",
-
         # OS script:5331 (a)
         "Goodnight [mc]!!":
             "Goodnight, bro!!",
 
-        # OS script:5479
-        "(Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all these girls around me...)":
-            "(Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all the girls in your family...)",
-
-        # OS script:5583 {inject}
+        # OS script:5583 (n)
         "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":
-            ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5583",[
-                "show ale 31",
-                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
-            ]),
-
-        # base map label mod lines explaining MC, Annie, and Dalia's close age here
-            # REPLACED BY INJECTION, below
-
-        # OS script:6047 {inject} (replaces labelmod)
-        "Yeah, we've known each other since we were little.":
-            ("Yeah, we were separated as kids when our parents divorced.","script:6047",[
-                "show ale 74",
-                'x "Now that I think about, Dalia did mention having younger siblings before." with dis',
-                'x "How are you in the same class as us?"',
-                "show ale 75",
-                'mc "*Chuckles* I was actually born later that same year, close enough for us to be in the same grade."',
-                'mc "The other younger sibling is my twin sister, so she’s also in our grade."',
-                'mc "She’s in a different class though."',
-                "show ale 78",
-                'x "Oh, wow. That’s quite the family." with dis'
-            ]),
-
-        # OS script:6049 use with inject
-        "Probably the only two people in this class that are actually worth talking to.":
-            "Well, you and Dalia probably the only people in this class that are actually worth talking to.",
+            "(I mean... If the girls never found out, then would it really be so bad? It’d be our little secret...)",
 
         # ========== START label mod "preeternum_mod" backup ==========
             # Full replacement label with some line/image rearrangements
@@ -8416,7 +9170,7 @@ init python:
             "That's the thing, bro!",
 
         # OS script:6728
-        # Overwritten by AS script:6179, okay
+        # Overwritten by OS script:6179, okay
         # "Annie?!" -> "Hey, sis?!"
 
         # OS script:6810
@@ -8435,7 +9189,7 @@ init python:
         "(That's a bad idea...)":
             "(Nope, bad idea. She's my sister!)",
 
-        # OS script:7142, script:7172
+        # OS script:7142, also overwrites script:7172
         "*Laughs* Don't get lost or get yourself into much trouble, alright?":
             "*Laughs* Don't get lost or get yourself into much trouble, alright bro?",
 
@@ -8455,7 +9209,7 @@ init python:
         "Oh... Come on Annie, it doesn't matter!":
             "Oh... Come on sis, it doesn't matter!",
 
-        # OS script:8016, script:8040
+        # OS script:8016, also overwrites script:8040
         "*Laughs* You always know how to make me laugh.":
             "*Laughs* You always know how to make me laugh, bro.",
 
@@ -8483,31 +9237,23 @@ init python:
         "The pleasure was all mine, Annie. Eternum is awesome. I’m so grateful I had you by my side.":
             "The pleasure was all mine, sis. Eternum is awesome. I’m so grateful I had you by my side.",
 
-        # OS script:8525 (p)
-        "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I got a little annoyed.":
-            "You know, I'm not gonna lie, when Mom told me that you and Annie were gonna come back for a while, I wasn't sure what to feel. Ten years apart is a long time after all.",
 
-        # OS script:8526 (p)
-        "But hey, I’m glad to say I was wrong. Both of you breathe so much life into this house. It almost feels like you've always lived here.":
-            "But hey, I’m glad to say I was wrong. Both of you breathe so much life into this house. It almost feels like you never left.",
+    # -----------------------------------------
+    # v0.2 script2.rpy
 
-
-        # -----------------------------------------
-        # v0.2 script2.rpy
-
-        # AS script2:40
+        # OS script2:40
         "I have a feeling this shit is much bigger than we think, Annie.":
             "I have a feeling this shit is much bigger than we think, sis.",
 
-        # AS script2:52
+        # OS script2:52
         "*Whispering* I don't like this, Annie...":
             "*Whispering* I don't like this, sis...",
 
-        # AS script2:82
+        # OS script2:82
         "I don't know, Annie... him having a stroke? I'm not buying it.":
             "I don't know, sis... him having a stroke? I'm not buying it.",
 
-        # AS script2:106
+        # OS script2:106
         "*Laughs* Don't mind him...":
             "*Laughs* Don't mind my brother...",
 
@@ -8515,329 +9261,327 @@ init python:
             # edit of lines added by "versiontwo_mod"
         # REPLACED BY INJECTION, old code left just in case
 
-        # AS IncestLables:2500
+        # OS IncestLables:2500
         #"Same to you. You must be Annie, [mc]'s told me about you.":
         #    "Same to you. You must be Annie, his twin sister. [mc]'s told me about you.",
 
-        # AS IncestLables:2502
+        # OS IncestLables:2502
         #"Yep! I heard [mc] managed to win a neural implant at your cafe!":
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
-        # AS script2:112 {inject} (replaces labelmod)
-        "It's so nice to meet you, Luna!":
+        # OS script2:112 {inject} (replaces labelmod)
+        "It's so nice to meet you, Luna!":[
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
                 'l "Same to you. You must be Annie, his twin sister. [mc]’s told me about you."',
                 "scene aaa 14"
             ]),
 
-        # AS script2:113 used with inject
+            # Bonus Mod
+            # script2:112, same as original
+
+            # Multi Mod
+            # script2:112, same as original
+        ],
+
+        # OS script2:113 used with inject
         "I heard [mc] managed to win a neural implant at your cafe!":
             "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
         # ========== END label mod "versiontwo_mod" ==========
 
-        # AS script2:113 disable if using inject
+        # OS script2:113 disable if using inject
         #"I heard [mc] managed to win a neural implant at your cafe!":
         #    "I heard my brother managed to win a neural implant at your cafe!",
 
-        # AS script2:126
+        # OS script2:126
         "Can I play with you guys, [mc]?!":
             "Can I play with you guys, bro?!",
 
-        # AS script2:133
+        # OS script2:133
         "Horror? Okay... maybe it'd be better if you didn't join us, Annie.":
             "Horror? Okay... maybe it'd be better if you didn't join us, sis.",
 
-        # AS script2:167
+        # OS script2:167
         "But you're not allowed to complain if you’re scared, Annie!":
             "But you're not allowed to complain if you’re scared, sis!",
 
-        # AS script2:174
+        # OS script2:174
         "I'm sorry Annie, we both know you can't handle horror... no matter how light it is.":
             "I'm sorry sis, we both know you can't handle horror... no matter how light it is.",
 
-        # AS script2:810
+        # OS script2:810
         "(Maybe his girlfriend...?)":
             "(Maybe his girlfriend... or his sister...?)",
 
-        # AS script2:1014
+        # OS script2:1014
         "Annie should be waiting for us already.":
             "Your sister should be waiting for us already.",
 
-        # AS script2:1117
+        # OS script2:1117
         "I love your outfit, Annie!":
             "I love your outfit, sis!",
 
-        # AS script2:1389
+        # OS script2:1389
         "Y-You're scaring me, [mc].":
             "Y-You're scaring me, bro.",
 
-        # AS script2:1965
+        # OS script2:1965
         "It's okay Annie, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!":
             "It's okay sis, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!",
 
-        # AS script2:2051
+        # OS script2:2051
         "Right, Annie?!":
             "Right, sis?!",
 
-        # AS script2:2085, also overwrites script4:4995, okay
+        # OS script2:2085, also overwrites script4:4995, okay
         "Right, Annie?":
             "Right, sis?",
 
-        # AS script2:2187
+        # OS script2:2187
         "(Then Luna will shower me with hugs and Annie will gush non-stop about how I'm the bravest man she's ever met.)":
             "(Then Luna will shower me with hugs and Annie will gush non-stop about how I'm the bravest man she's ever known.)",
 
-        # AS script2:2905
+        # OS script2:2905
         "What about you, Annie?":
             "What about you, sis?",
 
-        # AS script2:3331
+        # OS script2:3331
         "(He must think I'm a useless, scared kid...)":
-            "(He must think I'm still a kid-a useless, scared kid...)",
+            "(He must think I'm still a kid – a useless, scared kid...)",
 
-        # AS script2:3339
+        # OS script2:3339
         "(Yeah, nice job impressing [mc] in Eternum, Annie.)":
             "(Yeah, nice job impressing your brother in Eternum, Annie.)",
 
-        # AS script2:3408
+        # OS script2:3408
         "Oh, [mc]! I wasn’t sure if you were asleep already!":
             "Oh, hey bro! I wasn’t sure if you were asleep already!",
 
-        # AS script2:3418
+        # OS script2:3418
         "I told you! You shouldn't have played in Luna's server, Annie! You can't handle that scary stuff! Remember when we played Dead Space?":
             "I told you, sis! You shouldn't have played in Luna's server! You can't handle that scary stuff! Remember when we played Dead Space?",
 
-        # AS script2:3474
+        # OS script2:3474
         "You can sleep here as many times as you want. You don’t even have to ask, alright?":
             "You can sleep here as many times as you want. You don’t even have to ask, alright? Just like when we were little.",
 
-        # AS script2:3479
+        # OS script2:3479
         "Anytime, Annie.":
             "Anytime, sis.",
 
-        # AS script2:3488
-        "Hey, your room is so cozy!":
-            "Wow, I forgot how cozy your room was!",
-
-        # AS script2:3489
-        "And you have a nice view of the backyard!":
-            "And how nice the view of the backyard is from here!",
-
-        # AS script2:3490
+        # OS script2:3490
         "It is pretty nice!":
-            "Yeah, sometimes I like to just look out the window and reminisce about playing down there when we were kids.",
+            "It is pretty nice! Do you remember how we'd play down there with Dalia when we were kids?",
 
-        # AS script2:3491
+        # OS script2:3491
         "My room faces the front yard. It’s a nice view too, but sometimes you can hear all the cars passing by.":
-            "*Giggles* We'd always get so muddy because of how much it rained.",
+            "*Giggles* Yeah, we'd always get so muddy because of how much it rained. My room has a nice view of the front yard, but sometimes you can hear all the cars passing by.",
 
-        # AS script2:3495
-        "Luckily your bed is big enough for the both of us. You could probably even fit three or four people on here!":
-            "Luckily your new bed is big enough for the both of us. You could probably even fit three or four people on here!",
-
-        # AS script2:3499
-        "For sure... She's been super nice so far.":
-            "For sure... There's so much more we need to thank Mom for too.",
-
-        # AS script2:3500
-        "We gotta prepare something to thank her one of these days.":
-            "We gotta prepare something extra special for her one of these days.",
-
-        # AS script2:3504
+        # OS script2:3504
         "G-Goodnight, [mc].":
             "G-Goodnight, bro.",
 
-        # AS script2:3506
+        # OS script2:3506
         "Goodnight Annie.":
             "Goodnight sis.",
 
-        # AS script2:3518
+        # OS script2:3518
         "(Oh yeah... I forgot that Annie came to sleep in my room.)":
             "(Oh yeah... I forgot that sis came to sleep in my room.)",
 
-        # AS script2:3526
+        # OS script2:3526
         "(She's probably used to hugging a pillow while she sleeps, or something.)":
             "(She used to hug a pillow or stuffed animal while she sleeps. I guess that hasn't changed.)",
 
-        # AS script2:3530
+        # OS script2:3530
         "(We're in quite an... intimate position... I don't want her to think I'm trying to take advantage of her while she sleeps.)":
             "(We're in quite an... intimate position... I don't want her to think her brother is trying to take advantage of her while she sleeps.)",
 
-        # AS script2:3545
+        # OS script2:3545
         "A-Are you awake, Annie?":
             "A-Are you awake, sis?",
 
-        # AS script2:3557
+        # OS script2:3557
         "Baloo?":
-            "Baloo? The teddy bear Mom gave you when you were 5?",
+            "Baloo? The teddy bear Nancy gave you when you were 5?",
 
-        # AS script2:3559
+        # OS script2:3559
         "Oh... Well... It's a stuffed bear that my mother gave me when I was 5, and...":
             "Yes, that Baloo...",
 
-        # AS script2:3562
+        # OS script2:3562
         "(Oh my god, why did I say that?! Now I probably sound like a child to him...)":
             "(Oh my god, why did I say that?! Now he probably thinks I'm still a child...)",
 
-        # AS script2:3564
+        # OS script2:3564
         "Oh... I didn't know about Baloo.":
             "Oh... I didn't know you still slept with Baloo.",
 
-        # AS script2:3594
+        # OS script2:3594
         "(He probably just sees me as the little girl who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)":
             "(He probably still sees me as his little sister who plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)",
 
-        # AS script2:3595
+        # OS script2:3595
         "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack.)":
             "(I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he's not a weirdo like me who has feelings for her twin brother.)",
 
-        # AS script2:3596
+        # OS script2:3596
         "(I'll always just be Annie, the \"best friend\".)":
             "(I'll always just be Annie, the \"little sister\".)",
 
-        # AS script2:3602
+        # OS script2:3602
         "(I'm a fucking mess. She needs someone more mature.)":
             "(I'm a fucking mess. She needs someone more mature... And someone not blood-related... she's not a weirdo like me who has feelings for his twin sister.)",
 
-        # AS script2:3607
+        # OS script2:3607
         "(This is why I'll always just be [mc], the \"best friend\"...)":
             "(This is why I'll always just be [mc], the \"big brother\"...)",
 
-        # AS script2:3630
+        # OS script2:3630
         "I'm not s-shy...":
             "I'm not s-shy... It’s just a shirt after all, right...?",
 
-        # AS script2:3631
+        # OS script2:3631
         "It’s just a shirt after all, right...?":
             "I-It’s not like we haven't seen each other naked before...",
 
-        # AS script2:3633
+        # OS script2:3633
         "(I'm not sure where she’s going with all of this...)":
             "(Yeah, but... not since we last bathed together when we were nine.)",
 
-        # AS script2:3634
+        # OS script2:3634
         "(But I sure as hell want to find out...)":
             "(I'm not sure where she’s going with all of this... But I sure as hell want to find out...)",
 
-        # AS script2:3642
+        # OS script2:3642
         "(This doesn't seem like the Annie I’ve known since I was young... Is she trying to prove something?)":
             "(This doesn't seem like the sister I know... Is she trying to prove something?)",
 
-        # AS script2:3644
+        # OS script2:3644
         "(...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to [mc].) ":
             "(...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to your brother.)",
 
-        # AS script2:3647
+        # OS script2:3647
         "(Holy shit, I’ve never seen her in such an... intimate way...)":
             "(Holy shit, I never noticed know how much she grew over the past years...)",
 
-        # AS script2:3652
+        # OS script2:3652
         # BA/N: Disabled, name simply works better
         #"(This is really Annie... {i}my{/i} Annie.)":
         #    "(This is really Annie... {i}my{/i} sister.)",
 
-        # AS script2:3658
+        # OS script2:3658
         "We're just... friends getting a little more comfortable.":
             "We're just... siblings getting a little more comfortable.",
 
-        # AS script2:3672
+        # OS script2:3672
         "(My precious Annie...)":
-            "(My precious little sister...)",
+            "(My precious twin sister...)",
 
-        # AS script2:3675
+        # OS script2:3675
         "Um, [mc]...? Oh man, I must look weird or someth—":
             "Um, bro...? Oh man, I must look weird or someth—",
 
-        # AS script2:3677
+        # OS script2:3677
         "Annie... you are so... beautiful...":
             "Sis... you are so... beautiful...",
 
-        # AS script2:3703
+        # OS script2:3703
         "Your skin feels so soft, Annie. It feels... really nice holding you...":
             "Your skin feels so soft, sis. It feels... really nice holding you...",
 
-        # AS script2:3711
+        # OS script2:3711
         "(Oh my god, am I the only one feeling all this tension in the air? I want to make a move, but... I don’t want to overstep my bounds...)":
             "(Oh my god, am I the only one feeling all this tension in the air? I kind of want to make a move, but... I don’t want to overstep my bounds... I'm her brother, after all.)",
 
-        # AS script2:3718
+        # OS script2:3718
         "(But it’s not just any guy. It’s [mc].)":
             "(But it’s not just any guy. It’s [mc]. My twin brother!)",
 
-        # AS script2:3719
+        # OS script2:3719
         "(You've had a crush on him since you were nine years old. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)":
             "(And despite that, you've had a crush on him since you were nine years old. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)",
 
-        # AS script2:3721
+        # OS script2:3721
         "(But... I don't want to scare her away. Annie has always been so special to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)":
-            "(But... I don't want to scare her away. Annie has always been so special–more than just a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
+            "(But... I don't want to scare her away. Annie has always been so special – more than just a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)",
 
-        # AS script2:3729
+        # OS script2:3729
         "(Baby steps, [mc]. Baby steps.)":
             "(A-And she's still my sister! It's just not right!)",
 
-        # AS script2:3730
+        # OS script2:3730
         "Goodnight, Annie.":
             "Goodnight, sis.",
 
-        # AS script2:3732
+        # OS script2:3732
         "G-Good night, [mc].":
             "G-Good night, bro.",
 
-        # AS script2:3740
+        # OS script2:3740
         "Um... Annie...?":
             "Um... sis...?",
 
-        # AS script2:3746 {inject}
-        "R-Really? W-Well... I guess that’s normal, given the circumstances.":
+        # OS script2:3746 {inject}
+        "R-Really? W-Well... I guess that’s normal, given the circumstances.":[
             ("R-Really? W-Well... I guess that’s normal, given the circumstances.","script2:3746",[
                 'a "It’s j-just a totally natural physical reaction."'
                 ]),
 
-        # AS script2:3763
+            # Bonus Mod
+            ("R-Really? W-Well... I guess that’s normal, given the circumstances.","script2:3795",[
+                'a "It’s j-just a totally natural physical reaction."'
+                ]),
+
+            # Multi Mod
+            ("R-Really? W-Well... I guess that’s normal, given the circumstances.","script2:3757",[
+                'a "It’s j-just a totally natural physical reaction."'
+                ]),
+        ],
+
+        # OS script2:3763
         "I’m sorry, Annie... I can’t help it... you’re driving me insane...":
             "I’m sorry, sis... I can’t help it... you’re driving me insane...",
 
-        # AS script2:3776
+        # OS script2:3776
         "Oh god, Annie...":
             "Oh god, sis...",
 
-        # AS script2:3792
+        # OS script2:3792
         "[mc]... Um, I don’t know if I’m ready to go all the way toni-":
             "B-bro... Um, I don’t know if I’m ready to go all the way toni-",
 
-        # AS script2:3797
+        # OS script2:3797
         "I’m sorry. I’m just a little nervous because no one has ever touched me there before, or even seen it, for that matter.":
             "I’m sorry. I’m just a little nervous because no one has ever touched me there before.",
 
-        # AS script2:3800
+        # OS script2:3800
         "[mc]. I said I’m nervous, but that doesn’t mean I... don’t want to...":
             "I said I’m nervous, bro, but that doesn’t mean I... don’t want to...",
 
-        # AS script2:3823
+        # OS script2:3823
         "I’ve never been more sure, Annie.":
             "I’ve never been more sure, sis.",
 
-        # AS script2:3826
+        # OS script2:3826
         "I thought you weren’t interested in me...":
             "I thought, as your sister, you'd never be interested in me...",
 
-        # AS script2:3828
+        # OS script2:3828
         # BA/N: borrowed from stepsis map
         "Where did you get that idea from?":
             "Oh Annie, you've never been just my sister.",
 
-        # AS script2:3830
+        # OS script2:3830
         "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our friendship.":
             "And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our relationship as brother and sister.",
 
-        # AS script2:3843
+        # OS script2:3843
         "*Kissing her neck* And don’t you worry. I’m perfectly fine with going as slow as you want.":
             "*Kissing her neck* And don’t you worry, sis. I’m perfectly fine with going as slow as you want.",
 
-        # AS script2:3845
+        # OS script2:3845
         "Y-Yeah... m-much better. You’re so warm...":
             "Y-Yeah... m-much better. You’re so warm, bro...",
 
@@ -8845,7 +9589,7 @@ init python:
         "You’re... so wet...":
             "Annie... You’re... so wet...",
 
-        # AS script2:3865 {specific}, also overwrites script4:5819, script6:6414, script6:6556, script8:9636
+        # OS script2:3865 {specific}, also overwrites script4:5819, script6:6414, script6:6556, script8:9636
         # Excludes script2:3905, script8:9293
         "Oh Annie...":[
             ("Oh sis...","script2:3865"),
@@ -8853,73 +9597,83 @@ init python:
             ("Oh sis...","script6:6414"),
             ("Oh sis...","script6:6556"),
             ("Oh sis...","script8:9636"),
+
+            # Bonus Mod
+            ("Oh sis...","script2:3914"),
+            ("Oh sis...","script4:5880"),
+            ("Oh sis...","script6:6454"),
+            ("Oh sis...","script6:6596"),
+            ("Oh sis...","script8:9767"),
+
+            # Multi Mod
+            ("Oh sis...","script2:3880"),
+            ("Oh sis...","script4:5852"),
+            ("Oh sis...","script6:6442"),
+            ("Oh sis...","script6:6584"),
+            ("Oh sis...","script8:9665"),
         ],
 
-        # AS script2:3867
+        # OS script2:3867
         "(Holy shit, this is really happening! I'm fucking Annie's thighs!)":
             "(Holy shit, this is really happening! I'm fucking my sister's thighs!)",
 
-        # AS script2:3872
+        # OS script2:3872
         "Jesus, Annie...":
             "Jesus, sis...",
 
-        # AS script2:3924
+        # OS script2:3924
         "Oh shit, I'm sorry, Annie...":
             "Oh shit, I'm sorry, sis...",
 
-        # AS script2:3931
+        # OS script2:3931
         "Did I do something wrong, Annie? I’m sorry! I didn’t know it was going to be that much!":
             "Did I do something wrong, sis? I’m sorry! I didn’t know it was going to be that much!",
 
-        # AS script2:3942
+        # OS script2:3942
         "I only came here t-to sleep and then... next thing I know I’m doing that...":
             "I only came here t-to sleep and then... next thing I know I’m doing that... and with my brother...",
 
-        # AS script2:3945
+        # OS script2:3945
         "No, no! It's okay! You’re good! I like you, Annie! We can...":
             "No, no! It's okay! You’re good! I like you, sis! We can...",
 
-        # AS script2:3952
+        # OS script2:3952
         "We skipped like 14 steps! In one night!":
             "We skipped like 14 steps and broke a dozen rules! In one night!",
 
-        # AS script2:3957
+        # OS script2:3957
         "What will [mc] think of me after all of this?!":
             "What will my brother think of me after all of this?!",
 
-        # AS script2:3965
+        # OS script2:3965
         "I'm gonna... go... think! Good night [mc]!":
             "I'm gonna... go... think! Good night, bro!",
 
-        # AS script2:3979
+        # OS script2:3979
         "(Maybe something between us could work after all.)":
             "(Even if we're siblings, maybe something between us could work after all.)",
 
-        # AS script2:3981
+        # OS script2:3981
         "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing Annie’s secret kinky side... and I loved every moment of it!)":
             "(HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing my sister's secret kinky side... and I loved every moment of it!)",
 
-        # AS script2:4474
+        # OS script2:4474
         "Annie! Do you have a minute? I wanted to talk to you!":
             "Sis! Do you have a minute? I wanted to talk to you!",
 
-        # AS script2:5094 (n)
-        "Look at that perfectly toned stomach... And to think she's had 2 daughters! Unbelievable.":
-            "Look at that perfectly toned stomach... And to think she's had 4 children! Unbelievable.",
-
-        # AS script2:5364 (n)
+        # OS script2:5364 (n)
         "(Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out.)":
-            "(Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be {i}furious{/i} if they ever found out. And fucking my son... God, there's so much that could go wrong for everyone...)",
+            "(Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be furious if they ever found out.)",
 
-        # AS script2:5413 (n)
+        # OS script2:5413 (n)
         "(I bet if I tried to do anything at home, Dalia or Penny would surely notice.)":
             "(I bet if I tried to do anything at home, the girls would surely notice.)",
 
-        # BA/N: also wanted to add a line about how Alex and MC are both twins but can't find a good place to fit it in
-
-        # AS script2:5937 (x)
+        # OS script2:5937 (x)
         "And on the first day of school, I saw him harassing a close friend of mine.":
-            "And on the first day of school, I saw him harassing my twin sister.",
+            "And on the first day of school, I saw him harassing my sister.",
+
+        # BA/N: also wanted to add a line about how Alex and MC are both twins but can't find a good place to fit it in
 
         # ========== START WIP ==========
             # BA/N: technically with Annie as sister, MC was never completely alone; Not sure how to fit that in while keeping the sentiment of the original.
@@ -8932,611 +9686,547 @@ init python:
         #"I never met my mother and my father was always absent in my life. He was constantly too occupied with his work.":
         #    "My father was always absent in my life, always too occupied with his work. When my parents divorced, I had to live with him for the last ten years, if you can even call it \"living with him\".",
 
-        # BM script2:6104 (x)
-        #"I know what it's like to be alone.":
-        #    "I know what it's like to feel alone.",
+        # OS script2:6104 (x)
+        "I know what it's like to be alone.":
+            "I know what it's like to feel alone.",
 
         # BM script2:6106 (x) {inject}
-        #"Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":
+        #"Huh... I just assumed you were one of those pampered city boys that’s never known a hard day in his life...":[
         #    ("Oh right, you {i}are{/i} Dalia's brother...","script2:6106",[
         #        'x "Honestly, my first impression of you was that you were one of those pampered city boys that’s never known a hard day in his life..."'
         #    ]),
 
+            # Bonus Mod script2:6170
+
+            # Multi Mod script2:6122
+        #],
+
         # ========== END WIP ==========
 
 
-        # -----------------------------------------
-        # v0.3 script3.rpy
+    # -----------------------------------------
+    # v0.3 script3.rpy
 
-        # AS script3:2877 (d)
-        "And with Annie and you too? Now that’s what I call a party!":
-            "And I never thought I'd be able to play with Annie and you too! A party with the entire family!",
-
-        # AS script3:3343
+        # OS script3:3343
         "Not a worry in mah noggin, homie. I just be... chillaxin’ all day! Yeahhhh...":
             "Not a worry in mah noggin, bro. I just be... chillaxin’ all day! Yeahhhh...",
 
-        # AS script3:3362
+        # OS script3:3362
         "Good morning, Annie!":
             "Good morning, sis!",
 
-        # AS script3:3368
+        # OS script3:3368
         "Um... Oh! [mc]! Good morning!":
             "Um... Oh! Bro! Good morning!",
 
-        # AS script3:3392
+        # OS script3:3392
         "But no biggie. I was scared. Not thinking clearly.":
             "But no biggie, bro. I was scared. Not thinking clearly.",
 
-        # AS script3:3400
+        # OS script3:3400
         "(She's right. Forgetting about this might be the best option right now.)":
             "(She's right. Forgetting about this might be the best option. We crossed way too many lines that night.)",
 
-        # AS script3:3402
+        # OS script3:3402
         "(That's all I want... just to stay friends with her.)":
             "(That's all I want... just to have a normal sibling relationship with her.)",
 
-        # AS script3:3412
+        # OS script3:3412
         "That sounds great. Take care, Annie!":
             "That sounds great. Take care, sis!",
 
-        # AS script3:3414
+        # OS script3:3414
         "Thank you, [mc]. I needed this talk.":
             "Thank you, bro. I needed this talk.",
 
-        # AS script3:3420
+        # OS script3:3420
         "*Taking a deep breath* (Well [mc], it's now or never. Time to grow a pair and man up!)":
             "*Taking a deep breath* (Well [mc], it's now or never. Time to grow a pair and man up! Let your sister know how you really feel.)",
 
-        # AS script3:3423
+        # OS script3:3423
         # BA/N: disabled, using name adds a bit of seriousness here
         #"I like you, Annie.":
         #    "I like you, sis.",
 
-        # AS script3:3428
+        # OS script3:3428
         "I've liked you ever since we were 10. If I’m being real with you, the only reason why I was willing to come back to Kredon at all was because you were coming too.":
             "And I mean I {i}like{/i} like you. I've felt this way since we were 10. If I’m being real with you, the only reason why I was willing to come back to Kredon at all was because you were coming too.",
 
-        # AS script3:3431
+        # OS script3:3431
         "You're my best friend.":
             "You're my twin sister.",
 
-        # AS script3:3434
+        # OS script3:3434
         "And in my heart I know, I want us to be so much more than that, too...":
             "So I know this is so, very wrong... but in my heart, I want us to be so much more than that.",
 
-        # AS script3:3446
+        # OS script3:3446
         "I don't want to lose our friendship, Annie. I’d be miserable without you in my life.":
             "I don't want to lose you, sis. I’d be miserable without you in my life.",
 
-        # AS script3:3449
+        # OS script3:3449
         "I just want us to stay friends forever!":
             "I just want us to be together forever!",
 
-        # AS script3:3467
+        # OS script3:3467
         "That sounds great! Just spending some time together as good friends. Like how we’ve always done it!":
             "That sounds great! Just some quality sibling bonding time. Like how we’ve always done it!",
 
-        # AS script3:3483
+        # OS script3:3483
         "Like... a fun date between friends?":
             "Like... a fun date with your sister?",
 
-        # AS script3:3484
+        # OS script3:3484
         "Hmmm... no, more like a date with a girl that I like. And I just happen to be so lucky in that, she’s also my best friend too. As for what the future holds? Who knows...":
             "Hmmm... no, more like a date with a girl that I like. Who just happens to be both my sister, and my best friend too. As for what the future holds? Who knows...",
 
-        # AS script3:3505
+        # OS script3:3505
         "Look, [mc], I know we’re going on a {i}date{/i} date, but I really do want to take it slow too. I don’t want you to assume that–":
             "Look, bro, I know we’re going on a {i}date{/i} date, but I really do want to take it slow too. I don’t want you to assume that–",
 
-        # AS script3:3511
+        # OS script3:3511
         "And not a word to anyone. I mean... there's no need for it, really. We’re just two people going on a date, and there’s no need to overthink it.":
             "We’re just two people going on a date, there’s no need to overthink it. But uh, not a word to anyone. Don't want others to think weird things...",
 
-        # AS script3:3518
+        # OS script3:3518
         "T-Thank you, [mc]. I needed this talk.":
             "T-Thank you, bro. I needed this talk.",
 
-        # AS script3:3526
-        "Um... yeah, I guess she does have that...":
-            "Um... what's up with you and our sister's ass...?",
-
-        # AS script3:3540
+        # OS script3:3540
         # BA/N: borrowed from stepsis map
         "I know you want to take things slow. And I’m perfectly okay with that.":
             "I know you want to take things slow, sis. And I’m perfectly okay with that.",
 
-        # AS script3:3561
+        # OS script3:3561
         "That was quite the goodbye for just a couple of... friends.":
             "That was quite the goodbye for just... siblings.",
 
-        # AS script3:3578
+        # OS script3:3578
         "(Maybe a good movie? Or a walk along the beach. Or even a date in Eternum!)":
             "(Maybe a good movie? Or a walk along the beach. Or even a date in Eternum! We wouldn't have to worry about running into people who know us there.)",
 
-        # AS script3:4828 (d)
+        # OS script3:4828 (d)
         # BA/N: added Annie mention at start of flashback, also sets up for AS script3:5231
         "And it helps you grow up to be strong!":
-            "Mommy said it's good for us! Helps us grow up to be strong!",
+            "Mommy said it's good for you! Helps you grow up to be strong!",
 
-        # AS script3:4829 (d)
+        # OS script3:4829 (d)
         "It’s good for you! Mommy told me!":
             "This is why you and Annie are such sleepyheads.",
 
-        # AS script3:4918 (n)
-        "(I'm not gonna be able to hold out much longer. They'll take the house from me if I don't get some sort of extra income this month. I can only fend off the bank for so long...)":
-            "(I {i}need{/i} to be able to support Dalia and Penny by myself once the divorce is done. I already had to let him take the twins since I can't provide for all of them alone right now......)",
+        # OS script3:4919 (n)
+        "([mc]'s father is already generously paying me more than he should for taking care of his son. But even with that extra money, it's only delaying the inevitable.)":
+            "([mc] and Annie's father is already generously paying me more than he should for taking care of his children. But even with that extra money, it's only delaying the inevitable.)",
 
-        # AS script3:4982
+        # OS script3:4982
         "I... I know honey, but I don't have anyone else I can call on such short notice to take care of Dalia and [mc].":
             "I... I know honey, but I don't have anyone else I can call on such short notice to take care of the little ones.",
 
-        # AS script3:5007
-        "Do you have any idea how much I've sacrificed so that you and Dalia would never be left wanting?!":
-            "Do you have any idea how much I've sacrificed so that you four would never be left wanting?!",
-
-        # AS script3:5046
+        # OS script3:5046
         "And... what about Dalia and [mc]?":
             "And... what about Dalia, Annie, and [mc]?",
 
-        # AS script3:5105
+        # OS script3:5105
         "Nothing... I’m just sad because in a couple of weeks, my dad will be bringing me with him to Europe.":
-            "Nothing... I'm just sad because in a couple of weeks, Dad will be taking me and Annie with him to Europe.",
+            "Nothing... I'm just sad because in a couple of weeks, my dad will be taking me and Annie with him to Europe.",
 
-        # AS script3:5111
+        # OS script3:5111
         "Well you can still come play with me after school, right?":
-            "Well, maybe you two can come over to play with me after school?",
+            "Well you two can still come play with me after school, right?",
 
-        # AS script3:5171
+        # OS script3:5171
         "Absolutely! Don't worry sis, I'll protect you, [mc], and Mom!":
             "Absolutely! Don't worry sis, I'll protect you, and [mc], and Annie, and Mom too!",
 
-        # AS script3:5228
+        # OS script3:5228
         "But you got to bathe first!":
             "But you two got to bathe first! I can see the mud stains on you!",
 
-        # AS script3:5230
+        # OS script3:5230
         "Come on [mc], let's go to the bathroom.":
             "Where's Annie? She was playing with you outside earlier.",
 
-        # AS script3:5231
+        # OS script3:5231
         "Me too?!":
-            "She got sleepy and went to bed.",
+            "She got sleepy and took a nap.",
 
-        # AS script3:5232
+        # OS script3:5232
         "Yeah, let's go! We're all gonna bathe together!":
-            "Already? Wake her up, she also needs to bathe first!",
+            "Go wake her up, she also needs to bathe!",
 
-        # AS script3:5233
+        # OS script3:5233
         "But I'm not dirty!":
             "Okay!",
 
-        # AS script3:5234
+        # OS script3:5234
         "I can see the mud stains from here, mister!":
             "After that, we can all watch movies together!",
 
-        # AS script3:9706
-        "I owe it to my mother. It seems like once she reached 25, she stopped aging. She died shortly after Dalia was born, but she was always so full of life.":
-            "I owe it to your grandma. It seems like once she reached 25, she stopped aging. She died shortly after Dalia was born. It's a shame she never got to met you and Annie, she was always so full of life.",
-
-        # AS script3:9709
-        "Dalia and Penelope are gonna be very blessed when they get older too.":
-            "Annie, Dalia, and Penny are all gonna be very blessed when they get older too.",
-
-        # AS script3:9761
-        "What about Dalia and Penelope?":
-            "What about... Dalia, Penelope, and Annie?",
+        # OS script3:9866 (n)
+        "I think this goes without saying, but let’s not mention this to anyone. My daughters especially... heaven knows what they’d think if they learned we bathed together.":
+            "I think this goes without saying, but let’s not mention this to anyone. My daughters and your sister especially... heaven knows what they’d think if they learned we bathed together.",
 
 
-        # -----------------------------------------
-        # v0.4 script4.rpy
+    # -----------------------------------------
+    # v0.4 script4.rpy
 
-        # AS script4:4286
+        # OS script4:4286
         "(I'm going on a date with [mc]!)":
             "(I'm going on a date with my brother!)",
 
-        # AS script4:4339
+        # OS script4:4339
         "*Chuckles* I think you're getting too excited about this, Annie. You need to relax. You'll enjoy it more if you take it less seriously!":
             "*Chuckles* I think you're getting too excited about this, sis. You need to relax. You'll enjoy it more if you take it less seriously!",
 
-        # AS script4:4347
+        # OS script4:4347
         "Chillin’ like a villain on penicillin, bro!":
             "Chillin’ like a villain on penicillin, yo!",
 
-        # AS script4:4349
+        # OS script4:4349
         "Gonna play some Eternum with ma' homie...":
             "Gonna play some Eternum with ma' bro...",
 
-        # AS script4:4397
+        # OS script4:4397
         "Send invitation... to... Annie Winters.":
             "Send invitation... to... Annie [lastname].",
 
-        # AS script4:4411
+        # OS script4:4411
         "Annie? Is that you?":
             "Sis? Is that you?",
 
-        # AS script4:4621
+        # OS script4:4621
         "Quick, [mc], make a wish!":
             "Quick, bro, make a wish!",
 
-        # AS script4:4686
+        # OS script4:4686
         "Let's watch Interstellar. It's one of my favorite movies, and I know you haven't seen it yet.":
             "Let's watch Interstellar, it's one of my favorite movies. It's the one I've been trying to get you to watch since you love sci-fi.",
 
-        # AS script4:4687
+        # OS script4:4687
         "With how much you love sci-fi, I'm sure you'll like it too!":
             "You were busy every time I wanted to watch it with you, so now's our chance!",
 
-        # AS script4:4803
-        # Overwritten by AS script:2952, okay
+        # OS script4:4803
+        # Overwritten by OS script:2952, okay
         # "Are you okay, Annie?" -> "Are you okay, sis?"
 
-        # AS script4:4825
+        # OS script4:4825
         "I can see why! I remember you talking about it, but I never got the chance to see it until now.":
             "I can see why! You were so right, I should've watched this sooner.",
 
-        # AS script4:4915
+        # OS script4:4915
         "I mean... of course we're not. We haven't even...":
             "I mean... of course we're not. We're still {i}just{/i} siblings, we haven't...",
 
-        # AS script4:4926
+        # OS script4:4926
         "*Chuckles* A likely story, Ms. Winters... I'll believe you, for now...":
             "*Chuckles* A likely story, dear sister... I'll believe you, for now...",
 
-        # AS script4:4977
+        # OS script4:4977
         "Come here, [mc]! Jump!":
             "Come here, bro! Jump!",
 
-        # AS script4:4984
+        # OS script4:4984
         "Have you ever done any scuba diving?":
             "We've never done any scuba diving?",
 
-        # AS script4:4995
-        # Overwritten by AS script2:2085, okay
+        # OS script4:4995
+        # Overwritten by OS script2:2085, okay
         # "Right, Annie?" -> "Right, sis?"
 
-        # AS script4:4997
+        # OS script4:4997
         "Annie, you awake? I can go call the Astrocorp employee if we’re ready to wrap this up.":
             "Sis, you awake? I can go call the Astrocorp employee if we’re ready to wrap this up.",
 
-        # AS script4:5004
+        # OS script4:5004
         "You and Chang have always been my best friends, and neither of you played Eternum until recently, so... I've always felt kind of alone here.":
             "You and Chang have always been by my side, and neither of you played Eternum until recently, so... I've always felt kind of alone here.",
 
-        # AS script4:5008
+        # OS script4:5008
         "You’re the one who’s really made these first few weeks in Eternum worthwhile, Annie. I couldn't have asked for anyone better to spend time with.":
             "You’re the one who’s really made these first few weeks in Eternum worthwhile, sis. I couldn't have asked for anyone better to spend time with.",
 
-        # AS script4:5108
+        # OS script4:5108
         "How's life in Kredon so far?":
             "How's life back in Kredon so far?",
 
-        # AS script4:5111
+        # OS script4:5111
         "You were right, it's a rather small town, but there's everything you need!":
             "It's still a rather small town like I remembered, but there's everything we need!",
 
-        # AS script4:5112
-        "And I felt super welcome in our new home!":
-            "And it really feels like we never left!",
-
-        # AS script4:5113
+        # OS script4:5113
         "Nancy, Penelope, and Dalia are all very nice to me. They treat me as one of the family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!":
-            "Mom, Penny, and Dalia are still so nice to me. You know I’ve always wanted to see our sisters again, so I really feel suuuuuper happy!",
+            "Nancy, Penny, and Dalia are still so nice to me. They treat like I'm their sister, which makes me feel suuuuuper happy!",
 
-        # AS script4:5129
-        "Assets.":
-            "Assets... I'm the only girl in the family without them!",
-
-        # AS script4:5131
+        # OS script4:5131
         "Oh! Come on, Annie! You can't be serious!":
             "Oh! Come on, sis! You can't be serious!",
 
-        # AS script4:5216
+        # OS script4:5216
         "*Jumps on the bed* Oh my god, [mc]! Look at this!":
             "*Jumps on the bed* Oh my god, bro! Look at this!",
 
-        # AS script4:5250
+        # OS script4:5250
         # BA/N: borrowed from stepsis map
         "(Maybe... it's just not the right time yet...?)":
             "(Maybe... was this all a mistake...?)",
 
-        # AS script4:5311 (menu)
+        # OS script4:5311 (menu)
         # l9/N: Changed to be fully compatible with and without either walkthrough
         "Decline and stay as friends":
             "{color=[walk_path]}Decline and stay as siblings [red][mt](Closes Annie's path)",
 
-        # AS script4:5314
+        # OS script4:5314
         "I like you, and you're my best friend, you already know that.":
             "I like you, and you're my sister, you already know that.",
 
-        # AS script4:5315
+        # OS script4:5315
         "But... I also feel like we're not meant to be more than that. Things would get awkward if we tried to get together, and our friendship is too important to risk, for me at least.":
             "But... I also feel like we're not meant to be more than that. Things would get {i}so{/i} complicated if we tried to get together, and our relationship is too important to risk, for me at least.",
 
         # BA/N: next 7 lines borrowed and modified from stepsis map, which rewrote them to be a bit more emotional which I agree with, but tried to keep more of the original lines in it than the stepsis map did.
 
-        # AS script4:5316
+        # OS script4:5316
         "I just like spending time with you!":
             "I'm still your brother and I'll always be there for you, but...",
 
-        # AS script4:5317
+        # OS script4:5317
         "I... I think we're meant to be friends. Best friends!":
             "I... I don't think we're meant to be anything more than siblings.",
 
-        # AS script4:5318
+        # OS script4:5318
         "So... let's just stay like this for now, okay?":
             "So... let's just go back to what we always were, okay?",
 
-        # AS script4:5319
+        # OS script4:5319
         "I just don’t have those feelings for you right now.":
             "I can’t commit to this... {i}thing{/i} between us. Not right now. ",
 
-        # AS script4:5320
+        # OS script4:5320
         "In the future... who knows? Maybe. But I don’t want to lead you on, either.":
             "In the future... I don’t know. Maybe. But I don’t want to lead you on, either.",
 
-        # AS script4:5326
+        # OS script4:5326
         "No worries! I totally understand. My head has been all over the place too, you know, with all this back and forth...":
             "It's not your fault, Annie, it's mine. I know I've been sending you mixed signals, bringing you here today. My head has been all over the place too, you know, with all this back and forth... You don't deserve that.",
 
-        # AS script4:5327
+        # OS script4:5327
         "We can have this conversation again after we gather the 10 Gems!":
             "I'm sorry, sis. This isn't how I wanted today to go. For what it's worth, I still enjoyed spending this time with you.",
 
-        # AS script4:5369
+        # OS script4:5369
         "Y-Yeah... It's been like... 10 years since we first met?":
             "Y-Yeah...",
 
-        # AS script4:5371
+        # OS script4:5371
         "That’s quite a while... No big deal.":
             "No big deal.",
 
-        # AS script4:5382
+        # OS script4:5382
         "You're so pretty, Annie...":
             "You're so pretty, sis...",
 
-        # AS script4:5395
+        # OS script4:5395
         "[mc]! What are you doing?!":
             "Bro! What are you doing?!",
 
-        # AS script4:5405
+        # OS script4:5405
         "Seeing you undressing just for me was hot as fuck, Annie.":
             "Seeing you undressing just for me was hot as fuck, sis.",
 
-        # AS script4:5436
+        # OS script4:5436
         "But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding an adorably precious, absolutely gorgeous girl whom I’ve liked for years.":
             "But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding my adorably precious, absolutely gorgeous twin sister whom I’ve liked for years.",
 
-        # AS script4:5438
+        # OS script4:5438
         "I know it's scary to get out of your comfort zone, but... I think we can overcome it together.":
             "I know it's terrifying thing we're trying, starting a relationship as siblings, but... I think we can overcome it together.",
 
-        # AS script4:5442
+        # OS script4:5442
         "That’s how I feel. If you don't feel the same way... we can always go back to where we were a month ago and stay friends!":
             "That’s how I feel. If you don't feel the same way... we can always go back to where we were a month ago and just be siblings again!",
 
-        # AS script4:5443
+        # OS script4:5443
         "It’ll be a little awkward at first, but our friendship is strong, and I know we’d be back to normal in no time.":
             "It’ll be a little awkward at first, but our relationship is strong, and I know we’d be back to normal in no time.",
 
-        # AS script4:5471
+        # OS script4:5471
         "*Caressing her cheek* I feel like I could never get enough of you, Annie...":
             "*Caressing her cheek* I feel like I could never get enough of you, sis...",
 
-        # AS script4:5494
+        # OS script4:5494
         "Is that so? What have you been thinking about, exactly, Ms. Winters?":
             "Is that so? What have you been thinking about, exactly, Ms. [lastname]?",
 
-        # AS script4:5518
+        # OS script4:5518
         "Have I been fooled all these years? Innocent, shy Annie is actually a horny, perverted little girl?":
             "Have I been fooled all these years? My innocent, shy little sister is actually a horny, perverted little girl?",
 
-        # AS script4:5526
+        # OS script4:5526
         "God, there are so many things I want to do to Annie right now... but it's still Annie. I don't wanna cross any line too fast.":
             "God, there are so many things I want to do to Annie right now... but she is still my sister. I don't wanna cross any line too fast.",
 
-        # AS script4:5528
+        # OS script4:5528
         "You're making me so horny, Annie...":
             "You're making me so horny, sis...",
 
-        # AS script4:5562
+        # OS script4:5562
         "It'll only get better from here, babe...":
             "It'll only get better from here, Annie...",
 
-        # AS script4:5604
+        # OS script4:5604
         "*Panting* K-Keep going, [mc]! Y-You’re hitting just the... r-right spot!":
             "*Panting* K-Keep going, bro! Y-You’re hitting just the... r-right spot!",
 
-        # AS script4:5621
+        # OS script4:5621
         "Y-You have to stop! S-STOP! [mc]!":
             "Y-You have to stop! S-STOP! [mc!u]!",
 
-        # AS script4:5624
+        # OS script4:5624
         "Don't worry, babe...":
             "Don't worry, sis...",
 
-        # AS script4:5665
+        # OS script4:5665
         "([mc] made me... {i} cum{/i}!)":
             "(My brother made me... {i} cum{/i}!)",
 
-        # AS script4:5675
+        # OS script4:5675
         "You turn me on so much, Annie... I'd be lying if I said I wasn’t rock-hard the whole time...":
             "You turn me on so much, sis... I'd be lying if I said I wasn’t rock-hard the whole time...",
 
-        # AS script4:5721
+        # OS script4:5721
         "That's it, baby...":
             "That's it, sis...",
 
-        # AS script4:5724
+        # OS script4:5724
         "You’re such a good girl, Annie...":
             "You’re such a good girl, sis...",
 
-        # AS script4:5753
+        # OS script4:5753
         "D-Do you like beating off my cock, Annie?":
             "D-Do you like beating off my cock, sis?",
 
-        # AS script4:5765
+        # OS script4:5765
         "*Panting* F-Fuck, I won't last much longer, Annie...":
             "*Panting* F-Fuck, I won't last much longer, sis...",
 
-        # AS script4:5767
+        # OS script4:5767
         "I want to make you cum, [mc]... You were so kind to me...":
             "I want to make you cum, bro... You were so kind to me...",
 
-        # AS script4:5819
-        # Overwritten by AS script2:3865, okay
+        # OS script4:5819
+        # Overwritten by OS script2:3865, okay
         # "Oh Annie..." -> "Oh sis..."
 
-        # AS script4:5823
+        # OS script4:5823
         "I want you so bad, Annie... I can’t wait ‘til the day you can finally take this dick... But not yet...":
             "I want you so bad, sis... I can’t wait ‘til the day you can finally take this dick... But not yet...",
 
-        # AS script4:5825
+        # OS script4:5825
         "W-We’ve g-gotta do some practicing b-beforehand, [mc]...":
             "W-We’ve g-gotta do some practicing b-beforehand, bro...",
 
-        # AS script4:6106
+        # OS script4:6106
         "My date left the room and went to the canteen, and a few minutes later... the lights went out and everyone had disappeared!":
             "My si- my date left the room and went to the canteen, and a few minutes later... the lights went out and everyone had disappeared!",
 
-        # AS script4:6902
+        # OS script4:6902
         # Overwritten by AS script:6179, okay
         # "Annie?!" -> "Hey, sis?!"
 
-        # AS script4:6924
+        # OS script4:6924
         "Oh Annie... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?":
             "Oh sis... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?",
 
-        # AS script4:6942
+        # OS script4:6942
         "Look, Annie! A teleporter! We can get out of here!":
             "Look, sis! A teleporter! We can get out of here!",
 
-        # AS script4:6952
+        # OS script4:6952
         "*Pulling your shirt* [mc]...":
             "*Pulling your shirt* Bro...",
 
-        # AS script4:6986
+        # OS script4:6986
         "D-Don't look at him, Annie.":
             "D-Don't look at him, sis.",
 
-        # AS script4:7014
+        # OS script4:7014
         "*Whispering* O-Okay Annie...":
             "*Whispering* O-Okay sis...",
 
-        # AS script4:7052
+        # OS script4:7052
         "*Sobbing* [mc]?":
             "*Sobbing* [mc_dash]?",
 
-        # AS script4:7054
+        # OS script4:7054
         # BA/N: Disabled for seriousness
         #"D-Don't worry, Annie...":
         #    "D-Don't worry, sis...",
 
-        # AS script4:7250
+        # OS script4:7250
         "Thank you for an amazing day, [mc].":
             "Thank you for an amazing day, bro.",
 
-        # AS script4:7252
+        # OS script4:7252
         "I'm glad you enjoyed it, Annie. Even with the alien attack, and... well, the bloodbath... it was still one of the best days I've ever had.":
             "I'm glad you enjoyed it, sis. Even with the alien attack, and... well, the bloodbath... it was still one of the best days I've ever had.",
 
-        # AS script4:7429
+        # OS script4:7429
         "Oh, already?! Good luck, [mc]! Be sure to get plenty of information!":
             "Oh, already?! Good luck, bro! Be sure to get plenty of information!",
 
-        # AS script4:7431
+        # OS script4:7431
         "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what best friends do, I guess.":
             "Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what brothers do, I guess.",
 
-        # AS script4:7467
-        "I can help you out if you want, ma'am.":
-            "I can help you out if you want, Mom.",
-
-        # AS script4:7468
-        "I don't know Aunt Cordelia, but I'm good at making collages.":
-            "I don't remember Aunt Cordelia very well, but I'm good at making collages.",
-
-        # AS script4:7473
-        "Thank you Annie!":
-            "Thank you, sweetie! You've grown into such a good girl!",
+        # OS script4:8176 (misc)
+        # BA/N: borrowed from aunt map, random but funny change
+        "Actually, he was caught with HER sister in HIS office!":
+            "Actually, he was caught with HIS OWN sister in HIS office!",
 
 
-        # -----------------------------------------
-        # v0.5 script5.rpy
+    # -----------------------------------------
+    # v0.5 script5.rpy
 
-        # AS script5:809
-        # BA/N: tried reworking "best friends" bit, idk if it works
+        # OS script5:809
         "The scholarship that was granted to [mc] and his best friends is the best thing that has happened to me in a very long time.":
-            "The scholarship that was granted to my twins and their best friend is the best thing that has happened to me in a very long time.",
+            "The scholarship that was granted to these three best friends is the best thing that has happened to me in a very long time.",
 
-        # AS script5:811
+        # OS script5:811
         "*Clears throat* I think it's best not to dig too deep into the \"best friend\" subject.":
             "*Clears throat* I think it's best not to bring up the \"best friend\" subject.",
 
-        # AS script5:842
+        # OS script5:842
         "I don't really mind anymore. I'm happy being just a good friend.":
             "I don't really mind anymore. I'm happy just being his sister.",
 
-        # AS script5:903
-        "We won’t fail you, Nancy! No stone will be left unturned!":
-            "We won’t fail you, Mom! No stone will be left unturned!",
-
-        # AS script5:1005
+        # OS script5:1005
         "B-Bye, [mc]! I'll see you at home!":
             "B-Bye, bro! I'll see you at home!",
 
-        # AS script5:2044
+        # OS script5:2044
         "I mean, Dad has only called me once since I got here.":
             "I mean, Dad has only called us once since we got here. Our grandparents called every other week.",
 
-        # AS script5:4455 chat:517
-        "I've been shopping all day with Nancy and I had no signal!":
-            "I've been shopping all day with Mom and I had no signal!",
-
-        # AS script5:4455 chat:544
-        "Nancy's gonna wonder what's taking me so long {image=images/MENUS/e_blush2.png}":
-            "Mom's gonna wonder what's taking me so long {image=images/MENUS/e_blush2.png}",
-
-        # AS script5:4455 chat:548
-        "Shopping with Nancy {image=images/MENUS/e_blush.png}":
-            "Shopping with Mom {image=images/MENUS/e_blush.png}",
-
-        # AS script5:9633
-        # Disabled, interferes with other lines, also doesn't work if not on other paths
-        # "I like where this is going...":
-        #     "I like where this is going... and I am too horny to care that she is my sister... as if I had cared with Mom, Dalia, or Annie...",
-
-        # AS script5:10045
+        # OS script5:10045 (p)
         "*Snorts* You're such a dork. You’re lucky I think you’re cute.":
-            "*Snorts* You're such a dork. I think you have enough twins in your life already.",
+            "*Snorts* You’re such a cute little dork. Don’t you have enough twins in your life already?",
 
-        # AS script5:12484
-        "I have two girls, Dalia and Penelope.":
-            "I have three girls and one son, Dalia, Penelope, Annie, and [mc].",
+        # OS script5:12104 (n)
+        "*Chuckles* Let's keep these dreams of yours between us, though. I don’t know how my daughters would take the news.":
+            "*Chuckles* Let's keep these dreams of yours between us, though. I don’t know how my daughters or your sister would take the news.",
 
 
-        # -----------------------------------------
-        # v0.6 script6.rpy
+    # -----------------------------------------
+    # v0.6 script6.rpy
 
-        # AS script6:229 (d)
-        "Truth is, you do look really good, Annie!":
-            "Truth is, you do look really good, sis!",
-
-        # AS script6:243
+        # OS script6:243
         "Private Annie Winters reports!":
             "Private Annie [lastname] reports!",
 
-        # AS script6:249 (a)
-        "T-Thank you, sir, ma'am, sir.":
-            "T-Thank you, Mo-sir, ma'am, sir.",
-
-        # AS script6:655 (p)
-        "Nice job, Annie!":
-            "Nice job, lil sis!",
-
-        # AS script6:1674 {inject}
+        # OS script6:1674 {inject}
         # working in why annie didn't go too, elaborated later on
-        "I thought I'd be way more homesick.":
+        "I thought I'd be way more homesick.":[
             ("I thought I'd be way more homesick.","script6:1674",[
                 'show ep 41',
                 'a "I told you you booked it too soon!" with dis',
@@ -9544,95 +10234,106 @@ init python:
                 'mc "Yeah, I might’ve rushed a bit since the ticket was cheap."'
             ]),
 
-        # AS script6:1678
+            # Bonus Mod
+            ("I thought I'd be way more homesick.","script6:1684",[
+                'show ep 41',
+                'a "I told you you booked it too soon!" with dis',
+                'show ep 40',
+                'mc "Yeah, I might’ve rushed a bit since the ticket was cheap."'
+            ]),
+
+            # Multi Mod
+            # script6:1674, same as original
+        ],
+
+        # OS script6:1678
         "How was your father?":
             "How was Dad?",
 
-        # AS script6:1767
-        "Wow, how come you don’t get this excited when you're playing with your beloved sister?":
-            "Wow, how come you don’t get this excited when you're playing with your beloved older sister?",
-
-        # AS script6:1785
+        # OS script6:1785
         "Good night!!":
             "Good night bro!!",
 
-        # AS script6:1804
-        "Right now? With Penelope, Dalia, and Annie in the house?":
-            "Right now? With your sisters in the house?",
-
-        # AS script6:1975
+        # OS script6:1975
         "[mc]...? What are you doing here?!":
             "Bro...? What are you doing here?!",
 
-        # AS script6:2004
+        # OS script6:2004
         "It's just... that... well, I was shocked at first since we had {i}never{/i} seen each other naked, and all that.":
             "It's just... that... well, I was shocked at first since the last time I saw you naked was {i}so long{/i} ago.",
 
-        # AS script6:2008 (no)
+        # OS script6:2008 (no)
         "A bit striking because I {i}never{/i} saw you naked before either.":
             "A bit striking because I {i}never{/i} saw you naked before.",
 
         # ========== START Murder Mystery ==========
             # adding this just to note that this section is organized by script line, and does not really reflect the order the events actually play out in game
 
-        # AS script6:3524
+        # OS script6:3524
         "What? Annie?":
             "What? Sis?",
 
-        # AS script6:3536
+        # OS script6:3536
         "Elementary, my dear [mc].":
             "Elementary, my dear brother.",
 
-        # AS script6:3689
+        # OS script6:3689
         "Well, you should still get it, [mc].":
             "Well, you should still get it, bro.",
 
-        # AS script6:4970
+        # OS script6:4970
         "We're just... friends.":
             "Delilah's just... a friend. And Annie's my sister.",
 
-        # AS script6:4975
+        # OS script6:4975
         "Are you seriously telling me you have those two fun-sized cuties around you and you're not doing anything with them?":
             "Sucks for you that one's your sister. I couldn't imagine having these two fun-sized cuties around me and not doing anything with them.",
 
-        # AS script6:5473
+        # OS script6:5473
         "Um... Annie? We have a problem.":
             "Um... Sis? We have a problem.",
 
-        # AS script6:5474
+        # OS script6:5474
         "Wow, come here, [mc]!":
             "Wow, come here, bro!",
 
-        # AS script6:5504
+        # OS script6:5504
         "Oh, thanks for the reassurance, [mc]! I feel much, much better now!":
             "Oh, thanks for the reassurance, brother! I feel much, much better now!",
 
-        # AS script6:5523
+        # OS script6:5523
         "Can you focus and stop being a pig?!":
             "Can you focus and stop being a pervert?!",
 
-        # AS script6:5739 {specific}
+        # OS script6:5739 (a) {specific}
         # Excludes script:3745 (d), script3:734 (no)
-        "[mc]!!":
+        "[mc]!!":[
             ("Bro!!","script6:5739"),
+
+            # Bonus Mod
+            ("Bro!!","script6:5775"),
+
+            # Multi Mod
+            ("Bro!!","script6:5767"),
+        ],
 
         # ========== END Murder Mystery ==========
 
-        # AS script6:5970
+        # OS script6:5970
         "*Knocking on the door* Annie?":
             "*Knocking on the door* Sis?",
 
-        # AS script6:6012
+        # OS script6:6012
         "B-But thank you.":
             "B-But thank you, bro.",
 
-        # AS script6:6014
+        # OS script6:6014
         "Penelope has been teaching me different ways to style it too.":
             "Penny has been teaching me different ways to style it too.",
 
-        # AS script6:6026 {inject}
+        # OS script6:6026 {inject}
         # adding why Annie didn't go with you
-        "*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.":
+        "*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.":[
             ("*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.","script6:6026",[
                 'mc "They were also really surprised that you didn’t come with me."',
                 "show eaa 11",
@@ -9642,8 +10343,29 @@ init python:
                 'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
             ]),
 
-        # AS script6:6031 {inject}
-        "I don't care if I find discounted plane tickets again, I have no reason to go back there.":
+            # Bonus Mod
+            ("*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.","script6:6064",[
+                'mc "They were also really surprised that you didn’t come with me."',
+                "show eaa 11",
+                'a "*Laughs* True, I don’t think we’ve been apart for this long before."',
+                'a "Sorry to make you go alone, but I knew I wouldn’t be ready to go back so soon."',
+                "show eaa 10",
+                'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
+            ]),
+
+            # Multi Mod
+            ("*Eating another cookie* Mm-yeah, people mentioned how much my hair had grown during my visit too.","script6:6054",[
+                'mc "They were also really surprised that you didn’t come with me."',
+                "show eaa 11",
+                'a "*Laughs* True, I don’t think we’ve been apart for this long before."',
+                'a "Sorry to make you go alone, but I knew I wouldn’t be ready to go back so soon."',
+                "show eaa 10",
+                'mc "Nah, you were right about that. Though was kind of interesting to be completely on my own for once."',
+            ]),
+        ],
+
+        # OS script6:6031 {inject}
+        "I don't care if I find discounted plane tickets again, I have no reason to go back there.":[
             ("I don't care if I find discounted plane tickets again, I have no reason to go back there.","script6:6031",[
                 "show eaa 11",
                 'a "Ouch. I’m telling Grandpa and Grandma that next time they call."',
@@ -9651,358 +10373,425 @@ init python:
                 'mc "*Laughs* Okay, maybe two reasons."'
             ]),
 
-        # AS script6:6033
+            # Bonus Mod
+            ("I don't care if I find discounted plane tickets again, I have no reason to go back there.","script6:6069",[
+                "show eaa 11",
+                'a "Ouch. I’m telling Grandpa and Grandma that next time they call."',
+                "show eaa 10",
+                'mc "*Laughs* Okay, maybe two reasons."'
+            ]),
+
+            # Multi Mod
+            ("I don't care if I find discounted plane tickets again, I have no reason to go back there.","script6:6059",[
+                "show eaa 11",
+                'a "Ouch. I’m telling Grandpa and Grandma that next time they call."',
+                "show eaa 10",
+                'mc "*Laughs* Okay, maybe two reasons."'
+            ]),
+        ],
+
+        # OS script6:6033
         "And how was your dad?":
             "And how was Dad?",
 
-        # AS script6:6035
+        # OS script6:6035
         "My dad...?":
             "Dad...?",
 
-        # AS script6:6050
+        # OS script6:6050
         "Tell Na-":
-            "Tell An-",
+            "Tell Annie and Na-",
 
-        # AS script6:6052
-        "*Burps* Tell Nancy, Talia, and Persephone I said hi.":
-            "*Burps* Tell Annie, Nancy, Talia, and Persephone I said hi.",
-
-        # AS script6:6063
+        # OS script6:6063
         "So... yeah, you know how my father is.":
-            "So... yeah, you know how Dad is. Couldn’t even get his own kids’ names right...",
+            "So... yeah, you know how Dad is.",
 
-        # AS script6:6065
+        # OS script6:6065
         "Awh, I'm so sorry, [mc]...":
             "Awh, I'm so sorry, bro...",
 
-        # AS script6:6066
+        # OS script6:6066
         "I can’t imagine how that must’ve felt after traveling all that way.":
             "That must've really hurt to hear now that we’ve reunited with them.",
             #"I know a part of us is always hoping to get a bit more from him.",
 
-        # AS script6:6087 (menu)
+        # OS script6:6087 (menu)
         "You know dads can be real assholes":
             "You know Dad can be a real asshole",
 
-        # AS script6:6088
+        # OS script6:6088
         "You know as well as I do that dads can be real assholes.":
             "You know as well as I do that Dad can be a real asshole.",
 
-        # AS script6:6090
+        # OS script6:6090
         "W-Well... it's true that my dad has been working a lot all his life and he's been a bit absent, but... he's always cared about me.":
             "W-Well... it’s true that Dad’s always been pretty absent because of work, but...",
 
-        # AS script6:6091
+        # OS script6:6091
         "And he thinks highly of you!":
             "We still had our grandparents! And Chang’s parents too!",
 
-        # AS script6:6093
+        # OS script6:6093
         "Well... yeah, I guess that's different.":
             "Well... yeah. At least we had some adults looking out for us. Even if we didn't see them very often.",
 
-        # AS script6:6094
+        # OS script6:6094
         "That came out wrong, I'm sorry.":
             "Grandpa and Grandma miss you by the way.",
 
-        # AS script6:6096
+        # OS script6:6096
         "No worries! I know you didn't mean it in a bad way.":
             "I miss them too! I'll need make it up to them sometime.",
 
-        # AS script6:6190
+        # OS script6:6190
         "*Laughs* Don't be so dramatic.":
             "*Laughs* Don't be so dramatic, sis.",
 
-        # AS script6:6215 {specific}
+        # OS script6:6215 {specific}
         # Excludes script:8614 (n)
-        "Good night, [mc]!":
+        "Good night, [mc]!":[
             ("Good night, bro!","script6:6215"),
 
-        # AS script6:6218 {specific}
-        # Excludes script6:5866 (no) and script6:3453 (a)
-        "Good night, Annie!":
+            # Bonus Mod
+            ("Good night, bro!","script6:6253"),
+
+            # Multi Mod
+            ("Good night, bro!","script6:6243"),
+        ],
+
+        # OS script6:6218 {specific}
+        # Excludes script6:5866 (no) and script6:3453 (mc)
+        "Good night, Annie!":[
             ("Good night, sis!","script6:6218"),
 
-        # AS script6:6256
-        "Y-You know what I mean!":
-            "N-No, I just– y-you know what I mean!",
+            # Bonus Mod
+            ("Good night, sis!","script6:6256"),
 
-        # AS script6:6278
+            # Multi Mod
+            ("Good night, sis!","script6:6246"),
+        ],
+
+        # OS script6:6278
+        # Disabled for impact
         #"You need to be more direct, Annie.":
         #    "You need to be more direct, sis.",
 
-        # AS script6:6338
+        # OS script6:6338
         "I’ll never get tired of seeing your gorgeous body, Annie.":
             "I’ll never get tired of seeing your gorgeous body, sis.",
 
-        # AS script6:6399
+        # OS script6:6399
         "I... I'm n-not sure I'm ready, [mc].":
             "I... I'm n-not sure I'm ready, bro.",
 
-        # AS script6:414
+        # OS script6:414
         # Overwritten by AS script2:3865, okay
         # "Oh Annie..." -> "Oh sis..."
 
-        # AS script6:6426
+        # OS script6:6426
         "I’m dying to taste you, Annie.":
             "I’m dying to taste you, sis.",
 
-        # AS script6:6427
+        # OS script6:6427
         "[mc], I... I-I'm not sure if I'm ready for that either!":
             "Bro, I... I-I'm not sure if I'm ready for that either!",
 
-        # AS script6:6440
+        # OS script6:6440
         "Oh [mc]... that feels...":
             "Oh brooo... that feels...",
 
-        # AS script6:6450
+        # OS script6:6450
         "You begin to taste every inch of Annie, spreading her tight lips as you gracefully move your tongue back and forth.":
             "You begin to taste every inch of your twin sister, spreading her tight lips as you gracefully move your tongue back and forth.",
 
-        # AS script6:6454
+        # OS script6:6454
         "Oh my god, [mc]...":
             "Oh my god, bro...",
 
-        # AS script6:6471
+        # OS script6:6471
         "[mc]. . . . . . . . . . .  . !":
             "Broooo. . . . . . . . . . .  . !",
 
-        # AS script6:6486
+        # OS script6:6486
         "AAaahh... oh god [mc]... I think I'm gonna... C-CUM...":
             "AAaahh... oh god bro... I think I'm gonna... C-CUM...",
 
-        # AS script6:6488
+        # OS script6:6488
         "[mc]! You’re gonna make me...":
             "Bro! You’re gonna make me...",
 
-        # AS script6:6556
+        # OS script6:6556
         # Overwritten by AS script2:3865, okay
         # "Oh Annie..." -> "Oh sis..."
 
-        # AS script6:6559
+        # OS script6:6559
         "I can feel you pulsing, [mc]...":
             "I can feel you pulsing, bro...",
 
-        # AS script6:
+        # OS script6:
         "Yeah... keep going... suck it as hard as you can, babe...":
             "Yeah... keep going... suck it as hard as you can, sis...",
 
-        # AS script6:6627
+        # OS script6:6627
         "*Panting* Annie...?":
             "*Panting* Sis...?",
 
-        # AS script6:6644
+        # OS script6:6644
         "You grab Annie's head and start fucking her mouth. You can hear her choking with each thrust, but Annie's throat willingly takes all of you.":
             "You grab your sister's head and start fucking her mouth. You can hear her choking with each thrust, but Annie's throat willingly takes all of you.",
 
-        # AS script6:6657
+        # OS script6:6657
         "The sweet, innocent, little girl I've known for years...":
             "My sweet, innocent, little twin sister...",
             #"The sweet, innocent, little girl I've known my entire life...",
 
-        # AS script6:6666
+        # OS script6:6666
         "Come on Annie, you're gonna miss the entire movie!":
             "Come on sis, you're gonna miss the entire movie!",
 
-        # AS script6:6681
+        # OS script6:6681
         "AAAAargh... fuck, Annie...":
             "AAAAargh... fuck, sis...",
 
-        # AS script6:6687
+        # OS script6:6687
         "You better take care of my little girl while you're in the USA, [mc].":
             "You better take care of your sister while you're in the USA, [mc].",
         
-        # AS script6:6688
+        # OS script6:6688
         "Rest assured Mr. Winters, I won’t let anything happen to her!":
             "Rest assured Grandpa, I won’t let anything happen to her!",
 
-        # AS script6:6689
+        # OS script6:6689
         "I'll take care of Annie as if she was my sister!":
             "I'll take great care of Annie as always!",
 
-        # AS script6:6700
+        # OS script6:6700
         "Oh GOD, Annie, I'm gonna fucking cum!":
             "Oh GOD, sis, I'm gonna fucking cum!",
 
-        # AS script6:6718
+        # OS script6:6718
         "*Panting* Do it... empty y-yourself all over me, [mc]...":
             "*Panting* Do it... empty y-yourself all over me, bro...",
 
-        # AS script6:6719
+        # OS script6:6719
         "Oh god Annie, I'm...":
             "Oh god sis, I'm...",
 
-        # AS script6:6750
+        # OS script6:6750
         "Goddammit Annie... that was mind-blowing.":
             "Goddammit sis... that was mind-blowing.",
 
-        # AS script6:6757
+        # OS script6:6757
         "Well, I'm sure Dalia and Penelope would knock before entering your room.":
             "Well, I'm sure Dalia and Penny would knock before entering your room.",
 
-        # AS script6:6762
-        "Imagine if Nancy had caught us... she'd kick us out of the house!":
-            "Imagine if Mom had caught us... she'd go feral! We'd be kicked out a-and maybe even disowned!",
-
-        # AS script6:6766
+        # OS script6:6766
         "Why would she? We weren't doing anything wrong.":
-            "She loves us too much to do anything like that.",
+            "She cares about us too much to do anything like that.",
 
-        # AS script6:6770 base map override
-        "Don't be nasty!":
-            "Don't be nasty!",
-
-        # AS script6:6787
+        # OS script6:6787
         "Good night, Annie.":
             "Good night, sis.",
 
         # ========== START Fuck Marry Kill ==========
+            # BA/N: keeping this section because though not sisters here, Dalia is less likely to pick Fuck if she also knew Annie from childhood
 
-        # AS script6:10185 (d)
+        # OS script6:10185 (d)
         "And then I'd fuck... Annie.":
             "And then I'd marry... Annie.",
 
-        # AS script6:10185 (d)
+        # OS script6:10185 (d)
         "She's so cute. She’s small, but... in a hot way. You know what I mean?":
             "She’s so small and cute. Imagine having that adorable girl by your side all the time... though I suppose you already know what that’s like.",
 
-        # AS script6:10185 (d)
+        # OS script6:10185 (d)
         "You said fuck twice.":
             "You said marry twice.",
 
         # ========== END Fuck Marry Kill ==========
 
 
-        # -----------------------------------------
-        # v0.7 script7.rpy
+    # -----------------------------------------
+    # v0.7 script7.rpy
 
-        # AS script7:1461
+        # OS script7:1461
         "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, Annie.":
             "Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, sis.",
 
-        # AS script7:1468 {specific}
+        # OS script7:1468 {specific}
         # Excludes script:7779 (eva)
-        "Thank you, [mc]...":
+        "Thank you, [mc]...":[
             ("Thank you, bro...","script7:1468"),
 
-        # AS script7:1502
+            # Bonus Mod
+            ("Thank you, bro...","script7:1480"),
+
+            # Multi Mod
+            # script7:1468, same as original
+        ],
+
+        # OS script7:1502
         "Are you sure you don't want to join us, Annie?":
             "Are you sure you don't want to join us, sis?",
 
-        # AS script7:1622
-        "Give my best to Penny when you see her too.":
-            "Give my best to big sis when you see her too.",
-
-        # AS script7:1635
-        "Penny? We literally have dinner together every day." :
-            "Big sis? We literally have dinner together every day." ,
-
-        # AS script7:1640
+        # OS script7:1640
         "Take care, Annie.":
             "Take care, sis.",
 
         # ========== START harem thoughts ==========
 
-        # AS script7:7396 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+        # OS script7:7396 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
-                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
-        # AS script7:7398 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7452",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7454",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # OS script7:7398 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
-                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
-        # AS script7:7400 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
-            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
-                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7454",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
-        # AS script7:7402 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7456",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # OS script7:7402 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
                 'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
-        # AS script7:7404 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
-            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
-                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
-        # AS script7:7425 {inject}
-        # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
-        #    but also why would you be playing an incest mod without following at least one incest path right?
-        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # OS script7:7404 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":[
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7462",[
+                'mct "Well, Annie’s my twin sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # OS script7:7425 {inject}
+        # BA/N: technically this wouldn't work if you're not on Annie's path but don't feel like making a labelmod to add if statement just for this
+        #    but also why would you be playing this Annie sister mod without actually following Annie's path right?
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":[
             ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
                 'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
             ]),
 
+            # Bonus Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7481",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+            # Multi Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7483",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+        ],
+
         # ========== END harem thoughts ==========
 
-        # AS script7:8196 (p)
-        "(How would we even explain this to Mom or Dalia?)":
-            "(How would we even explain this to Mom, or Dalia, or Annie?)",
 
-        # AS script7:9816 (p)
-        "*Panting* I want Mom and Dalia to hear me scream...":
-            "*Panting* I want the whole family to hear me scream...",
+    # -----------------------------------------
+    # v0.8 script8.rpy
 
-
-        # -----------------------------------------
-        # v0.8 script8.rpy
-
-        # AS script8:4222
+        # OS script8:4222
         "Come on, [mc], I need you to catch on quickly! We're running out of time.":
             "Come on, bro, I need you to catch on quickly! We're running out of time.",
 
-        # AS script8:4278
+        # OS script8:4278
         "There's no time to hesitate, [mc]!":
             "There's no time to hesitate, bro!",
 
-        # AS script8:5558 (n)
-        "How are you still tight after giving birth to two children...?":
-            "How are you still tight after giving birth to four children...?",
+        # OS script8:6521 (n) {inject}
+        "If you ever hurt Nova, Annie, Luna, or Alex... I'll be seriously mad at you, young man.":[
+            ("If you ever hurt Nova, Luna, or Alex... I'll be seriously mad at you, young man.","script8:6521",[
+                "show gp 84",
+                'n "Not to mention Annie... I won’t judge you two, but she’s still your sister, so be especially careful with her." with dis12',
+                "show gp 85",
+                'mc "Of course I will."',
+            ]),
 
-        # AS script8:6521 (n)
-        "If you ever hurt Nova, Annie, Luna, or Alex... I'll be seriously mad at you, young man.":
-            "If you ever hurt Nova, Luna, or Alex... I'll be seriously mad at you, young man.",
+            # Bonus Mod
+            ("If you ever hurt Nova, Luna, or Alex... I'll be seriously mad at you, young man.","script8:6624",[
+                "show gp 84",
+                'n "Not to mention Annie... I won’t judge you two, but she’s still your sister, so be especially careful with her." with dis12',
+                "show gp 85",
+                'mc "Of course I will."',
+            ]),
 
-        # AS script8:6523 (n)
-        "Oh, and if you EVER hurt Penny or Dalia...":
-            "Oh, and if you EVER hurt Penny, Dalia, or Annie...",
+            # Multi Mod
+            ("If you ever hurt Nova, Luna, or Alex... I'll be seriously mad at you, young man.","script8:6549",[
+                "show gp 84",
+                'n "Not to mention Annie... I won’t judge you two, but she’s still your sister, so be especially careful with her." with dis12',
+                "show gp 85",
+                'mc "Of course I will."',
+            ]),
+        ],
 
-        # AS script8:6910
-        "Oh, no, no, no. Penny, Dalia, and Nancy were not an option.":
-            "Oh, no, no, no. Penny, Dalia, and Mom were not an option.",
-
-        # AS script8:6969
+        # OS script8:6969
         "(She's definitely going on a date with [mc].)":
             "(She's definitely going on a date with [mc]. Her own twin brother!)",
 
-        # AS script8:6983 (l)
+        # OS script8:6983 (l)
         # BA/N: leaving this here for the future when we learn what exactly Luna's vision was
         # "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)":
         #     "(And I... actually seemed to be enjoying myself in that vision. We all were. Which is... strange. I've almost always seen bad things.)",
 
-        # AS script8:7092
+        # OS script8:7092
         "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend for so many years.":
             "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend your entire life.",
 
-        # AS script8:7098
+        # OS script8:7098
         # Original non-inject version for safekeeping
         #"Hey, don’t sweat it. I already told you, it gives you a mysterious, sexy vibe.":
         #    "Hey, don’t sweat it. I already told you, it gives you a mysterious, sexy vibe.{p}And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.",
 
-        # AS script8:7099
+        # OS script8:7099
         # Original non-inject version for safekeeping
         #"And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":
         #    "Which is still strange to think about since you’re twins, but... You two mean a lot to me, and I know how much you mean to each other.{p}So, I just want to tell you again that I’ll always support you two.",
 
-        # AS script8:7099 {inject}
-        "And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":
+        # OS script8:7099 {inject}
+        "And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.":[
             ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7099",[
                 "show gf 35",
                 'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
@@ -10011,41 +10800,63 @@ init python:
                 'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
             ]),
 
-        # AS script8:7101 {specific}
+            # Bonus Mod
+            ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7208",[
+                "show gf 35",
+                'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
+                'c "Honestly, I probably could’ve seen it coming. I know how first-hand just much you two mean to each other."',
+                "show gf 36",
+                'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
+            ]),
+
+            # Multi Mod
+            ("And in any case, no worries — Annie’s going to look at you with those lovey-dovey eyes of hers, so she’ll only see the good stuff.","script8:7127",[
+                "show gf 35",
+                'c "Which is still {i}really{/i} strange to think about since you’re actual twins, but..."',
+                'c "Honestly, I probably could’ve seen it coming. I know how first-hand just much you two mean to each other."',
+                "show gf 36",
+                'c "So I just want to tell you again that you and Annie are my best friends, and I’ll always support you two." with dis08',
+            ]),
+        ],
+
+        # OS script8:7101 {specific}
         # Excludes script4:2443 (d). original backup line saved just in case
-        "*Chuckles* If you say so...":
+        "*Chuckles* If you say so...":[
             ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7101"),
             #"*Chuckles* Thanks, bro. I appreciate it.",
 
-        # AS script8:7205
+            # Bonus Mod
+            ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7210"),
+
+            # Multi Mod
+            ("*Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.","script8:7129"),
+        ],
+
+        # OS script8:7205
         "[mc], over here!":
             "Bro, over here!",
 
-        # AS script8:7209
+        # OS script8:7209
         "Ah, hey there!":
             "Ah, hey there, sis!",
 
-        # AS script8:7398
+        # OS script8:7398
         "Annie Winters and Luna Hernandez travel to the super scary Red Herring server and complete–":
             "Annie [lastname] and Luna Hernandez travel to the super scary Red Herring server and complete–",
 
-        # AS script8:7532
-        "I'll show them to Nancy later so I can–":
-            "I'll show them to Mom later so I can–",
-
-        # AS script8:7569
+        # OS script8:7569
         "A-Annie...?":
             "Uh sis...?",
 
-        # AS script8:7622
+        # OS script8:7622
         "*Turning around* Um... Annie...":
             "*Turning around* Um... sis...",
 
-        # AS script8:7696
+        # OS script8:7696
         "No one ever thought you were useless, Annie. But after this? D-Damn, even less so.":
             "No one ever thought you were useless, sis. But after this? D-Damn, even less so.",
 
-        # AS script8:7713
+        # OS script8:7713
         "Bye, bye, [mc]!":
             "Bye, bye, bro!",
 
@@ -10058,475 +10869,487 @@ init python:
             # Below is a backup in case it doesn't trigger.
             # BA/N: Touched up the backup, ngl still a bit half-assed due to a bunch of short lines lol.
 
-        # AS script8:8047
+        # OS script8:8047
         "You said it yourself. It's just a meal with Annie, like it's been a hundred times over the past 10 years.":
             "You said it yourself. It's just another meal alone with Annie, like we’ve usually had these last 10 years.",
 
-        # AS script8:8051
+        # OS script8:8051
         "Can't believe it's been that long already.":
             "Can't believe it's been that long since everything changed.",
 
-        # AS script8:8116
+        # OS IncestLables:8077 labelmod override
+        "Oh... well, I didn't buy mine either. My mom did.":
+            "Oh... well, I didn't buy mine either. Nancy did.",
+
+        # OS IncestLables:8078 labelmod override
+        "She got it for my birthday.":
+            "My... nanny. She got it for my birthday.",
+
+        # OS script8:8116
         # "And I'm not really alone, my dad's inside this office registering our new address.":
         #    "And I'm not really alone, my dad's inside this office registering our new address.",
 
-        # AS script8:8125
+        # OS script8:8125
         "I live here too! My parents have a hotpot restaurant just around the corner! You and Annie should totally come someday!":
             "I live here too! My parents have a hotpot restaurant just around the corner! You should totally come someday! Hey, you wanna come too?",
 
-        # AS script8:8127
+        # OS script8:8127
         "Who's Annie?":
             "Who are you talking to?",
 
-        # AS script8:8129
+        # OS script8:8129
         "Annie from school!":
             "The girl!",
 
-        # AS script8:8131
+        # OS script8:8131
         "Oh... I don't know her. I just arrived here.":
             "Which girl?",
 
-        # AS script8:8133
+        # OS script8:8133
         "Oh... really? And then why is she here?":
             "The one behind you?",
 
-        # AS script8:8140
+        # OS script8:8140
         "Hi.":
             "Hey, Annie.",
 
-        # AS script8:8141
+        # OS script8:8141
         "Are you Annie?":
             "Why aren't you with Grandpa anymore?",
 
-        # AS script8:8144
+        # OS script8:8144
         "*Whispering* Why isn't she talking...?":
             "Annie?",
 
-        # AS script8:8146
+        # OS script8:8146
         "*Whispering* I know her from school, but she never talks there either.":
             "Do you know each other?",
 
-        # AS script8:8147
+        # OS script8:8147
         "*Whispering* I think she's mute.":
             "*Whispering* Is she mute?",
 
-        # AS script8:8155
+        # OS script8:8155
         "I go to school with Chang. I'm Annie.":
             "I'm Annie, [mc]'s sister.",
 
-        # AS script8:8157
+        # OS script8:8157
         "Hi Annie. I'm [mc].":
             "This is Chang, Annie.",
 
-        # AS script8:8159 {specific}
+        # OS script8:8159 {specific}
         # Excludes script5:1198 (l)
-        "Hi [mc].":
+        "Hi [mc].":[
             ("Hi Chang.","script8:8159"),
 
-        # AS script8:8160
+            # Bonus Mod
+            ("Hi Chang.","script8:8278"),
+
+            # Multi Mod
+            ("Hi Chang.","script8:8187"),
+        ],
+
+        # OS script8:8160
         "D-Did you...":
             "W-We just moved here...",
 
-        # AS script8:8161
+        # OS script8:8161
         "Did you move here?":
             "Did [mc] already tell you?",
 
-        # AS script8:8162
+        # OS script8:8162
         "Yep! From the US, with my dad.":
             "Yep! We're from the US.",
 
-        # AS script8:8167
+        # OS script8:8167
         "You shouldn't be out here alone either, Annie.":
             "Nice to meet you, Annie.",
 
-        # AS script8:8168
+        # OS script8:8168
         "You could be kidnapped. Or kidnapped and then sold.":
             "You said your grandpa is here too? I don't see him.",
 
-        # AS script8:8170
+        # OS script8:8170
         "I'm not alone, my dad's over there.":
             "Grandpa's over there.",
 
-        # AS script8:8172
+        # OS script8:8172
         "He's a businessman. He's doing business calls now.":
             "He's calling a bunch of people to help Dad with the papers and stuff.",
 
-        # AS script8:8174
+        # OS script8:8174
         "We were gonna see the pandas at the zoo, but... he got a call. So I guess we’re not going anymore.":
             "He's taking too long so I got bored and came over here.",
 
-        # AS script8:8177
+        # OS script8:8177
         "I like your... h-hair, American boy.":
             "Um... I like your.. s-shirt, Chang.",
 
-        # AS script8:8178
+        # OS script8:8178
         "And your shirt.":
             "But you look better with it, [mc]!",
 
-        # AS script8:8184
+        # OS script8:8184
         "N-Not really. I mean... my mom doesn't let me watch it.":
             "Y-Yeah.",
 
-        # AS script8:8185
+        # OS script8:8185
         "She says those Japanese cartoons aren't for kids.":
             "I like Sailor Moon.",
 
-        # AS script8:8187
+        # OS script8:8187
         "Oh... too bad.":
             "She wanted to be Sailor Moon for Halloween.",
 
-        # AS script8:8189
+        # OS script8:8189
         "No problem! Do you wanna play with us?! Let's meet at school tomorrow at lunch and pretend to be something we all know!":
             "Cool! Do you wanna play with us?! Let's meet at school tomorrow at lunch and pretend to be something we all know!",
 
-        # AS script8:8192
+        # OS script8:8192
         "My mom says superhero movies are too violent.":
             "I don't know that one.",
 
-        # AS script8:8199
+        # OS script8:8199
         "Haven't seen it. My mom says witchcraft is the devil's work.":
             "Haven't seen it yet.",
 
-        # AS script8:8213
+        # OS script8:8213
         "Wait... yes! I saw it at my uncle's house!":
             "Wait... yes! We saw it!",
 
-        # AS script8:8264
+        # OS script8:8264
         "Yeah, I should go before my dad gets mad too.":
             "Guess we still have to wait for Dad...",
 
-        # AS script8:8265
+        # OS script8:8265
         "Will you... will you be at school tomorrow?":
             "I can't wait for school tomorrow! Will you play with us, too?",
 
-        # AS script8:8273
+        # OS script8:8273
         "You won't ignore me there...?":
             "And if we don't see Chang, you'll still play with me? You won't leave me alone?",
 
-        # AS script8:8275
+        # OS script8:8275
         "Of course not. Why would I...?":
             "Of course. Why wouldn't I...?",
 
-        # AS script8:8279
+        # OS IncestLables:1592 labelmod override
+        "I don’t want people to disappear again... like with Mom, and Dalia, and Penny...":
+            "I don’t want people to disappear again... Mom left, and now we won't see Dalia, or Nancy, or Penny...",
+
+        # OS script8:8279
         "Promise me we'll be friends!":
             "Promise me we'll be together forever!",
 
-        # AS script8:8283
+        # OS script8:8283
         "Friends.":
             "I'll always be by your side, sis.",
 
-        # AS script8:8284
+        # OS script8:8284
         "Friends forever!":
             "Together forever!",
 
-        # AS script8:8287
+        # OS script8:8287
         "I'll leave now!":
             "I'll go see if Dad is done yet!",
 
-        # AS script8:8288
+        # OS script8:8288
         "See you tomorrow... [mc]!":
             "Wait here!",
 
-        # AS script8:8293
+        # OS script8:8293
         "They said there weren’t many kids around here, but it seems like it’s full of weird ones.":
             "We made a friend already... and Annie's starting to smile again...",
 
-        # AS script8:8384
+        # OS script8:8384
         "Sure thing! It's one Penelope recommended me.":
             "Sure thing! It's one Penny recommended me.",
 
-        # AS script8:8399
+        # OS script8:8399
         "Actually, just before you got here, I was reminiscing about the day I met you and Chang.":
             "Actually, just before you got here, I was reminiscing about the day we arrived in Europe and met Chang.",
 
-        # AS script8:8403
+        # OS script8:8403
         "By all means! When I moved to London, I felt like my life was falling apart. You and Chang turned everything around for me.":
             "By all means! When we moved to London, everything felt like it was falling apart. But Chang helped turn that around, and the two of us grew closer than ever.",
 
-        # AS script8:8418
+        # OS script8:8418
         "And where was I going that day with my dad?":
             "And what were we waiting for?",
 
-        # AS script8:8422 (menu)
+        # OS script8:8422 (menu)
         "To the movie theater":
             "For Chang's hotpot restaurant to open",
 
-        # AS script8:8423
+        # OS script8:8423
         "To the movie theater.":
             "For Chang's hotpot restaurant to open.",
 
-        # AS script8:8424 (menu)
+        # OS script8:8424 (menu)
         # l9/N: Changed to be fully compatible with and without either walkthrough
         # BA/N: Not sure why this was originally disabled, but I've reenabled it for the backup
         "To see the pandas at the zoo":
             "{color=[walk_points]}For Dad to finish the registration [annie_pts]",
 
-        # AS script8:8425
+        # OS script8:8425
         "To see the pandas at the zoo.":
             "For Dad to finish the registration.",
 
-        # AS script8:8426
+        # OS script8:8426
         "Although... you had to cancel those plans.":
             "You bugged him over and over until he was done.",
 
-        # AS script8:8438 (menu)
+        # OS script8:8438 (menu)
         "To play mini golf":
             "For a bus to go see pandas at the zoo",
 
-        # AS script8:8439
+        # OS script8:8439
         "To play mini golf.":
             "For a bus to go see pandas at the zoo.",
 
         # ========== END label mod "menurestaurant_mod" backup ==========
 
-        # AS script8:8450
+        # OS script8:8450
         "Alright, tell me about the first birthday we celebrated together, a couple of years after that.":
             "Alright, tell me what happened on our tenth birthday.",
 
-        # AS script8:8455 {inject}
-        "We couldn’t celebrate your birthday because you were sick, so we decided to do a joint birthday celebration three weeks later at Chang’s parents' restaurant.":
+        # OS script8:8455 {inject}
+        "We couldn’t celebrate your birthday because you were sick, so we decided to do a joint birthday celebration three weeks later at Chang’s parents' restaurant.":[
             ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8455",[
                 'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
             ]),
 
-        # AS script8:8497
+            # Bonus Mod
+            ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8580",[
+                'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
+            ]),
+
+            # Multi Mod
+            ("Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.","script8:8483",[
+                'a "So we had a late birthday celebration three weeks later at Chang’s parents’ restaurant."'
+            ]),
+        ],
+
+        # OS script8:8497
         "D-Darn it, [mc].":
             "D-Darn it, bro.",
 
-        # AS script8:8569
+        # OS script8:8569
         "After all these years, I think I can read you pretty well.":
             "We've been together our whole lives, I think I can read you pretty well.",
 
-        # AS script8:8617
+        # OS script8:8617
         "Your answer could shape how the rest of tonight goes and... maybe even your relationship with Annie.":
             "Your answer could shape how the rest of tonight goes and... maybe even your relationship with your sister.",
 
-        # AS script8:8769
+        # OS script8:8769
         #"*Standing up* Are you alright, Annie?":
         #    "*Standing up* Are you alright, sis?",
 
-        # AS script8:8791
+        # OS script8:8791
         "Nancy, Penny, Dalia, Luna, Alex, Nova...":
-            "Luna, Alex, Nova, even Mom, Penny, and Dalia...",
+            "Luna, Alex, Nova, even Nancy, Penny, and Dalia...",
 
-        # AS script8:8839
+        # OS script8:8839
         #"I’m sorry, Annie. I swear I didn't–":
         #    "I’m sorry, sis. I swear I didn't–",
 
-        # AS script8:8845
+        # OS script8:8845
         "I'm so impressed, Annie.":
             "I'm so impressed, sis.",
 
-        # AS script8:8938
-        "Dalia, Penny, Nancy, Luna, Nova, Alex...":
-            "Dalia, Penny, Mom, Luna, Nova, Alex...",
-
-        # AS script8:9084
+        # OS script8:9084
         "Annie Winters.":
             "Annie [lastname].",
 
-        # AS script8:9155
+        # OS script8:9155
         "The way you’re tracing your finger on my chest is kind of turning me on more than it should, Annie...":
             "The way you’re tracing your finger on my chest is kind of turning me on more than it should, sis...",
 
-        # AS script8:9200
+        # OS script8:9200
         "After so many years thinking I’d never be more than friends with Annie... it's finally happening.":
             "After so many years thinking we’d never be more than siblings... it's finally happening.",
 
-        # AS script8:9225
+        # OS script8:9225
         "Phew... you sure know how to drive me crazy, Annie.":
             "Phew... you sure know how to drive me crazy, sis.",
 
-        # AS script8:9275
+        # OS script8:9275
         "You climb on top of Annie, trailing passionate kisses along her neck as she moans softly in appreciation.":
             "You climb on top of your sister, trailing passionate kisses along her neck as she moans softly in appreciation.",
 
-        # AS script8:9292
+        # OS script8:9292
         "You take a moment to contemplate Annie's plump, virgin pussy lips.":
             "You take a moment to contemplate your sister's plump, virgin pussy lips.",
 
-        # AS script8:9313
+        # OS script8:9313
         "*Moans* Ohh mmmm-y-yes, [mc]...":
             "*Moans* Ohh mmmm-y-yes, bro...",
 
-        # AS script8:9382, also overwrites script8:9494
+        # OS script8:9382, also overwrites script8:9494
         "*Tracing Annie's figure* Oh, babe...":
             "*Tracing Annie's figure* Oh, sis...",
 
-        # AS script8:9451
+        # OS script8:9451
         "*Sobbing* Maybe we're just not compatible.":
             "*Sobbing* Maybe... maybe this is sign that it was wrong for us to be together after all.",
 
-        # AS script8:9515
+        # OS script8:9515
         "*Panting* Ohh, [mc]...":
             "*Panting* Ohh, bro...",
 
-        # AS script8:9530
+        # OS script8:9530
         "You’ve got me all kinds of messed up with how great you look, Annie...":
             "You’ve got me all kinds of messed up with how great you look, sis...",
 
-        # AS script8:9540
+        # OS script8:9540
         #"Oh, trust me, you've seen nothing yet, my love...":
         #    "Oh, trust me, you've seen nothing yet, sis...",
 
-        # AS script8:9543
+        # OS script8:9543
         "I-I can't handle this unbearable teasing anymore, Annie...":
             "I-I can't handle this unbearable teasing anymore, sis...",
 
-        # AS script8:9559 {specific}
-        # Excludes other lines (x) (no) (l)
-        # with necessary overrides to keep dalia lines
+        # OS script8:9559 {specific}
+        # Excludes other lines (d)(x)(no)(l)
         "Oh babe...":[
-            ("Oh sis...","script6:10790"), #dalia
-            ("Oh sis...","script6:10811"), #dalia
             ("Oh sis...","script8:9559"), #annie
+
+            # Bonus Mod
+            ("Oh sis...","script8:9690"), #annie
+
+            # Multi Mod
+            ("Oh sis...","script8:9588"), #annie
         ],
 
-        # AS script8:9583 {inject} WIP
-        #"*Moans* I can feel it...":
+        # OS script8:9583 {inject} WIP
+        #"*Moans* I can feel it...":[
         #    ("*Moans* I can feel it...","script8:9583",[
         #        'a "*Giggles* We’re finally connected..."'
         #    ]),
+        #],
 
-        # AS script8:9591
+        # OS script8:9591
         "You're doing great, babe...":
             "You're doing great, sis...",
 
-        # AS script8:9614
+        # OS script8:9614
         "Oh babe, y-you feel so good...":
             "Oh Annie, y-you feel so good...",
 
-        # AS script8:9636
+        # OS script8:9636
         # Overwritten by AS script2:3865, okay
         # "Oh Annie..." -> "Oh sis..."
 
-        # AS script8:9639
+        # OS script8:9639
         "*Panting* I-I'm cumming, [mc]...":
             "*Panting* I-I'm cumming, bro...",
 
-        # AS script8:9696
+        # OS script8:9696
         "Not really, but that's not an exact science. You know that.":
             "Not really, but that's not an exact science. Plus we’re siblings, so we especially can’t be taking risks.",
 
-        # AS script8:9944
+        # OS script8:9944
         "My perfect, beautiful, innocent little Miss Winters...":
             "My perfect, beautiful, innocent little twin sister...",
 
-        # AS script8:9964
+        # OS script8:9964
         "*Panting* F-Fuck, me too, babe...":
             "*Panting* F-Fuck, me too, sis...",
 
-        # AS script8:9974
+        # OS script8:9974
         #"*Panting* I WANT... YOUR... S-S-SEED INSIDE OF ME...":
         #    "*Panting* I WANT... MY BROTHER'S... S-S-SEED INSIDE OF ME...",
 
-        # AS script8:9999
+        # OS script8:9999
         "T-That was... almost a religious experience, Annie.":
             "T-That was... almost a religious experience, sis.",
 
-        # AS script8:10057
+        # OS script8:10057
         "You came over and helped me study, even though you missed a football game with some other kids from school because of it.":
             "You stayed home and helped me study, even though you missed a football game with some other kids from school because of it.",
 
-        # AS script8:10069
+        # OS script8:10069
         "B-But I've liked you since the day I met you!":
             "B-But I've always liked you!",
 
 
-        # -----------------------------------------
-        # v0.9 script9.rpy
+    # -----------------------------------------
+    # v0.9 script9.rpy
 
-        # AS script9:167 (p)
-        "Is there anything better than spending time with my favorite sister?":
-            "Is there anything better than spending time with one of my precious little sisters?",
-
-        # AS script9:432 (p)
+        # OS script9:432 (p)
         "*Grumbling to herself* I had a feeling something was going on between him and Nova. Or Annie. Or even Luna, for that matter!":
             "*Grumbling to herself* I had a feeling something was going on between him and Nova. Or Alex. Or even Luna, for that matter!",
 
-        # AS script9:527 (n)
-        "*Yawns* Agh, what's with all this noise so early in the morning, girls? You're gonna wake up Annie.":
-            "*Yawns* Agh, what's with all this noise so early in the morning, girls? You're gonna wake up your sister.",
-
-        # AS script9:553 (p)
-        # BA/N: Ugh Can't think of a rewrite that works well. 
-        "Luckily, I don't have any more sisters he can be with at the moment.":
-            "Maybe having more secret adventures with his {i}other{/i} sister, too.",
-
-        # AS script9:3008
+        # OS script9:3008
         "Our...":
             "My...",
 
-        # AS script9:3009
+        # OS script9:3009
         "Our friend disappeared.":
             "My brother disappeared.",
 
-        # AS script9:3014
+        # OS script9:3014
         "She mentioned he sometimes plays Eternum for hours on end, right? Or maybe he just went to visit some family for a few days!":
             "She mentioned he sometimes plays Eternum for hours on end, right? Or maybe he just went to visit your father again for a few days!",
 
-        # AS script9:3016
+        # OS script9:3016
         "His only family is a drunk skunk of a father living an ocean away.":
             "Our father is a drunk skunk of a man living an ocean away.",
 
-        # AS script9:3123 (d)
-        "First, her sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].":
-            "First, your other sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].",
-
-        # AS script9:3267
-        "*Standing up* No! Didn't you hear Nancy?!":
-            "*Standing up* No! Remember what your mom said?!",
-
-        # AS script9:3272
+        # OS script9:3272
         "I can't live without him, Nova.":
             "I don't know how to live without him, Nova.",
 
-        # AS script9:9919
+        # OS script9:9919
         # Original non-inject version
         #"Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":
         #    "Annie flew back to the UK a few days ago. Our grandparents invited us over for Christmas for the first time since we were kids.{p}Annie accepted their invite, but I already saw them when I went back recently so I'm staying here. She’s gonna be back before New Year’s Eve.",
 
-        # AS script9:9919 {inject}
-        "Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":
+        # OS script9:9919 {inject}
+        "Annie flew back to the UK a few days ago to spend Christmas with her family and all, but she’s gonna be back before New Year’s Eve.":[
             ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9919",[
                 'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
             ]),
 
-        # AS script9:9941
+            # Bonus Mod
+            ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9983",[
+                'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
+            ]),
+
+            # Multi Mod
+            ("Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.","script9:9927",[
+                'mc "I already saw them when I went back to the UK, so I’m staying here this time. Annie’s gonna be back before New Year’s Eve."'
+            ]),
+        ],
+
+        # OS script9:9941
         "Nova's doing the family thing too.":
             "Nova's got family visiting.",
 
-        # AS script9:9955
-        "As for me, I’m spending Christmas Eve with Nancy, Penny, Dalia, and Alex. Even though... Alex doesn't know yet. It's a surprise.":
-            "As for me, I’m spending Christmas Eve with the rest of the family and Alex. Although... Alex doesn't know yet. It's a surprise.",
-
-        # AS script9:10030
+        # OS script9:10030
         "Annie flew back to London for a few days to spend Christmas with her family — same with Nova and Luna.":
             "Annie flew back to London for a few days to spend Christmas with our grandparents, while Nova and Luna have family visiting for the holidays.",
 
-        # AS script9:10117
+        # OS script9:10117
         "Last Christmas, I had a cold kebab in the kitchen while my dad passed out on the couch in the middle of his tenth beer.":
-            "Last Christmas, Annie and I had cold kebabs in the kitchen while Dad passed out on the couch in the middle of his tenth beer.",
+            "Last Christmas, Annie and I had cold kebabs in the kitchen while our dad passed out on the couch in the middle of his tenth beer.",
 
-        # AS script9:10424
+        # OS script9:10424
         "Christmas never felt special to me.":
-            "We never really celebrated it in the UK. Annie still enjoys the idea of it, but for me, Christmas stopped feeling very special.",
+            "We never really celebrated it. Annie still enjoys the idea of it, but for me, Christmas never felt very special.",
 
-        # AS script9:10706 chat:614
-        "I thought Nancy said you had no signal??":
-            "I thought Mom said you had no signal??",
-
-        # AS script9:10706 chat:626
+        # OS script9:10706 chat:626
         "But I really gotta go now or my dad will get mad {image=images/MENUS/e_tongue2.png}":
             "But I really gotta go now or grandpa will get mad {image=images/MENUS/e_tongue2.png}",
 
-        # AS script9:12870
+        # OS script9:12870
         "I’ve never had a Christmas dinner like this before, Nan.":
             "I wish Annie was here for this, she's missing out on quite the feast!",
 
-        # AS script9:12871
+        # OS script9:12871
         "Feels really special.":
-            "We’ve never had a Christmas dinner like this before, Mom. Feels really special.",
+            "We’ve never had a Christmas dinner like this before, Nan. Feels really special.",
     }
 
     annie_half_sister_map = {
@@ -10754,12 +11577,25 @@ init python:
         "Goodnight [mc]!!":
             "Goodnight, bro!!",
 
-        # HS script:5583 {inject}
-        "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":
+        # HS script:5583 (n) {inject}
+        "(I mean... If Dalia and Penelope never found out, then would it really be so bad? It’d be our little secret...)":[
             ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5583",[
                 "show ale 31",
                 'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
             ]),
+
+            # Bonus Mod
+            ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5649",[
+                "show ale 31",
+                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+            ]),
+
+            # Multi Mod
+            ("(I mean... If the girls never found out, then would it really be so bad...?)","script:5584",[
+                "show ale 31",
+                'n "(What am I thinking?! Of course it would be! He’s my son...)" with dis06'
+            ]),
+        ],
 
         # HS script:6093
         "Let's go! We're already late!":
@@ -10874,12 +11710,19 @@ init python:
         #    "Yep! I heard my brother managed to win a neural implant at your cafe!",
 
         # HS script2:112 {inject} (replaces labelmod)
-        "It's so nice to meet you, Luna!":
+        "It's so nice to meet you, Luna!":[
             ("It's so nice to meet you, Luna!","script2:112",[
                 "scene aaa 15",
                 'l "Same to you. You must be Annie, one of his sisters. [mc]’s told me about you."',
                 "scene aaa 14"
             ]),
+
+            # Bonus Mod
+            # script2:112, same as original
+
+            # Multi Mod
+            # script2:112, same as original
+        ],
 
         # HS script2:113 use with inject
         "I heard [mc] managed to win a neural implant at your cafe!":
@@ -11158,7 +12001,7 @@ init python:
 
         # HS script2:5413 (n)
         "(I bet if I tried to do anything at home, Dalia or Penny would surely notice.)":
-            "(I bet if I tried to do anything at home, the girls would surely notice.)",
+            "(I bet if I tried to do anything at home, one of the girls would surely notice.)",
 
         # HS script2:5937 (x)
         "And on the first day of school, I saw him harassing a close friend of mine.":
@@ -11166,7 +12009,7 @@ init python:
 
         # HS script2:5938 (x) {inject}
         # BA/N: Funny extra lines, disable if too clunky
-        "Honestly, I couldn't help it.":
+        "Honestly, I couldn't help it.":[
             ("Honestly, I couldn't help it.","script2:5938",[
                 'show aaz 44',
                 'x "Wait, Dalia?" with dis',
@@ -11176,6 +12019,29 @@ init python:
                 'x "How many sisters do you have?" with dis'
                 ''
             ]),
+
+            # Bonus Mod
+            ("Honestly, I couldn't help it.","script2:6002",[
+                'show aaz 44',
+                'x "Wait, Dalia?" with dis',
+                'show aaz 46',
+                'mc "Ah, no. Annie, my half-sister... It’s complicated." with dis',
+                'show aaz 44',
+                'x "How many sisters do you have?" with dis'
+                ''
+            ]),
+
+            # Multi Mod
+            ("Honestly, I couldn't help it.","script2:5954",[
+                'show aaz 44',
+                'x "Wait, Dalia?" with dis',
+                'show aaz 46',
+                'mc "Ah, no. Annie, my half-sister... It’s complicated." with dis',
+                'show aaz 44',
+                'x "How many sisters do you have?" with dis'
+                ''
+            ]),
+        ],
 
         # HS script2:5945 (x) use with above
         "Well, I think I respect you a little bit more now because of what you did.":
@@ -11807,42 +12673,110 @@ init python:
         # ========== START harem thoughts ==========
 
         # HS script7:7396 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
                 'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7452",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7454",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
         # HS script7:7398 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
                 'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7454",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7456",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
         # HS script7:7400 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
                 'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7456",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Dalia’s my sister so that’d be a whole scandal instead. As for the others..."',
+            ]),
+        ],
+
         # HS script7:7402 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
                 'mct "Well, Annie’s my half-sister so that’d be a bit of a scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Annie’s my half-sister so that’d be a bit of a scandal instead. As for the others..."',
+            ]),
+
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, Annie’s my half-sister so that’d be a bit of a scandal instead. As for the others..."',
+            ]),
+
+        ],
+
         # HS script7:7404 {inject}
-        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":[
             ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
                 'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
             ]),
 
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7462",[
+                'mct "Well, two of them are my sisters so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
         # HS script7:7425 {inject}
         # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
         #    but also why would you be playing an incest mod without following at least one incest path right?
-        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":[
             ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
                 'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
             ]),
+
+            # Bonus Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7481",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+            # Multi Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7483",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+        ],
 
         # ========== END harem thoughts ==========
 
@@ -12056,6 +12990,10 @@ init python:
         "*Panting* I-I'm cumming, [mc]...":
             "*Panting* I-I'm cumming, bro...",
 
+        # HS script8:9974
+        "*Panting* I WANT... YOUR... S-S-SEED INSIDE OF ME...":
+            "*Panting* I WANT... MY BROTHER'S... S-S-SEED INSIDE OF ME...",
+
         # HS script8:10069
         "B-But I've liked you since the day I met you!":
             "B-But I've liked you since the first day!",
@@ -12116,7 +13054,6 @@ init python:
     }
 
     annie_aunt_map = {
-        
         # -----------------------------------------
         # Nancy as aunt (mother's sister), Penelope and Dalia as cousins
         # Combined with Annie as stepsister in annie_aunt_map
@@ -12140,10 +13077,16 @@ init python:
         # (d) = Dalia line
         # (other) = Other line (Any/all main)
         # (misc) = Miscellaneous line (Extras/side characters)
-        # These tags aren't based on who's speaking, but who the line and scene are about.
-        # l9/N = l9453394's notes
+        # These tags aren't based on who's speaking, but who the line and scene are about.#
         # -----------------------------------------
-        
+        # Code tags
+        # {specific} = use of Variant 2 to target specific lines
+        # {inject} = use of Variant 3 to inject new lines      
+        # -----------------------------------------
+        # l9/N = l9453394's notes
+        # LW/N = Lucifer_W's notes
+        # BA/N = BlueArrow's notes
+        # -----------------------------------------
         
     # -----------------------------------------
     # v0.1 script.rpy Nancy aunt/Penelope & Dalia cousin lines
@@ -12502,8 +13445,15 @@ init python:
         
         # AU script3:6005 (p) {specific}
         # Excludes script:1493 (chang)
-        "She's perfect...":
+        "She's perfect...":[
             ("She's... my cousin is... perfect...","script3:6005"),
+
+            # Bonus Mod
+            ("She's... my cousin is... perfect...","script3:6049"),
+
+            # Multi Mod
+            ("She's... my cousin is... perfect...","script3:6016"),
+        ],
         
         # AU script3:6044 (p)
         "Or if you prefer, you can feel this huge, gorgeous ass right here...":
@@ -12857,7 +13807,7 @@ init python:
         
         # AU script5:5289 (p)
         "I've never been attracted to guys younger than me, but I don't know... he's really cute!":
-            "*Whispering* Honestly, the fact that we're related makes it {i}{b}so{/b}{/i} much more exciting!",
+            "*Whispering* Honestly, the fact that we're related makes it {i}{b}so {/b}{/i}much more exciting!",
         
         # AU script5:5302 (p)
         "But he might not be into me like that so... keep it secret!":
@@ -13126,31 +14076,290 @@ init python:
         
     # -----------------------------------------
     # v0.6 script6.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
-        # AU script6:
-        
-        
+
+        # AU script6:1577 (d)
+        "My god, did Dalia's ass get even bigger while I was in the UK? Or... rounder?":
+            "My god, did my cousin's ass get even bigger while I was in the UK? Or... rounder?",
+
+        # AU script6:1818 (n)
+        "*Snorts* Of course you’d say that! I'm afraid I'll have to shower alone today, my insatiable stud.":
+            "*Snorts* Of course you’d say that! I'm afraid I'll have to shower alone today, my insatiable nephew.",
+
+        # AU script6:7806 (n)(p)
+        "Nancy and Penelope definitely have some competition in that department...":
+            "Nancy and Penelope definitely have some competition in that department... not that I should be sizing up my own aunt and cousin like that.",
+
+
     # -----------------------------------------
     # v0.7 script7.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
+
         # AU script7:
         
-        
+        # ========== START harem thoughts ==========
+            # includes annie stepsister logic for convenience since it's part of the same map
+
+        # AU script7:7396 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.":[
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7396",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7452",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, Annie, or Alex are a little more than just “pals”.","script7:7454",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # AU script7:7398 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.":[
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7398",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7454",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Annie are a little more than just “pals”.","script7:7456",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # AU script7:7400 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.":[
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7400",[
+                'mct "Well, Dalia’s my cousin so that’d be bit of a scandal instead. As for the others..."',
+            ]),
+
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7456",[
+                'mct "Well, Dalia’s my cousin so that’d be a bit of a scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Dalia, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Dalia’s my cousin so that’d be a bit of a scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # AU script7:7402 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.":[
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7402",[
+                'mct "Well, Annie’s my stepsister so that’d be quite a scandal instead. As for the others..."',
+            ]),
+
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7458",[
+                'mct "Well, Annie’s my stepsister so that’d be quite a scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Luna, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, Annie’s my stepsister so that’d be quite a scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # AU script7:7404 {inject}
+        "Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.":[
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7404",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Bonus Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7460",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+
+            # Multi Mod
+            ("Hmm, I wonder what the gang at school would say if they knew me and Dalia, Annie, or Alex are a little more than just “pals”.","script7:7462",[
+                'mct "Well, two of them are my family so that’d be a huge scandal instead. As for the others..."',
+            ]),
+        ],
+
+        # AU script7:7425 {inject}
+        # BA/N: technically this wouldn't work if you're not on any of the incest routes but don't feel like making a labelmod to add if statement just for this
+        #    but also why would you be playing an incest mod without following at least one incest path right?
+        "I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?":[
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7425",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+            # Bonus Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7481",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+
+            # Multi Mod
+            ("I mean... I'm not “officially” dating anyone, and no one's popped the exclusive question, so... I'm not doing anything wrong, am I...?","script7:7483",[
+                'mct "Besides the incest... but if we both want it, then it’s fine, right?"',
+            ]),
+        ],
+
+        # ========== END harem thoughts ==========
+
+        # AU script7:8254 (p)
+        "(How would we even explain this to Mom or Dalia?)":
+            "(How would we even explain this to Mom or Dalia? “Hey, guess who I hooked up with — my own cousin”?)",
+
+        # AU script7:8260 (p)
+        "(You can't be fixated on [mc] like some teenage crush, Penny. There's plenty more fish in the sea!)":
+            "(You can't be fixated on your own cousin like some teenage crush, Penny. There's plenty more fish in the sea that aren't blood-related!)",
+
+        # ========== START Regina's car photoshoot / first time ==========
+
+        # AU script7:9319 (p)
+        "I'm glad I have a friend who I trust and with whom I can do these kinds of things, [mc].":
+            "I'm glad I have a cousin who I trust and with whom I can do these kinds of things, [mc].",
+
+        # AU script7:9389 (p)
+        "I'd never let another man see you in your most glorious form.":
+            "I'd never let another man see you in your most glorious form. Then again, I'm not exactly “another man”, am I?",
+
+        # AU script7:9424 (p)
+        "We're just humans after all. We have a history together, and this is quite an... explicit session.":
+            "We're just humans after all. We're cousins, sure, but we have a history together, and this is quite an... explicit session.",
+
+        # AU script7:9517 (p)
+        "Let's cross this line... just once.":
+            "Let's cross this line... the one line we probably shouldn't... just once.",
+
+        # AU script7:9518 (p)
+        "And after this... the game will be over. It will be... our secret.":
+            "And after this... the game will be over. It will be... our own little family secret.",
+
+        # AU script7:9566 (p)
+        "I'm having sex with her. I’m fucking Penelope Carter.":
+            "I'm having sex with her. I’m fucking my own cousin, Penelope Carter.",
+
+        # AU script7:9567 (p)
+        "I'm living out the fantasy of what her 180,000 followers can only dream of.":
+            "I'm living out the fantasy of what her 180,000 followers can only dream of. Not that any of them know she's my cousin.",
+
+        # AU script7:9571 (p)
+        "*Giggles* Oh y-yeah? You thought about this...? Thought about fucking little old me?":
+            "*Giggles* Oh y-yeah? You thought about this...? Thought about fucking your own cousin?",
+
+        # AU script7:9591 (p)
+        "You can feel Penelope's tight cavity slowly adjust to your size. Each of her movements feels extra sensitive on your dick.":
+            "You can feel your cousin's tight cavity slowly adjust to your size. Each of her movements feels extra sensitive on your dick.",
+
+        # AU script7:9640 (p)
+        "Penny’s jiggling, voluptuous body fills your every sense, as each individual bounce and thrust causes your body to radiate with a divine pleasure.":
+            "Your cousin’s jiggling, voluptuous body fills your every sense, as each individual bounce and thrust causes your body to radiate with a divine pleasure.",
+
+        # AU script7:9663 (p)
+        "You keep hammering Penelope's pussy, your ears drowning in her small, constant whimpers of pleasure.":
+            "You keep hammering your cousin's pussy, your ears drowning in her small, constant whimpers of pleasure.",
+
+        # AU script7:9695 (p)
+        "Penelope orgasms, soaking your cock in vaginal fluids and contracting all of her muscles at once.":
+            "Your cousin orgasms, soaking your cock in vaginal fluids and contracting all of her muscles at once.",
+
+        # AU script7:9710 (p)
+        "Man, I can't believe I just fucked Penny.":
+            "Man, I can't believe I just fucked my own cousin.",
+
+        # AU script7:9739 (p)
+        "Split me in half...":
+            "Split me in half, cuz...",
+
+        # ========== END Regina's car photoshoot / first time ==========
+
+
     # -----------------------------------------
     # v0.8 script8.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
+
+        # ========== START Dalia first time (fireplace scene) ==========
+        # l9/N: kept light on purpose, same as the rest of Dalia's path — she and MC barely acknowledge it out loud
+
+        # AU script8:15623 (d)
+        "Sh-Should we really do it?":
+            "Sh-Should we really do it? I mean... we're cousins, [mc]...",
+
+        # AU script8:15840 (d)
+        "*Panting* That the childhood friend I used to p-play with would end up ramming her p-perfect, huge ass down on my cock...":
+            "*Panting* That the cousin I used to play with as a kid would end up ramming her p-perfect, huge ass down on my cock...",
+
+        # AU script8:16044 (d)
+        "We... connected. As if we had been lovers for years.":
+            "We... connected. I guess it makes sense, though. We've basically been family for years — just, well... in a very different way now.",
+
+        # ========== END Dalia first time (fireplace scene) ==========
+
         # AU script8:
         
         
     # -----------------------------------------
     # v0.9 script9.rpy Nancy aunt/Penelope & Dalia cousin lines
-        
+
+        # AU script9:452 (d)
+        "I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING MY FUCKING BOYFRIEND!":
+            "I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING OUR OWN FUCKING COUSIN!",
+
+        # AU script9:454 (p)
+        "Oh, so he's {i}your{/i} boyfriend now.":
+            "Oh, so now he's suddenly {i}your{/i} cousin more than mine?",
+
+        # ========== START blindfold cabin scene ==========
+
+        # AU script9:11899 (p)
+        "*Snorts* You're such a pervert, [mc]. You ever think about anything besides sex?":
+            "*Snorts* You're such a pervert, cuz. You ever think about anything besides sex?",
+
+        # AU script9:11996 (p)
+        "You press your lips against Penelope's neck, trailing soft kisses over her skin as your hands slide over her curves.":
+            "You press your lips against your cousin's neck, trailing soft kisses over her skin as your hands slide over her curves.",
+
+        # AU script9:12085 (p)
+        "You instinctively take Penelope's nipple into your mouth. She arches her back with a soft moan, starting to stroke you with deliberate, slow pumps.":
+            "You instinctively take your cousin's nipple into your mouth. She arches her back with a soft moan, starting to stroke you with deliberate, slow pumps.",
+
+        # AU script9:12099 (p)
+        "I just want to devour every single inch of you... down to the very last freckle...":
+            "I just want to devour every single inch of my own cousin... down to the very last freckle...",
+
+        # AU script9:12202 (p)
+        "*Giggles* You’re not secretly recording me, right? Taking advantage of little old blind Penny...?":
+            "*Giggles* You’re not secretly recording me, right? Taking advantage of your own little blind cousin...?",
+
+        # AU script9:12220 (p)
+        "Penelope's mouth finally closes around your cock.":
+            "Your cousin's mouth finally closes around your cock.",
+
+        # AU script9:12425 (p)
+        "You sink your cock into Penelope — slick, warm, and indescribably tight.":
+            "You sink your cock into your cousin — slick, warm, and indescribably tight.",
+
+        # AU script9:12432 (p)
+        "F-Fuck, I love you Penny...":
+            "F-Fuck, I love you Penny... and I don't care that you're my cousin...",
+
+        # AU script9:12468 (p)
+        "You lift Penelope's leg up in the air, and slam back into her with brutal force, the thrumming sounds of your bodies colliding and liquids sloshing radiating through the room.":
+            "You lift your cousin's leg up in the air, and slam back into her with brutal force, the thrumming sounds of your bodies colliding and liquids sloshing radiating through the room.",
+
+        # AU script9:12553 (p)(d)
+        "Have you ever... fucked Dalia's ass?":
+            "Have you ever... fucked our cousin Dalia's ass?",
+
+        # AU script9:12589 (p)
+        "I wanna be your first.":
+            "I wanna be your first, cuz.",
+
+        # ========== END blindfold cabin scene ==========
+
         # AU script9:
-        
-        
+
+
     # -----------------------------------------
-        
-        
+    # Annie Stepsister Map
         # -----------------------------------------
         # Annie as stepsister, MC's dad remarried in UK
         # Combined with Nancy as aunt (mother's sister), Penelope and Dalia as cousins in annie_aunt_map
@@ -13160,7 +14369,12 @@ init python:
         # -----------------------------------------
         # Annie stepsister character notes
         # 
-        # - Annie: Only add references to not being blood-related during lines where they waver on sibling boundaries. Note: Never use "stepsibling" in their dialogue, especially when it gets emotional. Their relationship is 100% brother and sister, even if they're not biologically related. The "step-" doesn't matter to them in terms of boundaries. They should only call each other "big bro" and "little sis" in intimate lines as a little "younger sister" kick, and they usually just refer to each other by name. This path is the most emotionally incestuous, since they have a much more intimate relationship than anyone else.
+        # - Annie: Only add references to not being blood-related during lines where they waver on sibling boundaries. 
+        #       - Note: Never use "stepsibling" in their dialogue, especially when it gets emotional. 
+        #       - Their relationship is 100% brother and sister, even if they're not biologically related. 
+        #       - The "step-" doesn't matter to them in terms of boundaries. 
+        #       - They should only call each other "big bro" and "little sis" in intimate lines as a little "younger sister" kick, and they usually just refer to each other by name. 
+        #t      - his path is the most emotionally incestuous, since they have a much more intimate relationship than anyone else.
         # -----------------------------------------
         # ST = Annie stepsister lines in annie_aunt_map
         # script:0000 = file name:line number
@@ -13168,7 +14382,14 @@ init python:
         # (chat) = Phone chat line
         # (n) = Nancy line
         # These tags aren't based on who's speaking, but who the line and scene are about.
-        # l9/N = Editor's notes
+        #-----------------------------------------
+        # Code tags
+        # {specific} = use of Variant 2 to target specific lines
+        # {inject} = use of Variant 3 to inject new lines      
+        # -----------------------------------------
+        # l9/N = l9453394's notes
+        # LW/N = Lucifer_W's notes
+        # BA/N = BlueArrow's notes
         # -----------------------------------------
         
         
@@ -13762,27 +14983,66 @@ init python:
         
     # -----------------------------------------
     # v0.6 script6.rpy Annie stepsister lines
-        
-        # ST script6:
-        
-        
+
+        # ========== START movie night handjob/blowjob scene ==========
+
+        # ST script6:6512
+        "Annie's body language screams of ecstasy as you continue attacking her swollen clit.":
+            "Your little sister's body language screams of ecstasy as you continue attacking her swollen clit.",
+
+        # ST script6:6521
+        "But I have to resist the urge, for now. I know Annie better than herself, and I know she’s really close but not quite ready to go all the way.":
+            "But I have to resist the urge, for now. I know my little sister better than she knows herself, and I know she’s really close but not quite ready to go all the way.",
+
+        # ST script6:6697
+        "The sweet, innocent, little girl I've known for years...":
+            "The sweet, innocent, little sister I've known for years...",
+
+        # ========== END movie night handjob/blowjob scene ==========
+
     # -----------------------------------------
     # v0.7 script7.rpy Annie stepsister lines
-        
+
         # ST script7:
-        
-        
+
+        # ========== START harem thoughts ==========
+            # included in aunt map section for convenience since it's part of the same map
+        # ========== END harem thoughts ==========
+
     # -----------------------------------------
     # v0.8 script8.rpy Annie stepsister lines
-        
-        # ST script8:
-        
-        
+
+        # ST script8:7201
+        "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend for so many years.":
+            "It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with your own sister, after all these years.",
+
+        # ST script8:8166
+        "You said it yourself. It's just a meal with Annie, like it's been a hundred times over the past 10 years.":
+            "You said it yourself. It's just a meal with your sister, like it's been a hundred times over the past 10 years.",
+
+        # ========== START romantic dinner / first time ==========
+
+        # ST script8:9331
+        "After so many years thinking I’d never be more than friends with Annie... it's finally happening.":
+            "After so many years thinking I’d never be more than her brother... it's finally happening.",
+
+        # ST script8:9702
+        "You slowly start pushing yourself into Annie's petite body.":
+            "You slowly start pushing yourself into your sister's petite body.",
+
+        # ST script8:9720
+        "I'm finally taking Annie's virginity...":
+            "I'm finally taking my own sister's virginity...",
+
+        # ========== END romantic dinner / first time ==========
+
     # -----------------------------------------
     # v0.9 script9.rpy Annie stepsister lines
-        
-        # ST script9:
-        
+
+        # ST script9:3025
+        "Our friend disappeared.":
+            "My brother disappeared.",
+
     }
 
     _build_replace_map_cache = {}
@@ -13873,6 +15133,43 @@ init python:
         if not isinstance(value, str):
             return value
         return _in_strip_tag_re.sub("", value)
+
+    def _im_get_current_say_raw_text():
+        ast_mod = _in_ast_module
+        if ast_mod is None:
+            return None
+        try:
+            ctx = renpy.game.context()
+            node_id = getattr(ctx, "current", None)
+            if not node_id:
+                return None
+            node = renpy.game.script.lookup(node_id)
+        except Exception:
+            return None
+        SayCls = getattr(ast_mod, "Say", None)
+        if SayCls is None or not isinstance(node, SayCls):
+            return None
+        raw_what = getattr(node, "what", None)
+        if isinstance(raw_what, str):
+            return raw_what
+        return None
+
+    def _im_matches_active_say_text(text):
+        active = getattr(store, "_im_active_say_text", None)
+        if not isinstance(text, str) or not isinstance(active, str):
+            return False
+        try:
+            active_cmp = _im_strip_bonusmod_tags(_im_strip_multimod_tags(active, force=True))
+            text_cmp = _im_strip_bonusmod_tags(_im_strip_multimod_tags(text, force=True))
+        except Exception:
+            active_cmp = active
+            text_cmp = text
+        if _in_normalize_equiv_text(active_cmp) == _in_normalize_equiv_text(text_cmp):
+            return True
+        return (
+            _in_normalize_equiv_text(_in_strip_tags(active_cmp))
+            == _in_normalize_equiv_text(_in_strip_tags(text_cmp))
+        )
 
     # cache last speaker for "extend"
     try:
@@ -14023,6 +15320,142 @@ init python:
             or getattr(renpy.store, 'annie_aunt', False)
         )
 
+    # Pre-compiled Nancy substitution patterns — declared before _in_transform_text
+    # so they are available when the function runs.
+    _in_nancy_possessive_re = re.compile(r"\bNancy['']s\b")
+    _in_nancy_re = re.compile(r"\bNancy\b")
+
+    # Pre-normalized skip-list strings for the Nancy swap — computed once,
+    # not on every MC say line.
+    _in_nancy_skip1 = _in_normalize_equiv_text("No, I came with Nancy, my mother.")
+    _in_nancy_skip2 = _in_normalize_equiv_text("(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)")
+
+    # Static allow-list for say/menu filtering. Building this set once avoids
+    # allocating it on every dialogue/menu line.
+    _in_allowed_say_tags = frozenset((
+        'b', 'i', 'u', 's',
+        'color', 'alpha', 'font', 'cps',
+        'k', 'w', 'nw', 'p', 'br', 'rt', 'rb',
+        'a',
+        'size',
+    ))
+
+    # Active replacement index. The old implementation scanned the entire
+    # active replacement map for every say/menu string. This index turns the
+    # common path into a handful of dictionary lookups.
+    _in_replace_index_key = None
+    _in_replace_index_cache = None
+
+    def _in_add_replace_index_entry(bucket, key, entry):
+        if key is None:
+            return
+        bucket.setdefault(key, []).append(entry)
+
+    def _in_expand_candidate_placeholders(old, mc_display, lastname_display):
+        candidates = set([old])
+        if "[mc]" in old and mc_display != "[mc]":
+            candidates.add(old.replace("[mc]", mc_display))
+        if "[lastname]" in old and lastname_display != "[lastname]":
+            for base in list(candidates):
+                candidates.add(base.replace("[lastname]", lastname_display))
+        return candidates
+
+    def _in_get_replace_index(mapping, mc_display, lastname_display):
+        global _in_replace_index_key, _in_replace_index_cache
+        try:
+            flags_key = _build_replace_map_flags
+        except Exception:
+            flags_key = None
+        key = (flags_key, len(mapping), mc_display, lastname_display)
+        if key == _in_replace_index_key and _in_replace_index_cache is not None:
+            return _in_replace_index_cache
+
+        exact = {}
+        norm = {}
+        stripped = {}
+        multimod = {}
+        order = 0
+        for old, new in mapping.items():
+            if not old:
+                order += 1
+                continue
+
+            if isinstance(new, (list, tuple)) and new and isinstance(new[0], (list, tuple)):
+                alternatives = new
+            else:
+                alternatives = (new,)
+
+            for alt_index, alt in enumerate(alternatives):
+                extracted = _im_extract_entry(alt)
+                if extracted is None:
+                    continue
+                rep, spec, inj = extracted
+                entry = (order, alt_index, old, rep, spec, tuple(inj or ()))
+                for cand in _in_expand_candidate_placeholders(old, mc_display, lastname_display):
+                    if not cand:
+                        continue
+                    _in_add_replace_index_entry(exact, cand, entry)
+                    try:
+                        _in_add_replace_index_entry(norm, _in_normalize_equiv_text(cand), entry)
+                    except Exception:
+                        pass
+                    try:
+                        _in_add_replace_index_entry(stripped, _in_normalize_equiv_text(_in_strip_tags(cand)), entry)
+                    except Exception:
+                        pass
+                    try:
+                        _in_add_replace_index_entry(multimod, _in_normalize_equiv_text(_im_strip_multimod_tags(cand, force=True)), entry)
+                    except Exception:
+                        pass
+            order += 1
+
+        _in_replace_index_key = key
+        _in_replace_index_cache = (exact, norm, stripped, multimod)
+        return _in_replace_index_cache
+
+    def _in_find_indexed_replacement(t, t_norm, t_norm_stripped, t_norm_multimod, mc_display, lastname_display, min_order=0):
+        mapping = _build_replace_map()
+        if not mapping:
+            return None
+        exact, norm, stripped, multimod = _in_get_replace_index(mapping, mc_display, lastname_display)
+
+        found = []
+        seen = set()
+
+        def _collect(entries):
+            if not entries:
+                return
+            for entry in entries:
+                ident = (entry[0], entry[1])
+                if ident in seen:
+                    continue
+                seen.add(ident)
+                found.append(entry)
+
+        _collect(exact.get(t))
+        if t_norm is not None:
+            _collect(norm.get(t_norm))
+        if t_norm_stripped is not None:
+            _collect(stripped.get(t_norm_stripped))
+        if t_norm_multimod is not None:
+            _collect(multimod.get(t_norm_multimod))
+
+        if not found:
+            return None
+        found.sort(key=lambda entry: (entry[0], entry[1]))
+
+        for order, alt_index, old, rep, spec, inj in found:
+            if order < min_order:
+                continue
+            if not _im_script_spec_matches(spec):
+                continue
+            if "[mc]" in rep:
+                rep = rep.replace("[mc]", mc_display)
+            if "[lastname]" in rep:
+                rep = rep.replace("[lastname]", lastname_display)
+            return (rep, list(inj), order + 1)
+        return None
+
     def _in_transform_text(s: str) -> str:
         global _in_adad_sync_flags, _in_display_cache, _in_display_cache_keys
         t = s
@@ -14091,171 +15524,35 @@ init python:
             mc_display = _in_display_cache["mc"]
             lastname_display = _in_display_cache["lastname"]
 
-        # 3) apply mapping first (before Nancy->Mom)
+        # 3) apply mapping first (before Nancy->Mom). Use the cached
+        # replacement index so this does not scan every map entry per line.
         try:
-            mapping = _build_replace_map()
-            for old, new in mapping.items():
-                if not old:
-                    continue
-                # VARIANT 2b: list of (text, spec[, injections]) alternatives
-                # Detected when the first element is itself a tuple/list (not a string).
-                if isinstance(new, (list, tuple)) and new and isinstance(new[0], (list, tuple)):
-                    _im_matched = None
-                    for _im_alt in new:
-                        _im_e = _im_extract_entry(_im_alt)
-                        if _im_e is not None and _im_script_spec_matches(_im_e[1]):
-                            _im_matched = _im_e
-                            break
-                    if _im_matched is None:
-                        continue
-                    new, _im_spec, _im_inj = _im_matched
-                else:
-                    _im_e = _im_extract_entry(new)
-                    if _im_e is None:
-                        continue
-                    new, _im_spec, _im_inj = _im_e
-                    if not _im_script_spec_matches(_im_spec):
-                        continue
+            _im_next_order = 0
+            # The old code could cascade into later map entries after a match.
+            # Keep that behavior, but cap the loop to avoid accidental cycles.
+            for _im_replace_pass in range(8):
+                _im_repl = _in_find_indexed_replacement(
+                    t,
+                    t_norm,
+                    t_norm_stripped,
+                    t_norm_multimod,
+                    mc_display,
+                    lastname_display,
+                    _im_next_order,
+                )
+                if _im_repl is None:
+                    break
+                t, _im_inj, _im_next_order = _im_repl
+                t_norm = _in_normalize_equiv_text(t)
+                t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
+                try:
+                    t_norm_multimod = _in_normalize_equiv_text(
+                        _im_strip_multimod_tags(t, force=True)
+                    )
+                except Exception:
+                    t_norm_multimod = None
 
-                # Build candidate variants allowing either raw placeholders or resolved values
-                candidates = set([old])
-                if "[mc]" in old and mc_display != "[mc]":
-                    candidates.add(old.replace("[mc]", mc_display))
-                # Expand for [lastname] on top of current candidates
-                if "[lastname]" in old and lastname_display != "[lastname]":
-                    for base in list(candidates):
-                        candidates.add(base.replace("[lastname]", lastname_display))
-
-                replaced_once = False
-                for cand in candidates:
-                    if not cand:
-                        continue
-
-                    cand_match = (t == cand)
-                    if (not cand_match) and (t_norm is not None):
-                        cand_match = (_in_normalize_equiv_text(cand) == t_norm)
-                    if cand_match:
-                        rep = new
-                        if "[mc]" in rep:
-                            rep = rep.replace("[mc]", mc_display)
-                        if "[lastname]" in rep:
-                            rep = rep.replace("[lastname]", lastname_display)
-                        t = rep
-                        t_norm = _in_normalize_equiv_text(t)
-                        t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                        try:
-                            t_norm_multimod = _in_normalize_equiv_text(
-                                _im_strip_multimod_tags(t, force=True)
-                            )
-                        except Exception:
-                            t_norm_multimod = None
-                        replaced_once = True
-                        break
-
-                # regex fallback allowing either [mc] or resolved name
-                if (not replaced_once) and ("[mc]" in old) and (mc_display != "[mc]"):
-                    try:
-                        pattern = "^" + re.escape(old).replace(
-                            re.escape("[mc]"),
-                            r"(?:\[mc\]|%s)" % re.escape(mc_display)
-                        ) + "$"
-                        rep = new.replace("[mc]", mc_display)
-                        if "[lastname]" in rep:
-                            rep = rep.replace("[lastname]", lastname_display)
-                        if re.fullmatch(pattern, t):
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                    except Exception:
-                        pass
-                # regex fallback for [lastname]
-                if (not replaced_once) and ("[lastname]" in old) and (lastname_display != "[lastname]"):
-                    try:
-                        pattern = "^" + re.escape(old).replace(
-                            re.escape("[lastname]"),
-                            r"(?:\[lastname\]|%s)" % re.escape(lastname_display)
-                        ) + "$"
-                        rep = new
-                        if "[mc]" in rep:
-                            rep = rep.replace("[mc]", mc_display)
-                        rep = rep.replace("[lastname]", lastname_display)
-                        if re.fullmatch(pattern, t):
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                    except Exception:
-                        pass
-                # final fallback: compare strings with tags stripped (handles cases
-                # where Ren'Py injects extra formatting tags before our replacer)
-                if (not replaced_once) and (t_norm_stripped is not None):
-                    for cand2 in candidates:
-                        if not cand2:
-                            continue
-                        try:
-                            cand_stripped = _in_normalize_equiv_text(_in_strip_tags(cand2))
-                        except Exception:
-                            continue
-                        if cand_stripped == t_norm_stripped:
-                            rep = new
-                            if "[mc]" in rep:
-                                rep = rep.replace("[mc]", mc_display)
-                            if "[lastname]" in rep:
-                                rep = rep.replace("[lastname]", lastname_display)
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                            break
-                # compare strings with Multi-Mod tags stripped so replacements still
-                # match when point markers like [annie_pts] are present.
-                if (not replaced_once) and (t_norm_multimod is not None):
-                    for cand2 in candidates:
-                        if not cand2:
-                            continue
-                        try:
-                            cand_mm = _in_normalize_equiv_text(
-                                _im_strip_multimod_tags(cand2, force=True)
-                            )
-                        except Exception:
-                            continue
-                        if cand_mm == t_norm_multimod:
-                            rep = new
-                            if "[mc]" in rep:
-                                rep = rep.replace("[mc]", mc_display)
-                            if "[lastname]" in rep:
-                                rep = rep.replace("[lastname]", lastname_display)
-                            t = rep
-                            t_norm = _in_normalize_equiv_text(t)
-                            t_norm_stripped = _in_normalize_equiv_text(_in_strip_tags(t))
-                            try:
-                                t_norm_multimod = _in_normalize_equiv_text(
-                                    _im_strip_multimod_tags(t, force=True)
-                                )
-                            except Exception:
-                                t_norm_multimod = None
-                            replaced_once = True
-                            break
-                if replaced_once and _im_inj:
+                if _im_inj:
                     # Only queue when we are inside a real say __call__.
                     # replace_text also runs on History/log re-renders; the
                     # _im_in_say_call flag (set in _im_char_call_wrapper only
@@ -14272,25 +15569,23 @@ init python:
         except Exception:
             pass
 
-        # 4) speaker-aware "Nancy" -> "Mom" only for MC lines
-        #    Some lines intentionally keep "Nancy" for clarity.
+        # 4) speaker-aware "Nancy" -> "Mom" only for MC lines.
+        #    Avoid the AST/speaker lookup unless the active text can actually match.
         try:
-            skip_nancy_swap = False
-            try:
-                if t_norm == _in_normalize_equiv_text("No, I came with Nancy, my mother."):
-                    skip_nancy_swap = True
-                if t_norm == _in_normalize_equiv_text("(Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)"):
-                    skip_nancy_swap = True
-            except Exception:
-                pass
-            who_obj, who_name = _in_current_speaker()
-            if (
-                _is_mc_like(who_obj, who_name)
-                and not skip_nancy_swap
-                and getattr(renpy.store, 'annie_mom', False)
-            ):
-                t = re.sub(r"\bNancy['’]s\b", "Mom's", t)  # possessive first
-                t = re.sub(r"\bNancy\b", "Mom", t)
+            if getattr(renpy.store, 'annie_mom', False) and "Nancy" in t:
+                skip_nancy_swap = False
+                try:
+                    if t_norm == _in_nancy_skip1:
+                        skip_nancy_swap = True
+                    elif t_norm == _in_nancy_skip2:
+                        skip_nancy_swap = True
+                except Exception:
+                    pass
+                if not skip_nancy_swap:
+                    who_obj, who_name = _in_current_speaker()
+                    if _is_mc_like(who_obj, who_name):
+                        t = _in_nancy_possessive_re.sub("Mom's", t)  # possessive first
+                        t = _in_nancy_re.sub("Mom", t)
         except Exception:
             pass
         t = _im_strip_multimod_tags(t)
@@ -14443,13 +15738,7 @@ init 991 python:
             Some builds escape unapproved tags via a filter. This wrapper
             guarantees that the 'size' tag remains active.
             """
-            allowed = {
-                'b', 'i', 'u', 's',
-                'color', 'alpha', 'font', 'cps',
-                'k', 'w', 'nw', 'p', 'br', 'rt', 'rb',
-                'a',
-                'size',  # crucial for this mod
-            }
+            allowed = _in_allowed_say_tags
             try:
                 sanitized = _im_strip_multimod_tags(text)
                 sanitized = _im_strip_bonusmod_tags(sanitized)
@@ -14515,7 +15804,7 @@ label annie_incest_optin:
             $ im_incest_mode = "incest"
         "I only want Nancy as Mom":
             $ im_incest_mode = "mom"
-        "I only want Annie as sister (coming soon)":
+        "I only want Annie as sister":
             $ im_incest_mode = "sister"
         "Nancy as Mom and Annie as half-sister":
             $ im_incest_mode = "half"
