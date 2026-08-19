@@ -14455,17 +14455,37 @@ init 991 python:
                 sanitized = _im_strip_bonusmod_tags(sanitized)
             except Exception:
                 sanitized = text
+            # Ren'Py also invokes this filter while predicting future dialogue.
+            # Translator3000 performs synchronous web requests, so translating
+            # predicted (invisible) lines stalls rendering for every request.
+            # Keep prediction cheap; the line is transformed and translated
+            # normally when it is actually executed.
+            try:
+                if renpy.predicting():
+                    return renpy.filter_text_tags(sanitized, allow=allowed)
+            except Exception:
+                pass
             try:
                 transformed = _in_transform_text(sanitized)
             except Exception:
                 transformed = sanitized
+            mod_transformed = transformed
+            # Preserve a previously installed dialogue filter (for example
+            # Translator3000).  Eternum-IC must transform the original English
+            # text first so its exact-string mappings can match; the resulting
+            # text can then be translated by the earlier filter.
+            try:
+                if callable(_in_prev_say_menu_filter):
+                    transformed = _in_prev_say_menu_filter(transformed)
+            except Exception:
+                pass
             # Dev: track whether this dialogue line was changed by the mod
             try:
                 if getattr(persistent, "im_dev_text_indicator", False):
                     prev = getattr(store, "_im_dev_last_filter_input", None)
                     if sanitized != prev:
                         store._im_dev_last_filter_input = sanitized
-                        store._im_dev_text_modified = (transformed != sanitized)
+                        store._im_dev_text_modified = (mod_transformed != sanitized)
             except Exception:
                 pass
             # Dev: capture current AST node location for the specifier overlay
