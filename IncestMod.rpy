@@ -15413,7 +15413,7 @@ init python:
         _in_replace_index_cache = (exact, norm, stripped, multimod)
         return _in_replace_index_cache
 
-    def _in_find_indexed_replacement(t, t_norm, t_norm_stripped, t_norm_multimod, mc_display, lastname_display, min_order=0):
+    def _in_find_indexed_replacement(t, t_norm, t_norm_stripped, t_norm_multimod, mc_display, lastname_display, min_order=0, resolve_names=True):
         mapping = _build_replace_map()
         if not mapping:
             return None
@@ -15449,14 +15449,19 @@ init python:
                 continue
             if not _im_script_spec_matches(spec):
                 continue
-            if "[mc]" in rep:
-                rep = rep.replace("[mc]", mc_display)
-            if "[lastname]" in rep:
-                rep = rep.replace("[lastname]", lastname_display)
+            # Only resolve [mc]/[lastname] when the text is already past
+            # Ren'Py's substitution stage. In the say/menu filter the
+            # placeholders must survive: Ren'Py interpolates them later, and
+            # keeping them makes the resulting string a stable translation key.
+            if resolve_names:
+                if "[mc]" in rep:
+                    rep = rep.replace("[mc]", mc_display)
+                if "[lastname]" in rep:
+                    rep = rep.replace("[lastname]", lastname_display)
             return (rep, list(inj), order + 1)
         return None
 
-    def _in_transform_text(s: str) -> str:
+    def _in_transform_text(s: str, resolve_names: bool = True) -> str:
         global _in_adad_sync_flags, _in_display_cache, _in_display_cache_keys
         t = s
 
@@ -15539,6 +15544,7 @@ init python:
                     mc_display,
                     lastname_display,
                     _im_next_order,
+                    resolve_names,
                 )
                 if _im_repl is None:
                     break
@@ -15687,7 +15693,7 @@ init python:
             override_target = (None, None)
         _in_chat_speaker_override = override_target
         try:
-            out = _in_transform_text(sanitized)
+            out = _in_transform_text(sanitized, resolve_names=False)
         finally:
             _in_chat_speaker_override = prev_override
         if len(cache) > 5000:
@@ -15745,26 +15751,53 @@ init 991 python:
             except Exception:
                 sanitized = text
             # Ren'Py also invokes this filter while predicting future dialogue.
-            # Translator3000 performs synchronous web requests, so translating
-            # predicted (invisible) lines stalls rendering for every request.
-            # Keep prediction cheap; the line is transformed and translated
-            # normally when it is actually executed.
+            # Remember that state so local table translation can still happen,
+            # while potentially expensive third-party filters are skipped.
+            predicting = False
             try:
-                if renpy.predicting():
-                    return renpy.filter_text_tags(sanitized, allow=allowed)
+                predicting = bool(renpy.predicting())
             except Exception:
                 pass
             try:
-                transformed = _in_transform_text(sanitized)
+                transformed = _in_transform_text(sanitized, resolve_names=False)
             except Exception:
                 transformed = sanitized
             mod_transformed = transformed
+            # Translate immediately after the IC transformation. Multi-Mod
+            # decorates menu choices with numeric prefixes and can substitute
+            # [mc]/[lastname] before Character.__call__ reaches Ren'Py's normal
+            # late string lookup. Waiting for that lookup therefore produces
+            # keys such as "1. Full Incest..." or player-name-specific text,
+            # neither of which exists in the translation table. Returning the
+            # already translated string keeps choices and placeholder-bearing
+            # dialogue stable; the later lookup simply leaves German intact.
+            try:
+                _im_before_tl = transformed
+                transformed = renpy.translation.translate_string(_im_before_tl)
+
+                # Multi-Mod can number a menu label before this filter sees
+                # it ("1. Choice"). Its German pack contains numbered forms
+                # for the base game, but naturally none for IC-Mod's own menu.
+                # If the complete key misses, translate the unnumbered body
+                # and restore the decoration.
+                if transformed == _im_before_tl:
+                    _im_numbered = re.match(r"^(\s*\d+\.\s+)(.*)$", _im_before_tl, re.S)
+                    if _im_numbered:
+                        _im_choice_prefix = _im_numbered.group(1)
+                        _im_choice_body = _im_numbered.group(2)
+                        _im_choice_tl = renpy.translation.translate_string(_im_choice_body)
+
+                        if _im_choice_tl != _im_choice_body:
+                            transformed = _im_choice_prefix + _im_choice_tl
+            except Exception:
+                pass
             # Preserve a previously installed dialogue filter (for example
             # Translator3000).  Eternum-IC must transform the original English
-            # text first so its exact-string mappings can match; the resulting
-            # text can then be translated by the earlier filter.
+            # text first so its exact-string mappings can match. During
+            # prediction, skip the previous filter because Translator3000 can
+            # perform synchronous web requests for invisible future lines.
             try:
-                if callable(_in_prev_say_menu_filter):
+                if (not predicting) and callable(_in_prev_say_menu_filter):
                     transformed = _in_prev_say_menu_filter(transformed)
             except Exception:
                 pass
@@ -15808,7 +15841,7 @@ label annie_incest_optin:
             $ im_incest_mode = "sister"
         "Nancy as Mom and Annie as half-sister":
             $ im_incest_mode = "half"
-        "Nancy as aunt and Annie as stepsister (coming soon)":
+        "Nancy as aunt and Annie as stepsister":
             $ im_incest_mode = "aunt"
         "Disabled":
             $ im_incest_mode = "off"

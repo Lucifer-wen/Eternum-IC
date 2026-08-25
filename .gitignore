@@ -7,3 +7,10 @@ InfoNames.rpyc
 Eternum-IC.zip
 A_icmod_path.rpyc
 PERFORMANCE.md
+tl/German/
+
+# Translation: dev-only tool and build byproducts (not needed at runtime)
+tl/im_tl_selftest.rpy
+tl/*.rpyc
+tl/*/selftest_out.json
+tl/.vs/
