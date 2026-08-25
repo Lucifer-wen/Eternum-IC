@@ -5,8 +5,8 @@
 #     <mod>/tl/<language>/dialogue.json
 #
 # Run it from the console (Shift+O):
-#     im_tl_extract("german")                     # mod strings only
-#     im_tl_extract("german", include_base=True)  # + the whole base game
+#     im_tl_extract("<language>")                     # mod strings only
+#     im_tl_extract("<language>", include_base=True)  # + the whole base game
 #
 # The extractor deliberately produces the string AS THE PLAYER SEES IT, i.e.
 # after the mod's replacement map, after multi-mod tag stripping and after
@@ -49,8 +49,9 @@ init -900 python:
     def _im_tlx_is_translation_file(filename):
         """
         A node from game/tl/<language>/ is somebody else's translation, not a
-        source string. Counting those as base-game lines would let a German
-        line shadow an identical mod output and drop it from the template.
+        source string. Counting those as base-game lines would let a
+        translated line shadow an identical mod output and drop it from the
+        template.
         """
         if not filename:
             return False

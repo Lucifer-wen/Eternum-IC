@@ -14,11 +14,11 @@
 #
 # Why string translations and not `translate <lang> <id>:` blocks?
 #   Translate blocks swap the say text at AST level, i.e. BEFORE
-#   config.say_menu_text_filter runs -- the mod would then try to match German
-#   text against its English map and silently replace nothing. String
+#   config.say_menu_text_filter runs -- the mod would then try to match
+#   translated text against its English map and silently replace nothing. String
 #   translations are applied inside renpy.substitute(), which runs AFTER the
 #   filter. Order becomes:
-#       English -> mod makes incest-English -> string table makes German
+#       English -> mod makes incest-English -> string table translates
 ################################################################################
 
 init -900 python:
@@ -63,7 +63,7 @@ init -900 python:
             return None
 
     def _im_tl_languages():
-        """Language folders shipped with the mod, e.g. ['german']."""
+        """Names of the language folders shipped with the mod."""
         base = _im_tl_dir()
         if base is None:
             return []

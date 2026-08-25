@@ -12,7 +12,7 @@ Eternum-IC/tl/
                             `_im_tlx_final_form()` to the converter at runtime
     im_tl_selftest.rpy      Self-test — `Eternum.exe . imtl` (dev tool)
     im_tl_txt_merge.py      Writes a filled-in UNTRANSLATED.txt back into the JSON
-    German/
+    <language>/
         dialogue.json       Mod dialogue
         ui.json             Mod menus
         UNTRANSLATED.txt    What is still open, ready to be filled in
@@ -20,9 +20,9 @@ Eternum-IC/tl/
 
 ## The language folder ships separately
 
-`German/` is not part of the repository — `.gitignore` excludes it, and the
-translation is delivered as its own download. A fresh clone therefore has the
-loader but no data.
+Language folders are not part of the repository — `.gitignore` excludes
+`tl/German/`, and the translation is delivered as its own download. A fresh
+clone therefore has the loader but no data.
 
 That case is silent by design: `_im_tl_languages()` finds no language folder,
 so `_im_tl_load_all()` returns an empty stats dict and the startup block in
@@ -30,7 +30,7 @@ so `_im_tl_load_all()` returns an empty stats dict and the startup block in
 stays English. It is not a bug, and it is worth knowing before you go hunting
 for one.
 
-To get the translation back, drop the `German/` folder next to the `.rpy` files
+To get a translation back, drop its `<language>/` folder next to the `.rpy` files
 and restart. `log.txt` then carries a line like
 
 ```
@@ -49,12 +49,12 @@ the table itself and resolves conflicts rather than aborting.
 ## Why not `translate <language> <id>:`?
 
 Ordering. Translate blocks swap the text at AST level, i.e. **before**
-`config.say_menu_text_filter` runs. The mod would then check German text
+`config.say_menu_text_filter` runs. The mod would then check translated text
 against its English map and replace nothing. String translations hook into
 `renpy.substitute()`, i.e. **afterwards**:
 
 ```
-English  ->  mod replaces (incest English)  ->  string table  ->  German
+English  ->  mod replaces (incest English)  ->  string table  ->  translated
 ```
 
 That is why the keys in the JSON files are the English lines **as already
@@ -68,9 +68,9 @@ replaced by the mod**, not the original lines.
    separate string table per spelling.
 2. Generate the template — open the in-game console (`Shift+O`):
    ```python
-   im_tl_extract("french")
+   im_tl_extract("<language>")
    ```
-   This writes `french/dialogue.json` with all mod strings and empty values.
+   This writes `<language>/dialogue.json` with all mod strings and empty values.
 3. Fill in the values. An empty value means "not translated yet"; the English
    line stays as it is.
 4. Restart the game (or run `_im_tl_reload()` in the console).
@@ -80,7 +80,7 @@ lines — so after a game or mod update, just run it once more.
 
 ## Filling in open lines
 
-`German/UNTRANSLATED.txt` lists everything that has no translation yet, grouped
+`<language>/UNTRANSLATED.txt` lists everything that has no translation yet, grouped
 by reason. Format:
 
 ```
@@ -94,7 +94,7 @@ Then:
 
 ```
 cd Eternum-IC/tl
-python im_tl_txt_merge.py German/UNTRANSLATED.txt
+python im_tl_txt_merge.py <language>/UNTRANSLATED.txt
 ```
 
 The script matches on the English text, not on the number — so the file stays
@@ -137,16 +137,16 @@ If you want to build a standalone language pack that also covers the original
 text:
 
 ```python
-im_tl_extract("German", include_base=True)   # -> German/base_dialogue.json
+im_tl_extract("<language>", include_base=True)   # -> <language>/base_dialogue.json
 ```
 
 For the base game's UI, additionally use Ren'Py's own generator:
 
 ```
-Eternum.exe . translate German --strings-only
+Eternum.exe . translate <language> --strings-only
 ```
 
-It writes to `game/tl/German/` and works with `old`/`new` pairs, which fit this
+It writes to `game/tl/<language>/` and works with `old`/`new` pairs, which fit this
 system.
 
 ## Self-test
@@ -157,14 +157,14 @@ Eternum.exe . imtl
 
 Runs without a window and checks: loader registration, lookup via
 `translate_string()`, that the mod replacement leaves `[mc]` intact, and the
-complete chain English → mod → German.
+complete chain English → mod → translation.
 
 ## Third-party translations using translate blocks
 
 `im_tl_convert.rpy` solves the underlying problem that a regular Ren'Py
 translation ships its dialogue as `translate <language> <id>:` blocks. Those
 apply at AST level, i.e. **before** `config.say_menu_text_filter` — the mod
-would receive German text and would no longer replace anything.
+would receive translated text and would no longer replace anything.
 
 On a language switch, the converter rewrites every block into a string pair
 `English original -> translation` and removes the block. `lookup_translate()`
@@ -172,7 +172,7 @@ then falls back to the English original, the filter sees English again, and the
 translation applies afterwards:
 
 ```
-English  ->  mod replaces  ->  string table  ->  German
+English  ->  mod replaces  ->  string table  ->  translated
 ```
 
 `game/tl/<language>/` is **not touched** in the process — the rewrite happens
@@ -215,6 +215,6 @@ dialogue whenever a third-party translation is active.
 ### What still needs doing afterwards
 
 Lines the mod **replaces** are no longer covered by the base translation — their
-text is a different one, after all. That is exactly what `German/dialogue.json`
+text is a different one, after all. That is exactly what `<language>/dialogue.json`
 is for: the 2126 strings from the extractor have to be translated, otherwise the
-lines changed by the mod show up in English while everything else is German.
+lines changed by the mod show up in English while everything else is translated.
