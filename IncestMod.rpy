@@ -15775,6 +15775,59 @@ init 991 python:
                 _im_before_tl = transformed
                 transformed = renpy.translation.translate_string(_im_before_tl)
 
+                # IC-Mod also changes relationship names inside Multi-Mod's
+                # point annotations, e.g. "(Nancy +1)" becomes "(Mom +1)".
+                # That makes Multi-Mod's otherwise valid complete translation
+                # key miss. Look up the original annotation and then restore
+                # the relationship name in the translated result.
+                if transformed == _im_before_tl:
+                    _im_points_alias = re.sub(
+                        r"(\(\s*)Mom(?=\s*[+-]\s*\d+\s*\))",
+                        r"\1Nancy",
+                        _im_before_tl,
+                    )
+                    if _im_points_alias != _im_before_tl:
+                        _im_points_tl = renpy.translation.translate_string(_im_points_alias)
+                        if _im_points_tl != _im_points_alias:
+                            transformed = re.sub(
+                                r"(\(\s*)Nancy(?=\s*[+-]\s*\d+\s*\))",
+                                r"\1Mom",
+                                _im_points_tl,
+                            )
+
+                # Some point-decorated choices only have an unadorned base
+                # translation. Translate that semantic core and attach the
+                # colour/point annotation again without modifying it.
+                if transformed == _im_before_tl:
+                    _im_points = re.match(
+                        r"^(.*?)(\s*(?:\[[^\]\r\n]+\])+\([^()\r\n]*[+-]\s*\d+[^()\r\n]*\))(\s*)$",
+                        _im_before_tl,
+                        re.S,
+                    )
+                    if _im_points:
+                        _im_points_core = _im_points.group(1)
+                        _im_points_suffix = _im_points.group(2) + _im_points.group(3)
+                        _im_points_core_tl = renpy.translation.translate_string(_im_points_core)
+
+                        # The number is screen decoration, not part of the
+                        # actual choice. Strip it if the core lookup still
+                        # misses, then restore it after translation.
+                        if _im_points_core_tl == _im_points_core:
+                            _im_points_numbered = re.match(
+                                r"^(\s*\d+\.\s+)(.*)$",
+                                _im_points_core,
+                                re.S,
+                            )
+                            if _im_points_numbered:
+                                _im_points_prefix = _im_points_numbered.group(1)
+                                _im_points_body = _im_points_numbered.group(2)
+                                _im_points_body_tl = renpy.translation.translate_string(_im_points_body)
+                                if _im_points_body_tl != _im_points_body:
+                                    _im_points_core_tl = _im_points_prefix + _im_points_body_tl
+
+                        if _im_points_core_tl != _im_points_core:
+                            transformed = _im_points_core_tl + _im_points_suffix
+
                 # Multi-Mod can number a menu label before this filter sees
                 # it ("1. Choice"). Its German pack contains numbered forms
                 # for the base game, but naturally none for IC-Mod's own menu.
