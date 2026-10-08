@@ -1,0 +1,10 @@
+{
+  "_comment": "Mod UI. 'Disabled' is deliberately included to show the conflict rule: if a base-game translation already owns that string, the loader keeps the base version and skips this one.",
+  "Which Incest Mode would you like to use? (You can always toggle it in the Preferences menu.)": "Welchen Incest-Modus möchtest du verwenden? (Du kannst ihn jederzeit im Einstellungsmenü umschalten.)",
+  "Full Incest (Nancy as Mom and Annie as sister)": "Voller Incest (Nancy als Mom und Annie als Schwester)",
+  "I only want Nancy as Mom": "Ich möchte nur Nancy als Mom",
+  "I only want Annie as sister": "Ich möchte nur Annie als Schwester",
+  "Nancy as Mom and Annie as half-sister": "Nancy als Mom und Annie als Halbschwester",
+  "Disabled": "Deaktiviert",
+  "Nancy as aunt and Annie as stepsister": "Nancy als Tante und Annie als Stiefschwester (kommt bald)"
+}

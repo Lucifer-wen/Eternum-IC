@@ -29,7 +29,6 @@ default _im_post_say_pending = []
 default _im_injection_queued = False
 default _im_executing_injection = False
 default _im_in_say_call = False
-default _im_active_say_text = None
 # default persistent.im_cousin_override = None
 
 # -----------------------------------------
@@ -277,7 +276,6 @@ init python:
     def _im_extract_entry(value):
         # Normalizes all map-value formats to (text, script_spec, injections).
         # "text"                       -> plain string (unchanged)
-        # ("text", {"after": "prev"})  -> with previous-line (context) filter
         # ("text", "script:2452")      -> with script-line filter
         # ("text", 2452)               -> line-number only filter
         # ["text", 'mc "..."', "show"] -> with post-line injections
@@ -295,10 +293,6 @@ init python:
                 if isinstance(item, bool):
                     continue
                 if isinstance(item, int):
-                    if script_spec is None:
-                        script_spec = item
-                elif hasattr(item, "keys"):
-                    # Context specifier, e.g. {"after": "previous line"}
                     if script_spec is None:
                         script_spec = item
                 elif isinstance(item, str):
@@ -322,61 +316,14 @@ init python:
         except Exception:
             return (None, None)
 
-    def _im_context_norm(text):
-        try:
-            text = _im_strip_bonusmod_tags(_im_strip_multimod_tags(text, force=True))
-        except Exception:
-            pass
-        return _in_normalize_equiv_text(_in_strip_tags(text))
-
-    def _im_get_prev_say_text():
-        """
-        Raw text of the dialogue line that precedes the current one in the
-        script file (non-dialogue statements in between are skipped), or None.
-        Unlike line numbers this is the same in the base game, Bonus Mod and
-        Multi-Mod. The lookup table is built once per session on first use.
-        """
-        try:
-            SayCls = renpy.ast.Say
-            table = _im_rt.prev_say
-            if table is None:
-                by_file = {}
-                for n in renpy.game.script.namemap.values():
-                    if isinstance(n, SayCls):
-                        by_file.setdefault(n.filename, []).append(n)
-                table = {}
-                for nodes in by_file.values():
-                    nodes.sort(key=lambda n: n.linenumber)
-                    prev = None
-                    for n in nodes:
-                        table[n.name] = prev
-                        prev = n.what
-                _im_rt.prev_say = table
-            return table.get(renpy.game.context().current)
-        except Exception:
-            return None
-
     def _im_script_spec_matches(spec):
         # Returns True if the current AST node matches the script specifier.
-        # None               -> always matches
-        # int                -> compare linenumber only
-        # "script:2452"      -> compare filename short-name + linenumber
-        # "2452"             -> compare linenumber only (string form)
-        # {"after": "text"}  -> previous dialogue line in the file is "text"
-        #                       (a list of texts matches any of them)
+        # None           -> always matches
+        # int            -> compare linenumber only
+        # "script:2452"  -> compare filename short-name + linenumber
+        # "2452"         -> compare linenumber only (string form)
         if spec is None:
             return True
-        if hasattr(spec, "keys"):
-            after = spec.get("after")
-            if after is None:
-                return False
-            prev = _im_get_prev_say_text()
-            if not isinstance(prev, str):
-                return False
-            if isinstance(after, str):
-                after = (after,)
-            prev = _im_context_norm(prev)
-            return any(isinstance(a, str) and _im_context_norm(a) == prev for a in after)
         short, line = _im_get_current_node_loc()
         if isinstance(spec, int):
             return line == spec
@@ -491,10 +438,6 @@ init python:
     def _im_reset_runtime_state(clear_pending=False):
         try:
             store._im_in_say_call = False
-        except Exception:
-            pass
-        try:
-            store._im_active_say_text = None
         except Exception:
             pass
         try:
@@ -640,14 +583,6 @@ init python:
         if not is_injection:
             try:
                 store._im_in_say_call = True
-            except Exception:
-                pass
-            # Remember the raw text of the say node being executed. Ren'Py's
-            # prediction pushes the NEXT lines through the say/menu filter
-            # while this say is still on screen; replace_text uses this to
-            # tell the active line apart from predicted ones.
-            try:
-                store._im_active_say_text = _im_get_current_say_raw_text()
             except Exception:
                 pass
         try:
@@ -869,21 +804,8 @@ init python early:
 
     if not hasattr(store, "_im_redirecting"):
         store._im_redirecting = False
-
-    # Session-only runtime state (applied mode flags, replacement caches).
-    # This must NOT live in plain store variables: anything rebound in the
-    # store after init is written into every save and restored on load, so a
-    # save would bring back stale maps from an older mod version and hide
-    # mode changes from the flag check below.
-    import types as _im_types
-    _im_rt = _im_types.SimpleNamespace(
-        applied_flags=None,
-        map_flags=None,
-        map_cache=None,
-        index_key=None,
-        index_cache=None,
-        prev_say=None,
-    )
+    if not hasattr(store, "_im_prev_flags"):
+        store._im_prev_flags = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half_sister', False)), bool(getattr(store, 'annie_aunt', False)))
 
     def _im_collect_maps():
         def _map(name):
@@ -959,9 +881,9 @@ init python early:
 
     def _im_refresh_if_flags_changed():
         curr = (bool(getattr(store, 'annie_incest', False)), bool(getattr(store, 'annie_sister', False)), bool(getattr(store, 'annie_mom', False)), bool(getattr(store, 'annie_half_sister', False)), bool(getattr(store, 'annie_aunt', False)))
-        if curr == _im_rt.applied_flags:
+        if curr == getattr(store, '_im_prev_flags', None):
             return False
-        _im_rt.applied_flags = curr
+        store._im_prev_flags = curr
         return True
 
     def _im_set_override(src, dst):
@@ -1199,11 +1121,12 @@ init python early:
         globals()["im_apply_label_map"] = _im_apply_map_to_config
 
     def _im_set_mode(mode):
+        global _in_replace_index_key, _in_replace_index_cache
         store.im_incest_mode = mode
         _im_apply_incest_mode()
         _im_apply_map_to_config()
-        _im_rt.index_key = None
-        _im_rt.index_cache = None
+        _in_replace_index_key = None
+        _in_replace_index_cache = None
         in_apply_text_map()
 
     # export helpers to store API (without leaking renpy into store)
@@ -1248,25 +1171,6 @@ init python early:
     #       ("New text A", "script:867"),
     #       ("New text B", "script:1234"),
     #   ],
-    #
-    #   VARIANT 2c - Replace text only after a specific previous line
-    #   Instead of a line number, name the dialogue line that comes right
-    #   before it in the script file (statements like show/pause in between
-    #   do not count). This is the same in the base game, Bonus Mod and
-    #   Multi-Mod, so ONE entry covers all three and survives game updates
-    #   that shift line numbers. Works with injections (Variant 3) too.
-    #   Write the previous line as it is in the ORIGINAL script, not as the
-    #   mod changes it. A list of texts matches any of them.
-    #
-    #   "Original text":
-    #       ("New text", {"after": "Previous original line"}),
-    #
-    #   "Original text":
-    #       ("New text", {"after": "Previous original line"}, [
-    #           'mc "injected line"'
-    #       ]),
-    #
-    #   Run tools/im_map_check.py to verify that every entry still matches.
     #
     # ---------------------------------------------------------
     #
@@ -1573,9 +1477,6 @@ init python:
         # BM script:2212
         "N-Nancy? W-Who is this kid?":
             "M-Mom? W-Who is this kid?",
-        
-        "Do you know where your Mom is?":
-            ("Do you know where mom is?", "script:2234"),
 
         # BM script:2365
         "N-Nancy! You almost gave me a heart attack!":
@@ -15144,10 +15045,14 @@ init python:
 
     }
 
+    _build_replace_map_cache = {}
+    _build_replace_map_flags = None
+
     def _build_replace_map():
         """
         Build the active replacement map from flags, cached until flags change.
         """
+        global _build_replace_map_cache, _build_replace_map_flags
         incest_enabled = bool(getattr(renpy.store, 'annie_incest', False))
         sister_enabled = bool(getattr(renpy.store, 'annie_sister', False))
         mom_enabled    = bool(getattr(renpy.store, 'annie_mom', False))
@@ -15155,8 +15060,8 @@ init python:
         aunt_enabled   = bool(getattr(renpy.store, 'annie_aunt', False))
         current_flags  = (incest_enabled, sister_enabled, mom_enabled, half_enabled, aunt_enabled)
 
-        if current_flags == _im_rt.map_flags and _im_rt.map_cache is not None:
-            return _im_rt.map_cache
+        if current_flags == _build_replace_map_flags and _build_replace_map_cache:
+            return _build_replace_map_cache
 
         mapping = {}
 
@@ -15182,8 +15087,8 @@ init python:
         # if cousin_override:
         #     mapping.update(cousin_map)  # highest priority overrides
 
-        _im_rt.map_flags = current_flags
-        _im_rt.map_cache = mapping
+        _build_replace_map_flags = current_flags
+        _build_replace_map_cache = mapping
         return mapping
 
 # -----------------------------------------
@@ -15437,8 +15342,9 @@ init python:
 
     # Active replacement index. The old implementation scanned the entire
     # active replacement map for every say/menu string. This index turns the
-    # common path into a handful of dictionary lookups. The cache lives in
-    # _im_rt (not the store) so it is never written into saves.
+    # common path into a handful of dictionary lookups.
+    _in_replace_index_key = None
+    _in_replace_index_cache = None
 
     def _in_add_replace_index_entry(bucket, key, entry):
         if key is None:
@@ -15455,9 +15361,14 @@ init python:
         return candidates
 
     def _in_get_replace_index(mapping, mc_display, lastname_display):
-        key = (_im_rt.map_flags, len(mapping), mc_display, lastname_display)
-        if key == _im_rt.index_key and _im_rt.index_cache is not None:
-            return _im_rt.index_cache
+        global _in_replace_index_key, _in_replace_index_cache
+        try:
+            flags_key = _build_replace_map_flags
+        except Exception:
+            flags_key = None
+        key = (flags_key, len(mapping), mc_display, lastname_display)
+        if key == _in_replace_index_key and _in_replace_index_cache is not None:
+            return _in_replace_index_cache
 
         exact = {}
         norm = {}
@@ -15498,11 +15409,11 @@ init python:
                         pass
             order += 1
 
-        _im_rt.index_key = key
-        _im_rt.index_cache = (exact, norm, stripped, multimod)
-        return _im_rt.index_cache
+        _in_replace_index_key = key
+        _in_replace_index_cache = (exact, norm, stripped, multimod)
+        return _in_replace_index_cache
 
-    def _in_find_indexed_replacement(t, t_norm, t_norm_stripped, t_norm_multimod, mc_display, lastname_display, min_order=0, resolve_names=True):
+    def _in_find_indexed_replacement(t, t_norm, t_norm_stripped, t_norm_multimod, mc_display, lastname_display, min_order=0):
         mapping = _build_replace_map()
         if not mapping:
             return None
@@ -15538,19 +15449,14 @@ init python:
                 continue
             if not _im_script_spec_matches(spec):
                 continue
-            # Only resolve [mc]/[lastname] when the text is already past
-            # Ren'Py's substitution stage. In the say/menu filter the
-            # placeholders must survive: Ren'Py interpolates them later, and
-            # keeping them makes the resulting string a stable translation key.
-            if resolve_names:
-                if "[mc]" in rep:
-                    rep = rep.replace("[mc]", mc_display)
-                if "[lastname]" in rep:
-                    rep = rep.replace("[lastname]", lastname_display)
+            if "[mc]" in rep:
+                rep = rep.replace("[mc]", mc_display)
+            if "[lastname]" in rep:
+                rep = rep.replace("[lastname]", lastname_display)
             return (rep, list(inj), order + 1)
         return None
 
-    def _in_transform_text(s: str, resolve_names: bool = True) -> str:
+    def _in_transform_text(s: str) -> str:
         global _in_adad_sync_flags, _in_display_cache, _in_display_cache_keys
         t = s
 
@@ -15633,7 +15539,6 @@ init python:
                     mc_display,
                     lastname_display,
                     _im_next_order,
-                    resolve_names,
                 )
                 if _im_repl is None:
                     break
@@ -15652,18 +15557,10 @@ init python:
                     # replace_text also runs on History/log re-renders; the
                     # _im_in_say_call flag (set in _im_char_call_wrapper only
                     # while the say is active) prevents those from queuing.
-                    # Predicted follow-up lines are filtered while the current
-                    # node is still the previous say, so a script spec that is
-                    # off by a line or two (base game vs. Bonus/Multi-Mod line
-                    # numbers) would match early; only the active line queues.
                     try:
                         if (
                             getattr(store, "_im_in_say_call", False)
                             and not getattr(store, "_im_injection_queued", False)
-                            and (
-                                getattr(store, "_im_active_say_text", None) is None
-                                or _im_matches_active_say_text(s)
-                            )
                         ):
                             store._im_injection_queued = True
                             store._im_post_say_pending.extend(_im_inj)
@@ -15790,7 +15687,7 @@ init python:
             override_target = (None, None)
         _in_chat_speaker_override = override_target
         try:
-            out = _in_transform_text(sanitized, resolve_names=False)
+            out = _in_transform_text(sanitized)
         finally:
             _in_chat_speaker_override = prev_override
         if len(cache) > 5000:
@@ -15848,110 +15745,26 @@ init 991 python:
             except Exception:
                 sanitized = text
             # Ren'Py also invokes this filter while predicting future dialogue.
-            # Remember that state so local table translation can still happen,
-            # while potentially expensive third-party filters are skipped.
-            predicting = False
+            # Translator3000 performs synchronous web requests, so translating
+            # predicted (invisible) lines stalls rendering for every request.
+            # Keep prediction cheap; the line is transformed and translated
+            # normally when it is actually executed.
             try:
-                predicting = bool(renpy.predicting())
+                if renpy.predicting():
+                    return renpy.filter_text_tags(sanitized, allow=allowed)
             except Exception:
                 pass
             try:
-                transformed = _in_transform_text(sanitized, resolve_names=False)
+                transformed = _in_transform_text(sanitized)
             except Exception:
                 transformed = sanitized
             mod_transformed = transformed
-            # Translate immediately after the IC transformation. Multi-Mod
-            # decorates menu choices with numeric prefixes and can substitute
-            # [mc]/[lastname] before Character.__call__ reaches Ren'Py's normal
-            # late string lookup. Waiting for that lookup therefore produces
-            # keys such as "1. Full Incest..." or player-name-specific text,
-            # neither of which exists in the translation table. Returning the
-            # already translated string keeps choices and placeholder-bearing
-            # dialogue stable; the later lookup simply leaves German intact.
-            try:
-                _im_before_tl = transformed
-                transformed = renpy.translation.translate_string(_im_before_tl)
-                # The fallback lookups below only make sense while a
-                # translation is active; without one every line "misses" and
-                # would run all of them for nothing (also during prediction).
-                _im_tl_active = renpy.game.preferences.language is not None
-
-                # IC-Mod also changes relationship names inside Multi-Mod's
-                # point annotations, e.g. "(Nancy +1)" becomes "(Mom +1)".
-                # That makes Multi-Mod's otherwise valid complete translation
-                # key miss. Look up the original annotation and then restore
-                # the relationship name in the translated result.
-                if _im_tl_active and transformed == _im_before_tl:
-                    _im_points_alias = re.sub(
-                        r"(\(\s*)Mom(?=\s*[+-]\s*\d+\s*\))",
-                        r"\1Nancy",
-                        _im_before_tl,
-                    )
-                    if _im_points_alias != _im_before_tl:
-                        _im_points_tl = renpy.translation.translate_string(_im_points_alias)
-                        if _im_points_tl != _im_points_alias:
-                            transformed = re.sub(
-                                r"(\(\s*)Nancy(?=\s*[+-]\s*\d+\s*\))",
-                                r"\1Mom",
-                                _im_points_tl,
-                            )
-
-                # Some point-decorated choices only have an unadorned base
-                # translation. Translate that semantic core and attach the
-                # colour/point annotation again without modifying it.
-                if _im_tl_active and transformed == _im_before_tl:
-                    _im_points = re.match(
-                        r"^(.*?)(\s*(?:\[[^\]\r\n]+\])+\([^()\r\n]*[+-]\s*\d+[^()\r\n]*\))(\s*)$",
-                        _im_before_tl,
-                        re.S,
-                    )
-                    if _im_points:
-                        _im_points_core = _im_points.group(1)
-                        _im_points_suffix = _im_points.group(2) + _im_points.group(3)
-                        _im_points_core_tl = renpy.translation.translate_string(_im_points_core)
-
-                        # The number is screen decoration, not part of the
-                        # actual choice. Strip it if the core lookup still
-                        # misses, then restore it after translation.
-                        if _im_points_core_tl == _im_points_core:
-                            _im_points_numbered = re.match(
-                                r"^(\s*\d+\.\s+)(.*)$",
-                                _im_points_core,
-                                re.S,
-                            )
-                            if _im_points_numbered:
-                                _im_points_prefix = _im_points_numbered.group(1)
-                                _im_points_body = _im_points_numbered.group(2)
-                                _im_points_body_tl = renpy.translation.translate_string(_im_points_body)
-                                if _im_points_body_tl != _im_points_body:
-                                    _im_points_core_tl = _im_points_prefix + _im_points_body_tl
-
-                        if _im_points_core_tl != _im_points_core:
-                            transformed = _im_points_core_tl + _im_points_suffix
-
-                # Multi-Mod can number a menu label before this filter sees
-                # it ("1. Choice"). Its German pack contains numbered forms
-                # for the base game, but naturally none for IC-Mod's own menu.
-                # If the complete key misses, translate the unnumbered body
-                # and restore the decoration.
-                if _im_tl_active and transformed == _im_before_tl:
-                    _im_numbered = re.match(r"^(\s*\d+\.\s+)(.*)$", _im_before_tl, re.S)
-                    if _im_numbered:
-                        _im_choice_prefix = _im_numbered.group(1)
-                        _im_choice_body = _im_numbered.group(2)
-                        _im_choice_tl = renpy.translation.translate_string(_im_choice_body)
-
-                        if _im_choice_tl != _im_choice_body:
-                            transformed = _im_choice_prefix + _im_choice_tl
-            except Exception:
-                pass
             # Preserve a previously installed dialogue filter (for example
             # Translator3000).  Eternum-IC must transform the original English
-            # text first so its exact-string mappings can match. During
-            # prediction, skip the previous filter because Translator3000 can
-            # perform synchronous web requests for invisible future lines.
+            # text first so its exact-string mappings can match; the resulting
+            # text can then be translated by the earlier filter.
             try:
-                if (not predicting) and callable(_in_prev_say_menu_filter):
+                if callable(_in_prev_say_menu_filter):
                     transformed = _in_prev_say_menu_filter(transformed)
             except Exception:
                 pass
@@ -15995,7 +15808,7 @@ label annie_incest_optin:
             $ im_incest_mode = "sister"
         "Nancy as Mom and Annie as half-sister":
             $ im_incest_mode = "half"
-        "Nancy as aunt and Annie as stepsister":
+        "Nancy as aunt and Annie as stepsister (coming soon)":
             $ im_incest_mode = "aunt"
         "Disabled":
             $ im_incest_mode = "off"
@@ -16015,27 +15828,11 @@ label annie_incest_optin:
 # -----------------------------------------
 # Re-apply after loading
 # -----------------------------------------
-# Registered as a callback instead of `label after_load`: the base game
-# already defines that label (save_compatibility.rpy), and with two
-# definitions Ren'Py silently keeps only one of them.
-init python:
-    def _im_after_load_cb():
-        for _fn in (im_export_store_api, _im_apply_incest_mode, _im_apply_map_to_config, in_apply_text_map):
-            try:
-                _fn()
-            except Exception:
-                pass
-
-    _im_after_load_cb._im_is_after_load_cb = True
-
-    try:
-        config.after_load_callbacks[:] = [
-            cb for cb in config.after_load_callbacks
-            if not getattr(cb, '_im_is_after_load_cb', False)
-        ]
-        config.after_load_callbacks.append(_im_after_load_cb)
-    except Exception:
-        pass
+label after_load:
+    $ im_export_store_api()
+    $ _im_apply_incest_mode()
+    $ in_apply_text_map()
+    return
 
 # -----------------------------------------
 # Autocall screen
@@ -16438,6 +16235,7 @@ init 1100:
                     vbox:
                         xfill True
                         spacing 10
+                        $ print(girl_chats.items())
                         for index, chat_info in girl_chats.items():
                             text "Chat {}".format(index): # TODO Check translation
                                 color "#fff"

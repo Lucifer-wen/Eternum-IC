@@ -1,0 +1,6841 @@
+================================================================================
+Eternum-IC  -  nicht uebersetzte Zeilen
+Erzeugt: 2026-08-24   |   1702 Eintraege
+================================================================================
+
+SO FUELLST DU SIE
+  Schreibe die Uebersetzung hinter 'DE:'. Leer lassen = bleibt englisch.
+  Danach im Ordner Eternum-IC/tl :
+      python im_tl_txt_merge.py German/UNTRANSLATED.txt
+  Das schreibt die Werte nach German/dialogue.json.
+
+REGELN
+  - Text-Tags wie {i}...{/i} oder {color=[walk_points]} exakt uebernehmen.
+  - [mc] und [lastname] stehen lassen - Ren'Py setzt die Namen danach ein.
+  - Genau eine Zeile pro 'DE:'. Zeilenumbrueche im Text sind nicht erlaubt.
+  - Die Nummer in [....] ist die Zeilen-ID. Nicht aendern.
+
+--------------------------------------------------------------------------------
+EXPLIZITER SEXUELLER INHALT  (209)
+  Diese Zeilen habe ich bewusst nicht uebersetzt.
+--------------------------------------------------------------------------------
+
+[0009]
+EN: {size=15}Fuck it
+DE: {size=15}Scheiß drauf
+
+[0011]
+EN: I said fuck it... let's do it.
+DE: Ich sagte Schei? drauf... tun wir es.
+
+[0012]
+EN: (Oh... fuck yeah! My sister's gonna give me a blowjob!)
+DE: (Oh... verdammt ja! Meine Schwester wird mir einen blasen!)
+
+[0187]
+EN: (Jesus, look at me. Fantasizing about the dick of my own son.)
+DE: (Jesus, seht mich an. Ich fantasiere über den Penis meines eigenen Sohnes.)
+
+[0188]
+EN: (You're his mother, Nancy, for fuck's sake! What's wrong with you?)
+DE: (Du bist seine Mutter, Nancy, verdammt nochmal! Was stimmt nicht mit dir?)
+
+[0194]
+EN: I'm your sister, you fucking pig!
+DE: Ich bin deine Schwester, du verdammtes Schwein!
+
+[0209]
+EN: (I better make sure he's not home. He may be my little brother, but I don't want him to catch me naked...)
+DE: (Ich sollte besser sichergehen, dass er nicht zu Hause ist. Er mag zwar mein kleiner Bruder sein, aber ich will nicht, dass er mich nackt erwischt...)
+
+[0214]
+EN: You're a fucking pervert!
+DE: Du bist ein verdammter Perverser!
+
+[0215]
+EN: You were hiding in the bathtub so you could see me naked! I'm your sister, you pig!
+DE: Du hast dich in der Badewanne versteckt, um mich nackt zu sehen! Ich bin deine Schwester, du Schwein!
+
+[0232]
+EN: (Man, I've been way too horny lately... I'm even thinking about my family in that way...)
+DE: (Mann, ich bin in letzter Zeit viel zu geil... Ich denke sogar so über meine Familie nach...)
+
+[0253]
+EN: (You're not a horny teenager, and she's your mother. Show her you're a respectable man now.)
+DE: (Du bist kein geiler Teenager, und sie ist deine Mutter. Zeig ihr jetzt, dass du ein anständiger Mann bist.)
+
+[0282]
+EN: (I can't just barge in and be like, "Hi [mc], did you know you make me feel so horny all the time? Do you wanna fuck your mother?")
+DE: (Ich kann ja nicht einfach reinplatzen und sagen: "Hi [mc], wusstest du, dass du mich ständig so geil machst? Willst du mit deiner Mutter schlafen?")
+
+[0283]
+EN: (Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be {i}furious{/i} if they ever found out. And fucking my son... God, there's so much that could go wrong for everyone...)
+DE: (Selbst wenn er mich irgendwie auch gewollt hätte... und wir es dann tatsächlich getan hätten, wären Dalia und Penny außer sich vor Wut, wenn sie es je herausfinden würden. Und mit meinem Sohn zu schlafen... Gott, da könnte so viel schiefgehen...)
+
+[0302]
+EN: (Oh my god, am I about to see my big sister naked?)
+DE: (Oh mein Gott, werde ich gleich meine große Schwester nackt sehen?)
+
+[0303]
+EN: (Don’t think about your sister's huge, perfect tits.)
+DE: (Denk nicht an die riesigen, perfekten Brüste deiner Schwester.)
+
+[0304]
+EN: (Or how her breasts are slightly paler than the rest of her body... because she probably never sunbathes topless... meaning you're likely the first man who's gotten to see your sister's breasts in who knows how long...)
+DE: (Oder wie ihre Brüste etwas blasser sind als der Rest ihres Körpers ... weil sie sich wahrscheinlich nie oben ohne sonnt ... was bedeutet, dass du wahrscheinlich der erste Mann bist, der die Brüste deiner Schwester seit wer weiß wie langer Zeit zu sehen bekommt ...)
+
+[0353]
+EN: She's my sister. I've only seen her half-naked dur– I-I meant a long time ago. Y-yeah.
+DE: Sie ist meine Schwester. Ich habe sie nur halb nackt geseh– i-ich meinte, vor langer Zeit. J-ja.
+
+[0370]
+EN: Your looks are pretty convincing, but I'm afraid I caught you in a lie. [mc] and I would never fuck. We're siblings!
+DE: Deine Maskerade ist ziemlich überzeugend, aber ich fürchte, ich habe dich bei einer Lüge ertappt. [mc] und ich würden niemals miteinander schlafen. Wir sind Geschwister!
+
+[0381]
+EN: S-Seriously? I'm your sister, you fucking pervert!
+DE: I-Im Ernst? Ich bin deine Schwester, du verdammter Perverser!
+
+[0383]
+EN: Well if that's the case, then why does it matter what I want? Getting naked, testing out your... “skills”, or any other thing. If you're so positive you're gonna win anyways, it shouldn't even matter that I'm your brother!
+DE: Nun, wenn das so ist – warum spielt es dann eine Rolle, was ich will? Ob ich mich ausziehe, deine ... „Künste“ teste oder sonst irgendetwas. Wenn du dir so sicher bist, dass du sowieso gewinnst, sollte es nicht einmal eine Rolle spielen, dass ich dein Bruder bin!
+
+[0385]
+EN: I'll suck your cock, {i}brother{/i}.
+DE: Ich lutsche deinen Schwanz, {i}Bruder{/i}.
+
+[0426]
+EN: *Giggles* Oh, my baby boy... want to suckle mommy's breasts again?
+DE: *Kichert* Oh, mein kleiner Junge ... willst du wieder an Mamas Brüsten nuckeln?
+
+[0427]
+EN: Does my Prince truly want to serve his Empress?
+DE: Will mein Prinz seiner Kaiserin wahrhaftig dienen?
+
+[0430]
+EN: I need to feel my Prince... taste the forbidden fruit...
+DE: Ich muss meinen Prinzen spüren ... die verbotene Frucht kosten ...
+
+[0431]
+EN: Oh, my P-Prince feels...
+DE: Oh, meine P-Prinz-Gefühle ...
+
+[0432]
+EN: Oh, s-screw the royalty shit...
+DE: Ach, scheiß auf den ganzen Royal-Mist ...
+
+[0434]
+EN: *Chuckles* Like having sex with your son?
+DE: *Kichert* So wie Sex mit deinem Sohn zu haben?
+
+[0435]
+EN: *Giggles* Yes, and now...
+DE: *Kichert* Ja, und jetzt...
+
+[0436]
+EN: This time though... I want you to lie back and let your mother do all the work...
+DE: Diesmal aber ... möchte ich, dass du dich zurücklehnst und deine Mutter die ganze Arbeit machen lässt ...
+
+[0440]
+EN: (Man, I was so damn close to fucking my own mom! To cross that forbidden line...)
+DE: (Mann, ich war so verdammt nah dran, mit meiner eigenen Mutter zu schlafen! Diese verbotene Grenze zu überschreiten...)
+
+[0470]
+EN: Isn't that what you wanted? For your dear sister to suck your cock?
+DE: 
+
+[0472]
+EN: You made me so fucking horny, Daly. Do you see how hard you made me?
+DE: 
+
+[0476]
+EN: (Oh my god, my sister’s really sucking my cock...)
+DE: 
+
+[0477]
+EN: You're basically drooling, Daly... You like your brother's cock that much?
+DE: 
+
+[0479]
+EN: Whose the pervert now? Are you hungry for some of your brother's cum?
+DE: 
+
+[0497]
+EN: I want you to fuck me, son. Hard. And filthy.
+DE: 
+
+[0503]
+EN: Anyway, it's not like we haven’t seen each other naked before, so there's really no reason to make a big deal about this in the future.
+DE: 
+
+[0541]
+EN: Bro, I'm not gonna get naked in front of everyone.
+DE: 
+
+[0549]
+EN: Fuck waiting for your brother.
+DE: 
+
+[0551]
+EN: My fucking god, bro, you're hung like a fucking horse. That cock is a weapon!
+DE: 
+
+[0558]
+EN: Sis... you're a fucking goddess.
+DE: 
+
+[0562]
+EN: You wrap your arms around Penelope's waist, holding her in place with a firm grip before beginning to suck on your sister's voluptuous breasts.
+DE: 
+
+[0566]
+EN: Not my fault. Your tits are literally making me lose my mind, sis.
+DE: 
+
+[0569]
+EN: I mean... holy fuck, sis.
+DE: 
+
+[0572]
+EN: *Giggles* I can imagine. Do you like feeling your sister's big titties wrapped around your cock like this?
+DE: 
+
+[0575]
+EN: I'm FUCKING my sister's tits! The best tits on Instagram!
+DE: 
+
+[0576]
+EN: Your lips are literally dripping over my cock, Penny...
+DE: 
+
+[0577]
+EN: W-We're not gonna f-fuck. We... we shouldn't... That'd be going too far...
+DE: 
+
+[0578]
+EN: Do you like this? Gliding your pussy along your little brother's thick cock?
+DE: 
+
+[0584]
+EN: Ohh... f-fuck me, sis...
+DE: 
+
+[0585]
+EN: *Choking* Y-Yeagh... u-use me as your fucking toy, bro...
+DE: 
+
+[0588]
+EN: *Choking* F-Fuck... I'm gonna cum, bro...
+DE: 
+
+[0589]
+EN: F-Fuck, bro... I'm gonna cum...
+DE: 
+
+[0616]
+EN: M-My mom's about to fuck me!
+DE: 
+
+[0617]
+EN: Nancy starts moving up and down. Your penis spreads her wet lips apart, while quickly adjusting to your mother's vicious pace.
+DE: 
+
+[0619]
+EN: The poor security guard having to watch the two of us – AGH... FUCK! – h-having sweaty, incestuous sex in an elevator in the middle of the day...
+DE: 
+
+[0620]
+EN: What a naughty mommy... what if my sisters could see their mother and brother fucking like this?
+DE: 
+
+[0621]
+EN: What a naughty empress... what if your subjects could see you being fucked like this by your own son?
+DE: 
+
+[0622]
+EN: Do you like being fucked roughly by your son?
+DE: 
+
+[0646]
+EN: *Pushing you inside* Goddammit bro, shut up and get the fuck in!
+DE: 
+
+[0648]
+EN: *Laughs* What makes you think I'd fuck my brother more than once?
+DE: 
+
+[0658]
+EN: Fuck, you have no fucking idea of how much you're turning me on right now, sis.
+DE: 
+
+[0661]
+EN: You feel your dick head disappear inside of your sister's mouth, even though you can't actually see it.
+DE: 
+
+[0663]
+EN: H-H-Holy fuck, bro...
+DE: 
+
+[0668]
+EN: Does that mean... you'd be okay if we fuck another time...?
+DE: 
+
+[0671]
+EN: Fuck, this feels so good, sis...
+DE: 
+
+[0672]
+EN: (Do I really want my brother to... fuck me?)
+DE: 
+
+[0674]
+EN: I'm g-gonna cum, Dal...
+DE: 
+
+[0675]
+EN: Fuck, sis, you're not gonna leave me hanging now, right...?
+DE: 
+
+[0717]
+EN: *Biting her lip* F-FUCK, bro, this isn't working.
+DE: 
+
+[0721]
+EN: Holy fuck, bro, that feels...
+DE: 
+
+[0723]
+EN: I'm having sex with her. I'm fucking my big sister.
+DE: 
+
+[0724]
+EN: *Moaning* Aaaghhh, bro...
+DE: 
+
+[0725]
+EN: *Giggles* Oh y-yeah? You thought about this...? Thought about fucking your big sister?
+DE: 
+
+[0727]
+EN: *Groaning* F-Fuck, you're so fucking big, bro...
+DE: 
+
+[0733]
+EN: *Panting* F-Fuck, I'm getting tired, bro...
+DE: 
+
+[0734]
+EN: Fuck me hard, bro...
+DE: 
+
+[0735]
+EN: *Panting* I-I'm gonna cum so hard, bro...
+DE: 
+
+[0739]
+EN: AAAAAAARGHHH, fuck, SIS...
+DE: 
+
+[0740]
+EN: *Panting* Fuck, bro... don't you ever run out of stamina?
+DE: 
+
+[0741]
+EN: Your tits are the fucking best I've ever seen in my life, sis, but goddamn, this butt of yours deserves some attention too...
+DE: 
+
+[0742]
+EN: *Panting* Oh dear Lord, y-your pussy is so fucking tight, sis...
+DE: 
+
+[0746]
+EN: You can feel how Penelope orgasms again at the same time as you finish unloading an insane amount of jizz deep inside your sister's warm vagina.
+DE: 
+
+[0764]
+EN: Fuck me, brother...
+DE: 
+
+[0780]
+EN: This is completely surreal. I'm fucking two stunning red-haired goddesses at the same time. And one of them's my mother!
+DE: 
+
+[0793]
+EN: My dad left when I was a kid, you fucking idiot.
+DE: 
+
+[0807]
+EN: Fuck yes, sis...
+DE: 
+
+[0810]
+EN: You're a horny dog, bro. Don't you ever run out of fuel?
+DE: 
+
+[0813]
+EN: *Whispers* Do you want to {i}fuck{/i} me, [mc]...? Do you want to fuck your sister...?
+DE: 
+
+[0818]
+EN: You have no idea how good your pussy is making me feel right now, sis...
+DE: 
+
+[0819]
+EN: *Moans* AAAAAhhh... bro...
+DE: 
+
+[0820]
+EN: Bro, I'm cumming...
+DE: 
+
+[0822]
+EN: *Panting* I-I want you to make me cum again, bro...
+DE: 
+
+[0823]
+EN: *Moans* I-I want you to be the only one t-to ever have me, bro...
+DE: 
+
+[0824]
+EN: O-Ohh, fuck, sis...
+DE: 
+
+[0825]
+EN: *Panting* That my sister would end up ramming her p-perfect, huge ass down on my cock...
+DE: 
+
+[0827]
+EN: Oh fuck, I'm cumming again, bro...
+DE: 
+
+[0828]
+EN: Fuck, we can't stop now, sis...
+DE: 
+
+[0830]
+EN: F-F-FUCK ME, BRO...
+DE: 
+
+[0832]
+EN: *Panting* Y-Your pussy's pure fucking magic, Dal...
+DE: 
+
+[0856]
+EN: I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING MY FUCKING BROTHER!
+DE: 
+
+[0877]
+EN: But I fucking swear to you, Penelope — I love you. And I mean not as a sister... as a woman!
+DE: 
+
+[0887]
+EN: *Squeezing her tits* Oh, fuck, sis...
+DE: 
+
+[0889]
+EN: *Squeezing her breasts together* O-Oh, sis...
+DE: 
+
+[0893]
+EN: Your moans are turning shameless, sis...
+DE: 
+
+[0894]
+EN: Finally got too horny, eh, sis? Or maybe... you just love being on the submissive side?
+DE: 
+
+[0901]
+EN: Wanting to get fucked by my little brother...
+DE: 
+
+[0902]
+EN: You're choking my cock, sis...
+DE: 
+
+[0911]
+EN: Oh... fuck sis, this gets dry so quickly...
+DE: 
+
+[0912]
+EN: Ohhh sister... you’re gonna make me lose my f-fucking mind...
+DE: 
+
+[0946]
+EN: NO. FUCKING. WAY. YOU TOO?!
+DE: 
+
+[0954]
+EN: Alex! That's my brother! You're drunk as fuck!
+DE: 
+
+[0956]
+EN: Um... I'm not touching my brother's dick, thanks.
+DE: 
+
+[0959]
+EN: *Touching herself* AAaah... watching you j-jerk off your brother is so fucking hot, Dal......
+DE: 
+
+[0964]
+EN: I know you and your brother have fucked.
+DE: 
+
+[0965]
+EN: *Whispering* You’re a dirty, horny slut who wants to be fucked by your little brother until you can’t think straight.
+DE: 
+
+[0966]
+EN: Are your sister's tits big enough for you?
+DE: 
+
+[0967]
+EN: O-Ohh sis, that feels so fucking good...
+DE: 
+
+[0969]
+EN: Tell me, [mc]... do you wanna fuck your sister...?
+DE: 
+
+[0970]
+EN: Do you want every inch of this incestuous cock sliding deep inside you...?
+DE: 
+
+[0971]
+EN: I-I need you to fuck me, bro...
+DE: 
+
+[0972]
+EN: C-Christ, you're so fucking tight, sis...
+DE: 
+
+[0973]
+EN: *Panting* Yeah... f-fuck me hard, bro...
+DE: 
+
+[0977]
+EN: *Giggles* Your mouth is asking to slow down, but those eyes rolling back are screaming “fuck me harder, brother”...
+DE: 
+
+[0978]
+EN: You siblings are {i}made{/i} to fuck...
+DE: 
+
+[1186]
+EN: (I'm a fucking mess. She needs someone more mature... And someone not blood-related... she's not a weirdo like me who has feelings for his twin sister.)
+DE: 
+
+[1189]
+EN: I-It’s not like we haven't seen each other naked before...
+DE: 
+
+[1219]
+EN: (Holy shit, this is really happening! I'm fucking my sister's thighs!)
+DE: 
+
+[1232]
+EN: (Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be {i}furious{/i} if they ever found out. And fucking my son... God, there's so much that could go wrong for everyone...)
+DE: 
+
+[1317]
+EN: Seeing you undressing just for me was hot as fuck, sis.
+DE: 
+
+[1324]
+EN: Have I been fooled all these years? My innocent, shy little sister is actually a horny, perverted little girl?
+DE: 
+
+[1326]
+EN: You're making me so horny, sis...
+DE: 
+
+[1331]
+EN: (My brother made me... {i} cum{/i}!)
+DE: 
+
+[1335]
+EN: D-Do you like beating off my cock, sis?
+DE: 
+
+[1336]
+EN: *Panting* F-Fuck, I won't last much longer, sis...
+DE: 
+
+[1337]
+EN: I want to make you cum, bro... You were so kind to me...
+DE: 
+
+[1338]
+EN: I want you so bad, sis... I can’t wait ‘til the day you can finally take this dick... But not yet...
+DE: 
+
+[1374]
+EN: It's just... that... well, I was shocked at first since the last time I saw you naked was {i}so long{/i} ago.
+DE: 
+
+[1375]
+EN: A bit striking because I {i}never{/i} saw you naked before.
+DE: 
+
+[1380]
+EN: Sucks for you that one's your sister. I couldn't imagine having these two fun-sized cuties around me and not doing anything with them.
+DE: 
+
+[1414]
+EN: AAaahh... oh god bro... I think I'm gonna... C-CUM...
+DE: 
+
+[1417]
+EN: Yeah... keep going... suck it as hard as you can, sis...
+DE: 
+
+[1419]
+EN: You grab your sister's head and start fucking her mouth. You can hear her choking with each thrust, but Annie's throat willingly takes all of you.
+DE: 
+
+[1422]
+EN: AAAAargh... fuck, sis...
+DE: 
+
+[1426]
+EN: Oh GOD, sis, I'm gonna fucking cum!
+DE: 
+
+[1493]
+EN: You climb on top of your sister, trailing passionate kisses along her neck as she moans softly in appreciation.
+DE: 
+
+[1494]
+EN: You take a moment to contemplate your sister's plump, virgin pussy lips.
+DE: 
+
+[1495]
+EN: *Moans* Ohh mmmm-y-yes, bro...
+DE: 
+
+[1503]
+EN: *Panting* I-I'm cumming, bro...
+DE: 
+
+[1506]
+EN: *Panting* F-Fuck, me too, sis...
+DE: 
+
+[1639]
+EN: (I'm a fucking mess. She needs someone more mature... And someone not blood-related... she's not a weirdo like me who has feelings for their sibling.)
+DE: 
+
+[1651]
+EN: (Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be furious if they ever found out. And fucking my son, is that even legal?)
+DE: 
+
+[1656]
+EN: *Taking a deep breath* (Well [mc], it's now or never. Time to grow a pair and man up! Oh, and fuck the fact that she is your sister, you're well past that point.)
+DE: 
+
+[1658]
+EN: But you know what, fuck it I say. I want us to be so much more than that.
+DE: 
+
+[1708]
+EN: *Moans* Oh good grief, it's IN... I can feel it...
+DE: 
+
+[1709]
+EN: *Moans* My brother’s finally inside of me...
+DE: 
+
+[1732]
+EN: (Jesus, look at me. Fantasizing about the dick of the kid I used to raise like my own son.)
+DE: 
+
+[1733]
+EN: (You're his aunt, Nancy, for fuck's sake.)
+DE: 
+
+[1753]
+EN: (You're not a horny teenager. Show her you're a man now. She's just your aunt.)
+DE: 
+
+[1762]
+EN: (I can't just barge in and be like, "Hi [mc], did you know you make me feel so horny all the time? Do you wanna fuck your old aunt?")
+DE: 
+
+[1763]
+EN: (Even if, somehow, he wanted me too... and we ended up... doing it, Dalia and Penny would be furious if they ever found out... {w}And fucking my nephew, is that even legal?)
+DE: 
+
+[1778]
+EN: (Oh my god, am I about to see my cousin naked?)
+DE: 
+
+[1799]
+EN: She's my cousin. I've only seen her half-naked once... during a photoshoot.
+DE: 
+
+[1811]
+EN: Are you gonna fuck me, little cuz?
+DE: 
+
+[1817]
+EN: S-Seriously? You're a fucking pig! We're cousins!
+DE: 
+
+[1846]
+EN: I've wanted you to fuck me ever since I first saw you in that park. I thought maybe it was just a forbidden urge and it’d pass quickly... but no...
+DE: 
+
+[1851]
+EN: (Man, I was so damn close to fucking Nancy...! It's so... wrong...)
+DE: 
+
+[1862]
+EN: I know you already saw me naked, but I hope this can still get you in the mood. I trust that us being cousins won't be an issue for little [mc].
+DE: 
+
+[1864]
+EN: Well, well, well... so you openly admit having fantasized about how your cousin's cum tastes, huh...?
+DE: 
+
+[1899]
+EN: My fucking god, little cuz, you're hung like a fucking horse. That cock is a weapon!
+DE: 
+
+[1905]
+EN: You wrap your arms around Penelope's waist, holding her in place with a firm grip before beginning to suck on your cousin's voluptuous breasts.
+DE: 
+
+[1909]
+EN: What if it slips out of your costume again? We can’t have Nova or another girl accidentally catching sight of my cousin's monster dick, can we?
+DE: 
+
+[1910]
+EN: *Giggles* I can imagine. Do you like feeling my big titties wrapped around your cock like this, little cousin?
+DE: 
+
+[1911]
+EN: I rejected all their requests, but here I am doing it for free, for my kid cousin's fat dick.
+DE: 
+
+[1914]
+EN: I'm FUCKING my cousin's tits! The best tits on Instagram!
+DE: 
+
+[1917]
+EN: Do you like this? Gliding your pussy along your little cousin's thick cock?
+DE: 
+
+[1920]
+EN: *Choking* Y-Yeagh... u-use me as your fucking toy, little cuz...
+DE: 
+
+[1933]
+EN: M-My aunt is about to fuck me!
+DE: 
+
+[1934]
+EN: Nancy starts moving up and down. Your penis spreads her wet lips apart, while quickly adjusting to your aunt's vicious pace.
+DE: 
+
+[1936]
+EN: What a naughty mommy... what if your daughters could see you being fucked like this by their own cousin?
+DE: 
+
+[1937]
+EN: What a naughty empress... what if your subjects could see you being fucked like this by your own nephew?
+DE: 
+
+[1938]
+EN: F-Fuck your Auntie again, [mc]...
+DE: 
+
+[1952]
+EN: I'm having sex with her. I’m fucking my own cousin, Penelope Carter.
+DE: 
+
+[1954]
+EN: *Giggles* Oh y-yeah? You thought about this...? Thought about fucking your own cousin?
+DE: 
+
+[1955]
+EN: You can feel your cousin's tight cavity slowly adjust to your size. Each of her movements feels extra sensitive on your dick.
+DE: 
+
+[1956]
+EN: Your cousin’s jiggling, voluptuous body fills your every sense, as each individual bounce and thrust causes your body to radiate with a divine pleasure.
+DE: 
+
+[1957]
+EN: You keep hammering your cousin's pussy, your ears drowning in her small, constant whimpers of pleasure.
+DE: 
+
+[1958]
+EN: Your cousin orgasms, soaking your cock in vaginal fluids and contracting all of her muscles at once.
+DE: 
+
+[1959]
+EN: Man, I can't believe I just fucked my own cousin.
+DE: 
+
+[1962]
+EN: *Panting* That the cousin I used to play with as a kid would end up ramming her p-perfect, huge ass down on my cock...
+DE: 
+
+[1964]
+EN: I’D STILL HAVE APPRECIATED IT IF MY SISTER HAD TOLD ME SHE WAS SCREWING OUR OWN FUCKING COUSIN!
+DE: 
+
+[1968]
+EN: You instinctively take your cousin's nipple into your mouth. She arches her back with a soft moan, starting to stroke you with deliberate, slow pumps.
+DE: 
+
+[1971]
+EN: Your cousin's mouth finally closes around your cock.
+DE: 
+
+[1972]
+EN: You sink your cock into your cousin — slick, warm, and indescribably tight.
+DE: 
+
+[1973]
+EN: F-Fuck, I love you Penny... and I don't care that you're my cousin...
+DE: 
+
+[1975]
+EN: Have you ever... fucked our cousin Dalia's ass?
+DE: 
+
+[2007]
+EN: (I'm a fucking mess. She needs someone more mature... not a creep who has a crush on his little sister.)
+DE: 
+
+[2023]
+EN: (Holy shit, this is really happening! I'm fucking my little sister's thighs!)
+DE: 
+
+[2059]
+EN: Have I been fooled all these years? My innocent, shy sister is actually a horny, perverted little girl?
+DE: 
+
+[2063]
+EN: W-What are you *moans* doooooing to m-me, b-big brotheeeerrrr...?
+DE: 
+
+[2064]
+EN: (My big brother made me... {i} cum{/i}!)
+DE: 
+
+[2067]
+EN: I love beating off my b-big brother's... massive... pulsing... d-dirty cock...
+DE: 
+
+[2068]
+EN: I want to make you cum, big bro... You were so kind to me...
+DE: 
+
+[2072]
+EN: Your little sister's body language screams of ecstasy as you continue attacking her swollen clit.
+DE: 
+
+[2085]
+EN: (You're his mother, Mom, for fuck's sake! What's wrong with you?)
+DE: 
+
+[2089]
+EN: Mom starts moving up and down. Your penis spreads her wet lips apart, while quickly adjusting to your mother's vicious pace.
+DE: 
+
+[2107]
+EN: (You're his aunt, Mom, for fuck's sake.)
+DE: 
+
+[2117]
+EN: (Man, I was so damn close to fucking Mom...! It's so... wrong...)
+DE: 
+
+[2123]
+EN: Mom starts moving up and down. Your penis spreads her wet lips apart, while quickly adjusting to your aunt's vicious pace.
+DE: 
+
+--------------------------------------------------------------------------------
+ENTWICKLER-NOTIZEN  (5)
+  Kein Dialog - stehen als Werte in den Maps und werden nie angezeigt.
+  Wenn du sie aus den Maps entfernst, verschwinden sie beim naechsten im_tl_extract.
+--------------------------------------------------------------------------------
+
+[0138]
+EN: ===ideas for label mods, may or may not do===
+DE: 
+
+[0139]
+EN: script:touch for all maps, 416 lines replace injection lines since for some reason it's bugging out for the multimod Issue seems to be fixed, leaving note in case it happens again would change/add total 3-ish lines, is it worth it??
+DE: 
+
+[0140]
+EN: script5:collegepartypenny1 for base map, 940 lines Rewrite the truth or dare game to either work in or work around the incest would be a ridiculous amount of work or cop out and hide the incest like in aunt map lol
+DE: 
+
+[0141]
+EN: script7:friday07 for all maps, 184 lines add some if statements for additional harem thoughts if in incest routes. might be too much work for ultimately one line per route added the lines in main code regardless if using the incest mod you should be on at least one incest route right??? Leaving it at that until someone raises a complaint lol Might need to do this since injections are bugging out here too * Issue seems to be fixed, leaving note in case it happens again
+DE: 
+
+[0142]
+EN: script8:ga_novanancy for base map, 716 lines redo script8:5803 so it "babe" can be changed to mom without affecting Nova option Section is long though, not worth it for one line
+DE: 
+
+--------------------------------------------------------------------------------
+SONSTIGE OFFENE ZEILEN  (1488)
+  Noch nicht bearbeitet.
+--------------------------------------------------------------------------------
+
+[0458]
+EN: I already knew, their mom told me. I’m her greatest confidante.
+DE: 
+
+[0459]
+EN: I wish my brother would kiss me like that!
+DE: 
+
+[0460]
+EN: We're just siblings!
+DE: 
+
+[0461]
+EN: And d-don't tell our mom!
+DE: 
+
+[0462]
+EN: A-And I heard in Europe, siblings kiss all the time!! It doesn't mean anything!
+DE: 
+
+[0463]
+EN: *Imitating Dalia* Bro! I won! I won! Did you see it!? Muah Muah *imitates kissing noises*
+DE: 
+
+[0464]
+EN: I'm the lame one? Go tell that to that crybaby sister of yours.
+DE: 
+
+[0465]
+EN: Thank you bro.
+DE: 
+
+[0466]
+EN: What are you concocting in that pervy little brain of yours, brother?
+DE: 
+
+[0467]
+EN: This bikini looks good on you, sis.
+DE: 
+
+[0468]
+EN: If I had made out with Penelope yesterday, does that mean you could say that you’ve kissed Penelope too?
+DE: 
+
+[0469]
+EN: I loved spending some time with you in your server, sis. Thanks for letting me visit.
+DE: 
+
+[0471]
+EN: So... as a thank you for everything... I'm choosing not to overthink your definition of "beating me in a fight"... and to ignore the fact we're siblings...
+DE: 
+
+[0473]
+EN: You're in denial today, sis...
+DE: 
+
+[0474]
+EN: You're driving me insane, sis...
+DE: 
+
+[0475]
+EN: Does your sister's mouth feel good?
+DE: 
+
+[0478]
+EN: If you wanna stop, just give me a sign, sis...
+DE: 
+
+[0480]
+EN: I want my brother to release his seed in my little mouth...
+DE: 
+
+[0481]
+EN: Pennny invited me to a costume party at her campus.
+DE: 
+
+[0482]
+EN: Good luck, bro!
+DE: 
+
+[0483]
+EN: Hey! Thanks, sis!
+DE: 
+
+[0484]
+EN: She really does just think of me as her little brother...
+DE: 
+
+[0485]
+EN: Heeeey! Good luck with the fat cats, bro!
+DE: 
+
+[0486]
+EN: Thanks sis!
+DE: 
+
+[0487]
+EN: What other people? You? Mom? Annie? I'm sure [mc] doesn't mind either. He's... family. Our little brother...
+DE: 
+
+[0488]
+EN: Yeah... our little brother...
+DE: 
+
+[0489]
+EN: To our brother? Pffft, that would be incest! And please, even if he wasn't our brother, my bar is WAY higher. You've seen my Instagram DMs: models, actors, influencers... did you know that that Gigachad meme guy from a few years ago tried sliding into my DMs?
+DE: 
+
+[0490]
+EN: Actually, he was caught with HIS OWN sister in HIS office!
+DE: 
+
+[0491]
+EN: He and his family and friends are always in some kind of trouble. Which is exhausting, but also... entertaining. In a way.
+DE: 
+
+[0492]
+EN: (I don't even like him. The only guy I kinda liked lately wasn’t even into me... not to mention he's my brother...)
+DE: 
+
+[0493]
+EN: (So this is {i}definitely{/i} for the better. I can't believe I had a crush on my own little brother! Thank god that's over now.)
+DE: 
+
+[0494]
+EN: Oh, that is very likely, actually, Ms. [lastname]. It would be poetic and, at the same time, easy to make it look like an accident.
+DE: 
+
+[0495]
+EN: Could you help me with it, honey? I've gotta go before leaving.
+DE: 
+
+[0496]
+EN: It's been quite a challenge trying to find you alone this past week, my boy...
+DE: 
+
+[0498]
+EN: I already told Penny and Nova that I'd be going with them to a costume party at the University tomorrow night, so...
+DE: 
+
+[0499]
+EN: I already told Penny that I'd be going with her to a costume party at the University tomorrow night, so...
+DE: 
+
+[0500]
+EN: You don't live with your family anymore?
+DE: 
+
+[0501]
+EN: *Grabbing some bottles from the closet* I guess we have that in common. I’m perfectly fine with showing off my body too. Plus we're family, so it's not like it's a big deal, right?
+DE: 
+
+[0502]
+EN: I thought you said you didn't mind your big sis coming in.
+DE: 
+
+[0504]
+EN: Penelope [lastname]... you’re gonna drive me mad.
+DE: 
+
+[0505]
+EN: You look spectacular, sis. Really hit it out of the park!
+DE: 
+
+[0506]
+EN: *Chuckles* Don’t be silly, little brother! You're staying with us until we say so. No escaping the family this time!
+DE: 
+
+[0507]
+EN: Can you take a pic of us before going in, bro?
+DE: 
+
+[0508]
+EN: *Chuckles* You're too excited, lil bro.
+DE: 
+
+[0509]
+EN: U-Uh... i-isn't he your brother? A-are you sure?
+DE: 
+
+[0510]
+EN: I thought it was just a temporary thing, but... shit, I don't know anymore. Honestly, I think him being my brother is making it... {i}more{/i} exciting.
+DE: 
+
+[0511]
+EN: But we're still siblings, and he might not be into me like that so... keep it secret!
+DE: 
+
+[0512]
+EN: (A BIG one! The biggest one I've ever heard!)
+DE: 
+
+[0513]
+EN: (Nothing happened. So what if my new bestie Penny and I have a crush on the same boy? So what if he's her b-brother?)
+DE: 
+
+[0514]
+EN: Penelope? Penelope [lastname]? That IG model in the journalism program?
+DE: 
+
+[0515]
+EN: Tell her to join me and Penny when she's done!
+DE: 
+
+[0516]
+EN: I've gotta find Penny before she sees the photos.
+DE: 
+
+[0517]
+EN: And you thought of asking your big titty blonde bimbo sister to lend you hers, right?
+DE: 
+
+[0518]
+EN: No, not really. I'm her brother. I moved back to Kredon just few months ago, actually.
+DE: 
+
+[0519]
+EN: Actually, yeah! I'm looking for Penelope. Penelope [lastname]. Do you know her?
+DE: 
+
+[0520]
+EN: Um... no, not really. I'm her brother. I moved back to Kredon just few months ago.
+DE: 
+
+[0521]
+EN: Hi, bro! Sorry for the wait.
+DE: 
+
+[0522]
+EN: Goddamn, this dress looks GREAT on you, sis.
+DE: 
+
+[0523]
+EN: I came with Penelope, she's my sister. I moved back in with her as part of the Student Exchange Program.
+DE: 
+
+[0524]
+EN: *Chuckles* I'd say my family played a big role in that, yeah...
+DE: 
+
+[0525]
+EN: Penelope, did you know he was hung like this?
+DE: 
+
+[0526]
+EN: S-Seriously, Regina? He's my brother, of course I haven't even seen it yet.
+DE: 
+
+[0527]
+EN: Uhh... I-I meant in a long time... not since we were kids...
+DE: 
+
+[0528]
+EN: You want me to kiss Penelope... my sister?
+DE: 
+
+[0529]
+EN: *Giggles* Is little [mc] scared of a little dare?
+DE: 
+
+[0530]
+EN: Not at all! If you're not backing out, then I won't either.
+DE: 
+
+[0531]
+EN: *Grabbing her by the waist and whispering* I love this dress, sis.
+DE: 
+
+[0532]
+EN: (And he's her brother? Interesting...)
+DE: 
+
+[0533]
+EN: *Chuckles* Are you about say what I think you're about to say?
+DE: 
+
+[0534]
+EN: *Snorts* Yeah, okay, I'm gonna say [mc].
+DE: 
+
+[0535]
+EN: Not that it'll ever happen, so don't let it get to your head.
+DE: 
+
+[0536]
+EN: *Laughs* Penelope [lastname] just said she'd like to have a threesome with her brother. How scandalous!
+DE: 
+
+[0537]
+EN: I had to say someone, better you than someone I barely know. It's just a game, anyway.
+DE: 
+
+[0538]
+EN: *Chuckles* I'm definitely going to remember this.
+DE: 
+
+[0539]
+EN: Bro, do you want a glass of water?
+DE: 
+
+[0540]
+EN: Are you okay, lil bro?
+DE: 
+
+[0542]
+EN: *Laughs* Taking the easy way out, I see?
+DE: 
+
+[0543]
+EN: *Chuckles* You're being such a tease tonight, aren't you?
+DE: 
+
+[0544]
+EN: Well, you can continue following your sister like a puppy, like everyone else, doing what she wants and telling her how pretty she is all the time...
+DE: 
+
+[0545]
+EN: ...W-Wait, what do you mean she's {i}interested{/i}?
+DE: 
+
+[0546]
+EN: To send them to your sister.
+DE: 
+
+[0547]
+EN: Just my kid brother who's gonna help me sneak into the dorm room of someone who stole something from me.
+DE: 
+
+[0548]
+EN: Oh, damn, that sounds exciting! That brother of yours sounds like a real Prince Charming!
+DE: 
+
+[0550]
+EN: *Whispering* I'm sorry I dragged you into this, bro.
+DE: 
+
+[0552]
+EN: *Giggles* Oh my, I had no idea you were suffering this much, bro!
+DE: 
+
+[0553]
+EN: *Chuckles* Pretty please... little brother?
+DE: 
+
+[0554]
+EN: I'm {i}so{/i} very sorry for flaunting my lewd body in front of you, brother. I had no idea it would cause you so much stress...
+DE: 
+
+[0555]
+EN: Okay, take a good look, bro.
+DE: 
+
+[0556]
+EN: I'd forgotten how perfect they were, sis.
+DE: 
+
+[0557]
+EN: Not quite yet, Miss [lastname]...
+DE: 
+
+[0559]
+EN: Admit it. You like being my personal little model, sis.
+DE: 
+
+[0560]
+EN: You move closer to Penelope, frantically trying to memorize every square inch of your eldest sister’s ethereal body.
+DE: 
+
+[0561]
+EN: *Giggles* You're crazy, bro...
+DE: 
+
+[0563]
+EN: Damn, bro...
+DE: 
+
+[0564]
+EN: Yet here I am, her little brother, seeing them up close and personal.
+DE: 
+
+[0565]
+EN: She's mine... For at least tonight, Penelope [lastname] is all mine...
+DE: 
+
+[0567]
+EN: *Giggles* You're a filthy little degenerate, aren't you, little brother?
+DE: 
+
+[0568]
+EN: *Giggles* Jesus, bro, how long can you keep up an erection like that?
+DE: 
+
+[0570]
+EN: Well, I guess it runs in the family, since I'm not the only one with their “features” pushed to the max here... 
+DE: 
+
+[0571]
+EN: Well, I guess it runs in the family, since I'm not the only one with their “features” pushed to the max here...
+DE: 
+
+[0573]
+EN: My god, sis, please don't stop...
+DE: 
+
+[0574]
+EN: I think it’s time for me to take the lead, sis...
+DE: 
+
+[0579]
+EN: You want it faster? Tell me, sis...
+DE: 
+
+[0580]
+EN: Your hands wrap around Penelope’s soft neck as you hasten your pace, your hips slamming relentlessly against your sister's buttocks.
+DE: 
+
+[0581]
+EN: Ohhh sis...
+DE: 
+
+[0582]
+EN: K-Keep up that pace, bro...
+DE: 
+
+[0583]
+EN: Don't think I forgot what you said that day in Warthogs, sis...
+DE: 
+
+[0586]
+EN: I wanna make your body writhe in pleasure, sis...
+DE: 
+
+[0587]
+EN: Y-You’re telling me you haven’t jacked off to your big sis since arriving in Kredon?
+DE: 
+
+[0590]
+EN: You're something else, sis...
+DE: 
+
+[0591]
+EN: I'm gonna have to ask you to come to all the parties I'm invited to from now on, bro.
+DE: 
+
+[0592]
+EN: I like the way you think, sis.
+DE: 
+
+[0593]
+EN: *Snorts* You're such a dork. You’re lucky you’re my cute little brother.
+DE: 
+
+[0594]
+EN: What are your plans, bro?
+DE: 
+
+[0595]
+EN: Didn't you tell me you didn't get to go to Kredon's Spring Dance when you were little because you had to take care of us?
+DE: 
+
+[0596]
+EN: Thanks for being a good influence, [mc].
+DE: 
+
+[0597]
+EN: Hey, that's what family is for.
+DE: 
+
+[0598]
+EN: I had a lot of fun tonight, bro. Thank you.
+DE: 
+
+[0599]
+EN: I'm glad you're my brother.
+DE: 
+
+[0600]
+EN: That's my son!
+DE: 
+
+[0601]
+EN: Thanks for sacrificing your sleep for the mission, honey.
+DE: 
+
+[0602]
+EN: After all these years, you're still taking care of me, eh Mom?
+DE: 
+
+[0603]
+EN: Aww, of course, sweetie! No matter how old you get, Mommy will always care for you.
+DE: 
+
+[0604]
+EN: Roleplay as Dalia
+DE: 
+
+[0605]
+EN: I've been looking forward to seeing where my mom works, so she invited me to come with her today.
+DE: 
+
+[0606]
+EN: I'm not her daughter, I'm her {i}son{/i}!
+DE: 
+
+[0607]
+EN: Alright, Mom...
+DE: 
+
+[0608]
+EN: And you, dear boy... are going to retrieve that information.
+DE: 
+
+[0609]
+EN: And that's not even taking into account the fact we're mother and son.
+DE: 
+
+[0610]
+EN: The Student Exchange Program, your sisters, the fact we're mother and son...
+DE: 
+
+[0611]
+EN: It’s like we’re fighting against fate or destiny, telling us what we’re doing is wrong.
+DE: 
+
+[0612]
+EN: I'll take what I want. I don't care if it's wrong.
+DE: 
+
+[0613]
+EN: And what I want... is you, [mc]. My one and only son.
+DE: 
+
+[0614]
+EN: *Kneeling down* You know, your grandmother used to say that risk-takers defy destiny with every decision. I’ve always kept that thought in my head.
+DE: 
+
+[0615]
+EN: What do they feed you boys nowadays? You certainly didn't get this from your father...
+DE: 
+
+[0618]
+EN: Can you handle me going faster, sweetie? I'll start slowly... and it'll make your mother feel so much better...
+DE: 
+
+[0623]
+EN: Don't worry, my queen, just lean against the wall and let your prince do the work here...
+DE: 
+
+[0624]
+EN: [mc] s-s-stop joking! I-I can't have a baby w{size=40}AAAHHHHhhh{/size}... {w=1.5}w-with my own s-son!
+DE: 
+
+[0625]
+EN: I can’t cross that line, though... not if I want to do this again...
+DE: 
+
+[0626]
+EN: I can't be fired, [mc], I have our family to feed!
+DE: 
+
+[0627]
+EN: *Chuckles* Let's keep these dreams of yours between us, though. I don’t know how your sisters would take the news.
+DE: 
+
+[0628]
+EN: I kept a mask on because I was afraid that it would scare or hurt Penelope and Dalia.
+DE: 
+
+[0629]
+EN: Of course not! I swear on my children!
+DE: 
+
+[0630]
+EN: I have two girls and one son, Dalia, Penelope, and [mc] here.
+DE: 
+
+[0631]
+EN: The younger ones will start college next fall, and the oldest one will graduate in a couple of years.
+DE: 
+
+[0632]
+EN: I... Whatever you do, you need to hang onto your kids for as long as you can.
+DE: 
+
+[0633]
+EN: Goddammit, nice job, bro!
+DE: 
+
+[0634]
+EN: But well, at least it was nice to see our grandparents and a few friends.
+DE: 
+
+[0635]
+EN: No worries bro, there's nothing important to do tonight.
+DE: 
+
+[0636]
+EN: *Snorts* Of course you'd say that! I'm afraid I'll have to shower alone today, my insatiable son.
+DE: 
+
+[0637]
+EN: Don't be nasty! That's your mother!
+DE: 
+
+[0638]
+EN: Wow, I love your hair, sis. You look absolutely stunning.
+DE: 
+
+[0639]
+EN: Thanks bro!
+DE: 
+
+[0640]
+EN: Oh, hey bro.
+DE: 
+
+[0641]
+EN: It's a battle of wits, my brother.
+DE: 
+
+[0642]
+EN: Handling the loss like a true sportswoman, Miss [lastname].
+DE: 
+
+[0643]
+EN: Good luck, Dal.
+DE: 
+
+[0644]
+EN: Daly? Did you fall asleep back there?
+DE: 
+
+[0645]
+EN: Did you see that, Dal?
+DE: 
+
+[0647]
+EN: Oh... so I'd be your secret lover. Nice...
+DE: 
+
+[0649]
+EN: If this is the only time I can marry you, I'm taking it.
+DE: 
+
+[0650]
+EN: And don't worry, unlike Jerry's, our marriage is completely open to sex.
+DE: 
+
+[0651]
+EN: You always leave me speechless, sis...
+DE: 
+
+[0652]
+EN: *Taking her shirt off* We know each other pretty well already, brother.
+DE: 
+
+[0653]
+EN: (I can't believe I really asked my brother to go down on me. Alex is such a bad influence, I shouldn't listen to her.)
+DE: 
+
+[0654]
+EN: I want you to get carried away so bad, sis...
+DE: 
+
+[0655]
+EN: We're in a cabin in the middle of nowhere, who cares? No one else will ever know.
+DE: 
+
+[0656]
+EN: It's not... that much weirder, right?
+DE: 
+
+[0657]
+EN: Is it too weird? I mean, we're still siblings as it is...
+DE: 
+
+[0659]
+EN: Now it's you who's being overly confident, brother...
+DE: 
+
+[0660]
+EN: (With my brother.)
+DE: 
+
+[0662]
+EN: Oh, Dal...
+DE: 
+
+[0664]
+EN: I swear this booty of yours should be worshipped, sis.
+DE: 
+
+[0665]
+EN: Oh sis...
+DE: 
+
+[0666]
+EN: B-But we're siblings...
+DE: 
+
+[0667]
+EN: W-We can't.. Not now. N-Not here...
+DE: 
+
+[0669]
+EN: I d-don't know... m-maybe...
+DE: 
+
+[0670]
+EN: Just like big sis... interesting.
+DE: 
+
+[0673]
+EN: (He's... the one... even if we're...)
+DE: 
+
+[0676]
+EN: Oh Lord, Daly...
+DE: 
+
+[0677]
+EN: *Giggles* You're a terrible liar, bro.
+DE: 
+
+[0678]
+EN: Take it all, sis...
+DE: 
+
+[0679]
+EN: See you later, bro.
+DE: 
+
+[0680]
+EN: Goodbye, sis.
+DE: 
+
+[0681]
+EN: Although... not as much as when you went to Wyatt's house with your mother, Nancy [lastname], that's for sure.
+DE: 
+
+[0682]
+EN: H-Hey Dal!
+DE: 
+
+[0683]
+EN: Thanks, bro!
+DE: 
+
+[0684]
+EN: I know you've been fooling around with the WRE with your peculiar group of... {i}friends{/i} and {i}family{/i}.
+DE: 
+
+[0685]
+EN: *Snorts* Don't worry, I'm kidding, I'm kidding! He {i}is{/i} your brother, after all.
+DE: 
+
+[0686]
+EN: About {i}anything{/i}.
+DE: 
+
+[0687]
+EN: Penelope [lastname] plays Eternum!
+DE: 
+
+[0688]
+EN: *Hyperventilating* I left my drawing utensils at the [lastname] house last time I was there!
+DE: 
+
+[0689]
+EN: You raise your gaze from your sister's chest to meet her eyes, finding her staring at you in a bemused manner.
+DE: 
+
+[0690]
+EN: She's my sister
+DE: 
+
+[0691]
+EN: Uhh... well, she's actually my sister, but... alright, let's do it.
+DE: 
+
+[0692]
+EN: Nice job, bro.
+DE: 
+
+[0693]
+EN: Come on, sis!
+DE: 
+
+[0694]
+EN: Be careful, little brother.
+DE: 
+
+[0695]
+EN: You look incredible, sis.
+DE: 
+
+[0696]
+EN: I've come to recognize that horndog expression by now, little bro.
+DE: 
+
+[0697]
+EN: (You know that all this teasing with your brother isn't right.)
+DE: 
+
+[0698]
+EN: I mean... of course I like him, he's my little brother, but not in {i}that{/i} way, you know?
+DE: 
+
+[0699]
+EN: Penelope [lastname] is my bestie.
+DE: 
+
+[0700]
+EN: What are you talking about? He's not my step-brother, he's my actual brother.
+DE: 
+
+[0701]
+EN: Wait, really? I thought he only stayed with you for a little while.
+DE: 
+
+[0702]
+EN: And didn't you mention babysitting him when your mom had to work?
+DE: 
+
+[0703]
+EN: Isn't that a normal thing to do as a big sister?
+DE: 
+
+[0704]
+EN: And besides, that was ages ago.
+DE: 
+
+[0705]
+EN: (But in the end we’re still siblings. It’d cause so much trouble...)
+DE: 
+
+[0706]
+EN: (You can’t be fixated on your own younger brother like some teenage crush, Penny. There’s plenty more fish in the sea!)
+DE: 
+
+[0707]
+EN: (We're just two siblings goofing around.)
+DE: 
+
+[0708]
+EN: PENELOPE{w=.5} P. {w=.5}[lastname!u].
+DE: 
+
+[0709]
+EN: Ohh... you brought your brother again!
+DE: 
+
+[0710]
+EN: I'm [mc] [lastname] – Penelope [lastname]'s representative.
+DE: 
+
+[0711]
+EN: P-Penelope Paige [lastname].
+DE: 
+
+[0712]
+EN: Penelope Paige [lastname].
+DE: 
+
+[0713]
+EN: I'm glad I have someone who I trust and with whom I can do these kinds of things, [mc].
+DE: 
+
+[0714]
+EN: *Sitting on the car* Are you okay, bro? Your mind seems to be elsewhere.
+DE: 
+
+[0715]
+EN: We're siblings. We can’t be doing these things.
+DE: 
+
+[0716]
+EN: That I would stop thinking about you like this 24/7... thinking these thoughts about my own little brother.
+DE: 
+
+[0718]
+EN: And we could go back to being our regular selves. Being regular brother and sister.
+DE: 
+
+[0719]
+EN: S-Shit... this is crazy, bro.
+DE: 
+
+[0720]
+EN: We're both crazy.
+DE: 
+
+[0722]
+EN: Ooh SIS....
+DE: 
+
+[0726]
+EN: Jesus Christ, that feels good, sis...
+DE: 
+
+[0728]
+EN: Try it for me, sis...
+DE: 
+
+[0729]
+EN: O-Oh sis...
+DE: 
+
+[0730]
+EN: You're asking for a lot there, sis...
+DE: 
+
+[0731]
+EN: O-Oh my god, bro, you're stretching me out so much...
+DE: 
+
+[0732]
+EN: Y-You're taking it like a pro, sis...
+DE: 
+
+[0736]
+EN: C’mon... you were talking such a big game earlier, brother...
+DE: 
+
+[0737]
+EN: *Panting* I just can't stop, sis...
+DE: 
+
+[0738]
+EN: O-Oh my god, sis...
+DE: 
+
+[0743]
+EN: Crush me against this car, bro...
+DE: 
+
+[0744]
+EN: Oh yeah, sis...
+DE: 
+
+[0745]
+EN: I-I'm at my limit, sis...
+DE: 
+
+[0747]
+EN: *Whispering* Oh, sis...
+DE: 
+
+[0748]
+EN: I'm proud of our hot sissy
+DE: 
+
+[0749]
+EN: *Turning around* Ah, good morning Mo-
+DE: 
+
+[0750]
+EN: *Gulps* M-Mom.
+DE: 
+
+[0751]
+EN: I can see where Penny and I got our love for teasing.
+DE: 
+
+[0752]
+EN: And join my mom on The New World server.
+DE: 
+
+[0753]
+EN: Sooo... should we log in now? My mom must be waiting for us already.
+DE: 
+
+[0754]
+EN: I was trying to focus on my house, but I still appeared on the same exact spot where I left. Maybe I need more practice?
+DE: 
+
+[0755]
+EN: Turns out... I decided to pick up a couple of pizzas for my mom and me.
+DE: 
+
+[0756]
+EN: MOM!
+DE: 
+
+[0757]
+EN: {i}Listen, I was just calling to see if you've heard anything about Mom. I haven't heard from her in a few months.
+DE: 
+
+[0758]
+EN: What...? There's no power in this world strong enough to stop Mom from talking to her kids.
+DE: 
+
+[0759]
+EN: Was that your sister, Penelope [lastname]?!
+DE: 
+
+[0760]
+EN: The one and only... PENELOPE [lastname!u]!
+DE: 
+
+[0761]
+EN: Daly?! Is that you?!
+DE: 
+
+[0762]
+EN: {cps=16}However...{cps=1.5} {cps=16}the call from Dalia [lastname] sparked a glimmer of hope within him, so he decided to head to the coffee area and wait for her.{cps=1} {cps=16}This...{cps=1.4} {cps=16}was his chance.
+DE: 
+
+[0763]
+EN: Remember when we were foolin’ around in Kredon? Doin’ things no brother and s-sister should be doin’...?
+DE: 
+
+[0765]
+EN: {cps=17}Our hero was unable to resist the sight of his sister's ample bosom and alluring figure.{cps=0.6} {cps=16}Overwhelmed by desire, he accepted her offer and surrendered himself to her embrace.
+DE: 
+
+[0766]
+EN: Ah, a very smart choice, my boy... always making the most of every situation. I expected no less from my son!
+DE: 
+
+[0767]
+EN: And how about you, Mom? Have you ever caught Dalia or Penny... you know, giving in to their impulses? 
+DE: 
+
+[0768]
+EN: And how about you, Mom? Have you ever caught Dalia or Penny... you know, giving in to their impulses?
+DE: 
+
+[0769]
+EN: And honestly, I had a lot of reservations at first, but now I don't regret it one bit.
+DE: 
+
+[0770]
+EN: M-Mom...?
+DE: 
+
+[0771]
+EN: B-{w=0.2}but... {w=0.8}{size=50}AREN'T YOU {w=0.5}{i}HIS {b}MOM?!
+DE: 
+
+[0772]
+EN: Indeed. It was something we both desired.
+DE: 
+
+[0773]
+EN: Holy shit, that-that's {i}insane{/i}. I-I really didn't expect that.
+DE: 
+
+[0774]
+EN: *Giggles* Does it bother you? And don't worry, I won't get in your way.
+DE: 
+
+[0775]
+EN: I think I should keep my distance from your mother, [mc].
+DE: 
+
+[0776]
+EN: *Pulling your mother towards you* Hmph...
+DE: 
+
+[0777]
+EN: How are you still tight after giving birth to three children...?
+DE: 
+
+[0778]
+EN: My balls are about to explode, but... I still think we can give my mom one last ride.
+DE: 
+
+[0779]
+EN: Come here, Mom...
+DE: 
+
+[0781]
+EN: I need to find myself a man like that.
+DE: 
+
+[0782]
+EN: Hey, Dal, I'm done over here!
+DE: 
+
+[0783]
+EN: It's just some silly gift for... my very special sister.
+DE: 
+
+[0784]
+EN: Thank you so much, bro. You're the best.
+DE: 
+
+[0785]
+EN: Thank you so much, bro.
+DE: 
+
+[0786]
+EN: You know my mom's offer still stands, right?
+DE: 
+
+[0787]
+EN: Your abs are looking good, Daly.
+DE: 
+
+[0788]
+EN: I... usually just eat whatever my mom cooks.
+DE: 
+
+[0789]
+EN: *Giggles* You get carried away too easily, bro.
+DE: 
+
+[0790]
+EN: In the end I’m gonna start thinking you’re actually into me, sis...
+DE: 
+
+[0791]
+EN: That's... a little embarrassing. Shit, does Jerry know we're related?
+DE: 
+
+[0792]
+EN: It doesn't seem like he’s figured out that Dalia and I are related at least, but damn... that took a sad turn all of a sudden.
+DE: 
+
+[0794]
+EN: You think this... {i}Mom{/i} wants to play the role of some sort of intermediary? Because she wants it too?
+DE: 
+
+[0795]
+EN: But anyway, thank you for listening, I guess. And please keep this conversation private!
+DE: 
+
+[0796]
+EN: Hey, hey... what's wrong, sis? Are you okay?
+DE: 
+
+[0797]
+EN: Thank you for... humoring me with my ramblings, bro.
+DE: 
+
+[0798]
+EN: I also love spending time with you, sis.
+DE: 
+
+[0799]
+EN: Are you okay, Dal...?
+DE: 
+
+[0800]
+EN: I mean, like me like... “of course, she's my sister”?
+DE: 
+
+[0801]
+EN: Or like me, like... “ah, yeah, she's hot–”
+DE: 
+
+[0802]
+EN: You mean... love me... as your sister?
+DE: 
+
+[0803]
+EN: Yeah, you're smoking hot, but no, I didn't come looking for you because of your “butt”. It doesn't matter that you're my sister.
+DE: 
+
+[0804]
+EN: I know you love it, sis, you can't fool me...
+DE: 
+
+[0805]
+EN: Me? You've been watching too much porn, bro.
+DE: 
+
+[0806]
+EN: How is a cute little kiss not enough? You're getting so greedy, brother...
+DE: 
+
+[0808]
+EN: Aghh... you're the best, sis...
+DE: 
+
+[0809]
+EN: *Panting* O-OOH D-D-DALY, HANG IN RIGHT THERE...
+DE: 
+
+[0811]
+EN: You're underestimating the amount of “energy” you just unloaded a minute ago, brother.
+DE: 
+
+[0812]
+EN: As you expected, just the sight of your sister baring herself before you and the thoughts of what you'd do to her make you hard again in an instant.
+DE: 
+
+[0814]
+EN: My god, sis, I do...
+DE: 
+
+[0815]
+EN: OH, DALIA, YES...
+DE: 
+
+[0816]
+EN: O-Oh sis, I've been waiting for this forever...
+DE: 
+
+[0817]
+EN: Agghhh... oh bro...
+DE: 
+
+[0821]
+EN: You d-don't have to hold back, sis.
+DE: 
+
+[0826]
+EN: *Giggling breathlessly* That my idiot brother who m-moved back in with us w-would...
+DE: 
+
+[0829]
+EN: *Panting* Oh sweet L-Lord, bro...
+DE: 
+
+[0831]
+EN: *Panting* Oh, sis...
+DE: 
+
+[0833]
+EN: You sound exhausted, sis.
+DE: 
+
+[0834]
+EN: Well, I don't know, then I just thank Mom for making me the way I am.
+DE: 
+
+[0835]
+EN: (Imagine her face if I tell her it was with my brother.)
+DE: 
+
+[0836]
+EN: (Sissy would freak out if she found out...)
+DE: 
+
+[0837]
+EN: Hmmm, how many other boys do you know...
+DE: 
+
+[0838]
+EN: *Giggles* Can't be [mc]...
+DE: 
+
+[0839]
+EN: What!? Of-f course not... I-I mean...{w} {size=*0.75}he's my–{/size}{w} {size=*0.6}he's our...{/size}
+DE: 
+
+[0840]
+EN: YOU'RE IN LOVE WITH OUR BROTHER?!
+DE: 
+
+[0841]
+EN: He's our little brother! Our actual, {i}blood-related brother!{/i}
+DE: 
+
+[0842]
+EN: You think I'm not aware of that?
+DE: 
+
+[0843]
+EN: It's just, ever since [mc] came back, everything's been so... different.
+DE: 
+
+[0844]
+EN: Better really. Every time I'm with him, I'm just so happy and... confused.
+DE: 
+
+[0845]
+EN: Of course I’m confused! I know it’s wrong to feel this way!
+DE: 
+
+[0846]
+EN: What?! Hah! Me?! With our {i}brother?{/i} Pfft!
+DE: 
+
+[0847]
+EN: N-Not any more than the other girls do... I'm just doting on him as a big sister!
+DE: 
+
+[0848]
+EN: You've been quite clingy for a "big sister"...
+DE: 
+
+[0849]
+EN: You just can't let me have anything, can you?! Not even my own brother!
+DE: 
+
+[0850]
+EN: And you had the nerve to judge {i}me{/i} for liking my brother?!
+DE: 
+
+[0851]
+EN: What, was I supposed to pretend that {i}incest{/i} is all normal?
+DE: 
+
+[0852]
+EN: You're such a... selfish hypocrite!
+DE: 
+
+[0853]
+EN: *Grumbling to herself* His other goddamn sister, too?!
+DE: 
+
+[0854]
+EN: *Grumbling to herself* I thought we trusted each other more than this... Like... I get this is a huge taboo...
+DE: 
+
+[0855]
+EN: *Grumbling to herself* And on top of that, we're all living crazy enough lives, I know we've all got a million things going on and enough shit to worry about.
+DE: 
+
+[0857]
+EN: As if I'm the {i}only{/i} one here screwing her brother.
+DE: 
+
+[0858]
+EN: Something {i}you{/i} could've told me too, right?
+DE: 
+
+[0859]
+EN: Or are you the only one allowed to keep such a secret?!
+DE: 
+
+[0860]
+EN: Let's make him choose which {i}sister{/i} he wants!
+DE: 
+
+[0861]
+EN: Last thing your brother would want is for you to get hurt looking for him.
+DE: 
+
+[0862]
+EN: His only other family is a drunk skunk of a father living an ocean away.
+DE: 
+
+[0863]
+EN: First, the other sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].
+DE: 
+
+[0864]
+EN: [mc], however, appears to possess a magnetic pull, both physical and, I daresay, emotional, that draws multiple females to him alone. Even his own blood is caught in its grasp.
+DE: 
+
+[0865]
+EN: Even his relatives? Astounding...
+DE: 
+
+[0866]
+EN: Among them is a woman named Dalia, one of his elder sisters, who is just as strong, if not stronger than he is in close combat.
+DE: 
+
+[0867]
+EN: As for me, I’m spending Christmas Eve with my family and Alex. Although... Alex doesn't know yet. It's a surprise.
+DE: 
+
+[0868]
+EN: Last Christmas, I had a cold kebab in the kitchen while Dad passed out on the couch in the middle of his tenth beer.
+DE: 
+
+[0869]
+EN: *Chuckles* Damn, I almost forgot how into Christmas you are, sis.
+DE: 
+
+[0870]
+EN: Honestly, I’d probably still feel the same if I hadn’t grown up with Dad.
+DE: 
+
+[0871]
+EN: We never celebrated it in the UK, so Christmas stopped feeling special.
+DE: 
+
+[0872]
+EN: *Starts reading* {i}Dear Ms. [lastname], thank you for booking my humble property for this year’s Christmas Eve.
+DE: 
+
+[0873]
+EN: You've been hiding so many secrets from me, sissy.
+DE: 
+
+[0874]
+EN: I don't remember you being one when I still lived with you.
+DE: 
+
+[0875]
+EN: *Chuckles* You were quick, sis. Snagged the best room in the whole place before anyone else, eh?
+DE: 
+
+[0876]
+EN: I don't know about the other swimsuits you brought, but this bikini is doing things to me, sis.
+DE: 
+
+[0878]
+EN: It’s hard for anything to escape her notice in this house, so I suspected she knew something was going on. But thanks for confirming it. 
+DE: 
+
+[0879]
+EN: It’s hard for anything to escape her notice in this house, so I suspected she knew something was going on. But thanks for confirming it.
+DE: 
+
+[0880]
+EN: I can’t believe she actually talked with you about this... {i}stuff{/i} happening between us, her own kids... What exactly is she thinking?
+DE: 
+
+[0881]
+EN: I mean, it’s 2034. This probably isn’t the freakiest thing you’ll see on the street nowadays. And we are {i}way{/i} past the whole incest thing so...
+DE: 
+
+[0882]
+EN: Haven't you seen Mom? She’s almost twenty years older than me, and hers are still as firm as a twenty-year-old’s.
+DE: 
+
+[0883]
+EN: Genetics are on my side, bro.
+DE: 
+
+[0884]
+EN: Time to put all those thousands of hours playing RPGs to good use and impress your big sis.
+DE: 
+
+[0885]
+EN: *Snorts* Looks like you should’ve invested another thousand hours in Skyrim, little brother.
+DE: 
+
+[0886]
+EN: Mmm, I don't know, sis...
+DE: 
+
+[0888]
+EN: W-When are you gonna... take that picture, bro...?
+DE: 
+
+[0890]
+EN: You should learn to savor the moment, lil bro...
+DE: 
+
+[0891]
+EN: Oh, sis...
+DE: 
+
+[0892]
+EN: *Giggles* You’re not secretly recording me, right? Taking advantage of your blind big sister...?
+DE: 
+
+[0895]
+EN: Please... brother...
+DE: 
+
+[0896]
+EN: Make her call you something different (Use "Other" for "little brother"/"bro")
+DE: 
+
+[0897]
+EN: Make her use your name
+DE: 
+
+[0898]
+EN: Say my name...
+DE: 
+
+[0899]
+EN: It doesn't matter how many times I see you like this, sis... you still leave me breathless.
+DE: 
+
+[0900]
+EN: I've said it before, and I'll say it again, sis — your ass is criminally underrated...
+DE: 
+
+[0903]
+EN: You're just too much, sis...
+DE: 
+
+[0904]
+EN: Hey... can I... a-ask you something, bro?
+DE: 
+
+[0905]
+EN: {color=[walk_points]}Have anal sex with your big sister [gr][mt](Anal)
+DE: 
+
+[0906]
+EN: {color=[walk_points]}Have anal sex with your big sister
+DE: 
+
+[0907]
+EN: Have anal sex with your big sister [gr][mt](Anal)
+DE: 
+
+[0908]
+EN: Have anal sex with your big sister
+DE: 
+
+[0909]
+EN: I’ll remember it next time, sis... word for word.
+DE: 
+
+[0910]
+EN: Last chance to back out, sis...
+DE: 
+
+[0913]
+EN: My god, sis...
+DE: 
+
+[0914]
+EN: I’ve never had a Christmas dinner like this before, Mom.
+DE: 
+
+[0915]
+EN: I swear on my life, sis, they're delicious.
+DE: 
+
+[0916]
+EN: *Chuckles* (Penelope Paige [lastname]...)
+DE: 
+
+[0917]
+EN: Ever since I moved away, Christmas didn’t mean shit to me. It just became an excuse to slack off, sleep in, and play games until my eyes burned.
+DE: 
+
+[0918]
+EN: But now... damn, now I remember what it really means.
+DE: 
+
+[0919]
+EN: I want to be with my family and friends for the rest of my life, without wondering if today’s the day some psycho or evil corporation takes it all away.
+DE: 
+
+[0920]
+EN: I didn't know you had a poet inside you, little brother!
+DE: 
+
+[0921]
+EN: *Whispering* Though... something tells me that's exactly the reaction a certain girl was hoping for.
+DE: 
+
+[0922]
+EN: Did you get hard just staring at your sister?
+DE: 
+
+[0923]
+EN: Believe me, I know. You kids are my everything, but I sure as hell wasn’t planning on being a mom at eighteen.
+DE: 
+
+[0924]
+EN: Well, [mc]'s the baby of your family, and I'm March... so he goes first.
+DE: 
+
+[0925]
+EN: Thank you for your very... scientific, articulate observation, brother.
+DE: 
+
+[0926]
+EN: And just from objective observation...
+DE: 
+
+[0927]
+EN: Seriously? We're mostly family here.
+DE: 
+
+[0928]
+EN: Like you said, it's just family here, plus Alex... and well, we’re just having fun. Who cares?
+DE: 
+
+[0929]
+EN: Like you said, the card didn't mention anything else. We can keep it “family-friendly.”
+DE: 
+
+[0930]
+EN: And I doubt my mom or sisters would kiss me like that in front of the others.
+DE: 
+
+[0931]
+EN: Like... four of us are literally family here, so...
+DE: 
+
+[0932]
+EN: I guess we can just skip ahead and give the points to Alex.
+DE: 
+
+[0933]
+EN: Hey, hold on! We still have to vote! Those are the rules!
+DE: 
+
+[0934]
+EN: As the only guy here, I might be taking those points!
+DE: 
+
+[0935]
+EN: F-Fine, fine... let's give this pervert his ego boost.
+DE: 
+
+[0936]
+EN: If I {i}had to{/i} have a threesome with anyone here, I’d pick Alex and... as the only man here, [mc].
+DE: 
+
+[0937]
+EN: Guess I'd also have it with [mc] and Alex.
+DE: 
+
+[0938]
+EN: Well... As much as I’d like to avoid anything that could get pearl-clutching credit card companies offended, my options here are limited, so I'll say Alex, and...
+DE: 
+
+[0939]
+EN: Let's go, bro! Time to put on a show!
+DE: 
+
+[0940]
+EN: Well, thank you, dear.
+DE: 
+
+[0941]
+EN: You... YOU HAVE TOO–?! {w=0.7}BUT HE'S– {w=0.5}he's your–
+DE: 
+
+[0942]
+EN: I feel like... she probably suspects, but it's obviously a much different case with you than it is with me.
+DE: 
+
+[0943]
+EN: I know this might sound like a crazy bunch of bullshit on top of all that, but...
+DE: 
+
+[0944]
+EN: This went from zero to nuclear real quick. With your own brother...
+DE: 
+
+[0945]
+EN: M-Mom, I can explai–
+DE: 
+
+[0947]
+EN: This family is {b}{i}WILD!
+DE: 
+
+[0948]
+EN: No. No, no... no. Of course not.
+DE: 
+
+[0949]
+EN: But seriously, I'm off to bed! Goodnight, bro.
+DE: 
+
+[0950]
+EN: Goodnight, sis.
+DE: 
+
+[0951]
+EN: Goodnight, bro.
+DE: 
+
+[0952]
+EN: I-I mean... it’s a little weird with my brother here too, but... whatever.
+DE: 
+
+[0953]
+EN: J-Jesus Christ, bro.
+DE: 
+
+[0955]
+EN: Oh, sweet heavens, sis...
+DE: 
+
+[0957]
+EN: Oh, come on... don't be a bore! No one else will find out!
+DE: 
+
+[0958]
+EN: Just... don't get any weird ideas. We're still siblings...
+DE: 
+
+[0960]
+EN: *Whispers sharply* Hey! Alex is right there!
+DE: 
+
+[0961]
+EN: *Whispering* ...But, thanks.
+DE: 
+
+[0962]
+EN: HEY! I'm your sister! And even if I weren't, I'm-
+DE: 
+
+[0963]
+EN: What? He's my brother! O-Of course not!
+DE: 
+
+[0968]
+EN: Let yourself go and look at your beloved brother losing control because of you and your beautiful body.
+DE: 
+
+[0974]
+EN: You're taking it balls-deep f-from the start, sis...
+DE: 
+
+[0975]
+EN: S-S-Slow down, bro...
+DE: 
+
+[0976]
+EN: *Groaning* Oh D-Daly...
+DE: 
+
+[0979]
+EN: *Grinning* I'm watching a live incest porno in front of me...
+DE: 
+
+[0980]
+EN: O-Oooooh bbrrroooo... b-breeeEEAAAk meEEE...
+DE: 
+
+[0981]
+EN: Oh, sis... I-I'm getting close too...
+DE: 
+
+[0982]
+EN: I should warn you, though... I'm not as easy as your sister.
+DE: 
+
+[0983]
+EN: *Choked laugh* Y-You're one t-to talk, girl... 
+DE: 
+
+[0984]
+EN: *Choked laugh* Y-You're one t-to talk, girl...
+DE: 
+
+[0985]
+EN: *Grinning* You'll be fine, sis...
+DE: 
+
+[0986]
+EN: T-That's because my brother broke me! A-And all because of you!
+DE: 
+
+[0987]
+EN: How does it feel, huh? Going around making every girl with daddy issues fall for you. Even your own {i}sister{/i}. Must be one hell of a power trip.
+DE: 
+
+[0988]
+EN: It’s insane to think about, but... my mom is really the reason all of this is even working somehow.
+DE: 
+
+[0989]
+EN: I just... want everyone to be happy. Especially my children, even in this... situation of ours. So I nudge, guide, push a little where I think it’ll help.
+DE: 
+
+[0990]
+EN: Dalia [lastname] apologizing? This truly is a Christmas miracle.
+DE: 
+
+[0991]
+EN: W-Well, the whole incest part is weird enough as it is, so...
+DE: 
+
+[0992]
+EN: Sharing him can't be that much worse. Maybe. I guess.
+DE: 
+
+[0993]
+EN: I get to be with my beloved brother and still have my sister’s love!
+DE: 
+
+[0994]
+EN: Yeah, yeah — your nose isn't lying, Daly. I brought crepes for everyone!
+DE: 
+
+[0996]
+EN: My mother always cared for me, but my dad was never around much. He was always so focused on his job and never made time for our family. This basically left my mom as the only parent taking care of four young kids while still juggling school.
+DE: 
+
+[0997]
+EN: He got custody of me and my twin sister, taking us with him to the UK while my mom stayed behind with our two older sisters. I know it sounds a bit bleak, but don't worry - this isn't a sob story.
+DE: 
+
+[0998]
+EN: He had to work to support the three of us. Heaven knows where we'd be without him.
+DE: 
+
+[0999]
+EN: (Annie is my younger twin sister.)
+DE: 
+
+[1000]
+EN: (When we moved from Kredon, all we had were each other until we met Chang. He helped fill the gap of our missing family, but obviously couldn't be around us all the time.)
+DE: 
+
+[1001]
+EN: (We did have our grandparents on our dad's side living in the UK. They loved to pamper us when they could, but rarely were able to visit.)
+DE: 
+
+[1002]
+EN: (With our father always off working, it was pretty much just the two of us at home most of the time.)
+DE: 
+
+[1003]
+EN: (In those chaotic and lonely times, we gave each other stability.)
+DE: 
+
+[1004]
+EN: (As cliche as it may be for twins, we've naturally become inseparable ever since.)
+DE: 
+
+[1005]
+EN: (Because of how close we were, people liked to joke that we would've make a great couple... but the truth is, we're just siblings.)
+DE: 
+
+[1006]
+EN: (. . .)
+DE: 
+
+[1007]
+EN: (Well... she is cute... and we love spending time with each other...)
+DE: 
+
+[1008]
+EN: (NO.{w=0.5} Stop it.{w=1} She'd probably freak out if I did.)
+DE: 
+
+[1009]
+EN: (It would be... wrong. Very wrong! We're twin siblings after all.)
+DE: 
+
+[1010]
+EN: (Why am I even thinking about this!?)
+DE: 
+
+[1011]
+EN: I was saying that I spoke with Mom.
+DE: 
+
+[1012]
+EN: I can't wait to see her. I hope she recognizes us.
+DE: 
+
+[1013]
+EN: *Laughs* I'm sure she will. She is our mother after all.
+DE: 
+
+[1014]
+EN: (Our mother, Nancy, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)
+DE: 
+
+[1015]
+EN: (The two of us used to spend entire afternoons playing with Mom and our older sister Dalia, but then we had to move and ended up losing touch.)
+DE: 
+
+[1016]
+EN: (Living with them will be much cheaper than renting a student residence, and it'll surely be nice to see Mom, Dalia, and our oldest sister Penelope again.)
+DE: 
+
+[1017]
+EN: (Come to find out, she actually had our old rooms available!)
+DE: 
+
+[1018]
+EN: (Annie’s actually been the one who’s been coordinating with Mom over the phone, I didn't have to do anything.)
+DE: 
+
+[1019]
+EN: I'm really excited, do you think everything will go well?
+DE: 
+
+[1020]
+EN: Don't worry sis, it'll be alright.
+DE: 
+
+[1021]
+EN: And anyways, it's not like it's a stranger we're meeting, it's our family.
+DE: 
+
+[1022]
+EN: What's the first thing you're going to do when we get to our old home?
+DE: 
+
+[1023]
+EN: You should go to sleep too, sis. We have to wake up early tomorrow.
+DE: 
+
+[1024]
+EN: You're nothing but a big ball of envy because your dear sister and bestie can play Eternum and you can't since you didn't save any money.
+DE: 
+
+[1025]
+EN: B-Bestie?
+DE: 
+
+[1026]
+EN: But that doesn't mean you aren’t also my best friend, Annie! And my precious twin sister!
+DE: 
+
+[1027]
+EN: We've literally been together since birth, sis.
+DE: 
+
+[1028]
+EN: You're my best... male friend! Basically my brother!
+DE: 
+
+[1029]
+EN: Ahh, it's a deal, bro!
+DE: 
+
+[1030]
+EN: Hello everyone! Annie is back!
+DE: 
+
+[1031]
+EN: I know you're excited sis, but I'd appreciate it if you could at least carry your hand baggage!
+DE: 
+
+[1032]
+EN: It's just that I'm excited to be in our hometown again!
+DE: 
+
+[1033]
+EN: Well, I understand, but we left this place when we were 8, so I don't really remember anything.
+DE: 
+
+[1034]
+EN: We’ve never had a chance to come back ‘til now, so I'm excited to relive all our childhood memories!
+DE: 
+
+[1035]
+EN: Anyway, do you know where Mom is?
+DE: 
+
+[1036]
+EN: Mission failed, bro...
+DE: 
+
+[1037]
+EN: Annie! My precious little girl!
+DE: 
+
+[1038]
+EN: Y-Yeah, me too.
+DE: 
+
+[1039]
+EN: You're even cuter than when I last saw you. You've grown so much!
+DE: 
+
+[1040]
+EN: T-Thank you, Mom.
+DE: 
+
+[1041]
+EN: God, you can't imagine how much I missed my little twins!
+DE: 
+
+[1042]
+EN: We missed you too, Mom...
+DE: 
+
+[1043]
+EN: It's so nice to finally see you again!
+DE: 
+
+[1044]
+EN: I've prepared your old rooms for each of you, though I must warn you – don't expect anything fancy.
+DE: 
+
+[1045]
+EN: No worries, Mom! I'm sure it'll be more than enough!
+DE: 
+
+[1046]
+EN: I hope so!
+DE: 
+
+[1047]
+EN: If our rooms didn't shrink since last time, it'll be alright.
+DE: 
+
+[1048]
+EN: *Laughs* Well, you two are also much bigger now. Do you remember your time in the USA, Annie?
+DE: 
+
+[1049]
+EN: Kind of, but it's been so many years.
+DE: 
+
+[1050]
+EN: But I do remember all the fun we had playing together!
+DE: 
+
+[1051]
+EN: Of course! How could we forget those times?
+DE: 
+
+[1052]
+EN: After you left, I was able to finish my thesis.
+DE: 
+
+[1053]
+EN: Thanks to that, I work in laboratory now. It pays pretty well.
+DE: 
+
+[1054]
+EN: That's great! So how are our sisters doing?
+DE: 
+
+[1055]
+EN: They're doing well, they've grown up wonderfully like you.
+DE: 
+
+[1056]
+EN: *Chuckles* That's good to hear!
+DE: 
+
+[1057]
+EN: Yes... in the beginning I worked a lower-paying job but now that those two are older, I was able to start a better job within a local company.
+DE: 
+
+[1058]
+EN: Ahh, thank you, honey!
+DE: 
+
+[1059]
+EN: Alright then! Let's go to the car! Dalia and Penelope are dying to see you two again!
+DE: 
+
+[1060]
+EN: (My afternoons were spent playing with Mom, Dalia, and Annie. We had dinner every night at eight, and then went to bed.)
+DE: 
+
+[1061]
+EN: (Mom would always call us on our birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)
+DE: 
+
+[1062]
+EN: Do you remember it, Annie?
+DE: 
+
+[1063]
+EN: Yes, this place looks just like I remember! It's so beautiful! 
+DE: 
+
+[1064]
+EN: Yes, this place looks just like I remember! It's so beautiful!
+DE: 
+
+[1065]
+EN: *Laughs* That's nice, it never felt whole without you two.
+DE: 
+
+[1066]
+EN: We're used to living in a flat now, so this'll be like living in a palace again! 
+DE: 
+
+[1067]
+EN: We're used to living in a flat now, so this'll be like living in a palace again!
+DE: 
+
+[1068]
+EN: Yes, it is a good home.
+DE: 
+
+[1069]
+EN: It's served us well the past years.
+DE: 
+
+[1070]
+EN: *Clears throat* Let's not get sentimental...
+DE: 
+
+[1071]
+EN: You first, Annie!
+DE: 
+
+[1072]
+EN: Oh, I remember now, too! Guess that's why I've always loved rainy days!
+DE: 
+
+[1073]
+EN: Do you still paint?
+DE: 
+
+[1074]
+EN: No, I haven't done anything in years.
+DE: 
+
+[1075]
+EN: I wasn't expecting you to be so excited to meet your brother and sister again!
+DE: 
+
+[1076]
+EN: Oh, y-yeah, so excited! Hi Annie!
+DE: 
+
+[1077]
+EN: Both of those things can wait! You didn't even welcome your brother and sister properly!
+DE: 
+
+[1078]
+EN: We haven't seen them in ten years, you know!
+DE: 
+
+[1079]
+EN: Hey [mc], I can't wait to hear all about what happened to you and Annie!
+DE: 
+
+[1080]
+EN: Oh, and Annie! Nice to see you again!
+DE: 
+
+[1081]
+EN: Welcome back, you two!
+DE: 
+
+[1082]
+EN: By the way, I love your haircut, sis!
+DE: 
+
+[1083]
+EN: Of course they don't mind!
+DE: 
+
+[1084]
+EN: Still, I was hoping for a warmer family reunion after so much time apart...
+DE: 
+
+[1085]
+EN: It's okay, Mom! We have plenty of time to catch up in the days to come!
+DE: 
+
+[1086]
+EN: For tonight, I’d rather just unpack all my things and freshen up a bit.
+DE: 
+
+[1087]
+EN: That's nice of you to say, honey. Is there anything I can do for you?
+DE: 
+
+[1088]
+EN: Do you remember the way to your old room?
+DE: 
+
+[1089]
+EN: I think so. Second floor, last one on the right, right? The one with a lot of natural light.{w} (Hey, that rhymed!)
+DE: 
+
+[1090]
+EN: Well, since [mc] doesn't want any supper... Do you want something to eat, Annie?
+DE: 
+
+[1091]
+EN: Goodnight, bro! Sweet dreams!
+DE: 
+
+[1092]
+EN: Your sisters have been up for a while!
+DE: 
+
+[1093]
+EN: (Although, I think I'll wait a couple of weeks. I don't want [mc] and Annie to think I've become a promiscuous woman or anything...)
+DE: 
+
+[1094]
+EN: That's what I said, but she told us she really wanted to revisit the neighborhood.
+DE: 
+
+[1095]
+EN: Oh yeah, that sounds like sis. I guess she already told you she also plays Eternum?
+DE: 
+
+[1096]
+EN: (Like me, Annie was always good at making friends. Must run in our blood.)
+DE: 
+
+[1097]
+EN: (I guess I should let them walk to school on their own, since I don't wanna look like the cliche overprotective brother.)
+DE: 
+
+[1098]
+EN: Believe me, Kredon can seem like a very boring place unless you’re able to re-discover it with someone that knows all the hotspots.
+DE: 
+
+[1099]
+EN: *Laughs* Like what? I thought you just got back yesterday.
+DE: 
+
+[1100]
+EN: I know you're basically new around here, but you have no idea how lucky you are right now.
+DE: 
+
+[1101]
+EN: Hands off my sister, you jerk.
+DE: 
+
+[1102]
+EN: Her brother. And she said no.
+DE: 
+
+[1103]
+EN: Are you okay, sis?
+DE: 
+
+[1104]
+EN: Will you be alright, sis?
+DE: 
+
+[1105]
+EN: And... thank you again for helping me out back there, bro.
+DE: 
+
+[1106]
+EN: I don't know, it felt pretty special to me. Annie and I never really had a nice, home-cooked meal while we were living with Dad.
+DE: 
+
+[1107]
+EN: Tomorrow you'll finally be connected to Eternum, bro! After waiting for so many years!
+DE: 
+
+[1108]
+EN: We’re only missing Mom and Penelope, then our whole family would be complete!
+DE: 
+
+[1109]
+EN: *Laughs* I wouldn't count on it, lil sis, sorry.
+DE: 
+
+[1110]
+EN: Nah, don't worry, lil sis, it's my turn today. But thank you!
+DE: 
+
+[1111]
+EN: Goodnight, bro!!
+DE: 
+
+[1112]
+EN: (Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all the girls in your family...)
+DE: 
+
+[1113]
+EN: (I mean... If the girls never found out, then would it really be so bad...?)
+DE: 
+
+[1114]
+EN: Well, you and Dalia are probably the only people in this class that are actually worth talking to.
+DE: 
+
+[1115]
+EN: It's the Eternum E-Suit, dummy! Now, come on already!
+DE: 
+
+[1116]
+EN: You always play in your room, so I forgot about the E-sui—Oh crap, I don't have one yet!
+DE: 
+
+[1117]
+EN: So... do I have to wear the entire thing?
+DE: 
+
+[1118]
+EN: Nah, I just have it on so I can quickly jump in later.
+DE: 
+
+[1119]
+EN: You can look if you want, sis...
+DE: 
+
+[1120]
+EN: Sorry, bro! Did that hurt?!
+DE: 
+
+[1121]
+EN: (Dammit, sis didn't tell me about any of this...)
+DE: 
+
+[1122]
+EN: By the way, your outfit looks awesome, sis!
+DE: 
+
+[1123]
+EN: No, he's not! He's my brother! He's tough!
+DE: 
+
+[1124]
+EN: So this is the twin brother you're always talking about?
+DE: 
+
+[1125]
+EN: That's the thing, bro!
+DE: 
+
+[1126]
+EN: Thank god I have you, sis... I’d probably be lost in a ditch somewhere without you!
+DE: 
+
+[1127]
+EN: Alright. Thanks again, sis!
+DE: 
+
+[1128]
+EN: (Nope, bad idea. She's my sister!)
+DE: 
+
+[1129]
+EN: *Laughs* Don't get lost or get yourself into much trouble, alright bro?
+DE: 
+
+[1130]
+EN: (Jeez, I {i}really{/i} need to stop this... but...)
+DE: 
+
+[1131]
+EN: (She's not the skinny kid she used to be... she's got curves in all the right places now...)
+DE: 
+
+[1132]
+EN: (Dammit... Stop looking at your sister, [mc]...)
+DE: 
+
+[1133]
+EN: Oh... Come on sis, it doesn't matter!
+DE: 
+
+[1134]
+EN: *Laughs* You always know how to make me laugh, bro.
+DE: 
+
+[1135]
+EN: (I guess a little look won't hurt anyone...)
+DE: 
+
+[1136]
+EN: Erm... Y-You're the best brother ever!
+DE: 
+
+[1137]
+EN: I'm glad you like it, sis.
+DE: 
+
+[1138]
+EN: No. You have much more to lose, sis.
+DE: 
+
+[1139]
+EN: Thank you so much for playing with me, bro. It means a lot.
+DE: 
+
+[1140]
+EN: The pleasure was all mine, sis. Eternum is awesome. I’m so grateful I had you by my side.
+DE: 
+
+[1141]
+EN: You know, I'm not gonna lie, when Mom told me that you and Annie were gonna come back for a while, I wasn't sure what to feel. Ten years apart is a long time after all.
+DE: 
+
+[1142]
+EN: But hey, I’m glad to say I was wrong. Both of you breathe so much life into this house. It almost feels like you never left.
+DE: 
+
+[1143]
+EN: I have a feeling this shit is much bigger than we think, sis.
+DE: 
+
+[1144]
+EN: *Whispering* I don't like this, sis...
+DE: 
+
+[1145]
+EN: I don't know, sis... him having a stroke? I'm not buying it.
+DE: 
+
+[1146]
+EN: *Laughs* Don't mind my brother...
+DE: 
+
+[1147]
+EN: Yep! I heard my brother managed to win a neural implant at your cafe!
+DE: 
+
+[1148]
+EN: Can I play with you guys, bro?!
+DE: 
+
+[1149]
+EN: Horror? Okay... maybe it'd be better if you didn't join us, sis.
+DE: 
+
+[1150]
+EN: But you're not allowed to complain if you’re scared, sis!
+DE: 
+
+[1151]
+EN: I'm sorry sis, we both know you can't handle horror... no matter how light it is.
+DE: 
+
+[1152]
+EN: (Maybe his girlfriend... or his sister...?)
+DE: 
+
+[1153]
+EN: Your sister should be waiting for us already.
+DE: 
+
+[1154]
+EN: I love your outfit, sis!
+DE: 
+
+[1155]
+EN: Y-You're scaring me, bro.
+DE: 
+
+[1156]
+EN: It's okay sis, I know you’re not one for spooky things, but you’ve been doing good! I’m proud of you!
+DE: 
+
+[1157]
+EN: Right, sis?!
+DE: 
+
+[1158]
+EN: (Then Luna will shower me with hugs and Annie will gush non-stop about how I'm the bravest man she's ever known.)
+DE: 
+
+[1159]
+EN: What about you, sis?
+DE: 
+
+[1160]
+EN: (He must think I'm still a kid – a useless, scared kid...)
+DE: 
+
+[1161]
+EN: (Yeah, nice job impressing your brother in Eternum, Annie.)
+DE: 
+
+[1162]
+EN: Oh, hey bro! I wasn’t sure if you were asleep already!
+DE: 
+
+[1163]
+EN: I told you, sis! You shouldn't have played in Luna's server! You can't handle that scary stuff! Remember when we played Dead Space?
+DE: 
+
+[1164]
+EN: You can sleep here as many times as you want. You don’t even have to ask, alright? Just like when we were little.
+DE: 
+
+[1165]
+EN: Anytime, sis.
+DE: 
+
+[1166]
+EN: Wow, I forgot how cozy your room was!
+DE: 
+
+[1167]
+EN: And how nice the view of the backyard is from here!
+DE: 
+
+[1168]
+EN: Yeah, sometimes I like to just look out the window and reminisce about playing down there when we were kids.
+DE: 
+
+[1169]
+EN: *Giggles* We'd always get so muddy because of how much it rained.
+DE: 
+
+[1170]
+EN: Luckily your new bed is big enough for the both of us. You could probably even fit three or four people on here!
+DE: 
+
+[1171]
+EN: For sure... There's so much more we need to thank Mom for too.
+DE: 
+
+[1172]
+EN: We gotta prepare something extra special for her one of these days.
+DE: 
+
+[1173]
+EN: G-Goodnight, bro.
+DE: 
+
+[1174]
+EN: Goodnight sis.
+DE: 
+
+[1175]
+EN: (Oh yeah... I forgot that sis came to sleep in my room.)
+DE: 
+
+[1176]
+EN: (She used to hug a pillow or stuffed animal while she sleeps. I guess that hasn't changed.)
+DE: 
+
+[1177]
+EN: (We're in quite an... intimate position... I don't want her to think her brother is trying to take advantage of her while she sleeps.)
+DE: 
+
+[1178]
+EN: A-Are you awake, sis?
+DE: 
+
+[1179]
+EN: Baloo? The teddy bear Mom gave you when you were 5?
+DE: 
+
+[1180]
+EN: Yes, that Baloo...
+DE: 
+
+[1181]
+EN: (Oh my god, why did I say that?! Now he probably thinks I'm still a child...)
+DE: 
+
+[1182]
+EN: Oh... I didn't know you still slept with Baloo.
+DE: 
+
+[1183]
+EN: (He probably still sees me as his little sister who plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)
+DE: 
+
+[1184]
+EN: (I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he's not a weirdo like me who has feelings for her twin brother.)
+DE: 
+
+[1185]
+EN: (I'll always just be Annie, the "little sister".)
+DE: 
+
+[1187]
+EN: (This is why I'll always just be [mc], the "big brother"...)
+DE: 
+
+[1188]
+EN: I'm not s-shy... It’s just a shirt after all, right...?
+DE: 
+
+[1190]
+EN: (Yeah, but... not since we last bathed together when we were nine.)
+DE: 
+
+[1191]
+EN: (I'm not sure where she’s going with all of this... But I sure as hell want to find out...)
+DE: 
+
+[1192]
+EN: (This doesn't seem like the sister I know... Is she trying to prove something?)
+DE: 
+
+[1193]
+EN: (...No. You’re a woman now, Annie. It’s time to prove it to yourself... and prove it to your brother.)
+DE: 
+
+[1194]
+EN: (Holy shit, I never noticed know how much she grew over the past years...)
+DE: 
+
+[1195]
+EN: We're just... siblings getting a little more comfortable.
+DE: 
+
+[1196]
+EN: (My precious little sister...)
+DE: 
+
+[1197]
+EN: Um, bro...? Oh man, I must look weird or someth—
+DE: 
+
+[1198]
+EN: Sis... you are so... beautiful...
+DE: 
+
+[1199]
+EN: Your skin feels so soft, sis. It feels... really nice holding you...
+DE: 
+
+[1200]
+EN: (Oh my god, am I the only one feeling all this tension in the air? I kind of want to make a move, but... I don’t want to overstep my bounds... I'm her brother, after all.)
+DE: 
+
+[1201]
+EN: (But it’s not just any guy. It’s [mc]. My twin brother!)
+DE: 
+
+[1202]
+EN: (And despite that, you've had a crush on him since you were nine years old. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)
+DE: 
+
+[1203]
+EN: (But... I don't want to scare her away. Annie has always been so special – more than just a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)
+DE: 
+
+[1204]
+EN: (A-And she's still my sister! It's just not right!)
+DE: 
+
+[1205]
+EN: G-Good night, bro.
+DE: 
+
+[1206]
+EN: Um... sis...?
+DE: 
+
+[1207]
+EN: I’m sorry, sis... I can’t help it... you’re driving me insane...
+DE: 
+
+[1208]
+EN: Oh god, sis...
+DE: 
+
+[1209]
+EN: B-bro... Um, I don’t know if I’m ready to go all the way toni-
+DE: 
+
+[1210]
+EN: I’m sorry. I’m just a little nervous because no one has ever touched me there before.
+DE: 
+
+[1211]
+EN: I said I’m nervous, bro, but that doesn’t mean I... don’t want to...
+DE: 
+
+[1212]
+EN: I’ve never been more sure, sis.
+DE: 
+
+[1213]
+EN: I thought, as your sister, you'd never be interested in me...
+DE: 
+
+[1214]
+EN: Oh Annie, you've never been just my sister.
+DE: 
+
+[1215]
+EN: And I’m not just saying that because I’m finally seeing your gorgeous body. You’ve always been perfect to me... inside and out. I just didn’t want to risk ruining our relationship as brother and sister.
+DE: 
+
+[1216]
+EN: *Kissing her neck* And don’t you worry, sis. I’m perfectly fine with going as slow as you want.
+DE: 
+
+[1217]
+EN: Y-Yeah... m-much better. You’re so warm, bro...
+DE: 
+
+[1218]
+EN: Annie... You’re... so wet...
+DE: 
+
+[1220]
+EN: Jesus, sis...
+DE: 
+
+[1221]
+EN: Oh shit, I'm sorry, sis...
+DE: 
+
+[1222]
+EN: Did I do something wrong, sis? I’m sorry! I didn’t know it was going to be that much!
+DE: 
+
+[1223]
+EN: I only came here t-to sleep and then... next thing I know I’m doing that... and with my brother...
+DE: 
+
+[1224]
+EN: No, no! It's okay! You’re good! I like you, sis! We can...
+DE: 
+
+[1225]
+EN: We skipped like 14 steps and broke a dozen rules! In one night!
+DE: 
+
+[1226]
+EN: What will my brother think of me after all of this?!
+DE: 
+
+[1227]
+EN: I'm gonna... go... think! Good night, bro!
+DE: 
+
+[1228]
+EN: (Even if we're siblings, maybe something between us could work after all.)
+DE: 
+
+[1229]
+EN: (HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing my sister's secret kinky side... and I loved every moment of it!)
+DE: 
+
+[1230]
+EN: Sis! Do you have a minute? I wanted to talk to you!
+DE: 
+
+[1231]
+EN: Look at that perfectly toned stomach... And to think she's had 4 children! Unbelievable.
+DE: 
+
+[1233]
+EN: (I bet if I tried to do anything at home, the girls would surely notice.)
+DE: 
+
+[1234]
+EN: And on the first day of school, I saw him harassing my twin sister.
+DE: 
+
+[1235]
+EN: And I never thought I'd be able to play with Annie and you too! A party with the entire family!
+DE: 
+
+[1236]
+EN: Not a worry in mah noggin, bro. I just be... chillaxin’ all day! Yeahhhh...
+DE: 
+
+[1237]
+EN: Um... Oh! Bro! Good morning!
+DE: 
+
+[1238]
+EN: But no biggie, bro. I was scared. Not thinking clearly.
+DE: 
+
+[1239]
+EN: (She's right. Forgetting about this might be the best option. We crossed way too many lines that night.)
+DE: 
+
+[1240]
+EN: (That's all I want... just to have a normal sibling relationship with her.)
+DE: 
+
+[1241]
+EN: That sounds great. Take care, sis!
+DE: 
+
+[1242]
+EN: Thank you, bro. I needed this talk.
+DE: 
+
+[1243]
+EN: *Taking a deep breath* (Well [mc], it's now or never. Time to grow a pair and man up! Let your sister know how you really feel.)
+DE: 
+
+[1244]
+EN: And I mean I {i}like{/i} like you. I've felt this way since we were 10. If I’m being real with you, the only reason why I was willing to come back to Kredon at all was because you were coming too.
+DE: 
+
+[1245]
+EN: You're my twin sister.
+DE: 
+
+[1246]
+EN: So I know this is so, very wrong... but in my heart, I want us to be so much more than that.
+DE: 
+
+[1247]
+EN: I don't want to lose you, sis. I’d be miserable without you in my life.
+DE: 
+
+[1248]
+EN: I just want us to be together forever!
+DE: 
+
+[1249]
+EN: That sounds great! Just some quality sibling bonding time. Like how we’ve always done it!
+DE: 
+
+[1250]
+EN: Like... a fun date with your sister?
+DE: 
+
+[1251]
+EN: Hmmm... no, more like a date with a girl that I like. Who just happens to be both my sister, and my best friend too. As for what the future holds? Who knows...
+DE: 
+
+[1252]
+EN: Look, bro, I know we’re going on a {i}date{/i} date, but I really do want to take it slow too. I don’t want you to assume that–
+DE: 
+
+[1253]
+EN: We’re just two people going on a date, there’s no need to overthink it. But uh, not a word to anyone. Don't want others to think weird things...
+DE: 
+
+[1254]
+EN: T-Thank you, bro. I needed this talk.
+DE: 
+
+[1255]
+EN: Um... what's up with you and our sister's ass...?
+DE: 
+
+[1256]
+EN: I know you want to take things slow, sis. And I’m perfectly okay with that.
+DE: 
+
+[1257]
+EN: That was quite the goodbye for just... siblings.
+DE: 
+
+[1258]
+EN: (Maybe a good movie? Or a walk along the beach. Or even a date in Eternum! We wouldn't have to worry about running into people who know us there.)
+DE: 
+
+[1259]
+EN: Mommy said it's good for us! Helps us grow up to be strong!
+DE: 
+
+[1260]
+EN: This is why you and Annie are such sleepyheads.
+DE: 
+
+[1261]
+EN: (I {i}need{/i} to be able to support Dalia and Penny by myself once the divorce is done. I already had to let him take the twins since I can't provide for all of them alone right now......)
+DE: 
+
+[1262]
+EN: I... I know honey, but I don't have anyone else I can call on such short notice to take care of the little ones.
+DE: 
+
+[1263]
+EN: Do you have any idea how much I've sacrificed so that you four would never be left wanting?!
+DE: 
+
+[1264]
+EN: And... what about Dalia, Annie, and [mc]?
+DE: 
+
+[1265]
+EN: Nothing... I'm just sad because in a couple of weeks, Dad will be taking me and Annie with him to Europe.
+DE: 
+
+[1266]
+EN: Well, maybe you two can come over to play with me after school?
+DE: 
+
+[1267]
+EN: Absolutely! Don't worry sis, I'll protect you, and [mc], and Annie, and Mom too!
+DE: 
+
+[1268]
+EN: But you two got to bathe first! I can see the mud stains on you!
+DE: 
+
+[1269]
+EN: Where's Annie? She was playing with you outside earlier.
+DE: 
+
+[1270]
+EN: She got sleepy and went to bed.
+DE: 
+
+[1271]
+EN: Already? Wake her up, she also needs to bathe first!
+DE: 
+
+[1272]
+EN: After that, we can all watch movies together!
+DE: 
+
+[1273]
+EN: I owe it to your grandma. It seems like once she reached 25, she stopped aging. She died shortly after Dalia was born. It's a shame she never got to met you and Annie, she was always so full of life.
+DE: 
+
+[1274]
+EN: Annie, Dalia, and Penny are all gonna be very blessed when they get older too.
+DE: 
+
+[1275]
+EN: What about... Dalia, Penelope, and Annie?
+DE: 
+
+[1276]
+EN: (I'm going on a date with my brother!)
+DE: 
+
+[1277]
+EN: *Chuckles* I think you're getting too excited about this, sis. You need to relax. You'll enjoy it more if you take it less seriously!
+DE: 
+
+[1278]
+EN: Chillin’ like a villain on penicillin, yo!
+DE: 
+
+[1279]
+EN: Gonna play some Eternum with ma' bro...
+DE: 
+
+[1280]
+EN: Send invitation... to... Annie [lastname].
+DE: 
+
+[1281]
+EN: Sis? Is that you?
+DE: 
+
+[1282]
+EN: Quick, bro, make a wish!
+DE: 
+
+[1283]
+EN: Let's watch Interstellar, it's one of my favorite movies. It's the one I've been trying to get you to watch since you love sci-fi.
+DE: 
+
+[1284]
+EN: You were busy every time I wanted to watch it with you, so now's our chance!
+DE: 
+
+[1285]
+EN: I can see why! You were so right, I should've watched this sooner.
+DE: 
+
+[1286]
+EN: I mean... of course we're not. We're still {i}just{/i} siblings, we haven't...
+DE: 
+
+[1287]
+EN: *Chuckles* A likely story, dear sister... I'll believe you, for now...
+DE: 
+
+[1288]
+EN: Come here, bro! Jump!
+DE: 
+
+[1289]
+EN: We've never done any scuba diving?
+DE: 
+
+[1290]
+EN: Sis, you awake? I can go call the Astrocorp employee if we’re ready to wrap this up.
+DE: 
+
+[1291]
+EN: You and Chang have always been by my side, and neither of you played Eternum until recently, so... I've always felt kind of alone here.
+DE: 
+
+[1292]
+EN: You’re the one who’s really made these first few weeks in Eternum worthwhile, sis. I couldn't have asked for anyone better to spend time with.
+DE: 
+
+[1293]
+EN: How's life back in Kredon so far?
+DE: 
+
+[1294]
+EN: It's still a rather small town like I remembered, but there's everything we need!
+DE: 
+
+[1295]
+EN: And it really feels like we never left!
+DE: 
+
+[1296]
+EN: Mom, Penny, and Dalia are still so nice to me. You know I’ve always wanted to see our sisters again, so I really feel suuuuuper happy!
+DE: 
+
+[1297]
+EN: Assets... I'm the only girl in the family without them!
+DE: 
+
+[1298]
+EN: Oh! Come on, sis! You can't be serious!
+DE: 
+
+[1299]
+EN: *Jumps on the bed* Oh my god, bro! Look at this!
+DE: 
+
+[1300]
+EN: (Maybe... was this all a mistake...?)
+DE: 
+
+[1301]
+EN: {color=[walk_path]}Decline and stay as siblings [red][mt](Closes Annie's path)
+DE: 
+
+[1302]
+EN: {color=[walk_path]}Decline and stay as siblings
+DE: 
+
+[1303]
+EN: Decline and stay as siblings [red][mt](Closes Annie's path)
+DE: 
+
+[1304]
+EN: Decline and stay as siblings
+DE: 
+
+[1305]
+EN: I like you, and you're my sister, you already know that.
+DE: 
+
+[1306]
+EN: But... I also feel like we're not meant to be more than that. Things would get {i}so{/i} complicated if we tried to get together, and our relationship is too important to risk, for me at least.
+DE: 
+
+[1307]
+EN: I'm still your brother and I'll always be there for you, but...
+DE: 
+
+[1308]
+EN: I... I don't think we're meant to be anything more than siblings.
+DE: 
+
+[1309]
+EN: So... let's just go back to what we always were, okay?
+DE: 
+
+[1310]
+EN: I can’t commit to this... {i}thing{/i} between us. Not right now. 
+DE: 
+
+[1311]
+EN: I can’t commit to this... {i}thing{/i} between us. Not right now.
+DE: 
+
+[1312]
+EN: In the future... I don’t know. Maybe. But I don’t want to lead you on, either.
+DE: 
+
+[1313]
+EN: It's not your fault, Annie, it's mine. I know I've been sending you mixed signals, bringing you here today. My head has been all over the place too, you know, with all this back and forth... You don't deserve that.
+DE: 
+
+[1314]
+EN: I'm sorry, sis. This isn't how I wanted today to go. For what it's worth, I still enjoyed spending this time with you.
+DE: 
+
+[1315]
+EN: You're so pretty, sis...
+DE: 
+
+[1316]
+EN: Bro! What are you doing?!
+DE: 
+
+[1318]
+EN: But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding my adorably precious, absolutely gorgeous twin sister whom I’ve liked for years.
+DE: 
+
+[1319]
+EN: I know it's terrifying thing we're trying, starting a relationship as siblings, but... I think we can overcome it together.
+DE: 
+
+[1320]
+EN: That’s how I feel. If you don't feel the same way... we can always go back to where we were a month ago and just be siblings again!
+DE: 
+
+[1321]
+EN: It’ll be a little awkward at first, but our relationship is strong, and I know we’d be back to normal in no time.
+DE: 
+
+[1322]
+EN: *Caressing her cheek* I feel like I could never get enough of you, sis...
+DE: 
+
+[1323]
+EN: Is that so? What have you been thinking about, exactly, Ms. [lastname]?
+DE: 
+
+[1325]
+EN: God, there are so many things I want to do to Annie right now... but she is still my sister. I don't wanna cross any line too fast.
+DE: 
+
+[1327]
+EN: It'll only get better from here, Annie...
+DE: 
+
+[1328]
+EN: *Panting* K-Keep going, bro! Y-You’re hitting just the... r-right spot!
+DE: 
+
+[1329]
+EN: Y-You have to stop! S-STOP! [mc!u]!
+DE: 
+
+[1330]
+EN: Don't worry, sis...
+DE: 
+
+[1332]
+EN: You turn me on so much, sis... I'd be lying if I said I wasn’t rock-hard the whole time...
+DE: 
+
+[1333]
+EN: That's it, sis...
+DE: 
+
+[1334]
+EN: You’re such a good girl, sis...
+DE: 
+
+[1339]
+EN: W-We’ve g-gotta do some practicing b-beforehand, bro...
+DE: 
+
+[1340]
+EN: My si- my date left the room and went to the canteen, and a few minutes later... the lights went out and everyone had disappeared!
+DE: 
+
+[1341]
+EN: Oh sis... I wouldn’t ever do that to you! I care for you way too much... You see how silly you’re being, right?
+DE: 
+
+[1342]
+EN: Look, sis! A teleporter! We can get out of here!
+DE: 
+
+[1343]
+EN: *Pulling your shirt* Bro...
+DE: 
+
+[1344]
+EN: D-Don't look at him, sis.
+DE: 
+
+[1345]
+EN: *Whispering* O-Okay sis...
+DE: 
+
+[1346]
+EN: *Sobbing* [mc_dash]?
+DE: 
+
+[1347]
+EN: Thank you for an amazing day, bro.
+DE: 
+
+[1348]
+EN: I'm glad you enjoyed it, sis. Even with the alien attack, and... well, the bloodbath... it was still one of the best days I've ever had.
+DE: 
+
+[1349]
+EN: Oh, already?! Good luck, bro! Be sure to get plenty of information!
+DE: 
+
+[1350]
+EN: Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what brothers do, I guess.
+DE: 
+
+[1351]
+EN: I can help you out if you want, Mom.
+DE: 
+
+[1352]
+EN: I don't remember Aunt Cordelia very well, but I'm good at making collages.
+DE: 
+
+[1353]
+EN: Thank you, sweetie! You've grown into such a good girl!
+DE: 
+
+[1354]
+EN: The scholarship that was granted to my twins and their best friend is the best thing that has happened to me in a very long time.
+DE: 
+
+[1355]
+EN: *Clears throat* I think it's best not to bring up the "best friend" subject.
+DE: 
+
+[1356]
+EN: I don't really mind anymore. I'm happy just being his sister.
+DE: 
+
+[1357]
+EN: We won’t fail you, Mom! No stone will be left unturned!
+DE: 
+
+[1358]
+EN: B-Bye, bro! I'll see you at home!
+DE: 
+
+[1359]
+EN: I mean, Dad has only called us once since we got here. Our grandparents called every other week.
+DE: 
+
+[1360]
+EN: I've been shopping all day with Mom and I had no signal!
+DE: 
+
+[1361]
+EN: Mom's gonna wonder what's taking me so long 
+DE: 
+
+[1362]
+EN: Shopping with Mom 
+DE: 
+
+[1363]
+EN: *Snorts* You’re such a dork, my cute little brother. I think you have enough twins in your life already.
+DE: 
+
+[1364]
+EN: I have three girls and one son, Dalia, Penelope, Annie, and [mc] here.
+DE: 
+
+[1365]
+EN: Truth is, you do look really good, sis!
+DE: 
+
+[1366]
+EN: Private Annie [lastname] reports!
+DE: 
+
+[1367]
+EN: T-Thank you, Mo-sir, ma'am, sir.
+DE: 
+
+[1368]
+EN: Nice job, lil sis!
+DE: 
+
+[1369]
+EN: How was Dad?
+DE: 
+
+[1370]
+EN: Wow, how come you don’t get this excited when you're playing with your beloved older sister?
+DE: 
+
+[1371]
+EN: Good night bro!!
+DE: 
+
+[1372]
+EN: Right now? With your sisters in the house?
+DE: 
+
+[1373]
+EN: Bro...? What are you doing here?!
+DE: 
+
+[1376]
+EN: What? Sis?
+DE: 
+
+[1377]
+EN: Elementary, my dear brother.
+DE: 
+
+[1378]
+EN: Well, you should still get it, bro.
+DE: 
+
+[1379]
+EN: Delilah's just... a friend. And Annie's my sister.
+DE: 
+
+[1381]
+EN: Um... Sis? We have a problem.
+DE: 
+
+[1382]
+EN: Wow, come here, bro!
+DE: 
+
+[1383]
+EN: Oh, thanks for the reassurance, brother! I feel much, much better now!
+DE: 
+
+[1384]
+EN: Can you focus and stop being a pervert?!
+DE: 
+
+[1385]
+EN: Bro!!
+DE: 
+
+[1386]
+EN: *Knocking on the door* Sis?
+DE: 
+
+[1387]
+EN: B-But thank you, bro.
+DE: 
+
+[1388]
+EN: Penny has been teaching me different ways to style it too.
+DE: 
+
+[1389]
+EN: And how was Dad?
+DE: 
+
+[1390]
+EN: Dad...?
+DE: 
+
+[1391]
+EN: Tell Annie and Na-
+DE: 
+
+[1392]
+EN: So... yeah, you know how Dad is. Couldn’t even get his own kids’ names right...
+DE: 
+
+[1393]
+EN: Awh, I'm so sorry, bro...
+DE: 
+
+[1394]
+EN: That must've really hurt to hear now that we’ve reunited with them.
+DE: 
+
+[1395]
+EN: You know Dad can be a real asshole
+DE: 
+
+[1396]
+EN: You know as well as I do that Dad can be a real asshole.
+DE: 
+
+[1397]
+EN: W-Well... it’s true that Dad’s always been pretty absent because of work, but...
+DE: 
+
+[1398]
+EN: We still had our grandparents! And Chang’s parents too!
+DE: 
+
+[1399]
+EN: Well... yeah. At least we had some adults looking out for us. Even if we didn't see them very often.
+DE: 
+
+[1400]
+EN: Grandpa and Grandma miss you by the way.
+DE: 
+
+[1401]
+EN: I miss them too! I'll need make it up to them sometime.
+DE: 
+
+[1402]
+EN: *Laughs* Don't be so dramatic, sis.
+DE: 
+
+[1403]
+EN: Good night, bro!
+DE: 
+
+[1404]
+EN: Good night, sis!
+DE: 
+
+[1405]
+EN: N-No, I just– y-you know what I mean!
+DE: 
+
+[1406]
+EN: I’ll never get tired of seeing your gorgeous body, sis.
+DE: 
+
+[1407]
+EN: I... I'm n-not sure I'm ready, bro.
+DE: 
+
+[1408]
+EN: I’m dying to taste you, sis.
+DE: 
+
+[1409]
+EN: Bro, I... I-I'm not sure if I'm ready for that either!
+DE: 
+
+[1410]
+EN: Oh brooo... that feels...
+DE: 
+
+[1411]
+EN: You begin to taste every inch of your twin sister, spreading her tight lips as you gracefully move your tongue back and forth.
+DE: 
+
+[1412]
+EN: Oh my god, bro...
+DE: 
+
+[1413]
+EN: Broooo. . . . . . . . . . .  . !
+DE: 
+
+[1415]
+EN: Bro! You’re gonna make me...
+DE: 
+
+[1416]
+EN: I can feel you pulsing, bro...
+DE: 
+
+[1418]
+EN: *Panting* Sis...?
+DE: 
+
+[1420]
+EN: My sweet, innocent, little twin sister...
+DE: 
+
+[1421]
+EN: Come on sis, you're gonna miss the entire movie!
+DE: 
+
+[1423]
+EN: You better take care of your sister while you're in the USA, [mc].
+DE: 
+
+[1424]
+EN: Rest assured Grandpa, I won’t let anything happen to her!
+DE: 
+
+[1425]
+EN: I'll take great care of Annie as always!
+DE: 
+
+[1427]
+EN: *Panting* Do it... empty y-yourself all over me, bro...
+DE: 
+
+[1428]
+EN: Oh god sis, I'm...
+DE: 
+
+[1429]
+EN: Goddammit sis... that was mind-blowing.
+DE: 
+
+[1430]
+EN: Well, I'm sure Dalia and Penny would knock before entering your room.
+DE: 
+
+[1431]
+EN: Imagine if Mom had caught us... she'd go feral! We'd be kicked out a-and maybe even disowned!
+DE: 
+
+[1432]
+EN: She loves us too much to do anything like that.
+DE: 
+
+[1433]
+EN: Good night, sis.
+DE: 
+
+[1434]
+EN: And then I'd marry... Annie.
+DE: 
+
+[1435]
+EN: She’s so small and cute. Imagine having that adorable girl by your side all the time... though I suppose you already know what that’s like.
+DE: 
+
+[1436]
+EN: You said marry twice.
+DE: 
+
+[1437]
+EN: Well, I don’t want to be the only one without a compliment, but I have to say, I absolutely love your hair, sis.
+DE: 
+
+[1438]
+EN: Thank you, bro...
+DE: 
+
+[1439]
+EN: Are you sure you don't want to join us, sis?
+DE: 
+
+[1440]
+EN: Give my best to big sis when you see her too.
+DE: 
+
+[1441]
+EN: Big sis? We literally have dinner together every day.
+DE: 
+
+[1442]
+EN: Take care, sis.
+DE: 
+
+[1443]
+EN: (How would we even explain this to Mom, or Dalia, or Annie?)
+DE: 
+
+[1444]
+EN: *Panting* I want the whole family to hear me scream...
+DE: 
+
+[1445]
+EN: Come on, bro, I need you to catch on quickly! We're running out of time.
+DE: 
+
+[1446]
+EN: There's no time to hesitate, bro!
+DE: 
+
+[1447]
+EN: How are you still tight after giving birth to four children...?
+DE: 
+
+[1448]
+EN: If you ever hurt Nova, Luna, or Alex... I'll be seriously mad at you, young man.
+DE: 
+
+[1449]
+EN: Oh, and if you EVER hurt Penny, Dalia, or Annie...
+DE: 
+
+[1450]
+EN: Oh, no, no, no. Penny, Dalia, and Mom were not an option.
+DE: 
+
+[1451]
+EN: (She's definitely going on a date with [mc]. Her own twin brother!)
+DE: 
+
+[1452]
+EN: It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with someone who's been your second-best friend your entire life.
+DE: 
+
+[1453]
+EN: *Chuckles* Thanks, man. I appreciate it a lot. I'm sure Annie would, too.
+DE: 
+
+[1454]
+EN: Bro, over here!
+DE: 
+
+[1455]
+EN: Ah, hey there, sis!
+DE: 
+
+[1456]
+EN: Annie [lastname] and Luna Hernandez travel to the super scary Red Herring server and complete–
+DE: 
+
+[1457]
+EN: I'll show them to Mom later so I can–
+DE: 
+
+[1458]
+EN: Uh sis...?
+DE: 
+
+[1459]
+EN: *Turning around* Um... sis...
+DE: 
+
+[1460]
+EN: No one ever thought you were useless, sis. But after this? D-Damn, even less so.
+DE: 
+
+[1461]
+EN: Bye, bye, bro!
+DE: 
+
+[1462]
+EN: Why...? Come on, [mc], you always have dinner with Annie, why the jitters now?!
+DE: 
+
+[1463]
+EN: You said it yourself. It's just another meal alone with Annie, like we’ve usually had these last 10 years.
+DE: 
+
+[1464]
+EN: Why aren't you with Grandpa anymore?
+DE: 
+
+[1465]
+EN: *Whispering* Is she mute?
+DE: 
+
+[1466]
+EN: I'm Annie, [mc]'s sister.
+DE: 
+
+[1467]
+EN: Yep! We're from the US.
+DE: 
+
+[1468]
+EN: Nice to meet you, Annie.
+DE: 
+
+[1469]
+EN: You said your grandpa is here too? I don't see him.
+DE: 
+
+[1470]
+EN: Grandpa's over there.
+DE: 
+
+[1471]
+EN: He's calling a bunch of people to help Dad with the papers and stuff.
+DE: 
+
+[1472]
+EN: He's taking too long so I got bored and came over here.
+DE: 
+
+[1473]
+EN: Um... I like your.. s-shirt, Chang.
+DE: 
+
+[1474]
+EN: But you look better with it, [mc]!
+DE: 
+
+[1475]
+EN: I can't wait for school tomorrow! Will you play with us, too?
+DE: 
+
+[1476]
+EN: And if we don't see Chang, you'll still play with me? You won't leave me alone?
+DE: 
+
+[1477]
+EN: Of course. Why wouldn't I...?
+DE: 
+
+[1478]
+EN: Promise me we'll be together forever!
+DE: 
+
+[1479]
+EN: Together forever!
+DE: 
+
+[1480]
+EN: Sure thing! It's one Penny recommended me.
+DE: 
+
+[1481]
+EN: Alright, tell me what happened on our tenth birthday.
+DE: 
+
+[1482]
+EN: Dad tried to be considerate for once and plan us a big party, but in the end he didn't have the time to do anything.
+DE: 
+
+[1483]
+EN: D-Darn it, bro.
+DE: 
+
+[1484]
+EN: We've been together our whole lives, I think I can read you pretty well.
+DE: 
+
+[1485]
+EN: Your answer could shape how the rest of tonight goes and... maybe even your relationship with your sister.
+DE: 
+
+[1486]
+EN: Luna, Alex, Nova, even Mom, Penny, and Dalia...
+DE: 
+
+[1487]
+EN: I'm so impressed, sis.
+DE: 
+
+[1488]
+EN: Dalia, Penny, Mom, Luna, Nova, Alex...
+DE: 
+
+[1489]
+EN: Annie [lastname].
+DE: 
+
+[1490]
+EN: The way you’re tracing your finger on my chest is kind of turning me on more than it should, sis...
+DE: 
+
+[1491]
+EN: After so many years thinking we’d never be more than siblings... it's finally happening.
+DE: 
+
+[1492]
+EN: Phew... you sure know how to drive me crazy, sis.
+DE: 
+
+[1496]
+EN: *Tracing Annie's figure* Oh, sis...
+DE: 
+
+[1497]
+EN: *Sobbing* Maybe... maybe this is sign that it was wrong for us to be together after all.
+DE: 
+
+[1498]
+EN: *Panting* Ohh, bro...
+DE: 
+
+[1499]
+EN: You’ve got me all kinds of messed up with how great you look, sis...
+DE: 
+
+[1500]
+EN: I-I can't handle this unbearable teasing anymore, sis...
+DE: 
+
+[1501]
+EN: You're doing great, sis...
+DE: 
+
+[1502]
+EN: Oh Annie, y-you feel so good...
+DE: 
+
+[1504]
+EN: Not really, but that's not an exact science. Plus we’re siblings, so we especially can’t be taking risks.
+DE: 
+
+[1505]
+EN: My perfect, beautiful, innocent little twin sister...
+DE: 
+
+[1507]
+EN: T-That was... almost a religious experience, sis.
+DE: 
+
+[1508]
+EN: You stayed home and helped me study, even though you missed a football game with some other kids from school because of it.
+DE: 
+
+[1509]
+EN: B-But I've always liked you!
+DE: 
+
+[1510]
+EN: Is there anything better than spending time with one of my precious little sisters?
+DE: 
+
+[1511]
+EN: *Grumbling to herself* I had a feeling something was going on between him and Nova. Or Alex. Or even Luna, for that matter!
+DE: 
+
+[1512]
+EN: *Yawns* Agh, what's with all this noise so early in the morning, girls? You're gonna wake up your sister.
+DE: 
+
+[1513]
+EN: Maybe having more secret adventures with his {i}other{/i} sister, too.
+DE: 
+
+[1514]
+EN: My brother disappeared.
+DE: 
+
+[1515]
+EN: She mentioned he sometimes plays Eternum for hours on end, right? Or maybe he just went to visit your father again for a few days!
+DE: 
+
+[1516]
+EN: Our father is a drunk skunk of a man living an ocean away.
+DE: 
+
+[1517]
+EN: First, your other sister. Oh, what a {i}coincidence{/i}, the last person to see [mc].
+DE: 
+
+[1518]
+EN: *Standing up* No! Remember what your mom said?!
+DE: 
+
+[1519]
+EN: I don't know how to live without him, Nova.
+DE: 
+
+[1520]
+EN: Annie flew back to the UK a few days ago to spend Christmas with our grandparents. They haven’t been able to invite us over for the holidays since we were kids, so Annie took them up on the offer.
+DE: 
+
+[1521]
+EN: Nova's got family visiting.
+DE: 
+
+[1522]
+EN: As for me, I’m spending Christmas Eve with the rest of the family and Alex. Although... Alex doesn't know yet. It's a surprise.
+DE: 
+
+[1523]
+EN: Annie flew back to London for a few days to spend Christmas with our grandparents, while Nova and Luna have family visiting for the holidays.
+DE: 
+
+[1524]
+EN: Last Christmas, Annie and I had cold kebabs in the kitchen while Dad passed out on the couch in the middle of his tenth beer.
+DE: 
+
+[1525]
+EN: We never really celebrated it in the UK. Annie still enjoys the idea of it, but for me, Christmas stopped feeling very special.
+DE: 
+
+[1526]
+EN: I thought Mom said you had no signal??
+DE: 
+
+[1527]
+EN: But I really gotta go now or grandpa will get mad 
+DE: 
+
+[1528]
+EN: I wish Annie was here for this, she's missing out on quite the feast!
+DE: 
+
+[1529]
+EN: We’ve never had a Christmas dinner like this before, Mom. Feels really special.
+DE: 
+
+[1530]
+EN: My name is [mc] [lastname]. I was born as a twin in the city of Kredon, a relatively small town on the west coast of the United States.
+DE: 
+
+[1531]
+EN: My mother left shortly after my twin and I were born and my dad was never around much because he was always so focused on his job.
+DE: 
+
+[1532]
+EN: (When we moved from Kredon, all we had were each other until we met Chang.)
+DE: 
+
+[1533]
+EN: (We found out our grandparents also lived in the UK. They loved to pamper us when they could, but rarely were able to visit.)
+DE: 
+
+[1534]
+EN: (We gave each other stability in those lonely times.)
+DE: 
+
+[1535]
+EN: (It would be... wrong. Very wrong! We're twins after all.)
+DE: 
+
+[1536]
+EN: (Nancy used to be our babysitter in Kredon. Since our father was always working, I can recall more memories with her than with our dad.)
+DE: 
+
+[1537]
+EN: (We used to spend the entire afternoon playing with Nancy and her daughter Dalia, but then we had to move and ended up losing touch.)
+DE: 
+
+[1538]
+EN: (Come to find out, she actually had 2 rooms available, so Annie and I could stay together!)
+DE: 
+
+[1539]
+EN: (Annie’s actually been the one who’s been coordinating with Nancy over the phone, I didn't have to do anything.)
+DE: 
+
+[1540]
+EN: And anyways, it's not like it's a stranger we're meeting, it's our old babysitter.
+DE: 
+
+[1541]
+EN: Annie! Come here and let me see that adorable face!
+DE: 
+
+[1542]
+EN: It's been so long!
+DE: 
+
+[1543]
+EN: It's so good to see the two of you after all these years.
+DE: 
+
+[1544]
+EN: Same here, Nancy!
+DE: 
+
+[1545]
+EN: No worries, Nancy! I'm sure it'll be more than enough!
+DE: 
+
+[1546]
+EN: I sure hope so!
+DE: 
+
+[1547]
+EN: I remember your rooms being pretty spacious when we stayed over.
+DE: 
+
+[1548]
+EN: *Laughs* You two were also much smaller back then. Do you remember your time in the USA, Annie?
+DE: 
+
+[1549]
+EN: Yeah, since our Dad was constantly working, we've always said you were like a parent to us.
+DE: 
+
+[1550]
+EN: Back then I was still finishing my thesis. Thanks to your father offering me the babysitting gig, I had the flexibility to take care of my daughters at the same time.
+DE: 
+
+[1551]
+EN: Since you left, I've started working in laboratory. It pays pretty well.
+DE: 
+
+[1552]
+EN: That's great! So how are your daughters doing?
+DE: 
+
+[1553]
+EN: They're both doing well! Penelope's in college and Dalia will going to school with you. I remember the the two of you and Dalia were very close as children.
+DE: 
+
+[1554]
+EN: (Nancy used to pick us up after school and we'd come here.)
+DE: 
+
+[1555]
+EN: (Each day we would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Nancy drove us home once it got late.)
+DE: 
+
+[1556]
+EN: (Nancy would always call us on our birthday, but... aside from that, I never reached out. I have to make it up to her somehow.)
+DE: 
+
+[1557]
+EN: *Laughs* Thank you, sweetie.
+DE: 
+
+[1558]
+EN: We're used to living in a flat, so this'll be like living in a palace! 
+DE: 
+
+[1559]
+EN: We're used to living in a flat, so this'll be like living in a palace!
+DE: 
+
+[1560]
+EN: Yes, it is a good home. My husband and I bought it when I was pregnant with Dalia.
+DE: 
+
+[1561]
+EN: *Laughs* And Penelope the preteen that was too "cool" to play with us younger kids?
+DE: 
+
+[1562]
+EN: I wasn't expecting you to be so excited to meet [mc] and Annie again!
+DE: 
+
+[1563]
+EN: Welcome to the family, you two!
+DE: 
+
+[1564]
+EN: Still, I was hoping for us to have a warmer reunion...
+DE: 
+
+[1565]
+EN: It's okay, Nancy! We have plenty of time to catch up in the days to come!
+DE: 
+
+[1566]
+EN: That's nice of you to say, sweetie. Is there anything I can do for you?
+DE: 
+
+[1567]
+EN: Your sister, Penelope, and Dalia have been up for a while!
+DE: 
+
+[1568]
+EN: (Although, I think I'll wait a couple of weeks. I don't want the twins to think I've become a promiscuous woman or anything...)
+DE: 
+
+[1569]
+EN: Oh yeah, that sounds like my sister. I guess she already told you she also plays Eternum?
+DE: 
+
+[1570]
+EN: I don't know, it felt pretty special to me. Annie and I never really had a nice, home-cooked meal while we were living with our dad.
+DE: 
+
+[1571]
+EN: (I mean... If the girls never found out, then would it really be so bad? It’d be our little secret...)
+DE: 
+
+[1572]
+EN: It is pretty nice! Do you remember how we'd play down there with Dalia when we were kids?
+DE: 
+
+[1573]
+EN: *Giggles* Yeah, we'd always get so muddy because of how much it rained. My room has a nice view of the front yard, but sometimes you can hear all the cars passing by.
+DE: 
+
+[1574]
+EN: Baloo? The teddy bear Nancy gave you when you were 5?
+DE: 
+
+[1575]
+EN: (My precious twin sister...)
+DE: 
+
+[1576]
+EN: (Even if, somehow, he wanted me too... and we ended up... doing it, the girls would be furious if they ever found out.)
+DE: 
+
+[1577]
+EN: And on the first day of school, I saw him harassing my sister.
+DE: 
+
+[1578]
+EN: I know what it's like to feel alone.
+DE: 
+
+[1579]
+EN: Mommy said it's good for you! Helps you grow up to be strong!
+DE: 
+
+[1580]
+EN: ([mc] and Annie's father is already generously paying me more than he should for taking care of his children. But even with that extra money, it's only delaying the inevitable.)
+DE: 
+
+[1581]
+EN: Nothing... I'm just sad because in a couple of weeks, my dad will be taking me and Annie with him to Europe.
+DE: 
+
+[1582]
+EN: Well you two can still come play with me after school, right?
+DE: 
+
+[1583]
+EN: She got sleepy and took a nap.
+DE: 
+
+[1584]
+EN: Go wake her up, she also needs to bathe!
+DE: 
+
+[1585]
+EN: I think this goes without saying, but let’s not mention this to anyone. My daughters and your sister especially... heaven knows what they’d think if they learned we bathed together.
+DE: 
+
+[1586]
+EN: Nancy, Penny, and Dalia are still so nice to me. They treat like I'm their sister, which makes me feel suuuuuper happy!
+DE: 
+
+[1587]
+EN: The scholarship that was granted to these three best friends is the best thing that has happened to me in a very long time.
+DE: 
+
+[1588]
+EN: *Snorts* You’re such a cute little dork. Don’t you have enough twins in your life already?
+DE: 
+
+[1589]
+EN: *Chuckles* Let's keep these dreams of yours between us, though. I don’t know how my daughters or your sister would take the news.
+DE: 
+
+[1590]
+EN: So... yeah, you know how Dad is.
+DE: 
+
+[1591]
+EN: She cares about us too much to do anything like that.
+DE: 
+
+[1592]
+EN: I don’t want people to disappear again... Mom left, and now we won't see Dalia, or Nancy, or Penny...
+DE: 
+
+[1593]
+EN: Luna, Alex, Nova, even Nancy, Penny, and Dalia...
+DE: 
+
+[1594]
+EN: Last Christmas, Annie and I had cold kebabs in the kitchen while our dad passed out on the couch in the middle of his tenth beer.
+DE: 
+
+[1595]
+EN: We never really celebrated it. Annie still enjoys the idea of it, but for me, Christmas never felt very special.
+DE: 
+
+[1596]
+EN: We’ve never had a Christmas dinner like this before, Nan. Feels really special.
+DE: 
+
+[1597]
+EN: Things went south when Mom discovered that many of his so-called "work trips", were to be with his second wife and family in the UK. This led to a huge quarrel and an ugly divorce.
+DE: 
+
+[1598]
+EN: Dad somehow managed to get custody of me while my two older sisters stayed with Mom. He took me with him when he relocated to live with his other family in the UK. I know it sounds a bit bleak, but don't worry—this isn't a sob story.
+DE: 
+
+[1599]
+EN: The same can't be said of my dad's second marriage, though. It never really worked out, so he soon divorced once again, leaving my father with only me under his care.
+DE: 
+
+[1600]
+EN: Despite his other problems, at least he didn't fail to support us both economically. Heaven knows where I'd be without him.
+DE: 
+
+[1601]
+EN: (Annie is my half-sister.)
+DE: 
+
+[1602]
+EN: (When we moved from Kredon, she was the first person I met, along with Chang.)
+DE: 
+
+[1603]
+EN: (Living in the same semi-functional family, albeit not for long, naturally made us really close.)
+DE: 
+
+[1604]
+EN: (It was a chaotic time and we gave each other stability.)
+DE: 
+
+[1605]
+EN: (Even after our parents divorced, we've been as inseparable as ever.)
+DE: 
+
+[1606]
+EN: (Because of how close we were, people always joked we would've make a great couple... but the truth is, we're just siblings.)
+DE: 
+
+[1607]
+EN: (Well you know... I mean if...)
+DE: 
+
+[1608]
+EN: (NO. Stop it. She'd probably freak out if I did.)
+DE: 
+
+[1609]
+EN: (It would be... so weird for us. Yeah! She's still my sister after all.)
+DE: 
+
+[1610]
+EN: (Come to find out, she actually had not only my old room, but also an extra room available, so Annie will have a place to stay as well!)
+DE: 
+
+[1611]
+EN: (She’s actually been the one who’s been coordinating with Nancy over the phone, and things seem to be well despite the complicated family matter.)
+DE: 
+
+[1612]
+EN: Do you think she will like me? I mean, considering all those things between her and Dad...
+DE: 
+
+[1613]
+EN: Mom? Of course she's going to like you! You don't have to burden yourself with Dad's mistake.
+DE: 
+
+[1614]
+EN: She was never a petty person, and despite not seeing her in over 10 years, I'm sure she hasn't changed in that aspect.
+DE: 
+
+[1615]
+EN: You're nothing but a big ball of envy because your favorite sister can play Eternum and you can't since you didn't save any money.
+DE: 
+
+[1616]
+EN: F-Favorite?
+DE: 
+
+[1617]
+EN: I thought I was your favorite, [mc]!
+DE: 
+
+[1618]
+EN: I'm not your favorite?
+DE: 
+
+[1619]
+EN: Um... well, yeah, of course you’re my favorite Annie!
+DE: 
+
+[1620]
+EN: You're both my favorite people!
+DE: 
+
+[1621]
+EN: Yeah, who's your {i}favorite{/i}, me or Chang?
+DE: 
+
+[1622]
+EN: T-They're different kinds of favorite!
+DE: 
+
+[1623]
+EN: Who is the {b}ONE TRUE{/b} favorite?!
+DE: 
+
+[1624]
+EN: But that doesn't mean you aren’t also my favorite {i}sister{/i}, Annie!
+DE: 
+
+[1625]
+EN: We've literally lived under the same roof, Annie.
+DE: 
+
+[1626]
+EN: But that doesn't mean you aren’t also my favorite, Chang. You are my best friend!
+DE: 
+
+[1627]
+EN: You're my favorite... non-family!
+DE: 
+
+[1628]
+EN: (Sis was always good at making friends.)
+DE: 
+
+[1629]
+EN: So this is the brother you're always talking about?
+DE: 
+
+[1630]
+EN: (Jeez, I've always tried to not think of Annie in "that" way because I don't want to ruin our relationship, but now...)
+DE: 
+
+[1631]
+EN: You know, I'm not gonna lie, when Mom told me that you and Annie were gonna live with us for a while, I was a little annoyed, mostly because of all the things with Dad... Which I know was silly, since it neither of you were to blame.
+DE: 
+
+[1632]
+EN: But hey, I’m glad we're all still able to get along. Both of you breathe so much life into this house. It almost feels like you've always lived here.
+DE: 
+
+[1633]
+EN: I told you! You shouldn't have played in Luna's server, sis! You can't handle that scary stuff! Remember when we played Dead Space?
+DE: 
+
+[1634]
+EN: (I remember seeing her hugging a teddy bear at night when we still lived together, so that's probably why she grabbed me.)
+DE: 
+
+[1635]
+EN: (We're in quite an... intimate position... I don't want her to think I'm trying to take advantage of her while she sleeps, especially since I'm her brother for Christ's sake.)
+DE: 
+
+[1636]
+EN: Oh... I think I remember seeing Baloo before.
+DE: 
+
+[1637]
+EN: (He probably just sees me as his little sister who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)
+DE: 
+
+[1638]
+EN: (I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. And not blood-related ones... he's not a weirdo like me who has feelings for their sibling.)
+DE: 
+
+[1640]
+EN: (My precious sister...)
+DE: 
+
+[1641]
+EN: (Oh my god, am I the only one feeling all this tension in the air? I kind of want to make a move, but... I don’t want to overstep my bounds... I AM her brother after all)
+DE: 
+
+[1642]
+EN: (But it’s not just any guy. It’s [mc]. My brother!)
+DE: 
+
+[1643]
+EN: (You've had a crush on him since you were nine years old, even though he's your brother. You’ve been fantasizing about this moment for so long. Now it’s finally here... what are you going to do about it?)
+DE: 
+
+[1644]
+EN: (But... I don't want to scare her away. Annie has always been more than a friend, more than a sister to me. If I try something and it doesn't work out, I couldn’t bear the thought of losing her...)
+DE: 
+
+[1645]
+EN: Um... Sis...?
+DE: 
+
+[1646]
+EN: Bro... Um, I don’t know if I’m ready to go all the way toni-
+DE: 
+
+[1647]
+EN: Bro. I said I’m nervous, but that doesn’t mean I... don’t want to...
+DE: 
+
+[1648]
+EN: I thought, as your little sister, you weren’t interested in me...
+DE: 
+
+[1649]
+EN: Annie, you've never been just my sister.
+DE: 
+
+[1650]
+EN: I'm gonna... go... think! Good night bro!
+DE: 
+
+[1652]
+EN: (I bet if I tried to do anything at home, one of the girls would surely notice.)
+DE: 
+
+[1653]
+EN: Well, anyway, I think I respect you a little bit more now because of what you did.
+DE: 
+
+[1654]
+EN: Oh never mind... Well, actually she's also my sister, but-
+DE: 
+
+[1655]
+EN: That's even better then, you can introduce me! Can I go say hi?
+DE: 
+
+[1657]
+EN: You're my sister.
+DE: 
+
+[1659]
+EN: I just want us to stay together forever!
+DE: 
+
+[1660]
+EN: That sounds great! Just spending some time together as siblings. Like how we’ve always done it!
+DE: 
+
+[1661]
+EN: Hmmm... no, more like a date with a girl that I like. As for what the future holds? Who knows...
+DE: 
+
+[1662]
+EN: I mean... of course we're not. We are siblings, after all...
+DE: 
+
+[1663]
+EN: And I felt super welcome in your old home!
+DE: 
+
+[1664]
+EN: Nancy, Penelope, and Dalia are all very nice to me. I was worried they would hold a grudge against me or my mom, but nothing like that ever happened. They treat me as one of the family!
+DE: 
+
+[1665]
+EN: I told you that you were thinking too much on the train, didn't I? I'm so happy that you're able to get along with them.
+DE: 
+
+[1666]
+EN: But... I also feel like we're not meant to be more than that. Things would get awkward if we tried to get together, and our relationship is too important to risk, for me at least.
+DE: 
+
+[1667]
+EN: I just... Annie, I don’t want these feelings to overwrite all the memories and the relationship we’ve built until now.
+DE: 
+
+[1668]
+EN: I am and will always be your brother... but I think we're only meant to be that. Siblings.
+DE: 
+
+[1669]
+EN: But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding my adorably precious, absolutely gorgeous sister whom I’ve liked for years.
+DE: 
+
+[1670]
+EN: I know it's a scary, difficult line we're crossing, but... I think we can overcome it together.
+DE: 
+
+[1671]
+EN: Y-You have to stop! S-STOP! BRO!
+DE: 
+
+[1672]
+EN: The scholarship that was granted to [mc] and his favorite people is the best thing that has happened to me in a very long time.
+DE: 
+
+[1673]
+EN: *Clears throat* I think it's best not to dig too deep into the "favorite" subject.
+DE: 
+
+[1674]
+EN: I don't really care about the "favorite" status anymore, now that [mc] and I are...
+DE: 
+
+[1675]
+EN: N-Now that I am his {b}SUPER{/b} favorite!
+DE: 
+
+[1676]
+EN: Super-duper favorite!
+DE: 
+
+[1677]
+EN: Wait... did [mc] say Chang is his favorite?! And not me?!
+DE: 
+
+[1678]
+EN: I don't really mind anymore. I'm happy just being his little sister.
+DE: 
+
+[1679]
+EN: I mean, Dad has only called me once since we got here. Even Annie's mom called me more times.
+DE: 
+
+[1680]
+EN: (Penelope Carter... you’re gonna drive me mad.)
+DE: 
+
+[1681]
+EN: *Chuckles* Don’t be silly! You're staying with us until we say so. No escaping this family!
+DE: 
+
+[1682]
+EN: Penelope Carter just said she'd like to have a threesome with her brother. How scandalous!
+DE: 
+
+[1683]
+EN: So... yeah, you know how Dad is. He didn't even tell me to say hello to you...
+DE: 
+
+[1684]
+EN: W-Well... it's true that Dad's kind of an asshole, but...
+DE: 
+
+[1685]
+EN: You still had my mom! And my uncle! They think highly of you!
+DE: 
+
+[1686]
+EN: Well... yeah. At least there were other adults who cared about me.
+DE: 
+
+[1687]
+EN: Sorry for spiraling like that, thinking about him can be frustrating.
+DE: 
+
+[1688]
+EN: No worries! I'll always pull you back when you need it!
+DE: 
+
+[1689]
+EN: Imagine if Nancy had caught us... she'd kick us, or at least me, out of the house!
+DE: 
+
+[1690]
+EN: She's just not that type of person.
+DE: 
+
+[1691]
+EN: Although... not as much as when you went to Wyatt's house with your mother, Nancy Carter, that's for sure.
+DE: 
+
+[1692]
+EN: (How would we even explain this to Mom or Dalia? Or even Annie?)
+DE: 
+
+[1693]
+EN: (She's definitely going on a date with [mc]. Her own brother!)
+DE: 
+
+[1694]
+EN: I'm not alone, my uncle's over there.
+DE: 
+
+[1695]
+EN: He's talking to Mom on the phone. We're supposed to pick up my dad and brother who just moved over here from the USA.
+DE: 
+
+[1696]
+EN: I think-I think that's you, [mc].
+DE: 
+
+[1697]
+EN: I like your... h-hair, brother.
+DE: 
+
+[1698]
+EN: We should wait out here for Dad then.
+DE: 
+
+[1699]
+EN: Nice to... Nice to meet you, brother. Will you start going to school tomorrow?
+DE: 
+
+[1700]
+EN: Promise me I'll always be your favorite!
+DE: 
+
+[1701]
+EN: Favorite.
+DE: 
+
+[1702]
+EN: Favorite forever!
+DE: 
+
+[1703]
+EN: I'll go tell uncle I found you!
+DE: 
+
+[1704]
+EN: So she's my new sister? They said there weren’t many kids around here, but it seems like it’s full of weird ones.
+DE: 
+
+[1705]
+EN: For Dad to finish the registration so Uncle could take us to to our new home.
+DE: 
+
+[1706]
+EN: You kept bugging the rest of us until Dad was done.
+DE: 
+
+[1707]
+EN: Oh, trust me, you've seen nothing yet, sis...
+DE: 
+
+[1710]
+EN: *Panting* I WANT... MY BROTHER'S... S-S-SEED INSIDE OF ME...
+DE: 
+
+[1711]
+EN: B-But I've liked you since the first day!
+DE: 
+
+[1712]
+EN: "Mom" huh? Kinky. So, you think "Mom" wants to play the role of some sort of intermediary? Because she wants it too?
+DE: 
+
+[1713]
+EN: It's not... never mind. But yes, that's exactly what she implied.
+DE: 
+
+[1714]
+EN: Maybe having some secret adventures with his half-sister, too.
+DE: 
+
+[1715]
+EN: But I really gotta go now or my mom will get mad 
+DE: 
+
+[1716]
+EN: (Nancy is my mother's sister. She used to look after me in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)
+DE: 
+
+[1717]
+EN: (I used to spend the entire afternoon playing with Auntie Nancy and my cousin Dalia, but then we had to move and ended up losing touch.)
+DE: 
+
+[1718]
+EN: (When she heard Annie was coming, she offered us a second room, so I can finally introduce her to my family back in Kredon!)
+DE: 
+
+[1719]
+EN: I know, but I can't help feeling a little bit nervous to meet your family.
+DE: 
+
+[1720]
+EN: How could I forget my Auntie Nancy?
+DE: 
+
+[1721]
+EN: You clearly need a strong female influence in your life. Seems like your aunt has her work cut out for her, young man!
+DE: 
+
+[1722]
+EN: It’s me, Nancy! Even though we’ve only been speaking on the phone for the past few days, I feel like we’re becoming family already! Isn't that right, Annie?
+DE: 
+
+[1723]
+EN: And of his aunt!
+DE: 
+
+[1724]
+EN: Yeah, since my Dad was constantly working, I've always said you were like a mother to me.
+DE: 
+
+[1725]
+EN: Now I work in a laboratory, but back then I was still finishing my thesis. Thankfully [mc]'s father came to me and offered me a babysitting gig taking care of [mc] while he was at work.
+DE: 
+
+[1726]
+EN: It was not only well-paid, but also allowed me the flexibility to take care of my daughters at the same time. And for both of us, being a single mother and a single father, that was essential.
+DE: 
+
+[1727]
+EN: Yes, Dalia and Penelope. Penny is a little older than [mc], so she used to play on her own, but Dalia got very close to him! They were like twins.
+DE: 
+
+[1728]
+EN: (I guess you don't notice stuff like that about your aunt when you're 8 years old...)
+DE: 
+
+[1729]
+EN: I wasn't expecting you to be so excited to meet your cousin again!
+DE: 
+
+[1730]
+EN: Oh... O-Of course! Little [mc]!
+DE: 
+
+[1731]
+EN: It's like we're family again. I’m not bothered by you at all!
+DE: 
+
+[1734]
+EN: (I mean, I know they’re my family, so I don't mean it that way, but...)
+DE: 
+
+[1735]
+EN: Is that supposed to be a joke? You're my cousin.
+DE: 
+
+[1736]
+EN: Thanks, little cousin.
+DE: 
+
+[1737]
+EN: Oh, I'm sorry I bored you, little cousin.
+DE: 
+
+[1738]
+EN: (It's just Dalia. You two grew up together! She's literally your cousin...)
+DE: 
+
+[1739]
+EN: Dalia, your cousin?
+DE: 
+
+[1740]
+EN: And there's nothing like being on chore duty to strengthen a family bond!
+DE: 
+
+[1741]
+EN: *Imitating Penelope's voice* {i}Wow, little cuz!
+DE: 
+
+[1742]
+EN: (And that's... wrong! Bad [mc]! This is your cousin! Get a hold of yourself.)
+DE: 
+
+[1743]
+EN: Alright little cuz, you convinced me!
+DE: 
+
+[1744]
+EN: Well, I definitely do not share that opinion. You're my family, Penny.
+DE: 
+
+[1745]
+EN: Thanks for trusting me, little cuz. It means a lot.
+DE: 
+
+[1746]
+EN: (Looking at hot pics of Penelope, yeah, great idea, [mc]. Way to not have even more fantasies of all the girls in my family...)
+DE: 
+
+[1747]
+EN: (Who would’ve known my nephew was hiding such a monster...)
+DE: 
+
+[1748]
+EN: (Oh Jesus, one man comes into my house and suddenly I turn into a nymphomaniac. What the hell is wrong with me? He's my family!)
+DE: 
+
+[1749]
+EN: (I mean... If the girls never found out, then would it really be so bad? It’d be our little secret... my big boy...)
+DE: 
+
+[1750]
+EN: You said you were Dalia's cousin?
+DE: 
+
+[1751]
+EN: Yeah, I used to stay at her house all the time when we were little.
+DE: 
+
+[1752]
+EN: Thanks for supporting me, little cuz. I appreciate it.
+DE: 
+
+[1754]
+EN: *Laughs* It's not that. [mc] is my nephew. He's staying with us for a year until he finishes school as part of the student exchange program.
+DE: 
+
+[1755]
+EN: What? I'm not Dalia. My name is [mc]. Dalia is my cousin.
+DE: 
+
+[1756]
+EN: No, I came with Nancy. I'm her nephew.
+DE: 
+
+[1757]
+EN: Oh, really? You two are related? Well I'm glad to meet you, because I'm positive you're going to be seeing a lot more of me soon...
+DE: 
+
+[1758]
+EN: (Or can I? I mean... Why am I so jealous in the first place? It's not like anything could happen between Nancy and I anyways. She's my aunt...)
+DE: 
+
+[1759]
+EN: Y-Yeah, Nancy's my aunt, and honestly she’s been in quite a heightened emotional state lately. I can’t bear the thought of that guy taking advantage of her.
+DE: 
+
+[1760]
+EN: *Giggles* Just like when you were a kid.
+DE: 
+
+[1761]
+EN: *Giggles* Um, maybe. No, that would be so wrong... But, I mean... could you imagine?!
+DE: 
+
+[1764]
+EN: Is that a hint of jealousy I’m sensing, little cousin?
+DE: 
+
+[1765]
+EN: (I mean... not that I should care... or even had any chance, but still...)
+DE: 
+
+[1766]
+EN: (It's not like I was expecting her to keep her chastity like a nun, but... just imagining some guy banging her... ugh.)
+DE: 
+
+[1767]
+EN: (Way out of your league, and also, your cousin.)
+DE: 
+
+[1768]
+EN: Ahhh... yeah, that’s right. Your cousin, [mc]...
+DE: 
+
+[1769]
+EN: My little cousin is a good listener... thank you for remembering!
+DE: 
+
+[1770]
+EN: (Wake up [mc], we're talking about your cousin Penelope here. Still not gonna happen.)
+DE: 
+
+[1771]
+EN: But that’s why I’m glad to have you here, little cuz.
+DE: 
+
+[1772]
+EN: I might need you to be my photographer more often, little cuz!
+DE: 
+
+[1773]
+EN: Well, you sure do know how to push a button, cuz!
+DE: 
+
+[1774]
+EN: I don't mind you seeing me like this... You're my little cousin, I feel comfortable around you.
+DE: 
+
+[1775]
+EN: Come on, cuz, you know you can trust me. I wouldn’t do you wrong.
+DE: 
+
+[1776]
+EN: You know, little cuz... this whole thing got me thinking...
+DE: 
+
+[1777]
+EN: That Valentino guy made me realize that I'll never feel comfortable doing something like this with a stranger. But you’re family, [mc], and since I have you here...
+DE: 
+
+[1779]
+EN: Oh don’t be like that, cuz! It'll be fun!
+DE: 
+
+[1780]
+EN: Oh, come on, little cuz!
+DE: 
+
+[1781]
+EN: (Is this huge thing I’m feeling... my little cousin's...)
+DE: 
+
+[1782]
+EN: I don't know what it is about you, little cuz, but... I always have so much fun when you’re around.
+DE: 
+
+[1783]
+EN: I was wondering why Nancy and her shared the same last name on your followers list. She must be your cousin!
+DE: 
+
+[1784]
+EN: (She's always been like a big sister to me.)
+DE: 
+
+[1785]
+EN: And now I’ve come to learn that you’re cousins with Penelope too?!
+DE: 
+
+[1786]
+EN: Have fun playing, little cuz.
+DE: 
+
+[1787]
+EN: We will not leave until every lustful desire of yours is satisfied. Use us sisters as your personal toys, as we surrender ourselves to every inch of you... or lay back and let us take the lead... and do all of the work.
+DE: 
+
+[1788]
+EN: Nah... I don’t need to sleep out here. I tricked some relatives in Kredon into letting me live in their house for a whole year. They set me up with a bed to sleep in, too, so no park benches for me!
+DE: 
+
+[1789]
+EN: Especially my youngest cousin. She's extremely naive and easily manipulated.
+DE: 
+
+[1790]
+EN: Don't worry, I’m not going to waste time on your whore cousin anymore.
+DE: 
+
+[1791]
+EN: Penelope and I know each other from college, [mc]. I don't know why you never told me you were her cousin!
+DE: 
+
+[1792]
+EN: And this here is my cousin Penelope, and next to her...
+DE: 
+
+[1793]
+EN: If Auntie Nancy asks, I ate it all!
+DE: 
+
+[1794]
+EN: (This nanny gig with [mc] just isn't enough to pay the bills, and between paying the girls’ tuition and the mortgage...)
+DE: 
+
+[1795]
+EN: ([mc]'s father is already generously paying me more than he should for taking care of his son. I don't know what we'd do without his support. But even with that extra money, it’s only delaying the inevitable.)
+DE: 
+
+[1796]
+EN: Has little [mc] finished his dinner?
+DE: 
+
+[1797]
+EN: I can see the mud stains from here, little cousin!
+DE: 
+
+[1798]
+EN: *Giggles* That's a bold move, little cuz!
+DE: 
+
+[1800]
+EN: So tell me... don't you wanna see a bit more? If I had a cousin who looked like this, I’d be secretly dying to find out what’s underneath all those clothes...
+DE: 
+
+[1801]
+EN: She's... my cousin is... perfect...
+DE: 
+
+[1802]
+EN: Or if you prefer, you can feel your cousin's huge, gorgeous ass right here...
+DE: 
+
+[1803]
+EN: That makes me very uncomfortable, to be honest. I’m gonna need a little more fanfare from you, little cousin.
+DE: 
+
+[1804]
+EN: I couldn't care less about your social network pages or how many followers you have... I only care about the person behind it. You're my one and only big cousin, and you always looked after me. You're special to me just because of the person you are.
+DE: 
+
+[1805]
+EN: Nice to meet you. I’m [mc], and this is Luna and my cousin Penelope.
+DE: 
+
+[1806]
+EN: Someone I like!
+DE: 
+
+[1807]
+EN: (Well yeah, she's my cousin...)
+DE: 
+
+[1808]
+EN: Your BDSM-lover cousin said you’ve all been to the Emporium already, right?
+DE: 
+
+[1809]
+EN: Little cousin... can I confess something to you...? 
+DE: 
+
+[1810]
+EN: Little cousin... can I confess something to you...?
+DE: 
+
+[1812]
+EN: This is my cousin, Penelope, and my friend Luna.
+DE: 
+
+[1813]
+EN: She's my... second cousin. Totally loves to roleplay as an elf.
+DE: 
+
+[1814]
+EN: Don't worry little cuz, I'm in good hands!
+DE: 
+
+[1815]
+EN: Actually, I am! I'm looking for my cousin. She’s the one who invited me to the server.
+DE: 
+
+[1816]
+EN: I was just looking for her! Her name is Dalia. She's my cousin.
+DE: 
+
+[1818]
+EN: Oh, so it's fine to do all that with your cousin?!
+DE: 
+
+[1819]
+EN: *Laughs* Oh, don’t you dare! You’re my nephew, so that makes you a Prince too!
+DE: 
+
+[1820]
+EN: Well, enough about her. I want to hear more from my noble Prince. Did you know this Royal Bathhouse is open only to chosen members of the imperial family and the Emperor’s special guests?
+DE: 
+
+[1821]
+EN: I had no idea! I feel so honored now. Does that make me your chosen family, or your special guest?
+DE: 
+
+[1822]
+EN: Well... No one said you couldn’t be both...
+DE: 
+
+[1823]
+EN: (Keep it together! She’s your aunt, and she's like a mother to you. Focus, [mc]! This is strictly a bath!)
+DE: 
+
+[1824]
+EN: And I saw you! Back when you took care of me. I was too young to remember most of that time, but you looked exactly like you did in our old family pictures!
+DE: 
+
+[1825]
+EN: I owe it to your grandmother. It seems like once she reached 25, she stopped aging. She died shortly after you and Dalia were born, but she was always so full of life.
+DE: 
+
+[1826]
+EN: Girlfriend. No doubt about it at all. No one would believe me if I said you're my aunt.
+DE: 
+
+[1827]
+EN: I see... my young nephew has a little experience under his belt. Very interesting...
+DE: 
+
+[1828]
+EN: I mean... th-they're my cousins. I'd never dare.
+DE: 
+
+[1829]
+EN: Just forget about that for a moment, [mc]. I know it’s taboo, but I... wouldn’t mind having you as my son-in-law...
+DE: 
+
+[1830]
+EN: I know it would be incest, but... I'd be lying if I said that doesn’t sound like a dream come true.
+DE: 
+
+[1831]
+EN: *Chuckles* Aren't you forgetting something important...?
+DE: 
+
+[1832]
+EN: *Giggles* You're their family, [mc]. I’ve watched you grow up together, and I know you’d treat them right. You definitely have most of the desirable qualities in a man, but still... there’s some areas of you I don’t know much about.
+DE: 
+
+[1833]
+EN: I couldn't. I don't know... they're my family.
+DE: 
+
+[1834]
+EN: Ah, I see. I guess you're probably right.
+DE: 
+
+[1835]
+EN: Your energy is infectious. Your charm is invigorating. When I’m with you, I feel like I can take on the world. And then you awaken so many other feelings within me that I thought were long gone... feelings that I know I shouldn’t have...
+DE: 
+
+[1836]
+EN: Wow, I... I had no idea, Nancy.
+DE: 
+
+[1837]
+EN: No, really Nancy... it honestly feels so nice to hear that coming from you. You're my family and one of the most important women in my life, so it’s truly appreciated.
+DE: 
+
+[1838]
+EN: *Chuckles* Very much. I’m honored to be your chosen family and special guest... and feel so privileged to witness such a rare and honestly breathtaking sight.
+DE: 
+
+[1839]
+EN: Hmph. I invite my own nephew to our private baths and he can’t even contain himself. What a shame.
+DE: 
+
+[1840]
+EN: (She’s irresistible... even if it’s wrong, I can’t deny it...)
+DE: 
+
+[1841]
+EN: (I can tell she was looking forward to this... my Auntie Nancy...)
+DE: 
+
+[1842]
+EN: Does the Prince truly wish to serve his Empress?
+DE: 
+
+[1843]
+EN: You know... I remember from my history classes that it was common for royal families to "intermingle" with one another...
+DE: 
+
+[1844]
+EN: As they say... {i}"When in Rome, do as the Romans do..."{/i}
+DE: 
+
+[1845]
+EN: Oh, s-screw the Prince shit...
+DE: 
+
+[1847]
+EN: This time though... I want you to lie back and let your Auntie Nancy do all the work...
+DE: 
+
+[1848]
+EN: *Whispering* What for? It’s only a guard! They don't know we're related.
+DE: 
+
+[1849]
+EN: *Whispering* Oh, shit... I told Maximo earlier that Dalia was my cousin.
+DE: 
+
+[1850]
+EN: (Why does God hate me? Is this divine punishment?)
+DE: 
+
+[1852]
+EN: (I hope I can still look them in the face after this...)
+DE: 
+
+[1853]
+EN: I'm not Nancy's daughter, I'm her nephew. I mean, I'm not even a girl! Do I have to spell it out or what?
+DE: 
+
+[1854]
+EN: (With all our family living under the same roof, it'll be hard to find some time alone.)
+DE: 
+
+[1855]
+EN: Thanks cuz. You're a good friend.
+DE: 
+
+[1856]
+EN: I didn't know you were dating! Wait, aren't you two cousins?
+DE: 
+
+[1857]
+EN: Hold on, you two aren't actually cousins?! Is she adopted?! Why didn't you tell me, [mc]?!
+DE: 
+
+[1858]
+EN: W-What? No! We're not {i}dating!
+DE: 
+
+[1859]
+EN: We're just cousins!
+DE: 
+
+[1860]
+EN: It doesn't mean anything! A-And I heard that in Europe, cousins kiss each other all the time!!
+DE: 
+
+[1861]
+EN: I'm the lame one? Go tell that to that crybaby cousin of yours.
+DE: 
+
+[1863]
+EN: Well... I hope this is enough to get you in the mood. I trust that us being cousins won't be an issue for little [mc].
+DE: 
+
+[1865]
+EN: Nancy, Penelope, and Dalia are all very nice to me. They treat me as part of your family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!
+DE: 
+
+[1866]
+EN: Thanks, little cuz! You’re a sweetheart. I've been practicing with Luna these past few days. I can't stop playing!
+DE: 
+
+[1867]
+EN: Guess she still just sees me as her little cousin...
+DE: 
+
+[1868]
+EN: What other people? You? Mom? Annie? I'm sure [mc] doesn't mind either. He's just family. Like a little brother, almost.
+DE: 
+
+[1869]
+EN: With [mc]? Pffft, please, even if he {i}wasn't{/i} our cousin, my bar is WAY higher. You’ve seen my Instagram DMs: models, actors, influencers... did you know that that Gigachad meme guy from a few years ago tried sliding into my DMs?
+DE: 
+
+[1870]
+EN: (If I had to go down on my own cousin, he should do it too. Just so we're even.)
+DE: 
+
+[1871]
+EN: (I don't even like him. The only guy I kinda liked lately was my own cousin... and he wasn’t even into me.)
+DE: 
+
+[1872]
+EN: What have I done to deserve this? What god have I pissed off?! I haven't committed any sins...{w} other than, um... {w}lust, fornication, incest, greed, pride, and {i}so{/i} much temptation...
+DE: 
+
+[1873]
+EN: *Knocks on the door* Little cuz? Is that you?
+DE: 
+
+[1874]
+EN: *Chuckles* Are you alright, little cuz?
+DE: 
+
+[1875]
+EN: Yeah, I'll let you finish your shower. Sorry, cuz. Didn’t mean to give you a {i}hard{/i} time.
+DE: 
+
+[1876]
+EN: *Chuckles* Don’t be silly, little cuz! You're staying with us until we say so. No escaping the Carters!
+DE: 
+
+[1877]
+EN: Hey, cuz... before we go in, let's agree not to tell anyone we're related.
+DE: 
+
+[1878]
+EN: There are a few people here I have some... {i}disagreements{/i} with, and I don't want to get you involved in it.
+DE: 
+
+[1879]
+EN: Alright, that makes sense... But if they pick a fight with me, that's fair game, right?
+DE: 
+
+[1880]
+EN: Y-You... what?! B-But aren't you guys... y'know, blood-related?
+DE: 
+
+[1881]
+EN: Isn't it crazy?! I've never been attracted to guys younger than me, let alone my little cousin, but I don't know... he's really cute! And...
+DE: 
+
+[1882]
+EN: *Whispering* Honestly, the fact that we're related makes it {i}{b}so {/b}{/i}much more exciting!
+DE: 
+
+[1883]
+EN: But we're still family, and he might not be into me like that so... keep it secret!
+DE: 
+
+[1884]
+EN: (But holy shit, did she say she has a crush on [mc] too?! Her own {i}cousin!!{/i} I mean, I'm an only child, so I don't really know how their family works, but...)
+DE: 
+
+[1885]
+EN: (Nothing happened. So what if my new bestie Penny and I have a crush on the same boy? So what if h-he's her cousin?)
+DE: 
+
+[1886]
+EN: Or... your girlfriend, or anything. We're just cousins.
+DE: 
+
+[1887]
+EN: I'd be mad too if my own cousin had ignored me like that just to try to hook up with someone I don't like.
+DE: 
+
+[1888]
+EN: So... did you need anything, little cuz? Or were you just missing me?
+DE: 
+
+[1889]
+EN: And you thought of asking your big titty blonde bimbo cousin to lend you hers, right?
+DE: 
+
+[1890]
+EN: And I need to wash my hair before it's too late! See ya, cuzzy!
+DE: 
+
+[1891]
+EN: I came with Penelope. I- uhh, I live with her, as part of the Student Exchange Program.
+DE: 
+
+[1892]
+EN: Okay, it's about that damn yearbook. I just didn't wanna get you mixed up in this.
+DE: 
+
+[1893]
+EN: *Giggles* I knew I could count on you, little cuz.
+DE: 
+
+[1894]
+EN: Don't be such a bore! Where did you leave your spine, little cuz?
+DE: 
+
+[1895]
+EN: But... w-wait, she's {i}interested{/i}?
+DE: 
+
+[1896]
+EN: What do you know? D-Did she tell you anything?
+DE: 
+
+[1897]
+EN: Just a kid who's gonna help me sneak into the dorm room of someone who stole something from me.
+DE: 
+
+[1898]
+EN: *Whispering* I'm sorry I dragged you into this, cuz.
+DE: 
+
+[1900]
+EN: I'm {i}so{/i} very sorry for flaunting my lewd body in front of you, little cousin. I had no idea it would cause you so much stress...
+DE: 
+
+[1901]
+EN: Okay, take a good look, little cuz.
+DE: 
+
+[1902]
+EN: Do you forgive me for acting naughty? For being such a tease? For flaunting myself all around my own cousin?
+DE: 
+
+[1903]
+EN: You move closer to Penelope, frantically trying to memorize every square inch of your cousin’s ethereal body.
+DE: 
+
+[1904]
+EN: *Giggles* You're crazy, little cuz...
+DE: 
+
+[1906]
+EN: She's mine... For at least tonight, my big cousin, Penelope Carter, is all mine...
+DE: 
+
+[1907]
+EN: *Giggles* You're a filthy little degenerate, aren't you, cousin?
+DE: 
+
+[1908]
+EN: *Giggles* Jesus, cuz, how long can you keep up an erection like that?
+DE: 
+
+[1912]
+EN: But I’m not just some kid, y’know...
+DE: 
+
+[1913]
+EN: Yeah, I guess you can take a shot, little cuz...
+DE: 
+
+[1915]
+EN: Besides, that would be incest. We're blood-related and... w-we don't even have a condom...
+DE: 
+
+[1916]
+EN: AAaaaah... What are you d-doing to me, c-cuz?
+DE: 
+
+[1918]
+EN: Your hands wrap around Penelope’s soft neck as you hasten your pace, your hips slamming relentlessly against your cousin's buttocks.
+DE: 
+
+[1919]
+EN: K-Keep up that pace, cuzzy...
+DE: 
+
+[1921]
+EN: I'm gonna have to ask you to come to all the parties I'm invited to from now on, little cuz.
+DE: 
+
+[1922]
+EN: What are your plans, cuz?
+DE: 
+
+[1923]
+EN: Thanks, [mc]. You're a good cousin.
+DE: 
+
+[1924]
+EN: Good night, little cuz...
+DE: 
+
+[1925]
+EN: I'm glad I have you as my family.
+DE: 
+
+[1926]
+EN: After all these years, you’re still taking care of me like a mother, eh Nancy?
+DE: 
+
+[1927]
+EN: I'm not a girl, and Nancy isn't my mom. She's my aunt.
+DE: 
+
+[1928]
+EN: And you, dear nephew... are going to retrieve that information.
+DE: 
+
+[1929]
+EN: And that's not even taking into account our age difference or the fact that you're my sister's child, and I raised you like my own son until you were 9 years old.
+DE: 
+
+[1930]
+EN: Our age difference, our family, the Student Exchange Program... the fact that you're my sister's child, and I raised you like my own son until you were 9 years old...
+DE: 
+
+[1931]
+EN: I don't care if it's wrong. I don't care if it's incest. I'll take what I want.
+DE: 
+
+[1932]
+EN: Let your Auntie Nancy take care of you. You’ve been such a good boy, after all...
+DE: 
+
+[1935]
+EN: Can you handle me going faster, sweetie? I’ll start slowly... and it’ll make your Auntie Nancy feel so much better...
+DE: 
+
+[1939]
+EN: [mc] s-s-stop joking! Th-this is incest! I-I can't have a baby w{size=40}AAAHHHHhhh{/size}... {w=1.5}w-with my own n-nephew!
+DE: 
+
+[1940]
+EN: I can't be fired, [mc], I have to feed our family!
+DE: 
+
+[1941]
+EN: You’ve really made our family... authentic. It’s almost like we were missing something before you came back.
+DE: 
+
+[1942]
+EN: My god, did my cousin's ass get even bigger while I was in the UK? Or... rounder?
+DE: 
+
+[1943]
+EN: *Snorts* Of course you’d say that! I'm afraid I'll have to shower alone today, my insatiable nephew.
+DE: 
+
+[1944]
+EN: Nancy and Penelope definitely have some competition in that department... not that I should be sizing up my own aunt and cousin like that.
+DE: 
+
+[1945]
+EN: (How would we even explain this to Mom or Dalia? “Hey, guess who I hooked up with — my own cousin”?)
+DE: 
+
+[1946]
+EN: (You can't be fixated on your own cousin like some teenage crush, Penny. There's plenty more fish in the sea that aren't blood-related!)
+DE: 
+
+[1947]
+EN: I'm glad I have a cousin who I trust and with whom I can do these kinds of things, [mc].
+DE: 
+
+[1948]
+EN: I'd never let another man see you in your most glorious form. Then again, I'm not exactly “another man”, am I?
+DE: 
+
+[1949]
+EN: We're just humans after all. We're cousins, sure, but we have a history together, and this is quite an... explicit session.
+DE: 
+
+[1950]
+EN: Let's cross this line... the one line we probably shouldn't... just once.
+DE: 
+
+[1951]
+EN: And after this... the game will be over. It will be... our own little family secret.
+DE: 
+
+[1953]
+EN: I'm living out the fantasy of what her 180,000 followers can only dream of. Not that any of them know she's my cousin.
+DE: 
+
+[1960]
+EN: Split me in half, cuz...
+DE: 
+
+[1961]
+EN: Sh-Should we really do it? I mean... we're cousins, [mc]...
+DE: 
+
+[1963]
+EN: We... connected. I guess it makes sense, though. We've basically been family for years — just, well... in a very different way now.
+DE: 
+
+[1965]
+EN: Oh, so now he's suddenly {i}your{/i} cousin more than mine?
+DE: 
+
+[1966]
+EN: *Snorts* You're such a pervert, cuz. You ever think about anything besides sex?
+DE: 
+
+[1967]
+EN: You press your lips against your cousin's neck, trailing soft kisses over her skin as your hands slide over her curves.
+DE: 
+
+[1969]
+EN: I just want to devour every single inch of my own cousin... down to the very last freckle...
+DE: 
+
+[1970]
+EN: *Giggles* You’re not secretly recording me, right? Taking advantage of your own little blind cousin...?
+DE: 
+
+[1974]
+EN: You lift your cousin's leg up in the air, and slam back into her with brutal force, the thrumming sounds of your bodies colliding and liquids sloshing radiating through the room.
+DE: 
+
+[1976]
+EN: I wanna be your first, cuz.
+DE: 
+
+[1977]
+EN: (Annie is my stepsister.)
+DE: 
+
+[1978]
+EN: (After we moved from Kredon, she and her mother were our next-door neighbors, and she was the first person I met, along with Chang.)
+DE: 
+
+[1979]
+EN: (Her father was a traveling salesman and her mother was a flight attendant, so she almost never got to see the two of them, especially after they divorced.)
+DE: 
+
+[1980]
+EN: (Even after my dad and her mom got remarried, nothing changed. We were both lost... and lonely.)
+DE: 
+
+[1981]
+EN: (Because of how close we were, people always assumed we were dating... but the truth is, we're just siblings. Stepsiblings.)
+DE: 
+
+[1982]
+EN: (I mean… she's cute, and we love spending time with each other, but she's my little sister. I'd never try to make a move on her.)
+DE: 
+
+[1983]
+EN: (It would be... weird for us. Yeah! What would our parents say?)
+DE: 
+
+[1984]
+EN: (She's my family, and we'll always be close friends. It's just not the kind of relationship we have.)
+DE: 
+
+[1985]
+EN: You're nothing but a big ball of envy because your one-and-only little sister and best friend can play Eternum and you can't since you didn't save any money.
+DE: 
+
+[1986]
+EN: I guess it would be you, sis.
+DE: 
+
+[1987]
+EN: You're my best... bro!
+DE: 
+
+[1988]
+EN: Ahh, it's a deal, brother!
+DE: 
+
+[1989]
+EN: Oh, and you must be Annie, [mc]'s stepsister! Nice to meet you too!
+DE: 
+
+[1990]
+EN: (I guess I should let them walk to school on their own, since I don't wanna look like an overprotective older brother or something.)
+DE: 
+
+[1991]
+EN: (Bah, Annie isn't my baby sister anymore. She doesn't need protecting.)
+DE: 
+
+[1992]
+EN: Hands off my little sister, buddy. The lady said no.
+DE: 
+
+[1993]
+EN: Hands off my little sister. The lady said no.
+DE: 
+
+[1994]
+EN: And... thank you again for helping me out back there, big bro.
+DE: 
+
+[1995]
+EN: I don't know, it felt pretty special to me. I never had a nice, home-cooked meal when I was living with my dad and stepmom.
+DE: 
+
+[1996]
+EN: So this is the {i}big brother{/i} you're always talking about?
+DE: 
+
+[1997]
+EN: (That's a bad idea... she's my little sister.)
+DE: 
+
+[1998]
+EN: (Shit, I've always tried to not think of Annie in "that" way because I don't want to ruin our relationship, but now...)
+DE: 
+
+[1999]
+EN: (Damn... I guess she’s not the skinny baby sister she used to be...)
+DE: 
+
+[2000]
+EN: The pleasure was all mine, little sis. Eternum is awesome. I’m so grateful I had you by my side.
+DE: 
+
+[2001]
+EN: *Laughs* Come on, sis! The last time we watched a horror movie, you couldn’t sleep alone for an entire two weeks!
+DE: 
+
+[2002]
+EN: Mr. Baloo? That teddy bear your mom gave you when you were 5?
+DE: 
+
+[2003]
+EN: Y-yeah, Mr. Baloo...
+DE: 
+
+[2004]
+EN: Oh... I didn't know you still had him.
+DE: 
+
+[2005]
+EN: (He probably just sees me as the little sister who still plays with stuffed animals... the tiny little thing who’s barely tall enough to ride a rollercoaster.)
+DE: 
+
+[2006]
+EN: (I can't blame him. He probably prefers real women... taller ones, over 5'5 at least, with a big butt and a nice rack. Not a weirdo like me who has feelings for her own big brother...)
+DE: 
+
+[2008]
+EN: It’s just a shirt after all, right...? You've seen me without it before...
+DE: 
+
+[2009]
+EN: (The last time I saw her topless was when we were 9 and still bathing together, though...)
+DE: 
+
+[2010]
+EN: (I'm not sure where she’s going with all of this... but I sure as hell want to find out...)
+DE: 
+
+[2011]
+EN: (This doesn't seem like my sister... Is she trying to prove something?)
+DE: 
+
+[2012]
+EN: (Holy shit, I never noticed know how much she had... grown up...)
+DE: 
+
+[2013]
+EN: (This is really my sister... {i}my{/i} sister.)
+DE: 
+
+[2014]
+EN: (Oh my god, am I the only one feeling all this tension in the air? I want to make a move, but... I really don’t want to overstep my bounds...)
+DE: 
+
+[2015]
+EN: (But it’s not just any guy. It’s [mc]. Your big brother.)
+DE: 
+
+[2016]
+EN: (I can’t deny it, I want more of him... I mean, we aren’t even blood-related...)
+DE: 
+
+[2017]
+EN: (A-And this all still feels so wrong... we shouldn't go any further than this... {w}right...?)
+DE: 
+
+[2018]
+EN: Big bro. I said I’m nervous, but that doesn’t mean I... don’t want to...
+DE: 
+
+[2019]
+EN: I thought you weren’t interested in me... I was just your little sister...
+DE: 
+
+[2020]
+EN: Annie, you've never been {i}just{/i} my little sister.
+DE: 
+
+[2021]
+EN: You're... perfect.
+DE: 
+
+[2022]
+EN: *Chuckles* You know I’m not one to break my promises, sis.
+DE: 
+
+[2024]
+EN: (I never would’ve thought I’d have a chance to do this with my big brother...)
+DE: 
+
+[2025]
+EN: I only came here t-to sleep and then... next thing I know I’m doing that... with my big brother!
+DE: 
+
+[2026]
+EN: I started m-moving and then I c-couldn't stop and... now I’m not going to have my fairy tale ending... because what kind of Disney princess romance begins with a BROTHER-SISTER THIGH JOB?! AHAHAH!!
+DE: 
+
+[2027]
+EN: (HOLY SHIT! All of that really happened! That was incredible! That was my first time seeing my sister's secret kinky side... it felt so wrong... and I loved every moment of it!)
+DE: 
+
+[2028]
+EN: I never met my mother, and my father and stepmother were always absent in my life. They were constantly too occupied with their work.
+DE: 
+
+[2029]
+EN: (That's all I want... just to be brother and sister again.)
+DE: 
+
+[2030]
+EN: I've liked you ever since we were 10. If I’m being real with you, the only reason why I was willing to come back to Kredon at all was because you were coming with me.
+DE: 
+
+[2031]
+EN: You're my little sister and my best friend.
+DE: 
+
+[2032]
+EN: And in my heart I know, even if it's wrong, I want us to be so much more than that, too...
+DE: 
+
+[2033]
+EN: And, as much as I loved that night, I think we both felt like things were moving way too fast.
+DE: 
+
+[2034]
+EN: Like... a fun date between siblings?
+DE: 
+
+[2035]
+EN: Hmmm... no, more like a date with a girl that I like. And it just happens to be that she’s also my adorable little sister, and my best friend too. As for what the future holds? Who knows...
+DE: 
+
+[2036]
+EN: And not a word to anyone. I mean... there's no need for it, really. We’re just two {i}totally non-blood-related{/i} people going on a date, and there’s no need to overthink it.
+DE: 
+
+[2037]
+EN: That was quite the goodbye for just a brother and sister...
+DE: 
+
+[2038]
+EN: I think this goes without saying, but let’s not mention this to anyone. My daughters and your stepsister especially... heaven knows what they’d think if they learned we bathed together.
+DE: 
+
+[2039]
+EN: (A date with my big brother!)
+DE: 
+
+[2040]
+EN: (A date in Eternum WITH my big brother!)
+DE: 
+
+[2041]
+EN: I feel so comfortable with Annie that sometimes I forget we're just siblings, not really a... a couple.
+DE: 
+
+[2042]
+EN: {color=[walk_path]}Decline and stay as stepsiblings [red][mt](Closes Annie's path)
+DE: 
+
+[2043]
+EN: {color=[walk_path]}Decline and stay as stepsiblings
+DE: 
+
+[2044]
+EN: Decline and stay as stepsiblings [red][mt](Closes Annie's path)
+DE: 
+
+[2045]
+EN: Decline and stay as stepsiblings
+DE: 
+
+[2046]
+EN: I like you, and you're my beloved little sister and my best friend. You already know that.
+DE: 
+
+[2047]
+EN: But... I also feel like we're not meant to be more than that. Things would get so complicated if we tried to get together as stepsiblings, and our friendship, our {i}family{/i}, is too important to risk, for me at least.
+DE: 
+
+[2048]
+EN: Sometimes, when I look at you, I don’t recognize the Annie I’ve always known.
+DE: 
+
+[2049]
+EN: Sometimes, I don’t recognize myself.
+DE: 
+
+[2050]
+EN: It feels like we’re on the edge of losing something we’ve always had, and I’m...{w}{i}{size=27} I-I’m scared we’ll never get it back.
+DE: 
+
+[2051]
+EN: I can’t commit to this... {i}thing{/i} between us. Not right now. In the future... I don’t know. Maybe. But I don’t want to lead you on, either.
+DE: 
+
+[2052]
+EN: It's not your fault, Annie, it's mine. I know I've been sending you mixed signals, bringing you here today. My head has been all over the place too, you know, with all this back and forth...  You don't deserve that.
+DE: 
+
+[2053]
+EN: Y-Yeah... It's been like... 10 years since we became family?
+DE: 
+
+[2054]
+EN: But... Do you think I'm NOT nervous? I'm super scared too! I mean, in my arms, I'm holding my adorably precious, absolutely gorgeous little sister whom I’ve liked for years.
+DE: 
+
+[2055]
+EN: After so long together, I know it's scary to go outside what's familiar to us, but... I think we can overcome it together.
+DE: 
+
+[2056]
+EN: That’s how I feel. If you don't feel the same way... we can always go back to where we were a month ago and stay as siblings and friends!
+DE: 
+
+[2057]
+EN: I know it's scary to cross this bridge when you're not sure what your partner might want, or what our relationship is even supposed to be, so let me be clear...
+DE: 
+
+[2058]
+EN: You’re my beloved little sister and my best friend, and that part of us will never change. But... you’re so ridiculously pretty, Annie, that I can’t help but want to take our relationship to the next level.
+DE: 
+
+[2060]
+EN: God, there are so many things I want to do to Annie right now... but she's still my little sister. I don't wanna cross any line too fast.
+DE: 
+
+[2061]
+EN: It'll only get better from here, sis...
+DE: 
+
+[2062]
+EN: *Panting* K-Keep going, b-big bro! Y-You’re hitting just the... r-right spot!
+DE: 
+
+[2065]
+EN: Of course you can see it, little sis... After all, you’re responsible for it...
+DE: 
+
+[2066]
+EN: You’re such a good little sister, Annie...
+DE: 
+
+[2069]
+EN: W-We’ve g-gotta do some practicing b-beforehand, b-bro...
+DE: 
+
+[2070]
+EN: Thank you for an amazing day, big bro.
+DE: 
+
+[2071]
+EN: Annie has been distant, but I'm happy to see her smile. I guess that's all I need for now. That's what family does, I guess.
+DE: 
+
+[2073]
+EN: But I have to resist the urge, for now. I know my little sister better than she knows herself, and I know she’s really close but not quite ready to go all the way.
+DE: 
+
+[2074]
+EN: The sweet, innocent, little sister I've known for years...
+DE: 
+
+[2075]
+EN: It's straightforward yet stylish, giving off a confident vibe. It shows you're not desperate but also considerate enough to dress well for a date with your own sister, after all these years.
+DE: 
+
+[2076]
+EN: You said it yourself. It's just a meal with your sister, like it's been a hundred times over the past 10 years.
+DE: 
+
+[2077]
+EN: After so many years thinking I’d never be more than her brother... it's finally happening.
+DE: 
+
+[2078]
+EN: You slowly start pushing yourself into your sister's petite body.
+DE: 
+
+[2079]
+EN: I'm finally taking my own sister's virginity...
+DE: 
+
+[2080]
+EN: Full Incest (Mom as Mom and Annie as sister)
+DE: 
+
+[2081]
+EN: I only want Mom as Mom
+DE: 
+
+[2082]
+EN: Mom as Mom and Annie as half-sister
+DE: 
+
+[2083]
+EN: Mom as aunt and Annie as stepsister
+DE: 
+
+[2084]
+EN: It's me, Mom! Even though we've only been speaking on the phone for the past few days, I feel like we're becoming good friends already! Isn't that right, Annie?
+DE: 
+
+[2086]
+EN: No, I came with Mom, my mother.
+DE: 
+
+[2087]
+EN: I was wondering why you, Mom, and her shared the same last name on your followers list. You're all related!
+DE: 
+
+[2088]
+EN: *Clears throat* Hello, this is Mom [lastname].
+DE: 
+
+[2090]
+EN: Although... not as much as when you went to Wyatt's house with your mother, Mom [lastname], that's for sure.
+DE: 
+
+[2091]
+EN: (Our mother, Mom, used to look after us and our sisters in Kredon. Since our father was always working, I can recall more memories with her than with him.)
+DE: 
+
+[2092]
+EN: (Mom used to be our babysitter in Kredon. Since our father was always working, I can recall more memories with her than with our dad.)
+DE: 
+
+[2093]
+EN: (We used to spend the entire afternoon playing with Mom and her daughter Dalia, but then we had to move and ended up losing touch.)
+DE: 
+
+[2094]
+EN: Same here, Mom!
+DE: 
+
+[2095]
+EN: (Mom used to pick us up after school and we'd come here.)
+DE: 
+
+[2096]
+EN: (Each day we would spend the afternoon playing with her and Dalia. We had dinner every night at eight, and then Mom drove us home once it got late.)
+DE: 
+
+[2097]
+EN: Mom, Penny, and Dalia are still so nice to me. They treat like I'm their sister, which makes me feel suuuuuper happy!
+DE: 
+
+[2098]
+EN: I don’t want people to disappear again... Mom left, and now we won't see Dalia, or Mom, or Penny...
+DE: 
+
+[2099]
+EN: (She’s actually been the one who’s been coordinating with Mom over the phone, and things seem to be well despite the complicated family matter.)
+DE: 
+
+[2100]
+EN: Mom, Penelope, and Dalia are all very nice to me. I was worried they would hold a grudge against me or my mom, but nothing like that ever happened. They treat me as one of the family!
+DE: 
+
+[2101]
+EN: Imagine if Mom had caught us... she'd kick us, or at least me, out of the house!
+DE: 
+
+[2102]
+EN: Although... not as much as when you went to Wyatt's house with your mother, Mom Carter, that's for sure.
+DE: 
+
+[2103]
+EN: (Mom is my mother's sister. She used to look after me in Kredon. Since my father was always working, I can recall more memories with her than with my dad.)
+DE: 
+
+[2104]
+EN: (I used to spend the entire afternoon playing with Auntie Mom and my cousin Dalia, but then we had to move and ended up losing touch.)
+DE: 
+
+[2105]
+EN: How could I forget my Auntie Mom?
+DE: 
+
+[2106]
+EN: It’s me, Mom! Even though we’ve only been speaking on the phone for the past few days, I feel like we’re becoming family already! Isn't that right, Annie?
+DE: 
+
+[2108]
+EN: No, I came with Mom. I'm her nephew.
+DE: 
+
+[2109]
+EN: (Or can I? I mean... Why am I so jealous in the first place? It's not like anything could happen between Mom and I anyways. She's my aunt...)
+DE: 
+
+[2110]
+EN: Y-Yeah, Mom's my aunt, and honestly she’s been in quite a heightened emotional state lately. I can’t bear the thought of that guy taking advantage of her.
+DE: 
+
+[2111]
+EN: I was wondering why Mom and her shared the same last name on your followers list. She must be your cousin!
+DE: 
+
+[2112]
+EN: If Auntie Mom asks, I ate it all!
+DE: 
+
+[2113]
+EN: Wow, I... I had no idea, Mom.
+DE: 
+
+[2114]
+EN: No, really Mom... it honestly feels so nice to hear that coming from you. You're my family and one of the most important women in my life, so it’s truly appreciated.
+DE: 
+
+[2115]
+EN: (I can tell she was looking forward to this... my Auntie Mom...)
+DE: 
+
+[2116]
+EN: This time though... I want you to lie back and let your Auntie Mom do all the work...
+DE: 
+
+[2118]
+EN: I'm not Mom's daughter, I'm her nephew. I mean, I'm not even a girl! Do I have to spell it out or what?
+DE: 
+
+[2119]
+EN: Mom, Penelope, and Dalia are all very nice to me. They treat me as part of your family. You know I’ve always wanted sisters, so I really feel like they’re giving me that experience!
+DE: 
+
+[2120]
+EN: After all these years, you’re still taking care of me like a mother, eh Mom?
+DE: 
+
+[2121]
+EN: I'm not a girl, and Mom isn't my mom. She's my aunt.
+DE: 
+
+[2122]
+EN: Let your Auntie Mom take care of you. You’ve been such a good boy, after all...
+DE: 
+
+[2124]
+EN: Can you handle me going faster, sweetie? I’ll start slowly... and it’ll make your Auntie Mom feel so much better...
+DE: 
+
+[2125]
+EN: Mom and Penelope definitely have some competition in that department... not that I should be sizing up my own aunt and cousin like that.
+DE: 
+
