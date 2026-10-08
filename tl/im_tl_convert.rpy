@@ -6,8 +6,8 @@
 # The problem
 #   A normal Ren'Py translation ships its dialogue as `translate <lang> <id>:`
 #   blocks. Those swap the say text at AST level -- BEFORE
-#   config.say_menu_text_filter runs. The mod then matches German text against
-#   its English map, hits nothing, and silently stops replacing anything.
+#   config.say_menu_text_filter runs. The mod then matches translated text
+#   against its English map, hits nothing, and silently stops replacing.
 #
 # The fix
 #   For every translate block, register the pair
@@ -18,7 +18,7 @@
 #   original, the mod's filter sees English and replaces normally, and the
 #   string table translates the result inside renpy.substitute().
 #
-#       English -> mod replaces -> string table -> German
+#       English -> mod replaces -> string table -> translated
 #
 #   game/tl/<language>/ is never touched; the rewrite happens in memory only.
 #

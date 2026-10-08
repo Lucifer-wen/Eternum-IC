@@ -1,69 +1,87 @@
-# Eternum-IC — Übersetzungen
+# Eternum-IC — Translations
 
-Alles, was zur Mod-Übersetzung gehört, liegt in diesem Ordner. Eine
-Basisspiel-Übersetzung in `game/tl/<sprache>/` bleibt davon unberührt und
-übernimmt weiterhin den Originaltext.
+Everything related to translating the mod lives in this folder. A base-game
+translation in `game/tl/<language>/` is left untouched and keeps handling the
+original text.
 
 ```
 Eternum-IC/tl/
-    im_translation.rpy      Loader — trägt die JSON-Dateien in Ren'Pys String-Tabelle ein
-    im_tl_convert.rpy       Konverter — macht Fremdübersetzungen mod-kompatibel
-    im_tl_extract.rpy       Extraktor — erzeugt die JSON-Vorlage (Dev-Tool)
-    im_tl_selftest.rpy      Selbsttest — `Eternum.exe . imtl` (Dev-Tool)
-    im_tl_txt_merge.py      Schreibt eine ausgefüllte UNTRANSLATED.txt zurück in die JSON
-    German/
-        dialogue.json       Mod-Dialoge
-        ui.json             Mod-Menüs
-        UNTRANSLATED.txt    Was noch offen ist, zum Ausfüllen
+    im_translation.rpy      Loader — feeds the JSON files into Ren'Py's string table
+    im_tl_convert.rpy       Converter — makes third-party translations mod-compatible
+    im_tl_extract.rpy       Extractor — generates the JSON template; also supplies
+                            `_im_tlx_final_form()` to the converter at runtime
+    im_tl_selftest.rpy      Self-test — `Eternum.exe . imtl` (dev tool)
+    im_tl_txt_merge.py      Writes a filled-in UNTRANSLATED.txt back into the JSON
+    <language>/
+        dialogue.json       Mod dialogue
+        ui.json             Mod menus
+        UNTRANSLATED.txt    What is still open, ready to be filled in
 ```
 
-## Warum JSON und keine `translate ... strings:` Blöcke?
+## The language folder ships separately
 
-Ren'Py hält **eine** String-Tabelle pro Sprache für das ganze Spiel.
-`StringTranslator.add()` wirft eine Exception, sobald dieselbe Zeile ein
-zweites Mal registriert wird. `IncestLables.rpy` übernimmt ganze Szenen
-wortgleich aus dem Basisspiel — eine Mod-Übersetzung und eine
-Basis-Übersetzung würden also kollidieren und das Spiel beim Start abstürzen
-lassen. Der Loader schreibt stattdessen selbst in die Tabelle und entscheidet
-bei Konflikten, statt abzubrechen.
+Language folders are not part of the repository — `.gitignore` excludes
+`tl/German/`, and the translation is delivered as its own download. A fresh
+clone therefore has the loader but no data.
 
-## Warum nicht `translate <sprache> <id>:`?
+That case is silent by design: `_im_tl_languages()` finds no language folder,
+so `_im_tl_load_all()` returns an empty stats dict and the startup block in
+`im_translation.rpy` logs nothing at all. No error, no warning — the game just
+stays English. It is not a bug, and it is worth knowing before you go hunting
+for one.
 
-Reihenfolge. Translate-Blöcke tauschen den Text auf AST-Ebene aus, also
-**bevor** `config.say_menu_text_filter` läuft. Der Mod würde dann deutschen
-Text gegen seine englische Map prüfen und nichts ersetzen. String-Übersetzungen
-greifen in `renpy.substitute()`, also **danach**:
+To get a translation back, drop its `<language>/` folder next to the `.rpy` files
+and restart. `log.txt` then carries a line like
 
 ```
-Englisch  ->  Mod ersetzt (Incest-Englisch)  ->  String-Tabelle  ->  Deutsch
+Eternum-IC tl [German]: 2365 registered, 0 left to the base translation, 2366 in file.
 ```
 
-Deshalb sind die Schlüssel in den JSON-Dateien **die bereits vom Mod
-ersetzten** englischen Zeilen, nicht die Originalzeilen.
+## Why JSON and not `translate ... strings:` blocks?
 
-## Neue Sprache anlegen
+Ren'Py keeps **one** string table per language for the whole game.
+`StringTranslator.add()` raises an exception as soon as the same line is
+registered a second time. `IncestLables.rpy` takes over entire scenes
+word-for-word from the base game — so a mod translation and a base translation
+would collide and crash the game on startup. Instead, the loader writes into
+the table itself and resolves conflicts rather than aborting.
 
-1. Ordner erstellen, benannt **exakt** wie die Ren'Py-Sprache — die
-   Schreibweise zählt. Die Basis-Übersetzung dieses Spiels heißt `German`
-   (groß), also muss der Mod-Ordner auch `German` heißen, nicht `german`.
-   Ren'Py hält pro Schreibweise eine eigene String-Tabelle.
-2. Vorlage erzeugen — Konsole im Spiel öffnen (`Shift+O`):
+## Why not `translate <language> <id>:`?
+
+Ordering. Translate blocks swap the text at AST level, i.e. **before**
+`config.say_menu_text_filter` runs. The mod would then check translated text
+against its English map and replace nothing. String translations hook into
+`renpy.substitute()`, i.e. **afterwards**:
+
+```
+English  ->  mod replaces (incest English)  ->  string table  ->  translated
+```
+
+That is why the keys in the JSON files are the English lines **as already
+replaced by the mod**, not the original lines.
+
+## Adding a new language
+
+1. Create a folder named **exactly** like the Ren'Py language — capitalization
+   matters. This game's base translation is called `German` (capitalized), so
+   the mod folder has to be `German` as well, not `german`. Ren'Py keeps a
+   separate string table per spelling.
+2. Generate the template — open the in-game console (`Shift+O`):
    ```python
-   im_tl_extract("french")
+   im_tl_extract("<language>")
    ```
-   Das schreibt `french/dialogue.json` mit allen Mod-Strings und leeren Werten.
-3. Werte ausfüllen. Leerer Wert = noch nicht übersetzt, die englische Zeile
-   bleibt stehen.
-4. Spiel neu starten (oder `_im_tl_reload()` in der Konsole).
+   This writes `<language>/dialogue.json` with all mod strings and empty values.
+3. Fill in the values. An empty value means "not translated yet"; the English
+   line stays as it is.
+4. Restart the game (or run `_im_tl_reload()` in the console).
 
-Erneutes Ausführen von `im_tl_extract` behält vorhandene Übersetzungen und
-ergänzt nur neue Zeilen — nach einem Spiel- oder Mod-Update also einfach
-nochmal laufen lassen.
+Running `im_tl_extract` again keeps existing translations and only adds new
+lines — so after a game or mod update, just run it once more.
 
-## Offene Zeilen ausfüllen
+## Filling in open lines
 
-`German/UNTRANSLATED.txt` listet alles, was noch keine Übersetzung hat,
-gruppiert nach Grund. Format:
+`<language>/UNTRANSLATED.txt` lists everything that has no translation yet, grouped
+by reason. Format:
 
 ```
 [0385]
@@ -71,120 +89,119 @@ EN: I'll suck your cock, {i}brother{/i}.
 DE: 
 ```
 
-Übersetzung hinter `DE:` schreiben, leer lassen heißt „bleibt englisch". Dann:
+Write the translation after `DE:`; leaving it empty means "stays English".
+Then:
 
 ```
 cd Eternum-IC/tl
-python im_tl_txt_merge.py German/UNTRANSLATED.txt
+python im_tl_txt_merge.py <language>/UNTRANSLATED.txt
 ```
 
-Das Skript ordnet über den englischen Text zu, nicht über die Nummer — die
-Datei bleibt also gültig, auch wenn `im_tl_extract` die Reihenfolge ändert.
-Vor dem Übernehmen prüft es jede Zeile darauf, dass Text-Tags und
-`[mc]`/`[lastname]` in Quelle und Übersetzung gleich vorkommen; Abweichungen
-werden gemeldet und **nicht** übernommen, weil fehlende Tags sonst das Markup
-im Spiel zerlegen.
+The script matches on the English text, not on the number — so the file stays
+valid even if `im_tl_extract` changes the order. Before applying anything, it
+checks every line to make sure text tags and `[mc]`/`[lastname]` occur equally
+in source and translation; mismatches are reported and **not** applied, because
+missing tags would break the markup in-game.
 
-Die Datei wird von `gen_txt.py` neu erzeugt und ist danach wieder aktuell.
+The file is regenerated by `gen_txt.py` and is up to date again afterwards.
 
-## Regeln für die Schlüssel
+## Rules for the keys
 
-- **Exakter Match.** `That's` mit typografischem Apostroph (`’`) ist ein
-  anderer Schlüssel als mit ASCII-Apostroph. Schlüssel nie von Hand tippen —
-  immer aus der Extraktor-Vorlage übernehmen.
-- **`[mc]` und `[lastname]` stehen lassen**, in Schlüssel *und* Übersetzung.
-  Ren'Py setzt den Spielernamen erst nach der Übersetzung ein; dadurch ist die
-  Datei namensunabhängig.
-- **Text-Tags erhalten**: `{i}`, `{size=...}`, `{w}` müssen in der Übersetzung
-  genauso vorkommen.
-- Schlüssel, die mit `_` beginnen, ignoriert der Loader — praktisch für
-  Kommentare wie `_comment`.
+- **Exact match.** `That's` with a typographic apostrophe (`’`) is a different
+  key than with an ASCII apostrophe. Never type keys by hand — always take them
+  from the extractor template.
+- **Leave `[mc]` and `[lastname]` in place**, in both key *and* translation.
+  Ren'Py inserts the player name only after translation, which keeps the file
+  independent of the chosen name.
+- **Preserve text tags**: `{i}`, `{size=...}`, `{w}` have to appear in the
+  translation just the same.
+- Keys starting with `_` are ignored by the loader — handy for comments such as
+  `_comment`.
 
-## Konfliktregel
+## Conflict rule
 
-Standardmäßig gewinnt die Basis-Übersetzung: existiert eine Zeile bereits in
-`game/tl/<sprache>/`, überspringt der Loader den Mod-Eintrag. Umdrehen lässt
-sich das in `im_translation.rpy`:
+By default the base translation wins: if a line already exists in
+`game/tl/<language>/`, the loader skips the mod entry. This can be inverted in
+`im_translation.rpy`:
 
 ```python
 _im_tl_override_base = True
 ```
 
-Der Extraktor lässt Zeilen, die wortgleich im Basisspiel vorkommen, ohnehin
-weg — die gehören der Basis-Übersetzung.
+The extractor omits lines that appear word-for-word in the base game anyway —
+those belong to the base translation.
 
-## Ohne Basis-Übersetzung
+## Without a base translation
 
-Wer ein eigenständiges Sprachpaket bauen will, das auch den Originaltext
-abdeckt:
+If you want to build a standalone language pack that also covers the original
+text:
 
 ```python
-im_tl_extract("German", include_base=True)   # -> German/base_dialogue.json
+im_tl_extract("<language>", include_base=True)   # -> <language>/base_dialogue.json
 ```
 
-Für die UI des Basisspiels zusätzlich Ren'Pys eigenen Generator benutzen:
+For the base game's UI, additionally use Ren'Py's own generator:
 
 ```
-Eternum.exe . translate German --strings-only
+Eternum.exe . translate <language> --strings-only
 ```
 
-Der schreibt nach `game/tl/German/` und arbeitet mit `old`/`new`-Paaren, die
-mit diesem System zusammenpassen.
+It writes to `game/tl/<language>/` and works with `old`/`new` pairs, which fit this
+system.
 
-## Selbsttest
+## Self-test
 
 ```
 Eternum.exe . imtl
 ```
 
-Läuft ohne Fenster und prüft: Loader-Registrierung, Lookup über
-`translate_string()`, dass die Mod-Ersetzung `[mc]` intakt lässt, und die
-komplette Kette Englisch → Mod → Deutsch.
+Runs without a window and checks: loader registration, lookup via
+`translate_string()`, that the mod replacement leaves `[mc]` intact, and the
+complete chain English → mod → translation.
 
-## Fremdübersetzungen mit Translate-Blöcken
+## Third-party translations using translate blocks
 
-`im_tl_convert.rpy` löst das Grundproblem, dass eine normale Ren'Py-Übersetzung
-ihre Dialoge als `translate <sprache> <id>:` Blöcke liefert. Die greifen auf
-AST-Ebene, also **vor** `config.say_menu_text_filter` — der Mod bekäme
-deutschen Text und würde nichts mehr ersetzen.
+`im_tl_convert.rpy` solves the underlying problem that a regular Ren'Py
+translation ships its dialogue as `translate <language> <id>:` blocks. Those
+apply at AST level, i.e. **before** `config.say_menu_text_filter` — the mod
+would receive translated text and would no longer replace anything.
 
-Der Konverter schreibt beim Sprachwechsel jeden Block in ein String-Paar
-`englisches Original -> Übersetzung` um und entfernt den Block.
-`lookup_translate()` fällt dann auf das englische Original zurück, der Filter
-sieht wieder Englisch, und die Übersetzung greift danach:
-
-```
-Englisch  ->  Mod ersetzt  ->  String-Tabelle  ->  Deutsch
-```
-
-`game/tl/<sprache>/` wird dabei **nicht angefasst** — die Umschreibung
-passiert nur im Arbeitsspeicher.
-
-### Gemessen an der German-Übersetzung von Eternum 0.9.5
+On a language switch, the converter rewrites every block into a string pair
+`English original -> translation` and removes the block. `lookup_translate()`
+then falls back to the English original, the filter sees English again, and the
+translation applies afterwards:
 
 ```
-71793 Blöcke konvertiert in 0,20s
-  54347  Strings neu registriert
-  10711  bereits vorhanden (Dubletten mit gleicher Übersetzung)
-   5705  unübersetzt (Original == "Übersetzung")
-   1030  mehrdeutig — erste Fassung gewinnt
+English  ->  mod replaces  ->  string table  ->  translated
 ```
 
-Die 1030 mehrdeutigen Blöcke betreffen 571 englische Zeilen, die im
-Original mehrere deutsche Fassungen haben. Sie zeigen jetzt die erste davon.
-In der Stichprobe waren das fast ausschließlich Groß-/Kleinschreibungs-
-Varianten desselben Satzes:
+`game/tl/<language>/` is **not touched** in the process — the rewrite happens
+in memory only.
+
+### Measured against the German translation of Eternum 0.9.5
+
+```
+71793 blocks converted in 0.20s
+  54347  strings newly registered
+  10711  already present (duplicates with identical translation)
+   5705  untranslated (original == "translation")
+   1030  ambiguous — first version wins
+```
+
+The 1030 ambiguous blocks affect 571 English lines that have several German
+versions in the original. They now show the first of those. In the sample,
+these were almost exclusively capitalization variants of the same sentence:
 
 ```
 'Okay... let's do it.'  ->  'Okay... Lass es uns tun.' / 'Okay... lass es uns tun.'
 'Good girl...'          ->  'Braves Mädchen...'        / 'Gutes Mädchen...'
 ```
 
-219 Blöcke bleiben stehen: deren Identifier existiert im aktuellen Script
-nicht mehr (Reste einer älteren Spielversion). Sie könnten ohnehin nie feuern
-und werden deshalb bewusst in Ruhe gelassen.
+219 blocks are left alone: their identifier no longer exists in the current
+script (leftovers from an older game version). They could never fire anyway and
+are therefore deliberately left untouched.
 
-### Abschalten
+### Disabling it
 
 In `im_tl_convert.rpy`:
 
@@ -192,13 +209,12 @@ In `im_tl_convert.rpy`:
 _im_tl_convert_enabled = False
 ```
 
-Ohne Konverter ist der Mod bei aktiver Fremdübersetzung für
-Basisspiel-Dialoge praktisch abgeschaltet.
+Without the converter, the mod is effectively switched off for base-game
+dialogue whenever a third-party translation is active.
 
-### Was danach noch zu tun ist
+### What still needs doing afterwards
 
-Zeilen, die der Mod **ersetzt**, sind danach nicht mehr von der
-Basis-Übersetzung abgedeckt — ihr Text ist ja ein anderer. Genau dafür ist
-`German/dialogue.json` da: die 2126 Strings aus dem Extraktor müssen übersetzt
-werden, sonst erscheinen die vom Mod geänderten Zeilen auf Englisch, während
-der Rest deutsch ist.
+Lines the mod **replaces** are no longer covered by the base translation — their
+text is a different one, after all. That is exactly what `<language>/dialogue.json`
+is for: the 2126 strings from the extractor have to be translated, otherwise the
+lines changed by the mod show up in English while everything else is translated.
